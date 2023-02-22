@@ -1,4 +1,4 @@
-package com.hymnsmobile.utils;
+package com.hymnsmobile.pipeline.utils;
 
 import static com.google.gson.stream.JsonToken.END_DOCUMENT;
 

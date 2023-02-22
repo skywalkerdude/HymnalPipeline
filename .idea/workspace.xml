@@ -5,14 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ec1b235f-9709-4657-b690-982682a9f7b3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/protoeditor.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/hymnalnet/2023-02-21_20-11-55_PST.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/hymnalnet/2023-02-21_20-19-21_PST.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/hymnalnet/2023-02-21_20-21-01_PST.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/Pipeline.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/hymnalnet/HymnalNetPipeline.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/hymnalnet/HymnalNetPipeline.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/Pipeline.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/common/HttpNetworkClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/common/HttpNetworkClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/common/dagger/PipelineComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/dagger/PipelineComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/common/dagger/PipelineModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/dagger/PipelineModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/common/dagger/PipelineScope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/dagger/PipelineScope.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/hymnalnet/HymnType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/HymnType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/hymnalnet/HymnalDbKey.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/HymnalDbKey.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/hymnalnet/HymnalNetFetcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/HymnalNetFetcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/hymnalnet/HymnalNetPipeline.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/HymnalNetPipeline.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/utils/TextUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/utils/TextUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/proto/common.proto" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/proto/common.proto" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/proto/hymnal_net.proto" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/proto/hymnal_net.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/proto/proto.proto" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/proto/common.proto" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,31 +90,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.14746094&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.42365098&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_directory_selection": "/Users/lukelu/IdeaProjects/HymnalPipeline/src/main/java/com/hymnsmobile",
+    "last_opened_file_path": "/Users/lukelu/IdeaProjects/HymnalPipeline/src/main/java/com/hymnsmobile/pipeline/hymnalnet",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.14746094",
+    "project.structure.side.proportion": "0.42365098",
+    "settings.editor.selected.configurable": "preferences.keymap"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet" />
+      <recent name="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/dagger" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.hymnsmobile.pipeline" />
+      <recent name="com.hymnsmobile.pipeline.hymnalnet" />
+      <recent name="com.hymnsmobile.pipeline.utils" />
+      <recent name="com.hymnsmobile.pipeline.common" />
       <recent name="com.hymnsmobile.hymnalnet.dagger" />
-      <recent name="com.hymnsmobile.models.common" />
     </key>
   </component>
   <component name="RunManager" selected="Application.com.hymnsmobile.Pipeline">
-    <configuration name="com.hymnsmobile.Pipeline" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.hymnsmobile.Pipeline" />
+    <configuration name="Pipeline" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.hymnsmobile.pipeline.Pipeline" />
       <module name="HymnalPipeline.main" />
       <option name="PROGRAM_PARAMETERS" value="--scan" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.hymnsmobile.*" />
+          <option name="PATTERN" value="com.hymnsmobile.pipeline.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -159,7 +175,7 @@
       <workItem from="1676763307888" duration="8707000" />
       <workItem from="1676925618324" duration="19226000" />
       <workItem from="1677013730274" duration="2007000" />
-      <workItem from="1677018101564" duration="7639000" />
+      <workItem from="1677018101564" duration="12156000" />
     </task>
     <servers />
   </component>
@@ -184,9 +200,14 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/hymnsmobile/hymnalnet/HymnalDbKey.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/HymnalDbKey.java</url>
           <line>80</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/HymnalNetPipeline.java</url>
+          <line>54</line>
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

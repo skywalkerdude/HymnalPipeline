@@ -1,8 +1,8 @@
-package com.hymnsmobile;
+package com.hymnsmobile.pipeline;
 
-import com.hymnsmobile.common.dagger.DaggerPipelineComponent;
-import com.hymnsmobile.common.dagger.PipelineComponent;
-import com.hymnsmobile.hymnalnet.HymnalNetPipeline;
+import com.hymnsmobile.pipeline.dagger.DaggerPipelineComponent;
+import com.hymnsmobile.pipeline.dagger.PipelineComponent;
+import com.hymnsmobile.pipeline.hymnalnet.HymnalNetPipeline;
 import java.io.IOException;
 
 public class Pipeline {

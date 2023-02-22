@@ -1,4 +1,4 @@
-package com.hymnsmobile.hymnalnet;
+package com.hymnsmobile.pipeline.hymnalnet;
 
 import java.util.Optional;
 

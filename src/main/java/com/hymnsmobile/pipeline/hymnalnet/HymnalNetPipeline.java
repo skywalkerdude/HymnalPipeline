@@ -1,12 +1,12 @@
-package com.hymnsmobile.hymnalnet;
+package com.hymnsmobile.pipeline.hymnalnet;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.hymnsmobile.common.dagger.PipelineScope;
-import com.hymnsmobile.common.models.PipelineError;
-import com.hymnsmobile.common.models.PipelineError.Severity;
-import com.hymnsmobile.hymnalnet.models.Hymn;
-import com.hymnsmobile.hymnalnet.models.HymnalNet;
+import com.hymnsmobile.pipeline.dagger.PipelineScope;
+import com.hymnsmobile.pipeline.hymnalnet.models.Hymn;
+import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNet;
+import com.hymnsmobile.pipeline.models.PipelineError;
+import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -89,7 +89,8 @@ public class HymnalNetPipeline {
    * Fetch hymns afresh from Hymnal.net.
    */
   private void fetchHymns() throws InterruptedException, IOException {
-    for (HymnType hymnType : ImmutableList.of(HymnType.CHILDREN_SONG, HymnType.HOWARD_HIGASHI,
+    for (HymnType hymnType : ImmutableList.of(
+        HymnType.CHILDREN_SONG, HymnType.HOWARD_HIGASHI,
         HymnType.DUTCH, HymnType.SPANISH, HymnType.FRENCH)) {
       if (hymnType.maxNumber.isPresent()) {
         for (int hymnNumber = 1; hymnNumber < hymnType.maxNumber.get(); hymnNumber++) {

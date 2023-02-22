@@ -1,8 +1,8 @@
-package com.hymnsmobile.hymnalnet;
+package com.hymnsmobile.pipeline.hymnalnet;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
-import com.hymnsmobile.hymnalnet.models.Hymn;
+import com.hymnsmobile.pipeline.hymnalnet.models.Hymn;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;

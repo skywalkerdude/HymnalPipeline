@@ -1,13 +1,14 @@
 syntax = "proto3";
 
+package com.hymnsmobile.pipeline.hymnalnet.models;
+
 import "common.proto";
 
-option java_package = "com.hymnsmobile.hymnalnet.models";
 option java_multiple_files = true;
 
 message HymnalNet {
   map<string, Hymn> hymns = 1;
-  repeated PipelineError errors = 2;
+  repeated com.hymnsmobile.pipeline.models.PipelineError errors = 2;
 }
 
 message Hymn {

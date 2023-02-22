@@ -1,7 +1,7 @@
-package com.hymnsmobile.common.dagger;
+package com.hymnsmobile.pipeline.dagger;
 
-import com.hymnsmobile.Pipeline;
-import com.hymnsmobile.hymnalnet.HymnalNetPipeline;
+import com.hymnsmobile.pipeline.Pipeline;
+import com.hymnsmobile.pipeline.hymnalnet.HymnalNetPipeline;
 import dagger.Component;
 import java.net.http.HttpClient;
 

@@ -1,4 +1,4 @@
-package com.hymnsmobile.common.dagger;
+package com.hymnsmobile.pipeline.dagger;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

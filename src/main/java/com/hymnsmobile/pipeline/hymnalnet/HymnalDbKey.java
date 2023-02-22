@@ -1,6 +1,6 @@
-package com.hymnsmobile.hymnalnet;
+package com.hymnsmobile.pipeline.hymnalnet;
 
-import com.hymnsmobile.utils.TextUtil;
+import com.hymnsmobile.pipeline.utils.TextUtil;
 import java.util.Optional;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
