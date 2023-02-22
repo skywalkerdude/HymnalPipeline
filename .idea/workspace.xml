@@ -5,21 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ec1b235f-9709-4657-b690-982682a9f7b3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/Pipeline.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/BlockList.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/storage/hymnalnet/2023-02-21_21-42-53_PST.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/Pipeline.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/common/HttpNetworkClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/common/HttpNetworkClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/common/dagger/PipelineComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/dagger/PipelineComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/common/dagger/PipelineModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/dagger/PipelineModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/common/dagger/PipelineScope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/dagger/PipelineScope.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/hymnalnet/HymnType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/HymnType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/hymnalnet/HymnalDbKey.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/HymnalDbKey.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/hymnalnet/HymnalNetFetcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/HymnalNetFetcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/hymnalnet/HymnalNetPipeline.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/HymnalNetPipeline.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/utils/TextUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/utils/TextUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/proto/common.proto" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/proto/common.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/proto/hymnal_net.proto" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/proto/hymnal_net.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/HymnalNetPipeline.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/HymnalNetPipeline.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,7 +165,7 @@
       <workItem from="1676763307888" duration="8707000" />
       <workItem from="1676925618324" duration="19226000" />
       <workItem from="1677013730274" duration="2007000" />
-      <workItem from="1677018101564" duration="12156000" />
+      <workItem from="1677018101564" duration="12372000" />
     </task>
     <servers />
   </component>

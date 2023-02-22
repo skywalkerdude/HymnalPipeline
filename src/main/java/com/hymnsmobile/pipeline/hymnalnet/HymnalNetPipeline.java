@@ -1,5 +1,7 @@
 package com.hymnsmobile.pipeline.hymnalnet;
 
+import static com.hymnsmobile.pipeline.hymnalnet.BlockList.BLOCK_LIST;
+
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.hymnsmobile.pipeline.dagger.PipelineScope;
@@ -110,6 +112,11 @@ public class HymnalNetPipeline {
     LOGGER.info(String.format("Fetching %s", key));
     if (hymns.build().containsKey(key)) {
       LOGGER.info(String.format("%s already exists. Skipping...", key));
+      return;
+    }
+
+    if (BLOCK_LIST.contains(key)) {
+      LOGGER.info(String.format("%s contained in block list. Skipping...", key));
       return;
     }
 
