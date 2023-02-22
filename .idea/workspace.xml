@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ec1b235f-9709-4657-b690-982682a9f7b3" name="Changes" comment="" />
+    <list default="true" id="ec1b235f-9709-4657-b690-982682a9f7b3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/protoeditor.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/storage/hymnalnet/2023-02-21_20-11-55_PST.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/storage/hymnalnet/2023-02-21_20-19-21_PST.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/storage/hymnalnet/2023-02-21_20-21-01_PST.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/hymnalnet/HymnalNetPipeline.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/hymnalnet/HymnalNetPipeline.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/proto/hymnal_net.proto" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/proto/hymnal_net.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/proto/proto.proto" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/proto/common.proto" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -150,7 +159,7 @@
       <workItem from="1676763307888" duration="8707000" />
       <workItem from="1676925618324" duration="19226000" />
       <workItem from="1677013730274" duration="2007000" />
-      <workItem from="1677018101564" duration="5206000" />
+      <workItem from="1677018101564" duration="7639000" />
     </task>
     <servers />
   </component>

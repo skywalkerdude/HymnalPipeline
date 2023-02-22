@@ -73,7 +73,8 @@ public class HymnalNetPipeline {
     }
 
     LOGGER.info(String.format("Reading file %s", mostRecentFile.get()));
-    HymnalNet.parseFrom(new FileInputStream(mostRecentFile.get())).getHymnsMap()
+    HymnalNet.parseFrom(new FileInputStream(mostRecentFile.get()))
+        .getHymnsMap()
         .forEach((key, value) -> {
           Optional<HymnalDbKey> hymnalDbKey = HymnalDbKey.fromString(key);
           if (hymnalDbKey.isEmpty()) {
@@ -129,7 +130,7 @@ public class HymnalNetPipeline {
                 HymnalNetPipeline.this.errors.add(
                     PipelineError.newBuilder().setSeverity(Severity.ERROR)
                         .setMessage(String.format("Hymn %s had an invalid related hymn: %s", key,
-                            relatedSongKey)).build());
+                            datum.getPath())).build());
               }
               return relatedSongKey;
             })
@@ -178,6 +179,7 @@ public class HymnalNetPipeline {
       }
       HymnalNet.Builder builder = HymnalNet.newBuilder();
       hymns.build().forEach((key, value) -> builder.putHymns(key.toString(), value));
+      builder.addAllErrors(errors.build());
       builder.build().writeTo(output);
     }
   }

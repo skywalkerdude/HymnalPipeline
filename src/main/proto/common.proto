@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+option java_package = "com.hymnsmobile.common.models";
+option java_multiple_files = true;
+
+enum HymnType {
+  CLASSIC_HYMN = 0;
+  NEW_TUNE = 1;
+  NEW_SONG = 2;
+  CHILDREN_SONG = 3;
+  SCRIPTURE = 4;
+  HOWARD_HIGASHI = 5;
+  DUTCH = 6;
+  GERMAN = 7;
+  CHINESE = 8;
+  CHINESE_SUPPLEMENT = 9;
+  CEBUANO = 10;
+  TAGALOG = 11;
+  FRENCH = 12;
+  BE_FILLED = 13;
+  SPANISH = 14;
+  KOREAN = 15;
+  JAPANESE = 16;
+  CHINESE_SIMPLIFIED = 17;
+  CHINESE_SIMPLIFIED_SUPPLEMENT = 18;
+  FARSI = 19;
+  INDONESIAN = 20;
+  UNKNOWN = 21;
+}
+
+// An error encountered during processing of the pipeline.
+message PipelineError {
+  enum Severity {
+    // Should log error, but not the end of the world.
+    WARNING = 0;
+    // Blocks the hymn from ingestion but does not block the pipeline.
+    ERROR = 1;
+    // Blocks the entire pipeline from completion.
+    FATAL = 2;
+  }
+  string message = 1;
+  Severity severity = 2;
+}
