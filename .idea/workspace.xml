@@ -4,38 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ec1b235f-9709-4657-b690-982682a9f7b3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/Pipeline.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/common/HttpNetworkClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/common/dagger/PipelineComponent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/common/dagger/PipelineModule.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/common/dagger/PipelineScope.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/hymnalnet/HymnType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/hymnalnet/HymnalDbKey.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/hymnalnet/HymnalNetFetcher.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/hymnalnet/HymnalNetPipeline.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/utils/TextUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/proto/hymnal_net.proto" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/proto/proto.proto" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/hymnalnet/2023-02-21_00-00-08_PST.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/hymnalnet/2023-02-21_13-13-20_PST.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/hymnalnet/2023-02-21_13-20-55_PST.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/hymnalnet/2023-02-21_13-25-51_PST.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/hymnalnet/2023-02-21_13-26-53_PST.txt" afterDir="false" />
-    </list>
+    <list default="true" id="ec1b235f-9709-4657-b690-982682a9f7b3" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -181,7 +150,7 @@
       <workItem from="1676763307888" duration="8707000" />
       <workItem from="1676925618324" duration="19226000" />
       <workItem from="1677013730274" duration="2007000" />
-      <workItem from="1677018101564" duration="4681000" />
+      <workItem from="1677018101564" duration="5206000" />
     </task>
     <servers />
   </component>
