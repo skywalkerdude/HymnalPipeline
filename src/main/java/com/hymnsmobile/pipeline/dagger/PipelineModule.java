@@ -1,10 +1,11 @@
 package com.hymnsmobile.pipeline.dagger;
 
+import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNetPipelineComponent;
 import dagger.Module;
 import dagger.Provides;
 import java.net.http.HttpClient;
 
-@Module
+@Module(subcomponents = HymnalNetPipelineComponent.class)
 interface PipelineModule {
 
   @Provides

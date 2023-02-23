@@ -26,24 +26,25 @@ message Hymn {
   SongReference reference = 1;
   string title = 2;
   repeated Verse lyrics = 3;
-  optional string category = 4;
-  optional string sub_category = 5;
-  optional string author = 6;
-  optional string composer = 7;
-  optional string key = 8;
-  optional string time = 9;
-  optional string meter = 10;
-  optional string scriptures = 11;
-  optional string hymnCode = 12;
-  optional string musicJson = 13;
-  optional string svgJson = 14;
-  optional string pdfJson = 15;
-  repeated SongReference languages = 16;
-  repeated  SongReference relevants = 17;
+  repeated string category = 4;
+  repeated string sub_category = 5;
+  repeated string author = 6;
+  repeated string composer = 7;
+  repeated string key = 8;
+  repeated string time = 9;
+  repeated string meter = 10;
+  repeated string scriptures = 11;
+  repeated string hymn_code = 12;
+  repeated string music = 13;
+  repeated string svg_sheet = 14;
+  repeated string pdf_sheet = 15;
+  map<string, SongReference> languages = 16;
+  map<string, SongReference> relevants = 17;
 }
 
 message SongReference {
-  optional string hymnal_db_key = 1;
+  HymnType type = 1;
+  string number = 2;
 }
 
 message Verse {

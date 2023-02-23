@@ -1,7 +1,7 @@
 package com.hymnsmobile.pipeline.dagger;
 
 import com.hymnsmobile.pipeline.Pipeline;
-import com.hymnsmobile.pipeline.hymnalnet.HymnalNetPipeline;
+import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNetPipelineComponent;
 import dagger.Component;
 import java.net.http.HttpClient;
 
@@ -11,7 +11,7 @@ public interface PipelineComponent {
 
   HttpClient httpClient();
 
-  HymnalNetPipeline hymnalNetPipeline();
+  HymnalNetPipelineComponent.Builder hymnalNetComponent();
 
-  void inject(Pipeline pipeline);
+  Pipeline pipeline();
 }

@@ -5,11 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ec1b235f-9709-4657-b690-982682a9f7b3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/BlockList.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/hymnalnet/2023-02-21_21-42-53_PST.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/Converter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/HymnSanitizer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/MetaDatumType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/dagger/HymnalNet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/dagger/HymnalNetPipelineComponent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/dagger/HymnalNetPipelineModule.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/dagger/HymnalNetPipelineScope.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/Pipeline.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/Pipeline.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/common/HttpNetworkClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/dagger/PipelineComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/dagger/PipelineComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/dagger/PipelineModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/dagger/PipelineModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/BlockList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/BlockList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/HymnalDbKey.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/HymnalDbKey.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/HymnalNetFetcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/Fetcher.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/HymnalNetPipeline.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/HymnalNetPipeline.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/proto/common.proto" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/proto/common.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/proto/hymnal_net.proto" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/proto/hymnal_net.proto" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,22 +111,25 @@
       <recent name="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet" />
       <recent name="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/dagger" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.hymnsmobile.pipeline.hymnalnet" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.hymnsmobile.pipeline.hymnalnet.dagger" />
       <recent name="com.hymnsmobile.pipeline" />
       <recent name="com.hymnsmobile.pipeline.hymnalnet" />
       <recent name="com.hymnsmobile.pipeline.utils" />
       <recent name="com.hymnsmobile.pipeline.common" />
-      <recent name="com.hymnsmobile.hymnalnet.dagger" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.com.hymnsmobile.Pipeline">
+  <component name="RunManager" selected="Application.com.hymnsmobile.pipeline.Pipeline">
     <configuration name="Pipeline" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.hymnsmobile.pipeline.Pipeline" />
       <module name="HymnalPipeline.main" />
       <option name="PROGRAM_PARAMETERS" value="--scan" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.hymnsmobile.pipeline.*" />
+          <option name="PATTERN" value="com.hymnsmobile.pipeline.hymnalnet.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -143,13 +159,13 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Application.com.hymnsmobile.Pipeline" />
+      <item itemvalue="Application.com.hymnsmobile.pipeline.Pipeline" />
       <item itemvalue="Gradle.HymnalPipeline [dependencies]" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.HymnalPipeline [dependencies]" />
-        <item itemvalue="Application.com.hymnsmobile.Pipeline" />
+        <item itemvalue="Application.com.hymnsmobile.pipeline.Pipeline" />
       </list>
     </recent_temporary>
   </component>
@@ -165,7 +181,7 @@
       <workItem from="1676763307888" duration="8707000" />
       <workItem from="1676925618324" duration="19226000" />
       <workItem from="1677013730274" duration="2007000" />
-      <workItem from="1677018101564" duration="12372000" />
+      <workItem from="1677018101564" duration="37398000" />
     </task>
     <servers />
   </component>
@@ -185,21 +201,5 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/HymnalDbKey.java</url>
-          <line>80</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/HymnalNetPipeline.java</url>
-          <line>54</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

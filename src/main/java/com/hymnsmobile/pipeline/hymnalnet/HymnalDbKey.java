@@ -69,7 +69,7 @@ public class HymnalDbKey {
 
   @Override
   public String toString() {
-    return hymnType + "/" + hymnNumber + "/" + queryParams;
+    return hymnType + "/" + hymnNumber + "/" + queryParams.orElse("");
   }
 
   public static Optional<HymnalDbKey> extractFromPath(String path) {
