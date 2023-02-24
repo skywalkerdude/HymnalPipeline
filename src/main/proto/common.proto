@@ -5,21 +5,22 @@ package com.hymnsmobile.pipeline.models;
 option java_multiple_files = true;
 
 enum HymnType {
-  CLASSIC_HYMN = 0;
-  NEW_TUNE = 1;
-  NEW_SONG = 2;
-  CHILDREN_SONG = 3;
-  HOWARD_HIGASHI = 4;
-  DUTCH = 5;
-  GERMAN = 6;
-  CHINESE = 7;
-  CHINESE_SIMPLIFIED = 8;
-  CHINESE_SUPPLEMENTAL = 9;
-  CHINESE_SUPPLEMENTAL_SIMPLIFIED = 10;
-  CEBUANO = 11;
-  TAGALOG = 12;
-  FRENCH = 13;
-  SPANISH = 14;
+  DEFAULT = 0;
+  CLASSIC_HYMN = 1;
+  NEW_TUNE = 2;
+  NEW_SONG = 3;
+  CHILDREN_SONG = 4;
+  HOWARD_HIGASHI = 5;
+  DUTCH = 6;
+  GERMAN = 7;
+  CHINESE = 8;
+  CHINESE_SIMPLIFIED = 9;
+  CHINESE_SUPPLEMENTAL = 10;
+  CHINESE_SUPPLEMENTAL_SIMPLIFIED = 11;
+  CEBUANO = 12;
+  TAGALOG = 13;
+  FRENCH = 14;
+  SPANISH = 15;
 }
 
 message Hymn {
