@@ -13,6 +13,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.util.Optional;
 import java.util.logging.Logger;
 import javax.inject.Inject;
 
@@ -35,7 +36,11 @@ public class Fetcher {
     this.converter = converter;
   }
 
-  public Hymn fetchHymn(SongReference songReference)
+  /**
+   * Fetches the hymn referenced by the song, unless it doesn't exist, in which case, return
+   * {@link Optional#empty()}.
+   */
+  public Optional<Hymn> fetchHymn(SongReference songReference)
       throws IOException, InterruptedException, URISyntaxException {
     HymnalDbKey key = converter.toHymnalDbKey(songReference);
     HymnType hymnType = key.hymnType;
@@ -47,9 +52,9 @@ public class Fetcher {
         BodyHandlers.ofString());
 
     if (response.statusCode() != 200) {
-      throw new RuntimeException(
-          String.format("%s returned with status code: %d", buildUri(key),
-              response.statusCode()));
+      LOGGER.warning(
+          String.format("%s returned with status code: %d", buildUri(key), response.statusCode()));
+      return Optional.empty();
     }
 
     HymnalNetJson.Builder builder = HymnalNetJson.newBuilder();
@@ -60,7 +65,7 @@ public class Fetcher {
           String.format("Unable to parse %s/%s: %s", hymnType, hymnNumber, response.body()), e);
     }
     LOGGER.info(String.format("%s successfully fetched", key));
-    return converter.toHymn(key, builder.build());
+    return Optional.of(converter.toHymn(key, builder.build()));
   }
 
   /**

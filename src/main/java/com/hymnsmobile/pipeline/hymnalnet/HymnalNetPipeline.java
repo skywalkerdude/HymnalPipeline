@@ -79,21 +79,19 @@ public class HymnalNetPipeline {
    * Fetch hymns afresh from Hymnal.net.
    */
   private void fetchHymns() throws InterruptedException, IOException, URISyntaxException {
-    for (HymnType hymnType : ImmutableList.of(HymnType.HOWARD_HIGASHI)) {
-      if (hymnType.maxNumber.isPresent()) {
-        for (int hymnNumber = 1; hymnNumber < hymnType.maxNumber.get(); hymnNumber++) {
-          HymnalDbKey key = HymnalDbKey.create(hymnType, String.valueOf(hymnNumber));
-          SongReference songReference = converter.toSongReference(key);
-          fetchHymn(songReference);
-          if (hymnType == HymnType.CHINESE) {
-            fetchHymn(songReference.toBuilder()
-                .setType(com.hymnsmobile.pipeline.models.HymnType.CHINESE_SIMPLIFIED).build());
-          }
-          if (hymnType == HymnType.CHINESE_SUPPLEMENTAL) {
-            fetchHymn(songReference.toBuilder()
-                .setType(com.hymnsmobile.pipeline.models.HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED)
-                .build());
-          }
+    for (HymnType hymnType : HymnType.values()) {
+      for (int hymnNumber = 1; hymnNumber < hymnType.maxNumber.orElse(1000); hymnNumber++) {
+        HymnalDbKey key = HymnalDbKey.create(hymnType, String.valueOf(hymnNumber));
+        SongReference songReference = converter.toSongReference(key);
+        fetchHymn(songReference);
+        if (hymnType == HymnType.CHINESE) {
+          fetchHymn(songReference.toBuilder()
+              .setType(com.hymnsmobile.pipeline.models.HymnType.CHINESE_SIMPLIFIED).build());
+        }
+        if (hymnType == HymnType.CHINESE_SUPPLEMENTAL) {
+          fetchHymn(songReference.toBuilder()
+              .setType(com.hymnsmobile.pipeline.models.HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED)
+              .build());
         }
       }
     }
@@ -112,12 +110,17 @@ public class HymnalNetPipeline {
       return;
     }
 
-    Hymn hymn = fetcher.fetchHymn(songReference);
-    this.hymns.add(hymn);
+    Optional<Hymn> hymn = fetcher.fetchHymn(songReference);
+    if (hymn.isEmpty()) {
+      LOGGER.warning(String.format("Fetching %s was unsuccessful", songReference));
+      return;
+    }
+    this.hymns.add(hymn.get());
 
     // Also fetch all related songs
     List<SongReference> relatedSongs = ImmutableList.<SongReference>builder()
-        .addAll(hymn.getLanguagesMap().values()).addAll(hymn.getRelevantsMap().values()).build();
+        .addAll(hymn.get().getLanguagesMap().values()).addAll(hymn.get().getRelevantsMap().values())
+        .build();
     LOGGER.info(String.format("Found %d related songs: %s", relatedSongs.size(), relatedSongs));
     for (SongReference relatedSong : relatedSongs) {
       fetchHymn(relatedSong);
