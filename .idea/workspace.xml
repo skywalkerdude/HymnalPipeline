@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ec1b235f-9709-4657-b690-982682a9f7b3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/Fetcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/Fetcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/HymnalNetPipeline.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hymnsmobile/pipeline/hymnalnet/HymnalNetPipeline.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,7 +164,7 @@
       <workItem from="1676925618324" duration="19226000" />
       <workItem from="1677013730274" duration="2007000" />
       <workItem from="1677018101564" duration="40804000" />
-      <workItem from="1677205738671" duration="4374000" />
+      <workItem from="1677205738671" duration="4860000" />
     </task>
     <servers />
   </component>
