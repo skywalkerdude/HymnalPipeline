@@ -1,0 +1,161 @@
+{
+  "lyrics": [
+    {
+      "verse_content": [
+        "What shall I give unto the Lord",
+        "For all, for all, for all He’s done for me?",
+        "I’ll take the cup of salvation,",
+        "And call, and call, and call upon the name",
+        "  of the Lord."
+      ],
+      "verse_type": "verse"
+    }
+  ],
+  "meta_data": [
+    {
+      "data": [
+        {
+          "path": "/en/search/all/category/Scriptures+for+Singing",
+          "value": "Scriptures for Singing"
+        }
+      ],
+      "name": "Category"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/composer/Tony+Rosmarin?t=h&n=1336",
+          "value": "Adapted by Tony Rosmarin"
+        }
+      ],
+      "name": "Music"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/key/D+Major",
+          "value": "D Major"
+        }
+      ],
+      "name": "Key"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/time/4%2F4",
+          "value": "4/4"
+        }
+      ],
+      "name": "Time"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/meter/Peculiar+Meter.",
+          "value": "Peculiar Meter."
+        }
+      ],
+      "name": "Meter"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/hymncode/3334454321",
+          "value": "3334454321"
+        }
+      ],
+      "name": "Hymn Code"
+    },
+    {
+      "data": [
+        {
+          "path": "http://text.recoveryversion.bible/19_Psalms_116.htm#Psa116-12",
+          "value": "Psalms 116:12-13"
+        }
+      ],
+      "name": "Scriptures"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/hymn/hf/9336",
+          "value": "French"
+        }
+      ],
+      "name": "Languages"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/hymn/h/1337",
+          "value": "When the Lord turned again the captivity of Zion"
+        },
+        {
+          "path": "/en/hymn/h/1335",
+          "value": "Great is the Lord, and greatly to be praised"
+        },
+        {
+          "path": "/en/hymn/h/1334",
+          "value": "Thou hast turned my mourning into dancing for me"
+        },
+        {
+          "path": "/en/hymn/h/1339",
+          "value": "Behold how good and how pleasant it is"
+        },
+        {
+          "path": "/en/hymn/h/1338",
+          "value": "This is My rest forever"
+        }
+      ],
+      "name": "See Also"
+    },
+    {
+      "data": [
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/pdfs/e1336_p.pdf",
+          "value": "Piano"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/pdfs/e1336_g.pdf",
+          "value": "Guitar"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/pdfs/e1336_gt.pdf",
+          "value": "Text"
+        }
+      ],
+      "name": "Lead Sheet"
+    },
+    {
+      "data": [
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/mp3/e1336_i.mp3",
+          "value": "mp3"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/midi/e1336_i.mid",
+          "value": "MIDI"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/midi/tunes/e1336_tune.midi",
+          "value": "Tune (MIDI)"
+        }
+      ],
+      "name": "Music"
+    },
+    {
+      "data": [
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/svg/e1336_p.svg",
+          "value": "Piano"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/svg/e1336_g.svg",
+          "value": "Guitar"
+        }
+      ],
+      "name": "svg"
+    }
+  ],
+  "title": "Hymn: What shall I give unto the Lord"
+}

@@ -1,0 +1,160 @@
+{
+  "lyrics": [
+    {
+      "verse_content": [
+        "Praise Him, praise Him, all ye little children,",
+        "God is love, God is love;",
+        "Praise Him, praise Him, all ye little children,",
+        "God is love, God is love."
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "Love Him, love Him, all ye little children,",
+        "    God is love, God is love;",
+        "Love Him, love Him, all ye little children,",
+        "    God is love, God is love."
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "Thank Him, thank Him, all ye little children,",
+        "    God is love, God is love;",
+        "Thank Him, thank Him, all ye little children,",
+        "    God is love, God is love."
+      ],
+      "verse_type": "verse"
+    }
+  ],
+  "meta_data": [
+    {
+      "data": [
+        {
+          "path": "/en/search/all/category/Praise+of+the+Lord",
+          "value": "Praise of the Lord"
+        }
+      ],
+      "name": "Category"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/category/Praise+of+the+Lord%E2%80%94His+Love",
+          "value": "His Love"
+        }
+      ],
+      "name": "Subcategory"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/composer/Carey+Bonner?t=c&n=1",
+          "value": "Carey Bonner (1859-1938)"
+        }
+      ],
+      "name": "Music"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/key/C+Major",
+          "value": "C Major"
+        }
+      ],
+      "name": "Key"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/time/2%2F4",
+          "value": "2/4"
+        }
+      ],
+      "name": "Time"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/hymncode/1135671653",
+          "value": "1135671653"
+        }
+      ],
+      "name": "Hymn Code"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/hymn/h/216",
+          "value": "Around Thy table, holy Lord"
+        },
+        {
+          "path": "/en/hymn/h/98",
+          "value": "Jesus! Source of life eternal"
+        },
+        {
+          "path": "/en/hymn/c/40",
+          "value": "Whatever God says is true"
+        },
+        {
+          "path": "/en/hymn/c/162",
+          "value": "Yesterday, today, forever"
+        },
+        {
+          "path": "/en/hymn/h/149",
+          "value": "Hark! Ten thousand heav’nly voices"
+        }
+      ],
+      "name": "See Also"
+    },
+    {
+      "data": [
+        {
+          "path": "https://www.hymnal.net/Hymns/Children/pdfs/child0001_p.pdf",
+          "value": "Piano"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Children/pdfs/child0001_g.pdf",
+          "value": "Guitar"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Children/pdfs/child0001_gt.pdf",
+          "value": "Text"
+        }
+      ],
+      "name": "Lead Sheet"
+    },
+    {
+      "data": [
+        {
+          "path": "https://www.hymnal.net/Hymns/Children/mp3/c0001.mp3",
+          "value": "mp3"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Children/midi/c0001.mid",
+          "value": "MIDI"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Children/midi/tunes/child0001_tune.midi",
+          "value": "Tune (MIDI)"
+        }
+      ],
+      "name": "Music"
+    },
+    {
+      "data": [
+        {
+          "path": "https://www.hymnal.net/Hymns/Children/svg/child0001_p.svg",
+          "value": "Piano"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Children/svg/child0001_g.svg",
+          "value": "Guitar"
+        }
+      ],
+      "name": "svg"
+    }
+  ],
+  "title": "Hymn: Praise Him, praise Him, all ye little children"
+}

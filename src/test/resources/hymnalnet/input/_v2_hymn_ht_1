@@ -1,0 +1,167 @@
+{
+  "lyrics": [
+    {
+      "verse_content": [
+        "L’walhati sa Diyos Ama at sa Anak Kristo,",
+        "L’walhati sa Espiritu—laging Isa."
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "Sa pagmamasid ng malawak na nilikha,",
+        "Puso nati’y tatahimik at sasamba."
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "O Diyos, nais Mo ang magkaroon sa Anak",
+        "Mga anak nagpupuri’t nagmamahal."
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "Ang pagsinta Mo’y pinahayag sa nilalang",
+        "Upang ang pagsinta nila ay makamtan"
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "Sa pagtubos ni Kristo, masama’y napuksa;",
+        "Mananamba’y nakamtan sa bagong likha."
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "L’walhati sa Diyos Ama at sa Anak Kristo,",
+        "L’walhati sa Espiritu—laging Isa."
+      ],
+      "verse_type": "verse"
+    }
+  ],
+  "meta_data": [
+    {
+      "data": [
+        {
+          "path": "/en/search/all/category/PAGPAPARANGAL+SA+TRINIDAD",
+          "value": "PAGPAPARANGAL SA TRINIDAD"
+        }
+      ],
+      "name": "Category"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/category/PAGPAPARANGAL+SA+TRINIDAD%E2%80%94KANYANG+PLANO",
+          "value": "KANYANG PLANO"
+        }
+      ],
+      "name": "Subcategory"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/author/J.+F.+Garland?t=ht&n=1",
+          "value": "Translated from J. F. Garland"
+        }
+      ],
+      "name": "Lyrics"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/composer/Ira+David+Sankey?t=ht&n=1",
+          "value": "Ira David Sankey (1840-1908)"
+        }
+      ],
+      "name": "Music"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/key/Ab+Major",
+          "value": "Ab Major"
+        }
+      ],
+      "name": "Key"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/time/4%2F4",
+          "value": "4/4"
+        }
+      ],
+      "name": "Time"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/meter/8.5.8.3.",
+          "value": "8.5.8.3."
+        }
+      ],
+      "name": "Meter"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/hymncode/5553216153222",
+          "value": "5553216153222"
+        }
+      ],
+      "name": "Hymn Code"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/hymn/cb/1",
+          "value": "Cebuano"
+        },
+        {
+          "path": "/en/hymn/ch/1?gb=1",
+          "value": "诗歌(简)"
+        },
+        {
+          "path": "/en/hymn/ch/1",
+          "value": "詩歌(繁)"
+        },
+        {
+          "path": "/en/hymn/h/1",
+          "value": "English"
+        },
+        {
+          "path": "/en/hymn/hs/1",
+          "value": "Spanish"
+        }
+      ],
+      "name": "Languages"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/hymn/ht/6",
+          "value": "Banal, Banal, Banal, Makapangyarihan"
+        },
+        {
+          "path": "/en/hymn/ht/9",
+          "value": "Luwalhati sa Diyos Ama"
+        },
+        {
+          "path": "/en/hymn/ht/5",
+          "value": "Sinasamba Ka, O Ama"
+        },
+        {
+          "path": "/en/hymn/ht/4",
+          "value": "Ama, sinta Mo’y kay lalim"
+        }
+      ],
+      "name": "See Also"
+    }
+  ],
+  "title": "Hymn: L’walhati sa Diyos Ama at sa Anak Kristo"
+}

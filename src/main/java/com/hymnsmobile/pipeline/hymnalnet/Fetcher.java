@@ -4,7 +4,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
 import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNetPipelineScope;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetJson;
-import com.hymnsmobile.pipeline.models.Hymn;
+import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetKey;
 import com.hymnsmobile.pipeline.models.SongReference;
 import java.io.IOException;
 import java.net.URI;
@@ -40,15 +40,13 @@ public class Fetcher {
    * Fetches the hymn referenced by the song, unless it doesn't exist, in which case, return
    * {@link Optional#empty()}.
    */
-  public Optional<Hymn> fetchHymn(SongReference songReference)
+  public Optional<HymnalNetJson> fetchHymn(SongReference songReference)
       throws IOException, InterruptedException, URISyntaxException {
-    HymnalDbKey key = converter.toHymnalDbKey(songReference);
-    HymnType hymnType = key.hymnType;
-    String hymnNumber = key.hymnNumber;
+    HymnalNetKey key = converter.toHymnalNetKey(songReference);
+    HymnType hymnType = HymnType.fromString(key.getHymnType()).orElseThrow();
+    String hymnNumber = key.getHymnNumber();
 
-    HttpResponse<String> response = client.send(HttpRequest.newBuilder()
-            .uri(buildUri(key))
-            .build(),
+    HttpResponse<String> response = client.send(HttpRequest.newBuilder().uri(buildUri(key)).build(),
         BodyHandlers.ofString());
 
     if (response.statusCode() != 200) {
@@ -57,7 +55,8 @@ public class Fetcher {
       return Optional.empty();
     }
 
-    HymnalNetJson.Builder builder = HymnalNetJson.newBuilder();
+    HymnalNetJson.Builder builder = HymnalNetJson.newBuilder()
+        .setKey(converter.toHymnalNetKey(songReference));
     try {
       JsonFormat.parser().merge(response.body(), builder);
     } catch (InvalidProtocolBufferException e) {
@@ -65,7 +64,7 @@ public class Fetcher {
           String.format("Unable to parse %s/%s: %s", hymnType, hymnNumber, response.body()), e);
     }
     LOGGER.info(String.format("%s successfully fetched", key));
-    return Optional.of(converter.toHymn(key, builder.build()));
+    return Optional.of(builder.build());
   }
 
   /**
@@ -73,10 +72,9 @@ public class Fetcher {
    * "?gb=1". To remove the "?", we need to take the substring. Otherwise, it will look like
    * "...v2/hymn/ts/330??check_exists=true".
    */
-  private URI buildUri(HymnalDbKey key) throws URISyntaxException {
-    return new URI(SCHEME, AUTHORITY, String.format(PATH, key.hymnType, key.hymnNumber),
-        key.queryParams.map(
-            queryParam -> queryParam.substring(1) + "&" + CHECK_EXISTS).orElse(CHECK_EXISTS),
-        null);
+  private URI buildUri(HymnalNetKey key) throws URISyntaxException {
+    return new URI(SCHEME, AUTHORITY, String.format(PATH, key.getHymnType(), key.getHymnNumber()),
+        key.hasQueryParams() ? key.getQueryParams().substring(1) + "&" + CHECK_EXISTS
+            : CHECK_EXISTS, null);
   }
 }

@@ -1,0 +1,230 @@
+{
+  "lyrics": [
+    {
+      "verse_content": [
+        "Ehre sei Gott unsrem Vater,",
+        "Ehre sei dem Sohn,",
+        "Ehre sei dem Geist für ewig –",
+        "Welch Person!"
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "Unermesslich ist die Schöpfung,",
+        "Wunderbar der Plan,",
+        "Unsre Herzen sind bewegt und",
+        "Beten an."
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "Vater, groß ist Deine Sehnsucht,",
+        "Söhne willst für Dich,",
+        "Die im Sohn Dich preisend lieben,",
+        "Ewiglich."
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "Das Geheimnis Deiner Liebe",
+        "Offenbart hast hier,",
+        "Dadurch unsre Liebe, Vater,",
+        "Fließt zu Dir."
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "Bringst in Christus, durch Erlösung,",
+        "(Mächte Er bezwang!)",
+        "Anbeter in neue Schöpfung,",
+        "Welch Zugang!"
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "Ehre sei Gott unsrem Vater,",
+        "Ehre sei dem Sohn,",
+        "Ehre sei dem Geist für ewig –",
+        "Welch Person!"
+      ],
+      "verse_type": "verse"
+    }
+  ],
+  "meta_data": [
+    {
+      "data": [
+        {
+          "path": "/en/search/all/category/SEGEN+DER+DREIEINIGKEIT",
+          "value": "SEGEN DER DREIEINIGKEIT"
+        }
+      ],
+      "name": "Category"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/category/SEGEN+DER+DREIEINIGKEIT%E2%80%94Sein+Plan",
+          "value": "Sein Plan"
+        }
+      ],
+      "name": "Subcategory"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/author/J.+F.+Garland?t=de&n=1",
+          "value": "Translated from J. F. Garland"
+        }
+      ],
+      "name": "Lyrics"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/composer/Ira+David+Sankey?t=de&n=1",
+          "value": "Ira David Sankey (1840-1908)"
+        }
+      ],
+      "name": "Music"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/key/Ab+Major",
+          "value": "Ab Major"
+        }
+      ],
+      "name": "Key"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/time/4%2F4",
+          "value": "4/4"
+        }
+      ],
+      "name": "Time"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/meter/8.5.8.3.",
+          "value": "8.5.8.3."
+        }
+      ],
+      "name": "Meter"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/hymncode/5553216153222",
+          "value": "5553216153222"
+        }
+      ],
+      "name": "Hymn Code"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/hymn/cb/1",
+          "value": "Cebuano"
+        },
+        {
+          "path": "/en/hymn/ch/1?gb=1",
+          "value": "诗歌(简)"
+        },
+        {
+          "path": "/en/hymn/ch/1",
+          "value": "詩歌(繁)"
+        },
+        {
+          "path": "/en/hymn/h/1",
+          "value": "English"
+        },
+        {
+          "path": "/en/hymn/hs/1",
+          "value": "Spanish"
+        },
+        {
+          "path": "/en/hymn/ht/1",
+          "value": "Tagalog"
+        }
+      ],
+      "name": "Languages"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/hymn/de/6",
+          "value": "Heilig, heilig, heilig, Gott, Du bist allmächtig"
+        },
+        {
+          "path": "/en/hymn/de/8",
+          "value": "Preist Gott, der stets den Segen mehrt"
+        }
+      ],
+      "name": "See Also"
+    },
+    {
+      "data": [
+        {
+          "path": "https://www.hymnal.net/Hymns/German/pdfs/g0001_p.pdf",
+          "value": "Piano"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/German/pdfs/g0001_g.pdf",
+          "value": "Guitar"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/German/pdfs/g0001_gt.pdf",
+          "value": "Text"
+        }
+      ],
+      "name": "Lead Sheet"
+    },
+    {
+      "data": [
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_full.mp3",
+          "value": "mp3 (whole song)"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/midi/e0001_full.mid",
+          "value": "MIDI (whole song)"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_i.mp3",
+          "value": "mp3"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/midi/e0001_i.mid",
+          "value": "MIDI"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/German/midi/tunes/g0001_tune.midi",
+          "value": "Tune (MIDI)"
+        }
+      ],
+      "name": "Music"
+    },
+    {
+      "data": [
+        {
+          "path": "https://www.hymnal.net/Hymns/German/svg/g0001_p.svg",
+          "value": "Piano"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/German/svg/g0001_g.svg",
+          "value": "Guitar"
+        }
+      ],
+      "name": "svg"
+    }
+  ],
+  "title": "Hymn: Ehre sei Gott unsrem Vater"
+}

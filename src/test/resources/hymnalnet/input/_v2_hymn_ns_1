@@ -1,0 +1,201 @@
+{
+  "lyrics": [
+    {
+      "verse_content": [
+        "God’s economy is to have God and man",
+        "Incorporated as one—divine-human,",
+        "To build up His Body—an organism,",
+        "Which consummates the New Jerusalem."
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "God the Father loves man and chooses man",
+        "In eternity past, in His great plan,",
+        "According to His purpose, and not of works",
+        "But of Him, in the section of Jacob."
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "God the Father calls man and justifies man",
+        "In time, in the section of Abraham;",
+        "That man may live by faith, know grace from within",
+        "That man may live in fellowship with Him."
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "God the Son gives man His rich inheritance,",
+        "And a life enjoying His abundance,",
+        "And a life in peace, totally without lack—",
+        "Fully blessed, in the section of Isaac."
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "God the Spirit transforms man and causes man",
+        "To be mature in life, enabling man",
+        "To bless and supply all, and rule o’er the earth,",
+        "In the section of Jacob with Joseph."
+      ],
+      "verse_type": "verse"
+    }
+  ],
+  "meta_data": [
+    {
+      "data": [
+        {
+          "path": "/en/search/all/category/Ultimate+Manifestation",
+          "value": "Ultimate Manifestation"
+        }
+      ],
+      "name": "Category"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/category/Ultimate+Manifestation%E2%80%94God%27s+Eternal+Purpose",
+          "value": "God’s Eternal Purpose"
+        }
+      ],
+      "name": "Subcategory"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/composer/I.+E.+Rummery?t=ns&n=1",
+          "value": "I. E. Rummery"
+        }
+      ],
+      "name": "Music"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/key/G+Major",
+          "value": "G Major"
+        }
+      ],
+      "name": "Key"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/time/3%2F4",
+          "value": "3/4"
+        }
+      ],
+      "name": "Time"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/meter/11.11.11.11.",
+          "value": "11.11.11.11."
+        }
+      ],
+      "name": "Meter"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/hymncode/51123321271",
+          "value": "51123321271"
+        }
+      ],
+      "name": "Hymn Code"
+    },
+    {
+      "data": [
+        {
+          "path": "http://text.recoveryversion.bible/01_Genesis_12.htm#Gen12-1",
+          "value": "Genesis 12-50"
+        }
+      ],
+      "name": "Scriptures"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/hymn/h/278",
+          "value": "The Spirit of life is within us today"
+        }
+      ],
+      "name": "Relevant"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/hymn/h/981",
+          "value": "In His Christ to head up all things"
+        },
+        {
+          "path": "/en/hymn/h/976",
+          "value": "O Lord Jesus, Thy redeemed ones"
+        },
+        {
+          "path": "/en/hymn/h/979",
+          "value": "How glorious, how bright it shines"
+        },
+        {
+          "path": "/en/hymn/h/974",
+          "value": "He looked for a city and lived in a tent"
+        }
+      ],
+      "name": "See Also"
+    },
+    {
+      "data": [
+        {
+          "path": "https://www.hymnal.net/Hymns/NewSongs/pdfs/ns0001_p.pdf",
+          "value": "Piano"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/NewSongs/pdfs/ns0001_g.pdf",
+          "value": "Guitar"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/NewSongs/pdfs/ns0001_gt.pdf",
+          "value": "Text"
+        }
+      ],
+      "name": "Lead Sheet"
+    },
+    {
+      "data": [
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/mp3/e0278_i.mp3",
+          "value": "mp3"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/midi/e0278_i.mid",
+          "value": "MIDI"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/NewSongs/midi/tunes/ns0001_tune.midi",
+          "value": "Tune (MIDI)"
+        }
+      ],
+      "name": "Music"
+    },
+    {
+      "data": [
+        {
+          "path": "https://www.hymnal.net/Hymns/NewSongs/svg/ns0001_p.svg",
+          "value": "Piano"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/NewSongs/svg/ns0001_g.svg",
+          "value": "Guitar"
+        }
+      ],
+      "name": "svg"
+    }
+  ],
+  "title": "Hymn: The working of the Triune God"
+}

@@ -1,0 +1,238 @@
+{
+  "lyrics": [
+    {
+      "verse_content": [
+        "Glory be to God the Father,",
+        "  And to Christ the Son,",
+        "Glory to the Holy Spirit—",
+        "    Ever One."
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "As we view the vast creation,",
+        "  Planned with wondrous skill,",
+        "So our hearts would move to worship,",
+        "    And be still."
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "But, our God, how great Thy yearning",
+        "  To have sons who love",
+        "In the Son e’en now to praise Thee,",
+        "    Love to prove!"
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "’Twas Thy thought in revelation,",
+        "  To present to men",
+        "Secrets of Thine own affections,",
+        "    Theirs to win."
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "So in Christ, through His redemption",
+        "  (Vanquished evil powers!)",
+        "Thou hast brought, in new creation,",
+        "    Worshippers!"
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "Glory be to God the Father,",
+        "  And to Christ the Son,",
+        "Glory to the Holy Spirit—",
+        "    Ever One."
+      ],
+      "verse_type": "verse"
+    }
+  ],
+  "meta_data": [
+    {
+      "data": [
+        {
+          "path": "/en/search/all/category/Blessing+of+the+Trinity",
+          "value": "Blessing of the Trinity"
+        }
+      ],
+      "name": "Category"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/category/Blessing+of+the+Trinity%E2%80%94His+Plan",
+          "value": "His Plan"
+        }
+      ],
+      "name": "Subcategory"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/author/J.+F.+Garland?t=h&n=1",
+          "value": "J. F. Garland"
+        }
+      ],
+      "name": "Lyrics"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/composer/Ira+David+Sankey?t=h&n=1",
+          "value": "Ira David Sankey (1840-1908)"
+        }
+      ],
+      "name": "Music"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/key/Ab+Major",
+          "value": "Ab Major"
+        }
+      ],
+      "name": "Key"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/time/4%2F4",
+          "value": "4/4"
+        }
+      ],
+      "name": "Time"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/meter/8.5.8.3.",
+          "value": "8.5.8.3."
+        }
+      ],
+      "name": "Meter"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/hymncode/5553216153222",
+          "value": "5553216153222"
+        }
+      ],
+      "name": "Hymn Code"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/hymn/cb/1",
+          "value": "Cebuano"
+        },
+        {
+          "path": "/en/hymn/ch/1?gb=1",
+          "value": "诗歌(简)"
+        },
+        {
+          "path": "/en/hymn/ch/1",
+          "value": "詩歌(繁)"
+        },
+        {
+          "path": "/en/hymn/hs/1",
+          "value": "Spanish"
+        },
+        {
+          "path": "/en/hymn/ht/1",
+          "value": "Tagalog"
+        }
+      ],
+      "name": "Languages"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/hymn/h/5",
+          "value": "God, our Father, we adore Thee"
+        },
+        {
+          "path": "/en/hymn/ns/834",
+          "value": "What a Mystery, Mystery of Mysteries"
+        },
+        {
+          "path": "/en/hymn/ns/936",
+          "value": "Merciful and righteous, wise beyond the wise"
+        },
+        {
+          "path": "/en/hymn/h/3",
+          "value": "Come, Thou Almighty King"
+        }
+      ],
+      "name": "See Also"
+    },
+    {
+      "data": [
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/pdfs/e0001_p.pdf",
+          "value": "Piano"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/pdfs/e0001_g.pdf",
+          "value": "Guitar"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/pdfs/e0001_gt.pdf",
+          "value": "Text"
+        }
+      ],
+      "name": "Lead Sheet"
+    },
+    {
+      "data": [
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_full.mp3",
+          "value": "mp3 (whole song)"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/midi/e0001_full.mid",
+          "value": "MIDI (whole song)"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_sing.mp3",
+          "value": "Singing"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_i.mp3",
+          "value": "mp3"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/midi/e0001_i.mid",
+          "value": "MIDI"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/midi/tunes/e0001_tune.midi",
+          "value": "Tune (MIDI)"
+        }
+      ],
+      "name": "Music"
+    },
+    {
+      "data": [
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/svg/e0001_p.svg",
+          "value": "Piano"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/svg/e0001_g.svg",
+          "value": "Guitar"
+        }
+      ],
+      "name": "svg"
+    }
+  ],
+  "title": "Hymn: Glory be to God the Father"
+}

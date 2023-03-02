@@ -1,0 +1,167 @@
+{
+  "lyrics": [
+    {
+      "verse_content": [
+        "Himayaong Dios Amahan,",
+        "Cristo nga Anak;",
+        "Espiritu himayaon",
+        "Sa dayon."
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "Kabuhatan kon sud-ongon,",
+        "O pagkatahum,",
+        "Matandog mi ug magsimba",
+        "Maghilom."
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "Pagkadako’s pangandoy Mo",
+        "May mga anak",
+        "Nga mahigugma’g magdayeg",
+        "Kanimo!"
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "Diha’s bugna pangagpas Mo,",
+        "Ipadayag’s tawo",
+        "Mailahang sekreto sa",
+        "Pagmahal Mo."
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "Giwagtang dautang gahum",
+        "Diha kang Cristo!",
+        "Nia’s bag-ong kabuhatan",
+        "Magsisimba!"
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "Himayaong Dios Amahan,",
+        "Cristo nga Anak;",
+        "Espiritu himayaon,",
+        "Sa dayon."
+      ],
+      "verse_type": "verse"
+    }
+  ],
+  "meta_data": [
+    {
+      "data": [
+        {
+          "path": "/en/search/all/category/PANALANGIN+SA+TRINIDAD",
+          "value": "PANALANGIN SA TRINIDAD"
+        }
+      ],
+      "name": "Category"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/category/PANALANGIN+SA+TRINIDAD%E2%80%94SA+IYANG+PLANO",
+          "value": "SA IYANG PLANO"
+        }
+      ],
+      "name": "Subcategory"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/author/J.+F.+Garland?t=cb&n=1",
+          "value": "Translated from J. F. Garland"
+        }
+      ],
+      "name": "Lyrics"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/composer/Ira+David+Sankey?t=cb&n=1",
+          "value": "Ira David Sankey (1840-1908)"
+        }
+      ],
+      "name": "Music"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/key/Ab+Major",
+          "value": "Ab Major"
+        }
+      ],
+      "name": "Key"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/time/4%2F4",
+          "value": "4/4"
+        }
+      ],
+      "name": "Time"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/meter/8.5.8.3.",
+          "value": "8.5.8.3."
+        }
+      ],
+      "name": "Meter"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/hymncode/5553216153222",
+          "value": "5553216153222"
+        }
+      ],
+      "name": "Hymn Code"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/hymn/ch/1?gb=1",
+          "value": "诗歌(简)"
+        },
+        {
+          "path": "/en/hymn/ch/1",
+          "value": "詩歌(繁)"
+        },
+        {
+          "path": "/en/hymn/h/1",
+          "value": "English"
+        },
+        {
+          "path": "/en/hymn/hs/1",
+          "value": "Spanish"
+        },
+        {
+          "path": "/en/hymn/ht/1",
+          "value": "Tagalog"
+        }
+      ],
+      "name": "Languages"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/hymn/cb/7",
+          "value": "Himayaon ang Amahan"
+        }
+      ],
+      "name": "See Also"
+    }
+  ],
+  "title": "Hymn: Himayaong Dios Amahan"
+}

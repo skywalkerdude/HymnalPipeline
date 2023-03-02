@@ -3,20 +3,20 @@ package com.hymnsmobile.pipeline.hymnalnet;
 import static com.hymnsmobile.pipeline.hymnalnet.BlockList.BLOCK_LIST;
 
 import com.google.common.collect.ImmutableList;
+import com.hymnsmobile.pipeline.FileReadWriter;
 import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNet;
 import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNetPipelineScope;
+import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetJson;
+import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetKey;
 import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.SongReference;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -29,40 +29,55 @@ public class HymnalNetPipeline {
   private static final Logger LOGGER = Logger.getGlobal();
 
   private final Converter converter;
-  private final Fetcher fetcher;
-
-  private final Set<Hymn> hymns;
   private final Set<PipelineError> errors;
+  private final Fetcher fetcher;
+  private final FileReadWriter fileReadWriter;
+  private final Set<Hymn> hymns;
+  private final Set<HymnalNetJson> hymnalNetJsons;
+  private final ImmutableList<HymnalNetKey> songsToFetch;
+  private final ZonedDateTime currentTime;
 
   @Inject
   public HymnalNetPipeline(
       Converter converter,
       Fetcher fetcher,
+      FileReadWriter fileReadWriter,
+      ImmutableList<HymnalNetKey> songsToFetch,
+      ZonedDateTime currentTime,
       @HymnalNet Set<Hymn> hymns,
+      @HymnalNet Set<HymnalNetJson> hymnalNetJsons,
       @HymnalNet Set<PipelineError> errors) {
     this.converter = converter;
-    this.fetcher = fetcher;
-    this.hymns = hymns;
     this.errors = errors;
+    this.fetcher = fetcher;
+    this.fileReadWriter = fileReadWriter;
+    this.hymns = hymns;
+    this.hymnalNetJsons = hymnalNetJsons;
+    this.songsToFetch = songsToFetch;
+    this.currentTime = currentTime;
+  }
+
+  public ImmutableList<Hymn> getHymns() {
+    return ImmutableList.copyOf(hymns);
+  }
+
+  public ImmutableList<HymnalNetJson> getHymnalNetJsons() {
+    return ImmutableList.copyOf(hymnalNetJsons);
+  }
+
+  public ImmutableList<PipelineError> getErrors() {
+    return ImmutableList.copyOf(errors);
   }
 
   public void run() throws IOException, InterruptedException, URISyntaxException {
     readFile();
     fetchHymns();
-    writeHymns();
+    writeAllHymns();
   }
 
   private void readFile() throws IOException {
-    File storageDirectory = new File("storage/hymnalnet");
-    LOGGER.info(String.format("Reading files from %s", storageDirectory.getName()));
-    File[] hymnalNetFiles = storageDirectory.listFiles();
-    if (hymnalNetFiles == null) {
-      throw new RuntimeException("file storage empty");
-    }
-
-    Optional<File> mostRecentFile = ImmutableList.copyOf(hymnalNetFiles).stream().filter(
-            file -> file.getName().matches("\\d\\d\\d\\d-\\d\\d-\\d\\d_\\d\\d-\\d\\d-\\d\\d_PST.txt"))
-        .max(Comparator.comparing(File::getName));
+    Optional<File> mostRecentFile = fileReadWriter.readLargestFile("storage/hymnalnet",
+        Optional.of("\\d\\d\\d\\d-\\d\\d-\\d\\d_\\d\\d-\\d\\d-\\d\\d_PST.txt"));
     // No file to read
     if (mostRecentFile.isEmpty()) {
       return;
@@ -72,6 +87,7 @@ public class HymnalNetPipeline {
     com.hymnsmobile.pipeline.hymnalnet.models.HymnalNet hymnalNet = com.hymnsmobile.pipeline.hymnalnet.models.HymnalNet.parseFrom(
         new FileInputStream(mostRecentFile.get()));
     this.hymns.addAll(hymnalNet.getHymnsList());
+    this.hymnalNetJsons.addAll(hymnalNet.getHymnanlNetJsonList());
     this.errors.addAll(hymnalNet.getErrorsList());
   }
 
@@ -79,20 +95,18 @@ public class HymnalNetPipeline {
    * Fetch hymns afresh from Hymnal.net.
    */
   private void fetchHymns() throws InterruptedException, IOException, URISyntaxException {
-    for (HymnType hymnType : HymnType.values()) {
-      for (int hymnNumber = 1; hymnNumber < hymnType.maxNumber.orElse(1000); hymnNumber++) {
-        HymnalDbKey key = HymnalDbKey.create(hymnType, String.valueOf(hymnNumber));
-        SongReference songReference = converter.toSongReference(key);
-        fetchHymn(songReference);
-        if (hymnType == HymnType.CHINESE) {
-          fetchHymn(songReference.toBuilder()
-              .setType(com.hymnsmobile.pipeline.models.HymnType.CHINESE_SIMPLIFIED).build());
-        }
-        if (hymnType == HymnType.CHINESE_SUPPLEMENTAL) {
-          fetchHymn(songReference.toBuilder()
-              .setType(com.hymnsmobile.pipeline.models.HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED)
-              .build());
-        }
+    for (HymnalNetKey key : songsToFetch) {
+      HymnType hymnType = HymnType.fromString(key.getHymnType()).orElseThrow();
+      SongReference songReference = converter.toSongReference(key);
+      fetchHymn(songReference);
+      if (hymnType == HymnType.CHINESE) {
+        fetchHymn(songReference.toBuilder()
+            .setType(com.hymnsmobile.pipeline.models.HymnType.CHINESE_SIMPLIFIED).build());
+      }
+      if (hymnType == HymnType.CHINESE_SUPPLEMENTAL) {
+        fetchHymn(songReference.toBuilder()
+            .setType(com.hymnsmobile.pipeline.models.HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED)
+            .build());
       }
     }
   }
@@ -110,16 +124,18 @@ public class HymnalNetPipeline {
       return;
     }
 
-    Optional<Hymn> hymn = fetcher.fetchHymn(songReference);
-    if (hymn.isEmpty()) {
+    Optional<HymnalNetJson> hymnalNetJson = fetcher.fetchHymn(songReference);
+    if (hymnalNetJson.isEmpty()) {
       LOGGER.warning(String.format("Fetching %s was unsuccessful", songReference));
       return;
     }
-    this.hymns.add(hymn.get());
+    this.hymnalNetJsons.add(hymnalNetJson.get());
+    Hymn hymn = converter.toHymn(hymnalNetJson.get());
+    this.hymns.add(hymn);
 
     // Also fetch all related songs
     List<SongReference> relatedSongs = ImmutableList.<SongReference>builder()
-        .addAll(hymn.get().getLanguagesMap().values()).addAll(hymn.get().getRelevantsMap().values())
+        .addAll(hymn.getLanguagesMap().values()).addAll(hymn.getRelevantsMap().values())
         .build();
     LOGGER.info(String.format("Found %d related songs: %s", relatedSongs.size(), relatedSongs));
     for (SongReference relatedSong : relatedSongs) {
@@ -127,17 +143,12 @@ public class HymnalNetPipeline {
     }
   }
 
-  /**
-   * Write hymns to a dated storage file.
-   */
-  private void writeHymns() throws IOException {
+  private void writeAllHymns() throws IOException {
     String fileName = String.format("storage/hymnalnet/%s.txt",
-        LocalDateTime.now().atZone(ZoneId.of("America/Los_Angeles"))
-            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss_z")));
+        currentTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss_z")));
     LOGGER.info(String.format("Writing hymns to %s", fileName));
-    try (FileOutputStream output = new FileOutputStream(fileName)) {
-      com.hymnsmobile.pipeline.hymnalnet.models.HymnalNet.newBuilder().addAllHymns(hymns).build()
-          .writeTo(output);
-    }
+    fileReadWriter.writeProto(fileName,
+        com.hymnsmobile.pipeline.hymnalnet.models.HymnalNet.newBuilder().addAllHymns(hymns)
+            .addAllHymnanlNetJson(hymnalNetJsons).addAllErrors(errors).build());
   }
 }

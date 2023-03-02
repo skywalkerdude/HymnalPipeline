@@ -1,0 +1,189 @@
+{
+  "lyrics": [
+    {
+      "verse_content": [
+        "Jezus, ‘k ben gevangen door Uw schoonheid.",
+        "U bent alles wat ik ooit begeer.",
+        "Los van uiterlijk vertoon en tweestrijd,",
+        "laat mij wonen in Uzelf, o Heer.",
+        "O, Uw glorie dwingt mij om te buigen,",
+        "vul mijn hart met godd’lijk hemellicht.",
+        "Voed, doordrenk mij, ‘k wil van U getuigen.",
+        "Geest van God voor wie mijn leven zwicht."
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "Stralend licht, hoe schoon de lucht daarboven,",
+        "zie ik, waar de Zoon des mensen troont.",
+        "Uw heilig vuur in mij is niet te doven,",
+        "verteer mij tot slechts U mijn hart bewoont.",
+        "Toen ik U voor ‘t eerst zag in Uw luister,",
+        "zag ik pas mijn zelfzucht en mijn blaam.",
+        "Nu tast ik niet langer in het duister,",
+        "‘k proef de goedheid van Uw grote Naam."
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "Mijn narduskruik breek ik nu voor U open,",
+        "en zalf met liefde, Heer, Uw heilig hoofd.",
+        "Op U mijn meester blijf ik altijd hopen,",
+        "want het beste heeft U mij beloofd.",
+        "‘k Giet mijn leven uit voor U, o Here,",
+        "want Uw liefde brengt mij in de geest.",
+        "Uw liefdesstroom voor mij is niet te keren,",
+        "het is als olie die mijn hart geneest."
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "Zie, Hij komt over de berg der kruiden,",
+        "laat Geliefde, Uw gedaante zien.",
+        "Ontwaak nu winden van het noord’ en zuiden,",
+        "aanschouw de stromen, waarmee ik Hem dien.",
+        "‘k Weet dat ‘k in mijn liefde niet alleen sta,",
+        "maar met alle heiligen, Uw bruid.",
+        "O, kom spoedig Here, maranatha,",
+        "roepen wij verlangend naar U uit."
+      ],
+      "verse_type": "verse"
+    }
+  ],
+  "meta_data": [
+    {
+      "data": [
+        {
+          "path": "/en/search/all/category/Ervaren+van+Christus",
+          "value": "Ervaren van Christus"
+        }
+      ],
+      "name": "Category"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/category/Ervaren+van+Christus%E2%80%94Liefhebben+van+Hem",
+          "value": "Liefhebben van Hem"
+        }
+      ],
+      "name": "Subcategory"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/author/R.+K.?t=hd&n=1",
+          "value": "Translated from R. K."
+        }
+      ],
+      "name": "Lyrics"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/composer/Oscar+Ahnfeldt?t=hd&n=1",
+          "value": "Oscar Ahnfeldt"
+        }
+      ],
+      "name": "Music"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/key/Eb+Major",
+          "value": "Eb Major"
+        }
+      ],
+      "name": "Key"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/time/4%2F4",
+          "value": "4/4"
+        }
+      ],
+      "name": "Time"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/meter/10.9.10.9.D.",
+          "value": "10.9.10.9.D."
+        }
+      ],
+      "name": "Meter"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/hymncode/3211112332",
+          "value": "3211112332"
+        }
+      ],
+      "name": "Hymn Code"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/hymn/cb/1159",
+          "value": "Cebuano"
+        },
+        {
+          "path": "/en/hymn/ts/305?gb=1",
+          "value": "诗歌(简)"
+        },
+        {
+          "path": "/en/hymn/ts/305",
+          "value": "詩歌(繁)"
+        },
+        {
+          "path": "/en/hymn/h/1159",
+          "value": "English"
+        },
+        {
+          "path": "/en/hymn/hf/115",
+          "value": "French"
+        },
+        {
+          "path": "/en/hymn/de/1159",
+          "value": "German"
+        },
+        {
+          "path": "/en/hymn/hs/278",
+          "value": "Spanish"
+        },
+        {
+          "path": "/en/hymn/ht/1159",
+          "value": "Tagalog"
+        }
+      ],
+      "name": "Languages"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/hymn/hd/79",
+          "value": "Christus is mijn vrede"
+        },
+        {
+          "path": "/en/hymn/hd/41",
+          "value": "Ik ben een mens"
+        },
+        {
+          "path": "/en/hymn/hd/39",
+          "value": "Jezus is de Geest des levens"
+        },
+        {
+          "path": "/en/hymn/hd/100",
+          "value": "Heer, mijn liefde groeit en bloeit voor U"
+        }
+      ],
+      "name": "See Also"
+    }
+  ],
+  "title": "Hymn: Jezus, ‘k ben gevangen door Uw schoonheid"
+}

@@ -1,0 +1,239 @@
+{
+  "lyrics": [
+    {
+      "verse_content": [
+        "How firm a foundation, ye saints of the Lord,",
+        "Is laid for your faith in His excellent word!",
+        "What more can He say than to you He hath said,",
+        "To you who for refuge to Jesus have fled?"
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "“Fear not, I am with thee, O be not dismayed,",
+        "For I am thy God, and will still give thee aid;",
+        "I’ll strengthen thee, help thee, and cause thee to stand,",
+        "Upheld by My righteous, omnipotent hand.”"
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "“When through the deep waters I call thee to go,",
+        "The rivers of sorrow shall not overflow;",
+        "For I will be with thee, thy troubles to bless,",
+        "And sanctify to thee thy deepest distress.”"
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "“When through fiery trials thy pathway shall lie,",
+        "My grace, all sufficient, shall be thy supply;",
+        "The flame shall not hurt thee; I only design",
+        "Thy dross to consume, and thy gold to refine.”"
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "“E’en down to old age all My people shall prove",
+        "My sovereign, eternal, unchangeable love;",
+        "And then, when grey hairs shall their temples adorn,",
+        "Like lambs they shall still in My bosom be borne.”"
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "“The soul that on Jesus hath leaned for repose,",
+        "I will not, I will not desert to his foes;",
+        "That soul, though all hell should endeavor to shake,",
+        "I’ll never, no, never, no, never forsake!”"
+      ],
+      "verse_type": "verse"
+    }
+  ],
+  "meta_data": [
+    {
+      "data": [
+        {
+          "path": "/en/search/all/category/Assurance+and+Joy+of+Salvation",
+          "value": "Assurance and Joy of Salvation"
+        }
+      ],
+      "name": "Category"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/category/Assurance+and+Joy+of+Salvation%E2%80%94A+Firm+Foundation",
+          "value": "A Firm Foundation"
+        }
+      ],
+      "name": "Subcategory"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/author/%22K%22+in+Rippon%27s+Selection+of+Hymns?t=h&n=339",
+          "value": "\"K\" in Rippon's Selection of Hymns, 1787"
+        }
+      ],
+      "name": "Lyrics"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/composer/John+Wade%27s+Cantus+Diversi?t=h&n=339",
+          "value": "John Wade's Cantus Diversi"
+        }
+      ],
+      "name": "Music"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/key/Ab+Major",
+          "value": "Ab Major"
+        }
+      ],
+      "name": "Key"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/time/4%2F4",
+          "value": "4/4"
+        }
+      ],
+      "name": "Time"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/meter/11.11.11.11.",
+          "value": "11.11.11.11."
+        }
+      ],
+      "name": "Meter"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/hymncode/1151255323432",
+          "value": "1151255323432"
+        }
+      ],
+      "name": "Hymn Code"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/hymn/cb/339",
+          "value": "Cebuano"
+        },
+        {
+          "path": "/en/hymn/ch/260?gb=1",
+          "value": "诗歌(简)"
+        },
+        {
+          "path": "/en/hymn/ch/260",
+          "value": "詩歌(繁)"
+        },
+        {
+          "path": "/en/hymn/ht/339",
+          "value": "Tagalog"
+        }
+      ],
+      "name": "Languages"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/hymn/h/339b",
+          "value": "Alternate Tune"
+        },
+        {
+          "path": "/en/hymn/nt/339",
+          "value": "New Tune"
+        }
+      ],
+      "name": "Relevant"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/hymn/h/300b",
+          "value": "Arise, my soul, arise (Alternate Tune)"
+        },
+        {
+          "path": "/en/hymn/h/295",
+          "value": "God’s Christ, who is my righteousness"
+        },
+        {
+          "path": "/en/hymn/h/336",
+          "value": "Jesus has loved me, wonderful Savior"
+        },
+        {
+          "path": "/en/hymn/h/1127",
+          "value": "God has saved me from the world"
+        },
+        {
+          "path": "/en/hymn/h/316",
+          "value": "Some day the silver cord will break"
+        }
+      ],
+      "name": "See Also"
+    },
+    {
+      "data": [
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/pdfs/e0339_p.pdf",
+          "value": "Piano"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/pdfs/e0339_g.pdf",
+          "value": "Guitar"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/pdfs/e0339_gt.pdf",
+          "value": "Text"
+        }
+      ],
+      "name": "Lead Sheet"
+    },
+    {
+      "data": [
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/mp3/e0339_i.mp3",
+          "value": "mp3"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/midi/e0339_i.mid",
+          "value": "MIDI"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/midi/tunes/e0339_tune.midi",
+          "value": "Tune (MIDI)"
+        }
+      ],
+      "name": "Music"
+    },
+    {
+      "data": [
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/svg/e0339_p.svg",
+          "value": "Piano"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/svg/e0339_g.svg",
+          "value": "Guitar"
+        }
+      ],
+      "name": "svg"
+    }
+  ],
+  "title": "Hymn: How firm a foundation, ye saints of the Lord"
+}

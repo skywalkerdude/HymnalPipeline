@@ -1,0 +1,175 @@
+{
+  "lyrics": [
+    {
+      "verse_content": [
+        "Gloria dad a Dios el Padre,",
+        "Y͜ al Hijo loor;",
+        "Al Espíritu dad gloria;",
+        "Uno son."
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "Su cr͡eación inmensurable,",
+        "Fruto de Su plan;",
+        "Al mirarla nos inspira",
+        "A͜ adorar."
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "Mas Tú͜ anhelas muchos hijos,",
+        "Nuestro Dios de͜  amor,",
+        "Que͜ en el Hijo hoy te͜ alaben",
+        "En unión."
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "Fue Tu pensamiento santo",
+        "Dar al hombre ver,",
+        "Lo profundo de Tu͜  afecto",
+        "Para él."
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "Cristo͜ el mal ha destruido",
+        "Por Su redención;",
+        "¡Le͜ adoramos como nueva",
+        "Creación!"
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "Hoy al Padre demos gloria,",
+        "Y͜ al Hijo de Dios;",
+        "Al Espíritu dad gloria;",
+        "Uno son."
+      ],
+      "verse_type": "verse"
+    }
+  ],
+  "meta_data": [
+    {
+      "data": [
+        {
+          "path": "/en/search/all/category/Bendici%C3%B3n+a+la+Trinidad",
+          "value": "Bendición a la Trinidad"
+        }
+      ],
+      "name": "Category"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/category/Bendici%C3%B3n+a+la+Trinidad%E2%80%94Su+plan",
+          "value": "Su plan"
+        }
+      ],
+      "name": "Subcategory"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/author/J.+F.+Garland?t=hs&n=1",
+          "value": "Translated from J. F. Garland"
+        }
+      ],
+      "name": "Lyrics"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/composer/Ira+David+Sankey?t=hs&n=1",
+          "value": "Ira David Sankey (1840-1908)"
+        }
+      ],
+      "name": "Music"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/key/Ab+Major",
+          "value": "Ab Major"
+        }
+      ],
+      "name": "Key"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/time/4%2F4",
+          "value": "4/4"
+        }
+      ],
+      "name": "Time"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/meter/8.5.8.3.",
+          "value": "8.5.8.3."
+        }
+      ],
+      "name": "Meter"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/hymncode/5553216153222",
+          "value": "5553216153222"
+        }
+      ],
+      "name": "Hymn Code"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/hymn/cb/1",
+          "value": "Cebuano"
+        },
+        {
+          "path": "/en/hymn/ch/1?gb=1",
+          "value": "诗歌(简)"
+        },
+        {
+          "path": "/en/hymn/ch/1",
+          "value": "詩歌(繁)"
+        },
+        {
+          "path": "/en/hymn/h/1",
+          "value": "English"
+        },
+        {
+          "path": "/en/hymn/de/1",
+          "value": "German"
+        },
+        {
+          "path": "/en/hymn/ht/1",
+          "value": "Tagalog"
+        }
+      ],
+      "name": "Languages"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/hymn/hs/2",
+          "value": "Padre nuestro, te adoramos"
+        },
+        {
+          "path": "/en/hymn/hs/4",
+          "value": "Al Dios que emana bendición"
+        }
+      ],
+      "name": "See Also"
+    }
+  ],
+  "title": "Hymn: Gloria dad a Dios el Padre"
+}

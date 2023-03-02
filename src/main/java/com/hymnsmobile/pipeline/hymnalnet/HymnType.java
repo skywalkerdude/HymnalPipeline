@@ -2,6 +2,9 @@ package com.hymnsmobile.pipeline.hymnalnet;
 
 import java.util.Optional;
 
+/**
+ * All the hymn types currently on Hymnal.net
+ */
 public enum HymnType {
   CLASSIC_HYMN("h", Optional.of(1360)),
   NEW_TUNE("nt", Optional.empty()),

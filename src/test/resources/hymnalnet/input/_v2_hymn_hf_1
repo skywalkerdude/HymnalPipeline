@@ -1,0 +1,143 @@
+{
+  "lyrics": [
+    {
+      "verse_content": [
+        "Rendons gloire à notre Père,",
+        "Rendons toute gloire au Fils,",
+        "À l’Esprit rendons la gloire,",
+        "Trois en Un, sois exalté !"
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "Nous Te louons ! Nous Te louons !",
+        "Toi qui es un, qui es trois !",
+        "Gloire à Toi ! À Toi la gloire !",
+        "Des merveilles Tu as fait pour nous."
+      ],
+      "verse_type": "chorus"
+    },
+    {
+      "verse_content": [
+        "Le dessein de notre Père,",
+        "Christ le Fils l’a accompli,",
+        "Tout est transmis par Dieu l’Esprit :",
+        "Louée soit la Trinité !"
+      ],
+      "verse_type": "verse"
+    }
+  ],
+  "meta_data": [
+    {
+      "data": [
+        {
+          "path": "/en/search/all/category/La+b%C3%A9n%C3%A9diction+de+la+Trinit%C3%A9",
+          "value": "La bénédiction de la Trinité"
+        }
+      ],
+      "name": "Category"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/category/La+b%C3%A9n%C3%A9diction+de+la+Trinit%C3%A9%E2%80%94Sa+louange",
+          "value": "Sa louange"
+        }
+      ],
+      "name": "Subcategory"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/author/Margaret+Jenkins+Harris?t=hf&n=1",
+          "value": "Translated from Margaret Jenkins Harris (1865-1919)"
+        }
+      ],
+      "name": "Lyrics"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/composer/Margaret+Jenkins+Harris?t=hf&n=1",
+          "value": "Margaret Jenkins Harris (1865-1919)"
+        }
+      ],
+      "name": "Music"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/key/Eb+Major",
+          "value": "Eb Major"
+        }
+      ],
+      "name": "Key"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/time/4%2F4",
+          "value": "4/4"
+        }
+      ],
+      "name": "Time"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/meter/8.7.8.7.+with+chorus.",
+          "value": "8.7.8.7. with chorus."
+        }
+      ],
+      "name": "Meter"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/hymncode/334321444254323",
+          "value": "334321444254323"
+        }
+      ],
+      "name": "Hymn Code"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/hymn/cb/7",
+          "value": "Cebuano"
+        },
+        {
+          "path": "/en/hymn/ch/3?gb=1",
+          "value": "诗歌(简)"
+        },
+        {
+          "path": "/en/hymn/ch/3",
+          "value": "詩歌(繁)"
+        },
+        {
+          "path": "/en/hymn/hd/10",
+          "value": "Dutch"
+        },
+        {
+          "path": "/en/hymn/h/7",
+          "value": "English"
+        },
+        {
+          "path": "/en/hymn/de/7",
+          "value": "German"
+        },
+        {
+          "path": "/en/hymn/hs/3",
+          "value": "Spanish"
+        },
+        {
+          "path": "/en/hymn/ht/7",
+          "value": "Tagalog"
+        }
+      ],
+      "name": "Languages"
+    }
+  ],
+  "title": "Hymn: Rendons gloire à notre Père"
+}
