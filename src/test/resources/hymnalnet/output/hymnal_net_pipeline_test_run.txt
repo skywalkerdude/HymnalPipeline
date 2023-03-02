@@ -1,21 +1,21 @@
 
-�
-
-h1 Hymn: Glory be to God the Fatherp
-verseGlory be to God the Father,  And to Christ the Son,Glory to the Holy Spirit—    Ever One.�
-verseAs we view the vast creation,   Planned with wondrous skill,$So our hearts would move to worship,    And be still.�
-verse$But, our God, how great Thy yearning  To have sons who love%In the Son e’en now to praise Thee,    Love to prove!|
-verse"’Twas Thy thought in revelation,  To present to men Secrets of Thine own affections,    Theirs to win.�
-verse$So in Christ, through His redemption  (Vanquished evil powers!)#Thou hast brought, in new creation,    Worshippers!p
-verseGlory be to God the Father,  And to Christ the Son,Glory to the Holy Spirit—    Ever One."V
-CategoryJ
-Blessing of the Trinity//en/search/all/category/Blessing+of+the+Trinity"[
-SubcategoryL
-His Plan@/en/search/all/category/Blessing+of+the+Trinity%E2%80%94His+Plan"F
-Lyrics<
-J. F. Garland+/en/search/all/author/J.+F.+Garland?t=h&n=1"Z
-MusicQ
-Ira David Sankey (1840-1908)0/en/search/all/composer/Ira+David+Sankey?t=h&n=1".
+�
+
+ch1?gb=1Hymn: 但願榮耀歸於聖父�
+verse但願榮耀歸於聖父，並聖子基督，且願榮耀歸於聖靈到永古。-dàn yuàn róng yào gūi yú shèng fù ，bìng shèng zǐ jī dū ，+qiě yuàn róng yào gūi yú shèng língdào yǒng gǔ 。�
+verse當我觀賞廣大創造－神智所制訂，我靈受感，立獻敬拜，並肅靜。2dāng wǒ guān shǎng guǎng dà chuàng zào －shén zhì suǒ zhì dìng ，1wǒ líng shòu gǎn ， lì xiàn jìng bài ，bìng sù jìng 。�
+verse但是我神，你是深願：能得有眾子，今在子裡對你讚美，並賞識。0dàn shì wǒ shén ， nǐ shì shēn yuàn ：néng dé yǒu zhòng zǐ ，(jīn zài zǐ lǐ dùi nǐ zàn měi ，bìng shǎng shi 。�
+verse你話已向我們啟示，你情愛祕密，為要我們領略接受，以愛你。(nǐ huà yǐ xiàng wǒ men qǐ shì ，nǐ qíng ài mì mì ，+wèi yào wǒ men lǐng lvè jiē shòu ，yǐ ài nǐ 。�
+verse因此藉著基督救贖，既將敵全克，在新造裡你就帶來敬拜者。(yīn cǐ jiè zhù jī dū jìu shú ，jì jiāng dí quán kè ，%zài xīn zào lǐ nǐ jìu dài láijìng bài zhě 。�
+verse但願榮耀歸於聖父，並聖子基督，且願榮耀歸於聖靈到永古。-dàn yuàn róng yào gūi yú shèng fù ，bìng shèng zǐ jī dū ，+qiě yuàn róng yào gūi yú shèng língdào yǒng gǔ 。"d
+CategoryX
+頌讚三一神E/en/search/all/category/%E9%A0%8C%E8%AE%9A%E4%B8%89%E4%B8%80%E7%A5%9E"�
+Subcategory�
+祂的計畫r/en/search/all/category/%E9%A0%8C%E8%AE%9A%E4%B8%89%E4%B8%80%E7%A5%9E%E2%80%94%E7%A5%82%E7%9A%84%E8%A8%88%E7%95%AB"G
+Lyrics=
+J. F. Garland,/en/search/all/author/J.+F.+Garland?t=ch&n=1"[
+MusicR
+Ira David Sankey (1840-1908)1/en/search/all/composer/Ira+David+Sankey?t=ch&n=1".
 Key'
 Ab Major/en/search/all/key/Ab+Major"(
 Time 
@@ -23,33 +23,275 @@
 Meter)
 8.5.8.3./en/search/all/meter/8.5.8.3."C
 	Hymn Code6
-5553216153222%/en/search/all/hymncode/5553216153222"�
-	Languages
-Cebuano/en/hymn/cb/1!
-诗歌(简)/en/hymn/ch/1?gb=1
-詩歌(繁)/en/hymn/ch/1
+5553216153222%/en/search/all/hymncode/5553216153222"�
+	Languages!
+诗歌(简)/en/hymn/ch/1?gb=1
+Cebuano/en/hymn/cb/1
+English/en/hymn/h/1
 Spanish/en/hymn/hs/1
-Tagalog/en/hymn/ht/1"�
-See Also.
-God, our Father, we adore Thee/en/hymn/h/57
-$What a Mystery, Mystery of Mysteries/en/hymn/ns/834?
-,Merciful and righteous, wise beyond the wise/en/hymn/ns/936(
-Come, Thou Almighty King/en/hymn/h/3"�
+Tagalog/en/hymn/ht/1"�
 
-Lead Sheet=
-Piano4https://www.hymnal.net/Hymns/Hymnal/pdfs/e0001_p.pdf>
-Guitar4https://www.hymnal.net/Hymns/Hymnal/pdfs/e0001_g.pdf=
-Text5https://www.hymnal.net/Hymns/Hymnal/pdfs/e0001_gt.pdf"�
+Lead Sheet>
+Piano5https://www.hymnal.net/Hymns/Chinese/pdfs/c0001_p.pdf?
+Guitar5https://www.hymnal.net/Hymns/Chinese/pdfs/c0001_g.pdf>
+Text6https://www.hymnal.net/Hymns/Chinese/pdfs/c0001_gt.pdf"�
 MusicJ
 mp3 (whole song)6https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_full.mp3L
-MIDI (whole song)7https://www.hymnal.net/Hymns/Hymnal/midi/e0001_full.midA
-Singing6https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_sing.mp3:
+MIDI (whole song)7https://www.hymnal.net/Hymns/Hymnal/midi/e0001_full.midE
+Singing:https://www.hymnal.net/Hymns/Chinese/mp3/ch_0001_vocal.mp3:
 mp33https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_i.mp3<
-MIDI4https://www.hymnal.net/Hymns/Hymnal/midi/e0001_i.midM
-Tune (MIDI)>https://www.hymnal.net/Hymns/Hymnal/midi/tunes/e0001_tune.midi"�
-svg<
-Piano3https://www.hymnal.net/Hymns/Hymnal/svg/e0001_p.svg=
-Guitar3https://www.hymnal.net/Hymns/Hymnal/svg/e0001_g.svg
+MIDI4https://www.hymnal.net/Hymns/Hymnal/midi/e0001_i.midN
+Tune (MIDI)?https://www.hymnal.net/Hymns/Chinese/midi/tunes/c0001_tune.midi"�
+svg=
+Piano4https://www.hymnal.net/Hymns/Chinese/svg/c0001_p.svg>
+Guitar4https://www.hymnal.net/Hymns/Chinese/svg/c0001_g.svg
+�
+
+c14Hymn: Praise Him, praise Him, all ye little children�
+verse/Praise Him, praise Him, all ye little children,God is love, God is love;/Praise Him, praise Him, all ye little children,God is love, God is love.�
+verse+Love Him, love Him, all ye little children,!    God is love, God is love;+Love Him, love Him, all ye little children,!    God is love, God is love.�
+verse-Thank Him, thank Him, all ye little children,!    God is love, God is love;-Thank Him, thank Him, all ye little children,!    God is love, God is love."L
+Category@
+Praise of the Lord*/en/search/all/category/Praise+of+the+Lord"V
+SubcategoryG
+His Love;/en/search/all/category/Praise+of+the+Lord%E2%80%94His+Love"R
+MusicI
+Carey Bonner (1859-1938),/en/search/all/composer/Carey+Bonner?t=c&n=1",
+Key%
+C Major/en/search/all/key/C+Major"(
+Time 
+2/4/en/search/all/time/2%2F4"=
+	Hymn Code0
+
+1135671653"/en/search/all/hymncode/1135671653"�
+See Also-
+Around Thy table, holy Lord/en/hymn/h/216.
+Jesus! Source of life eternal/en/hymn/h/98*
+Whatever God says is true/en/hymn/c/40+
+Yesterday, today, forever/en/hymn/c/1626
+$Hark! Ten thousand heav’nly voices/en/hymn/h/149"�
+
+Lead SheetC
+Piano:https://www.hymnal.net/Hymns/Children/pdfs/child0001_p.pdfD
+Guitar:https://www.hymnal.net/Hymns/Children/pdfs/child0001_g.pdfC
+Text;https://www.hymnal.net/Hymns/Children/pdfs/child0001_gt.pdf"�
+Music:
+mp33https://www.hymnal.net/Hymns/Children/mp3/c0001.mp3<
+MIDI4https://www.hymnal.net/Hymns/Children/midi/c0001.midS
+Tune (MIDI)Dhttps://www.hymnal.net/Hymns/Children/midi/tunes/child0001_tune.midi"�
+svgB
+Piano9https://www.hymnal.net/Hymns/Children/svg/child0001_p.svgC
+Guitar9https://www.hymnal.net/Hymns/Children/svg/child0001_g.svg
+�
+
+ns1#Hymn: The working of the Triune God�
+verse&God’s economy is to have God and man#Incorporated as one—divine-human,#To build up His Body—an organism,$Which consummates the New Jerusalem.�
+verse(God the Father loves man and chooses man$In eternity past, in His great plan,*According to His purpose, and not of works$But of Him, in the section of Jacob.�
+verse*God the Father calls man and justifies man#In time, in the section of Abraham;2That man may live by faith, know grace from within)That man may live in fellowship with Him.�
+verse+God the Son gives man His rich inheritance,"And a life enjoying His abundance,,And a life in peace, totally without lack—'Fully blessed, in the section of Isaac.�
+verse,God the Spirit transforms man and causes man"To be mature in life, enabling man3To bless and supply all, and rule o’er the earth,$In the section of Jacob with Joseph."T
+CategoryH
+Ultimate Manifestation./en/search/all/category/Ultimate+Manifestation"x
+Subcategoryi
+God’s Eternal PurposeN/en/search/all/category/Ultimate+Manifestation%E2%80%94God%27s+Eternal+Purpose"H
+Music?
+I. E. Rummery./en/search/all/composer/I.+E.+Rummery?t=ns&n=1",
+Key%
+G Major/en/search/all/key/G+Major"(
+Time 
+3/4/en/search/all/time/3%2F4":
+Meter1
+11.11.11.11.!/en/search/all/meter/11.11.11.11."?
+	Hymn Code2
+51123321271#/en/search/all/hymncode/51123321271"Z
+
+ScripturesL
+Genesis 12-50;http://text.recoveryversion.bible/01_Genesis_12.htm#Gen12-1"C
+Relevant7
+%The Spirit of life is within us today/en/hymn/h/278"�
+See Also5
+#In His Christ to head up all things/en/hymn/h/9811
+O Lord Jesus, Thy redeemed ones/en/hymn/h/9764
+"How glorious, how bright it shines/en/hymn/h/979:
+(He looked for a city and lived in a tent/en/hymn/h/974"�
+
+Lead Sheet@
+Piano7https://www.hymnal.net/Hymns/NewSongs/pdfs/ns0001_p.pdfA
+Guitar7https://www.hymnal.net/Hymns/NewSongs/pdfs/ns0001_g.pdf@
+Text8https://www.hymnal.net/Hymns/NewSongs/pdfs/ns0001_gt.pdf"�
+Music:
+mp33https://www.hymnal.net/Hymns/Hymnal/mp3/e0278_i.mp3<
+MIDI4https://www.hymnal.net/Hymns/Hymnal/midi/e0278_i.midP
+Tune (MIDI)Ahttps://www.hymnal.net/Hymns/NewSongs/midi/tunes/ns0001_tune.midi"�
+svg?
+Piano6https://www.hymnal.net/Hymns/NewSongs/svg/ns0001_p.svg@
+Guitar6https://www.hymnal.net/Hymns/NewSongs/svg/ns0001_g.svg
+�"
+
+ts1Hymn: 當以嘴親子�
+verse看哪，地上萬民聚集，一同謀算虛妄事；君王臣宰起來商議，同聲一氣抵擋主。『我們掙開一切捆綁，脫去他們的繩索，』世上君王如此設謀，抵擋神並受膏者。-kàn nǎ ， dì shàng wàn mín jù jí ，'yī tóng móu suàn xū wàng shì ；-jūn wáng chén zǎi qǐ lái shāng yì ，'tóng shēng yī qì dǐ dǎng zhǔ 。/『 wǒ men zhēng kāi yī qiē kǔn bǎng ，'tuō qù tā men de shéng suǒ ， 』,shì shàng jūn wáng rú cǐ shè móu ，)dǐ dǎng shén bìng shòu gāo zhě 。�
+verse那坐天上的必發笑，主必定嗤笑他們；那時祂在怒中責備，烈怒中驚嚇他們。在祂的錫安聖山上，神已膏祂的君王─這是神自己的宣告，警戒地上的諸王。*nà zuò tiān shàng de bì fā xiào ，%zhǔ bì dìng chī xiào tā men ；)nà shí tā zài nù zhōng zé bèi ，&liè nù zhōng jīng xià tā men 。+zài tā de xí ān shèng shān shàng ，$shén yǐ gāo tā de jūn wáng ─)zhè shì shén zì jǐ de xuān gào ，'jǐng jiè dì shàng de zhū wáng 。�
+verse現今基督，神所膏者，傳揚主神的旨意：『你是我子（在復活裡），我在今日生了你。我將列國都賜給你，使你承受為基業，你顯王權，手拿鐵杖，將他們打破摔裂。』/xiàn jīn jī dū ， shén suǒ gāo zhě ，'chuán yáng zhǔ shén de zhǐ yì ：『 nǐ shì wǒ zǐ（ zài fù huó lǐ ） ，#wǒ zài jīn rì shēng le nǐ 。)wǒ jiāng liè guó dū cì gěi nǐ ，&shǐ nǐ chéng shòu wèi jī yè ，3nǐ xiǎn wáng quán ， shǒu ná tiě zhàng ，*jiāng tā men dǎ pò shuāi liè 。 』�
+verse你們君王應當省悟，審判官該受管教；當存畏懼事奉我主，又存戰兢而歡躍。當以嘴親子，消祂怒，免得你道中滅亡；!『投靠祂的是有福的，』讓我們同來歡唱！-nǐ men jūn wáng yīng dāng shěng wù ，+shěn pàn guān gāi shòu guǎn jiào ；+dāng cún wèi jù shì fèng wǒ zhǔ ，(yòu cún zhàn jīng ér huān yuè 。-dāng yǐ zǔi qīn zǐ ， xiāo tā nù ，(miǎn dé nǐ dào zhōng miè wáng ；-『 tóu kào tā de shì yǒu fú de ， 』)ràng wǒ men tóng lái huān chàng ！�
+verse哦，讚美神，我們看見你獨一受膏之子；從虛妄中我們悔改，在愛裡親你愛子。!『投靠祂的是有福的』─非那『遵守律法的；』只要信靠那復活者，就必蒙福永無已。-é ， zàn měi shén ， wǒ men kàn jiàn#nǐ dú yī shòu gāo zhī zǐ ；,cóng xū wàng zhōng wǒ men hǔi gǎi ，!zài ài lǐ qīn nǐ ài zǐ 。-『 tóu kào tā de shì yǒu fú de 』 ─+fēi nà 『 zūn shǒu lv̀ fǎ de ； 』)zhǐ yào xìn kào nà fù huó zhě ，$jìu bì méng fú yǒng wú yǐ 。"X
+CategoryL
+讚美的話</en/search/all/category/%E8%AE%9A%E7%BE%8E%E7%9A%84%E8%A9%B1"J
+MusicA
+J. B. O. Clemm//en/search/all/composer/J.+B.+O.+Clemm?t=ts&n=2",
+Key%
+F Major/en/search/all/key/F+Major"(
+Time 
+3/4/en/search/all/time/3%2F4"6
+Meter-
+
+8.7.8.7.D./en/search/all/meter/8.7.8.7.D."M
+	Hymn Code@
+333211121655113212*/en/search/all/hymncode/333211121655113212"R
+
+ScripturesD
+Psalms 28http://text.recoveryversion.bible/19_Psalms_2.htm#Psa2-1"J
+	Languages!
+诗歌(简)/en/hymn/ts/2?gb=1
+English/en/hymn/h/1094"�
+See Also
+披上喜樂/en/hymn/ts/5
+開口讚美/en/hymn/ts/1
+湧出美辭/en/hymn/ts/6)
+你名在全地何其美/en/hymn/ts/3)
+你的恩典一生之久/en/hymn/ts/4"�
+
+Lead SheetA
+Piano8https://www.hymnal.net/Hymns/ChineseTS/pdfs/ts0002_p.pdfB
+Guitar8https://www.hymnal.net/Hymns/ChineseTS/pdfs/ts0002_g.pdfA
+Text9https://www.hymnal.net/Hymns/ChineseTS/pdfs/ts0002_gt.pdf"�
+MusicG
+Singing<https://www.hymnal.net/Hymns/ChineseTS/mp3/ts_0002_vocal.mp3:
+mp33https://www.hymnal.net/Hymns/Hymnal/mp3/e0203_i.mp3<
+MIDI4https://www.hymnal.net/Hymns/Hymnal/midi/e0203_i.midQ
+Tune (MIDI)Bhttps://www.hymnal.net/Hymns/ChineseTS/midi/tunes/ts0002_tune.midi"�
+svg@
+Piano7https://www.hymnal.net/Hymns/ChineseTS/svg/ts0002_p.svgA
+Guitar7https://www.hymnal.net/Hymns/ChineseTS/svg/ts0002_g.svg
+�"
+
+ts1?gb=1Hymn: 當以嘴親子�
+verse看哪，地上萬民聚集，一同謀算虛妄事；君王臣宰起來商議，同聲一氣抵擋主。『我們掙開一切捆綁，脫去他們的繩索，』世上君王如此設謀，抵擋神並受膏者。-kàn nǎ ， dì shàng wàn mín jù jí ，'yī tóng móu suàn xū wàng shì ；-jūn wáng chén zǎi qǐ lái shāng yì ，'tóng shēng yī qì dǐ dǎng zhǔ 。/『 wǒ men zhēng kāi yī qiē kǔn bǎng ，'tuō qù tā men de shéng suǒ ， 』,shì shàng jūn wáng rú cǐ shè móu ，)dǐ dǎng shén bìng shòu gāo zhě 。�
+verse那坐天上的必發笑，主必定嗤笑他們；那時祂在怒中責備，烈怒中驚嚇他們。在祂的錫安聖山上，神已膏祂的君王─這是神自己的宣告，警戒地上的諸王。*nà zuò tiān shàng de bì fā xiào ，%zhǔ bì dìng chī xiào tā men ；)nà shí tā zài nù zhōng zé bèi ，&liè nù zhōng jīng xià tā men 。+zài tā de xí ān shèng shān shàng ，$shén yǐ gāo tā de jūn wáng ─)zhè shì shén zì jǐ de xuān gào ，'jǐng jiè dì shàng de zhū wáng 。�
+verse現今基督，神所膏者，傳揚主神的旨意：『你是我子（在復活裡），我在今日生了你。我將列國都賜給你，使你承受為基業，你顯王權，手拿鐵杖，將他們打破摔裂。』/xiàn jīn jī dū ， shén suǒ gāo zhě ，'chuán yáng zhǔ shén de zhǐ yì ：『 nǐ shì wǒ zǐ（ zài fù huó lǐ ） ，#wǒ zài jīn rì shēng le nǐ 。)wǒ jiāng liè guó dū cì gěi nǐ ，&shǐ nǐ chéng shòu wèi jī yè ，3nǐ xiǎn wáng quán ， shǒu ná tiě zhàng ，*jiāng tā men dǎ pò shuāi liè 。 』�
+verse你們君王應當省悟，審判官該受管教；當存畏懼事奉我主，又存戰兢而歡躍。當以嘴親子，消祂怒，免得你道中滅亡；!『投靠祂的是有福的，』讓我們同來歡唱！-nǐ men jūn wáng yīng dāng shěng wù ，+shěn pàn guān gāi shòu guǎn jiào ；+dāng cún wèi jù shì fèng wǒ zhǔ ，(yòu cún zhàn jīng ér huān yuè 。-dāng yǐ zǔi qīn zǐ ， xiāo tā nù ，(miǎn dé nǐ dào zhōng miè wáng ；-『 tóu kào tā de shì yǒu fú de ， 』)ràng wǒ men tóng lái huān chàng ！�
+verse哦，讚美神，我們看見你獨一受膏之子；從虛妄中我們悔改，在愛裡親你愛子。!『投靠祂的是有福的』─非那『遵守律法的；』只要信靠那復活者，就必蒙福永無已。-é ， zàn měi shén ， wǒ men kàn jiàn#nǐ dú yī shòu gāo zhī zǐ ；,cóng xū wàng zhōng wǒ men hǔi gǎi ，!zài ài lǐ qīn nǐ ài zǐ 。-『 tóu kào tā de shì yǒu fú de 』 ─+fēi nà 『 zūn shǒu lv̀ fǎ de ； 』)zhǐ yào xìn kào nà fù huó zhě ，$jìu bì méng fú yǒng wú yǐ 。"X
+CategoryL
+讚美的話</en/search/all/category/%E8%AE%9A%E7%BE%8E%E7%9A%84%E8%A9%B1"J
+MusicA
+J. B. O. Clemm//en/search/all/composer/J.+B.+O.+Clemm?t=ts&n=2",
+Key%
+F Major/en/search/all/key/F+Major"(
+Time 
+3/4/en/search/all/time/3%2F4"6
+Meter-
+
+8.7.8.7.D./en/search/all/meter/8.7.8.7.D."M
+	Hymn Code@
+333211121655113212*/en/search/all/hymncode/333211121655113212"R
+
+ScripturesD
+Psalms 28http://text.recoveryversion.bible/19_Psalms_2.htm#Psa2-1"J
+	Languages!
+诗歌(简)/en/hymn/ts/2?gb=1
+English/en/hymn/h/1094"�
+See Also
+披上喜樂/en/hymn/ts/5
+開口讚美/en/hymn/ts/1
+湧出美辭/en/hymn/ts/6)
+你名在全地何其美/en/hymn/ts/3)
+你的恩典一生之久/en/hymn/ts/4"�
+
+Lead SheetA
+Piano8https://www.hymnal.net/Hymns/ChineseTS/pdfs/ts0002_p.pdfB
+Guitar8https://www.hymnal.net/Hymns/ChineseTS/pdfs/ts0002_g.pdfA
+Text9https://www.hymnal.net/Hymns/ChineseTS/pdfs/ts0002_gt.pdf"�
+MusicG
+Singing<https://www.hymnal.net/Hymns/ChineseTS/mp3/ts_0002_vocal.mp3:
+mp33https://www.hymnal.net/Hymns/Hymnal/mp3/e0203_i.mp3<
+MIDI4https://www.hymnal.net/Hymns/Hymnal/midi/e0203_i.midQ
+Tune (MIDI)Bhttps://www.hymnal.net/Hymns/ChineseTS/midi/tunes/ts0002_tune.midi"�
+svg@
+Piano7https://www.hymnal.net/Hymns/ChineseTS/svg/ts0002_p.svgA
+Guitar7https://www.hymnal.net/Hymns/ChineseTS/svg/ts0002_g.svg
+�
+
+hd11Hymn: Jezus, ‘k ben gevangen door Uw schoonheid�
+verse,Jezus, ‘k ben gevangen door Uw schoonheid. U bent alles wat ik ooit begeer.(Los van uiterlijk vertoon en tweestrijd, laat mij wonen in Uzelf, o Heer.%O, Uw glorie dwingt mij om te buigen,)vul mijn hart met godd’lijk hemellicht.-Voed, doordrenk mij, ‘k wil van U getuigen.)Geest van God voor wie mijn leven zwicht.�
+verse.Stralend licht, hoe schoon de lucht daarboven,'zie ik, waar de Zoon des mensen troont.'Uw heilig vuur in mij is niet te doven,,verteer mij tot slechts U mijn hart bewoont.,Toen ik U voor ‘t eerst zag in Uw luister,(zag ik pas mijn zelfzucht en mijn blaam.&Nu tast ik niet langer in het duister,)‘k proef de goedheid van Uw grote Naam.�
+verse)Mijn narduskruik breek ik nu voor U open,*en zalf met liefde, Heer, Uw heilig hoofd.(Op U mijn meester blijf ik altijd hopen,#want het beste heeft U mij beloofd.(‘k Giet mijn leven uit voor U, o Here,&want Uw liefde brengt mij in de geest.+Uw liefdesstroom voor mij is niet te keren,&het is als olie die mijn hart geneest.�
+verse'Zie, Hij komt over de berg der kruiden, laat Geliefde, Uw gedaante zien.-Ontwaak nu winden van het noord’ en zuiden,*aanschouw de stromen, waarmee ik Hem dien.2‘k Weet dat ‘k in mijn liefde niet alleen sta,!maar met alle heiligen, Uw bruid.O, kom spoedig Here, maranatha,!roepen wij verlangend naar U uit."P
+CategoryD
+Ervaren van Christus,/en/search/all/category/Ervaren+van+Christus"l
+Subcategory]
+Liefhebben van HemG/en/search/all/category/Ervaren+van+Christus%E2%80%94Liefhebben+van+Hem"G
+Lyrics=
+Translated from R. K.$/en/search/all/author/R.+K.?t=hd&n=1"J
+MusicA
+Oscar Ahnfeldt//en/search/all/composer/Oscar+Ahnfeldt?t=hd&n=1".
+Key'
+Eb Major/en/search/all/key/Eb+Major"(
+Time 
+4/4/en/search/all/time/4%2F4":
+Meter1
+10.9.10.9.D.!/en/search/all/meter/10.9.10.9.D."=
+	Hymn Code0
+
+3211112332"/en/search/all/hymncode/3211112332"�
+	Languages
+Cebuano/en/hymn/cb/1159#
+诗歌(简)/en/hymn/ts/305?gb=1
+詩歌(繁)/en/hymn/ts/305
+English/en/hymn/h/1159
+French/en/hymn/hf/115
+German/en/hymn/de/1159
+Spanish/en/hymn/hs/278
+Tagalog/en/hymn/ht/1159"�
+See Also(
+Christus is mijn vrede/en/hymn/hd/79!
+Ik ben een mens/en/hymn/hd/41.
+Jezus is de Geest des levens/en/hymn/hd/39<
+)Heer, mijn liefde groeit en bloeit voor U/en/hymn/hd/100
+�
+
+c60'Hymn: I’ve got the joy, joy, joy, joy�
+verse!I’ve got the joy, joy, joy, joyDown in my heart,Down in my heart,Down in my heart,!I’ve got the joy, joy, joy, joyDown in my heart,Down in my heart to stay.�
+verseAnd I’m so happy,So very happy;)I’ve got the love of Jesus in my heart.And I’m so happy,So very happy,)I’ve got the love of Jesus in my heart."d
+CategoryX
+Assurance and Joy of Salvation6/en/search/all/category/Assurance+and+Joy+of+Salvation"`
+SubcategoryQ
+GeneralF/en/search/all/category/Assurance+and+Joy+of+Salvation%E2%80%94General"`
+LyricsV
+ George Willis Cooke (1848-1923)2/en/search/all/author/George+Willis+Cooke?t=c&n=60"a
+MusicX
+ George Willis Cooke (1848-1923)4/en/search/all/composer/George+Willis+Cooke?t=c&n=60",
+Key%
+A Major/en/search/all/key/A+Major"(
+Time 
+4/4/en/search/all/time/4%2F4"?
+	Hymn Code2
+56717653321#/en/search/all/hymncode/56717653321"�
+See Also#
+Blessed assurance/en/hymn/h/3088
+&Sov’reign grace o’er sin abounding/en/hymn/h/3142
+ My hope is built on nothing less/en/hymn/h/2987
+$Though the world may promise me more/en/hymn/ns/292"�
+
+Lead SheetC
+Piano:https://www.hymnal.net/Hymns/Children/pdfs/child0060_p.pdfD
+Guitar:https://www.hymnal.net/Hymns/Children/pdfs/child0060_g.pdfC
+Text;https://www.hymnal.net/Hymns/Children/pdfs/child0060_gt.pdf"�
+Music:
+mp33https://www.hymnal.net/Hymns/Children/mp3/c0060.mp3<
+MIDI4https://www.hymnal.net/Hymns/Children/midi/c0060.midS
+Tune (MIDI)Dhttps://www.hymnal.net/Hymns/Children/midi/tunes/child0060_tune.midi"�
+svgB
+Piano9https://www.hymnal.net/Hymns/Children/svg/child0060_p.svgC
+Guitar9https://www.hymnal.net/Hymns/Children/svg/child0060_g.svg
 �
 
 
@@ -83,6 +325,126 @@ $Margaret Jenkins Harris (1865-1919)8/en/search/all/composer/Margaret+Jenkins+
 German/en/hymn/de/7
 Spanish/en/hymn/hs/3
 Tagalog/en/hymn/ht/7
+�
+
+
+cb1Hymn: Himayaong Dios AmahanO
+verseHimayaong Dios Amahan,Cristo nga Anak;Espiritu himayaon	Sa dayon.T
+verseKabuhatan kon sud-ongon,O pagkatahum,Matandog mi ug magsimba	Maghilom.V
+versePagkadako’s pangandoy MoMay mga anakNga mahigugma’g magdayegKanimo!\
+verseDiha’s bugna pangagpas Mo,Ipadayag’s tawoMailahang sekreto saPagmahal Mo.[
+verseGiwagtang dautang gahumDiha kang Cristo!Nia’s bag-ong kabuhatanMagsisimba!P
+verseHimayaong Dios Amahan,Cristo nga Anak;Espiritu himayaon,	Sa dayon."T
+CategoryH
+PANALANGIN SA TRINIDAD./en/search/all/category/PANALANGIN+SA+TRINIDAD"f
+SubcategoryW
+SA IYANG PLANOE/en/search/all/category/PANALANGIN+SA+TRINIDAD%E2%80%94SA+IYANG+PLANO"W
+LyricsM
+Translated from J. F. Garland,/en/search/all/author/J.+F.+Garland?t=cb&n=1"[
+MusicR
+Ira David Sankey (1840-1908)1/en/search/all/composer/Ira+David+Sankey?t=cb&n=1".
+Key'
+Ab Major/en/search/all/key/Ab+Major"(
+Time 
+4/4/en/search/all/time/4%2F4"2
+Meter)
+8.5.8.3./en/search/all/meter/8.5.8.3."C
+	Hymn Code6
+5553216153222%/en/search/all/hymncode/5553216153222"�
+	Languages!
+诗歌(简)/en/hymn/ch/1?gb=1
+詩歌(繁)/en/hymn/ch/1
+English/en/hymn/h/1
+Spanish/en/hymn/hs/1
+Tagalog/en/hymn/ht/1"0
+See Also$
+Himayaon ang Amahan/en/hymn/cb/7
+�
+
+de1 Hymn: Ehre sei Gott unsrem Vateri
+verseEhre sei Gott unsrem Vater,Ehre sei dem Sohn, Ehre sei dem Geist für ewig –Welch Person!g
+verse Unermesslich ist die Schöpfung,Wunderbar der Plan,Unsre Herzen sind bewegt und	Beten an.r
+verse!Vater, groß ist Deine Sehnsucht,Söhne willst für Dich,!Die im Sohn Dich preisend lieben,	Ewiglich.g
+verseDas Geheimnis Deiner LiebeOffenbart hast hier,Dadurch unsre Liebe, Vater,Fließt zu Dir.q
+verse%Bringst in Christus, durch Erlösung,(Mächte Er bezwang!)Anbeter in neue Schöpfung,Welch Zugang!i
+verseEhre sei Gott unsrem Vater,Ehre sei dem Sohn, Ehre sei dem Geist für ewig –Welch Person!"V
+CategoryJ
+SEGEN DER DREIEINIGKEIT//en/search/all/category/SEGEN+DER+DREIEINIGKEIT"]
+SubcategoryN
+	Sein PlanA/en/search/all/category/SEGEN+DER+DREIEINIGKEIT%E2%80%94Sein+Plan"W
+LyricsM
+Translated from J. F. Garland,/en/search/all/author/J.+F.+Garland?t=de&n=1"[
+MusicR
+Ira David Sankey (1840-1908)1/en/search/all/composer/Ira+David+Sankey?t=de&n=1".
+Key'
+Ab Major/en/search/all/key/Ab+Major"(
+Time 
+4/4/en/search/all/time/4%2F4"2
+Meter)
+8.5.8.3./en/search/all/meter/8.5.8.3."C
+	Hymn Code6
+5553216153222%/en/search/all/hymncode/5553216153222"�
+	Languages
+Cebuano/en/hymn/cb/1!
+诗歌(简)/en/hymn/ch/1?gb=1
+詩歌(繁)/en/hymn/ch/1
+English/en/hymn/h/1
+Spanish/en/hymn/hs/1
+Tagalog/en/hymn/ht/1"�
+See AlsoB
+1Heilig, heilig, heilig, Gott, Du bist allmächtig/en/hymn/de/67
+&Preist Gott, der stets den Segen mehrt/en/hymn/de/8"�
+
+Lead Sheet=
+Piano4https://www.hymnal.net/Hymns/German/pdfs/g0001_p.pdf>
+Guitar4https://www.hymnal.net/Hymns/German/pdfs/g0001_g.pdf=
+Text5https://www.hymnal.net/Hymns/German/pdfs/g0001_gt.pdf"�
+MusicJ
+mp3 (whole song)6https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_full.mp3L
+MIDI (whole song)7https://www.hymnal.net/Hymns/Hymnal/midi/e0001_full.mid:
+mp33https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_i.mp3<
+MIDI4https://www.hymnal.net/Hymns/Hymnal/midi/e0001_i.midM
+Tune (MIDI)>https://www.hymnal.net/Hymns/German/midi/tunes/g0001_tune.midi"�
+svg<
+Piano3https://www.hymnal.net/Hymns/German/svg/g0001_p.svg=
+Guitar3https://www.hymnal.net/Hymns/German/svg/g0001_g.svg
+�
+
+hs1 Hymn: Gloria dad a Dios el Padre[
+verseGloria dad a Dios el Padre,Y͜ al Hijo loor;Al Espíritu dad gloria;Uno son.]
+verseSu cr͡eación inmensurable,Fruto de Su plan;Al mirarla nos inspiraA͜ adorar.r
+verseMas Tú͜ anhelas muchos hijos,Nuestro Dios de͜  amor, Que͜ en el Hijo hoy te͜ alaben
+En unión._
+verseFue Tu pensamiento santoDar al hombre ver,Lo profundo de Tu͜  afecto	Para él.a
+verseCristo͜ el mal ha destruidoPor Su redención;¡Le͜ adoramos como nueva
+Creación!]
+verseHoy al Padre demos gloria,Y͜ al Hijo de Dios;Al Espíritu dad gloria;Uno son."\
+CategoryP
+Bendición a la Trinidad4/en/search/all/category/Bendici%C3%B3n+a+la+Trinidad"^
+SubcategoryO
+Su planD/en/search/all/category/Bendici%C3%B3n+a+la+Trinidad%E2%80%94Su+plan"W
+LyricsM
+Translated from J. F. Garland,/en/search/all/author/J.+F.+Garland?t=hs&n=1"[
+MusicR
+Ira David Sankey (1840-1908)1/en/search/all/composer/Ira+David+Sankey?t=hs&n=1".
+Key'
+Ab Major/en/search/all/key/Ab+Major"(
+Time 
+4/4/en/search/all/time/4%2F4"2
+Meter)
+8.5.8.3./en/search/all/meter/8.5.8.3."C
+	Hymn Code6
+5553216153222%/en/search/all/hymncode/5553216153222"�
+	Languages
+Cebuano/en/hymn/cb/1!
+诗歌(简)/en/hymn/ch/1?gb=1
+詩歌(繁)/en/hymn/ch/1
+English/en/hymn/h/1
+German/en/hymn/de/1
+Tagalog/en/hymn/ht/1"f
+See Also+
+Padre nuestro, te adoramos/en/hymn/hs/2-
+Al Dios que emana bendición/en/hymn/hs/4
 �
 
 ch1Hymn: 但願榮耀歸於聖父�
@@ -167,6 +529,57 @@ Lead SheetC
 svgB
 Piano9https://www.hymnal.net/Hymns/NewTunes/svg/e0012_new_p.svgC
 Guitar9https://www.hymnal.net/Hymns/NewTunes/svg/e0012_new_g.svg
+�
+
+h1 Hymn: Glory be to God the Fatherp
+verseGlory be to God the Father,  And to Christ the Son,Glory to the Holy Spirit—    Ever One.�
+verseAs we view the vast creation,   Planned with wondrous skill,$So our hearts would move to worship,    And be still.�
+verse$But, our God, how great Thy yearning  To have sons who love%In the Son e’en now to praise Thee,    Love to prove!|
+verse"’Twas Thy thought in revelation,  To present to men Secrets of Thine own affections,    Theirs to win.�
+verse$So in Christ, through His redemption  (Vanquished evil powers!)#Thou hast brought, in new creation,    Worshippers!p
+verseGlory be to God the Father,  And to Christ the Son,Glory to the Holy Spirit—    Ever One."V
+CategoryJ
+Blessing of the Trinity//en/search/all/category/Blessing+of+the+Trinity"[
+SubcategoryL
+His Plan@/en/search/all/category/Blessing+of+the+Trinity%E2%80%94His+Plan"F
+Lyrics<
+J. F. Garland+/en/search/all/author/J.+F.+Garland?t=h&n=1"Z
+MusicQ
+Ira David Sankey (1840-1908)0/en/search/all/composer/Ira+David+Sankey?t=h&n=1".
+Key'
+Ab Major/en/search/all/key/Ab+Major"(
+Time 
+4/4/en/search/all/time/4%2F4"2
+Meter)
+8.5.8.3./en/search/all/meter/8.5.8.3."C
+	Hymn Code6
+5553216153222%/en/search/all/hymncode/5553216153222"�
+	Languages
+Cebuano/en/hymn/cb/1!
+诗歌(简)/en/hymn/ch/1?gb=1
+詩歌(繁)/en/hymn/ch/1
+Spanish/en/hymn/hs/1
+Tagalog/en/hymn/ht/1"�
+See Also.
+God, our Father, we adore Thee/en/hymn/h/57
+$What a Mystery, Mystery of Mysteries/en/hymn/ns/834?
+,Merciful and righteous, wise beyond the wise/en/hymn/ns/936(
+Come, Thou Almighty King/en/hymn/h/3"�
+
+Lead Sheet=
+Piano4https://www.hymnal.net/Hymns/Hymnal/pdfs/e0001_p.pdf>
+Guitar4https://www.hymnal.net/Hymns/Hymnal/pdfs/e0001_g.pdf=
+Text5https://www.hymnal.net/Hymns/Hymnal/pdfs/e0001_gt.pdf"�
+MusicJ
+mp3 (whole song)6https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_full.mp3L
+MIDI (whole song)7https://www.hymnal.net/Hymns/Hymnal/midi/e0001_full.midA
+Singing6https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_sing.mp3:
+mp33https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_i.mp3<
+MIDI4https://www.hymnal.net/Hymns/Hymnal/midi/e0001_i.midM
+Tune (MIDI)>https://www.hymnal.net/Hymns/Hymnal/midi/tunes/e0001_tune.midi"�
+svg<
+Piano3https://www.hymnal.net/Hymns/Hymnal/svg/e0001_p.svg=
+Guitar3https://www.hymnal.net/Hymns/Hymnal/svg/e0001_g.svg
 �
 
 ht10Hymn: L’walhati sa Diyos Ama at sa Anak Kristo[
@@ -202,615 +615,7 @@ Lead SheetC
 $Banal, Banal, Banal, Makapangyarihan/en/hymn/ht/6'
 Luwalhati sa Diyos Ama/en/hymn/ht/9$
 Sinasamba Ka, O Ama/en/hymn/ht/5,
-Ama, sinta Mo’y kay lalim/en/hymn/ht/4
-�
-
-de1 Hymn: Ehre sei Gott unsrem Vateri
-verseEhre sei Gott unsrem Vater,Ehre sei dem Sohn, Ehre sei dem Geist für ewig –Welch Person!g
-verse Unermesslich ist die Schöpfung,Wunderbar der Plan,Unsre Herzen sind bewegt und	Beten an.r
-verse!Vater, groß ist Deine Sehnsucht,Söhne willst für Dich,!Die im Sohn Dich preisend lieben,	Ewiglich.g
-verseDas Geheimnis Deiner LiebeOffenbart hast hier,Dadurch unsre Liebe, Vater,Fließt zu Dir.q
-verse%Bringst in Christus, durch Erlösung,(Mächte Er bezwang!)Anbeter in neue Schöpfung,Welch Zugang!i
-verseEhre sei Gott unsrem Vater,Ehre sei dem Sohn, Ehre sei dem Geist für ewig –Welch Person!"V
-CategoryJ
-SEGEN DER DREIEINIGKEIT//en/search/all/category/SEGEN+DER+DREIEINIGKEIT"]
-SubcategoryN
-	Sein PlanA/en/search/all/category/SEGEN+DER+DREIEINIGKEIT%E2%80%94Sein+Plan"W
-LyricsM
-Translated from J. F. Garland,/en/search/all/author/J.+F.+Garland?t=de&n=1"[
-MusicR
-Ira David Sankey (1840-1908)1/en/search/all/composer/Ira+David+Sankey?t=de&n=1".
-Key'
-Ab Major/en/search/all/key/Ab+Major"(
-Time 
-4/4/en/search/all/time/4%2F4"2
-Meter)
-8.5.8.3./en/search/all/meter/8.5.8.3."C
-	Hymn Code6
-5553216153222%/en/search/all/hymncode/5553216153222"�
-	Languages
-Cebuano/en/hymn/cb/1!
-诗歌(简)/en/hymn/ch/1?gb=1
-詩歌(繁)/en/hymn/ch/1
-English/en/hymn/h/1
-Spanish/en/hymn/hs/1
-Tagalog/en/hymn/ht/1"�
-See AlsoB
-1Heilig, heilig, heilig, Gott, Du bist allmächtig/en/hymn/de/67
-&Preist Gott, der stets den Segen mehrt/en/hymn/de/8"�
-
-Lead Sheet=
-Piano4https://www.hymnal.net/Hymns/German/pdfs/g0001_p.pdf>
-Guitar4https://www.hymnal.net/Hymns/German/pdfs/g0001_g.pdf=
-Text5https://www.hymnal.net/Hymns/German/pdfs/g0001_gt.pdf"�
-MusicJ
-mp3 (whole song)6https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_full.mp3L
-MIDI (whole song)7https://www.hymnal.net/Hymns/Hymnal/midi/e0001_full.mid:
-mp33https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_i.mp3<
-MIDI4https://www.hymnal.net/Hymns/Hymnal/midi/e0001_i.midM
-Tune (MIDI)>https://www.hymnal.net/Hymns/German/midi/tunes/g0001_tune.midi"�
-svg<
-Piano3https://www.hymnal.net/Hymns/German/svg/g0001_p.svg=
-Guitar3https://www.hymnal.net/Hymns/German/svg/g0001_g.svg
-�
-
-
-cb1Hymn: Himayaong Dios AmahanO
-verseHimayaong Dios Amahan,Cristo nga Anak;Espiritu himayaon	Sa dayon.T
-verseKabuhatan kon sud-ongon,O pagkatahum,Matandog mi ug magsimba	Maghilom.V
-versePagkadako’s pangandoy MoMay mga anakNga mahigugma’g magdayegKanimo!\
-verseDiha’s bugna pangagpas Mo,Ipadayag’s tawoMailahang sekreto saPagmahal Mo.[
-verseGiwagtang dautang gahumDiha kang Cristo!Nia’s bag-ong kabuhatanMagsisimba!P
-verseHimayaong Dios Amahan,Cristo nga Anak;Espiritu himayaon,	Sa dayon."T
-CategoryH
-PANALANGIN SA TRINIDAD./en/search/all/category/PANALANGIN+SA+TRINIDAD"f
-SubcategoryW
-SA IYANG PLANOE/en/search/all/category/PANALANGIN+SA+TRINIDAD%E2%80%94SA+IYANG+PLANO"W
-LyricsM
-Translated from J. F. Garland,/en/search/all/author/J.+F.+Garland?t=cb&n=1"[
-MusicR
-Ira David Sankey (1840-1908)1/en/search/all/composer/Ira+David+Sankey?t=cb&n=1".
-Key'
-Ab Major/en/search/all/key/Ab+Major"(
-Time 
-4/4/en/search/all/time/4%2F4"2
-Meter)
-8.5.8.3./en/search/all/meter/8.5.8.3."C
-	Hymn Code6
-5553216153222%/en/search/all/hymncode/5553216153222"�
-	Languages!
-诗歌(简)/en/hymn/ch/1?gb=1
-詩歌(繁)/en/hymn/ch/1
-English/en/hymn/h/1
-Spanish/en/hymn/hs/1
-Tagalog/en/hymn/ht/1"0
-See Also$
-Himayaon ang Amahan/en/hymn/cb/7
-�
-
-c60'Hymn: I’ve got the joy, joy, joy, joy�
-verse!I’ve got the joy, joy, joy, joyDown in my heart,Down in my heart,Down in my heart,!I’ve got the joy, joy, joy, joyDown in my heart,Down in my heart to stay.�
-verseAnd I’m so happy,So very happy;)I’ve got the love of Jesus in my heart.And I’m so happy,So very happy,)I’ve got the love of Jesus in my heart."d
-CategoryX
-Assurance and Joy of Salvation6/en/search/all/category/Assurance+and+Joy+of+Salvation"`
-SubcategoryQ
-GeneralF/en/search/all/category/Assurance+and+Joy+of+Salvation%E2%80%94General"`
-LyricsV
- George Willis Cooke (1848-1923)2/en/search/all/author/George+Willis+Cooke?t=c&n=60"a
-MusicX
- George Willis Cooke (1848-1923)4/en/search/all/composer/George+Willis+Cooke?t=c&n=60",
-Key%
-A Major/en/search/all/key/A+Major"(
-Time 
-4/4/en/search/all/time/4%2F4"?
-	Hymn Code2
-56717653321#/en/search/all/hymncode/56717653321"�
-See Also#
-Blessed assurance/en/hymn/h/3088
-&Sov’reign grace o’er sin abounding/en/hymn/h/3142
- My hope is built on nothing less/en/hymn/h/2987
-$Though the world may promise me more/en/hymn/ns/292"�
-
-Lead SheetC
-Piano:https://www.hymnal.net/Hymns/Children/pdfs/child0060_p.pdfD
-Guitar:https://www.hymnal.net/Hymns/Children/pdfs/child0060_g.pdfC
-Text;https://www.hymnal.net/Hymns/Children/pdfs/child0060_gt.pdf"�
-Music:
-mp33https://www.hymnal.net/Hymns/Children/mp3/c0060.mp3<
-MIDI4https://www.hymnal.net/Hymns/Children/midi/c0060.midS
-Tune (MIDI)Dhttps://www.hymnal.net/Hymns/Children/midi/tunes/child0060_tune.midi"�
-svgB
-Piano9https://www.hymnal.net/Hymns/Children/svg/child0060_p.svgC
-Guitar9https://www.hymnal.net/Hymns/Children/svg/child0060_g.svg
-�
-
-ch1?gb=1Hymn: 但願榮耀歸於聖父�
-verse但願榮耀歸於聖父，並聖子基督，且願榮耀歸於聖靈到永古。-dàn yuàn róng yào gūi yú shèng fù ，bìng shèng zǐ jī dū ，+qiě yuàn róng yào gūi yú shèng língdào yǒng gǔ 。�
-verse當我觀賞廣大創造－神智所制訂，我靈受感，立獻敬拜，並肅靜。2dāng wǒ guān shǎng guǎng dà chuàng zào －shén zhì suǒ zhì dìng ，1wǒ líng shòu gǎn ， lì xiàn jìng bài ，bìng sù jìng 。�
-verse但是我神，你是深願：能得有眾子，今在子裡對你讚美，並賞識。0dàn shì wǒ shén ， nǐ shì shēn yuàn ：néng dé yǒu zhòng zǐ ，(jīn zài zǐ lǐ dùi nǐ zàn měi ，bìng shǎng shi 。�
-verse你話已向我們啟示，你情愛祕密，為要我們領略接受，以愛你。(nǐ huà yǐ xiàng wǒ men qǐ shì ，nǐ qíng ài mì mì ，+wèi yào wǒ men lǐng lvè jiē shòu ，yǐ ài nǐ 。�
-verse因此藉著基督救贖，既將敵全克，在新造裡你就帶來敬拜者。(yīn cǐ jiè zhù jī dū jìu shú ，jì jiāng dí quán kè ，%zài xīn zào lǐ nǐ jìu dài láijìng bài zhě 。�
-verse但願榮耀歸於聖父，並聖子基督，且願榮耀歸於聖靈到永古。-dàn yuàn róng yào gūi yú shèng fù ，bìng shèng zǐ jī dū ，+qiě yuàn róng yào gūi yú shèng língdào yǒng gǔ 。"d
-CategoryX
-頌讚三一神E/en/search/all/category/%E9%A0%8C%E8%AE%9A%E4%B8%89%E4%B8%80%E7%A5%9E"�
-Subcategory�
-祂的計畫r/en/search/all/category/%E9%A0%8C%E8%AE%9A%E4%B8%89%E4%B8%80%E7%A5%9E%E2%80%94%E7%A5%82%E7%9A%84%E8%A8%88%E7%95%AB"G
-Lyrics=
-J. F. Garland,/en/search/all/author/J.+F.+Garland?t=ch&n=1"[
-MusicR
-Ira David Sankey (1840-1908)1/en/search/all/composer/Ira+David+Sankey?t=ch&n=1".
-Key'
-Ab Major/en/search/all/key/Ab+Major"(
-Time 
-4/4/en/search/all/time/4%2F4"2
-Meter)
-8.5.8.3./en/search/all/meter/8.5.8.3."C
-	Hymn Code6
-5553216153222%/en/search/all/hymncode/5553216153222"�
-	Languages!
-诗歌(简)/en/hymn/ch/1?gb=1
-Cebuano/en/hymn/cb/1
-English/en/hymn/h/1
-Spanish/en/hymn/hs/1
-Tagalog/en/hymn/ht/1"�
-
-Lead Sheet>
-Piano5https://www.hymnal.net/Hymns/Chinese/pdfs/c0001_p.pdf?
-Guitar5https://www.hymnal.net/Hymns/Chinese/pdfs/c0001_g.pdf>
-Text6https://www.hymnal.net/Hymns/Chinese/pdfs/c0001_gt.pdf"�
-MusicJ
-mp3 (whole song)6https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_full.mp3L
-MIDI (whole song)7https://www.hymnal.net/Hymns/Hymnal/midi/e0001_full.midE
-Singing:https://www.hymnal.net/Hymns/Chinese/mp3/ch_0001_vocal.mp3:
-mp33https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_i.mp3<
-MIDI4https://www.hymnal.net/Hymns/Hymnal/midi/e0001_i.midN
-Tune (MIDI)?https://www.hymnal.net/Hymns/Chinese/midi/tunes/c0001_tune.midi"�
-svg=
-Piano4https://www.hymnal.net/Hymns/Chinese/svg/c0001_p.svg>
-Guitar4https://www.hymnal.net/Hymns/Chinese/svg/c0001_g.svg
-�
-
-hd11Hymn: Jezus, ‘k ben gevangen door Uw schoonheid�
-verse,Jezus, ‘k ben gevangen door Uw schoonheid. U bent alles wat ik ooit begeer.(Los van uiterlijk vertoon en tweestrijd, laat mij wonen in Uzelf, o Heer.%O, Uw glorie dwingt mij om te buigen,)vul mijn hart met godd’lijk hemellicht.-Voed, doordrenk mij, ‘k wil van U getuigen.)Geest van God voor wie mijn leven zwicht.�
-verse.Stralend licht, hoe schoon de lucht daarboven,'zie ik, waar de Zoon des mensen troont.'Uw heilig vuur in mij is niet te doven,,verteer mij tot slechts U mijn hart bewoont.,Toen ik U voor ‘t eerst zag in Uw luister,(zag ik pas mijn zelfzucht en mijn blaam.&Nu tast ik niet langer in het duister,)‘k proef de goedheid van Uw grote Naam.�
-verse)Mijn narduskruik breek ik nu voor U open,*en zalf met liefde, Heer, Uw heilig hoofd.(Op U mijn meester blijf ik altijd hopen,#want het beste heeft U mij beloofd.(‘k Giet mijn leven uit voor U, o Here,&want Uw liefde brengt mij in de geest.+Uw liefdesstroom voor mij is niet te keren,&het is als olie die mijn hart geneest.�
-verse'Zie, Hij komt over de berg der kruiden, laat Geliefde, Uw gedaante zien.-Ontwaak nu winden van het noord’ en zuiden,*aanschouw de stromen, waarmee ik Hem dien.2‘k Weet dat ‘k in mijn liefde niet alleen sta,!maar met alle heiligen, Uw bruid.O, kom spoedig Here, maranatha,!roepen wij verlangend naar U uit."P
-CategoryD
-Ervaren van Christus,/en/search/all/category/Ervaren+van+Christus"l
-Subcategory]
-Liefhebben van HemG/en/search/all/category/Ervaren+van+Christus%E2%80%94Liefhebben+van+Hem"G
-Lyrics=
-Translated from R. K.$/en/search/all/author/R.+K.?t=hd&n=1"J
-MusicA
-Oscar Ahnfeldt//en/search/all/composer/Oscar+Ahnfeldt?t=hd&n=1".
-Key'
-Eb Major/en/search/all/key/Eb+Major"(
-Time 
-4/4/en/search/all/time/4%2F4":
-Meter1
-10.9.10.9.D.!/en/search/all/meter/10.9.10.9.D."=
-	Hymn Code0
-
-3211112332"/en/search/all/hymncode/3211112332"�
-	Languages
-Cebuano/en/hymn/cb/1159#
-诗歌(简)/en/hymn/ts/305?gb=1
-詩歌(繁)/en/hymn/ts/305
-English/en/hymn/h/1159
-French/en/hymn/hf/115
-German/en/hymn/de/1159
-Spanish/en/hymn/hs/278
-Tagalog/en/hymn/ht/1159"�
-See Also(
-Christus is mijn vrede/en/hymn/hd/79!
-Ik ben een mens/en/hymn/hd/41.
-Jezus is de Geest des levens/en/hymn/hd/39<
-)Heer, mijn liefde groeit en bloeit voor U/en/hymn/hd/100
-�
-
-hs1 Hymn: Gloria dad a Dios el Padre[
-verseGloria dad a Dios el Padre,Y͜ al Hijo loor;Al Espíritu dad gloria;Uno son.]
-verseSu cr͡eación inmensurable,Fruto de Su plan;Al mirarla nos inspiraA͜ adorar.r
-verseMas Tú͜ anhelas muchos hijos,Nuestro Dios de͜  amor, Que͜ en el Hijo hoy te͜ alaben
-En unión._
-verseFue Tu pensamiento santoDar al hombre ver,Lo profundo de Tu͜  afecto	Para él.a
-verseCristo͜ el mal ha destruidoPor Su redención;¡Le͜ adoramos como nueva
-Creación!]
-verseHoy al Padre demos gloria,Y͜ al Hijo de Dios;Al Espíritu dad gloria;Uno son."\
-CategoryP
-Bendición a la Trinidad4/en/search/all/category/Bendici%C3%B3n+a+la+Trinidad"^
-SubcategoryO
-Su planD/en/search/all/category/Bendici%C3%B3n+a+la+Trinidad%E2%80%94Su+plan"W
-LyricsM
-Translated from J. F. Garland,/en/search/all/author/J.+F.+Garland?t=hs&n=1"[
-MusicR
-Ira David Sankey (1840-1908)1/en/search/all/composer/Ira+David+Sankey?t=hs&n=1".
-Key'
-Ab Major/en/search/all/key/Ab+Major"(
-Time 
-4/4/en/search/all/time/4%2F4"2
-Meter)
-8.5.8.3./en/search/all/meter/8.5.8.3."C
-	Hymn Code6
-5553216153222%/en/search/all/hymncode/5553216153222"�
-	Languages
-Cebuano/en/hymn/cb/1!
-诗歌(简)/en/hymn/ch/1?gb=1
-詩歌(繁)/en/hymn/ch/1
-English/en/hymn/h/1
-German/en/hymn/de/1
-Tagalog/en/hymn/ht/1"f
-See Also+
-Padre nuestro, te adoramos/en/hymn/hs/2-
-Al Dios que emana bendición/en/hymn/hs/4
-�"
-
-ts1Hymn: 當以嘴親子�
-verse看哪，地上萬民聚集，一同謀算虛妄事；君王臣宰起來商議，同聲一氣抵擋主。『我們掙開一切捆綁，脫去他們的繩索，』世上君王如此設謀，抵擋神並受膏者。-kàn nǎ ， dì shàng wàn mín jù jí ，'yī tóng móu suàn xū wàng shì ；-jūn wáng chén zǎi qǐ lái shāng yì ，'tóng shēng yī qì dǐ dǎng zhǔ 。/『 wǒ men zhēng kāi yī qiē kǔn bǎng ，'tuō qù tā men de shéng suǒ ， 』,shì shàng jūn wáng rú cǐ shè móu ，)dǐ dǎng shén bìng shòu gāo zhě 。�
-verse那坐天上的必發笑，主必定嗤笑他們；那時祂在怒中責備，烈怒中驚嚇他們。在祂的錫安聖山上，神已膏祂的君王─這是神自己的宣告，警戒地上的諸王。*nà zuò tiān shàng de bì fā xiào ，%zhǔ bì dìng chī xiào tā men ；)nà shí tā zài nù zhōng zé bèi ，&liè nù zhōng jīng xià tā men 。+zài tā de xí ān shèng shān shàng ，$shén yǐ gāo tā de jūn wáng ─)zhè shì shén zì jǐ de xuān gào ，'jǐng jiè dì shàng de zhū wáng 。�
-verse現今基督，神所膏者，傳揚主神的旨意：『你是我子（在復活裡），我在今日生了你。我將列國都賜給你，使你承受為基業，你顯王權，手拿鐵杖，將他們打破摔裂。』/xiàn jīn jī dū ， shén suǒ gāo zhě ，'chuán yáng zhǔ shén de zhǐ yì ：『 nǐ shì wǒ zǐ（ zài fù huó lǐ ） ，#wǒ zài jīn rì shēng le nǐ 。)wǒ jiāng liè guó dū cì gěi nǐ ，&shǐ nǐ chéng shòu wèi jī yè ，3nǐ xiǎn wáng quán ， shǒu ná tiě zhàng ，*jiāng tā men dǎ pò shuāi liè 。 』�
-verse你們君王應當省悟，審判官該受管教；當存畏懼事奉我主，又存戰兢而歡躍。當以嘴親子，消祂怒，免得你道中滅亡；!『投靠祂的是有福的，』讓我們同來歡唱！-nǐ men jūn wáng yīng dāng shěng wù ，+shěn pàn guān gāi shòu guǎn jiào ；+dāng cún wèi jù shì fèng wǒ zhǔ ，(yòu cún zhàn jīng ér huān yuè 。-dāng yǐ zǔi qīn zǐ ， xiāo tā nù ，(miǎn dé nǐ dào zhōng miè wáng ；-『 tóu kào tā de shì yǒu fú de ， 』)ràng wǒ men tóng lái huān chàng ！�
-verse哦，讚美神，我們看見你獨一受膏之子；從虛妄中我們悔改，在愛裡親你愛子。!『投靠祂的是有福的』─非那『遵守律法的；』只要信靠那復活者，就必蒙福永無已。-é ， zàn měi shén ， wǒ men kàn jiàn#nǐ dú yī shòu gāo zhī zǐ ；,cóng xū wàng zhōng wǒ men hǔi gǎi ，!zài ài lǐ qīn nǐ ài zǐ 。-『 tóu kào tā de shì yǒu fú de 』 ─+fēi nà 『 zūn shǒu lv̀ fǎ de ； 』)zhǐ yào xìn kào nà fù huó zhě ，$jìu bì méng fú yǒng wú yǐ 。"X
-CategoryL
-讚美的話</en/search/all/category/%E8%AE%9A%E7%BE%8E%E7%9A%84%E8%A9%B1"J
-MusicA
-J. B. O. Clemm//en/search/all/composer/J.+B.+O.+Clemm?t=ts&n=2",
-Key%
-F Major/en/search/all/key/F+Major"(
-Time 
-3/4/en/search/all/time/3%2F4"6
-Meter-
-
-8.7.8.7.D./en/search/all/meter/8.7.8.7.D."M
-	Hymn Code@
-333211121655113212*/en/search/all/hymncode/333211121655113212"R
-
-ScripturesD
-Psalms 28http://text.recoveryversion.bible/19_Psalms_2.htm#Psa2-1"J
-	Languages!
-诗歌(简)/en/hymn/ts/2?gb=1
-English/en/hymn/h/1094"�
-See Also
-披上喜樂/en/hymn/ts/5
-開口讚美/en/hymn/ts/1
-湧出美辭/en/hymn/ts/6)
-你名在全地何其美/en/hymn/ts/3)
-你的恩典一生之久/en/hymn/ts/4"�
-
-Lead SheetA
-Piano8https://www.hymnal.net/Hymns/ChineseTS/pdfs/ts0002_p.pdfB
-Guitar8https://www.hymnal.net/Hymns/ChineseTS/pdfs/ts0002_g.pdfA
-Text9https://www.hymnal.net/Hymns/ChineseTS/pdfs/ts0002_gt.pdf"�
-MusicG
-Singing<https://www.hymnal.net/Hymns/ChineseTS/mp3/ts_0002_vocal.mp3:
-mp33https://www.hymnal.net/Hymns/Hymnal/mp3/e0203_i.mp3<
-MIDI4https://www.hymnal.net/Hymns/Hymnal/midi/e0203_i.midQ
-Tune (MIDI)Bhttps://www.hymnal.net/Hymns/ChineseTS/midi/tunes/ts0002_tune.midi"�
-svg@
-Piano7https://www.hymnal.net/Hymns/ChineseTS/svg/ts0002_p.svgA
-Guitar7https://www.hymnal.net/Hymns/ChineseTS/svg/ts0002_g.svg
-�
-
-c14Hymn: Praise Him, praise Him, all ye little children�
-verse/Praise Him, praise Him, all ye little children,God is love, God is love;/Praise Him, praise Him, all ye little children,God is love, God is love.�
-verse+Love Him, love Him, all ye little children,!    God is love, God is love;+Love Him, love Him, all ye little children,!    God is love, God is love.�
-verse-Thank Him, thank Him, all ye little children,!    God is love, God is love;-Thank Him, thank Him, all ye little children,!    God is love, God is love."L
-Category@
-Praise of the Lord*/en/search/all/category/Praise+of+the+Lord"V
-SubcategoryG
-His Love;/en/search/all/category/Praise+of+the+Lord%E2%80%94His+Love"R
-MusicI
-Carey Bonner (1859-1938),/en/search/all/composer/Carey+Bonner?t=c&n=1",
-Key%
-C Major/en/search/all/key/C+Major"(
-Time 
-2/4/en/search/all/time/2%2F4"=
-	Hymn Code0
-
-1135671653"/en/search/all/hymncode/1135671653"�
-See Also-
-Around Thy table, holy Lord/en/hymn/h/216.
-Jesus! Source of life eternal/en/hymn/h/98*
-Whatever God says is true/en/hymn/c/40+
-Yesterday, today, forever/en/hymn/c/1626
-$Hark! Ten thousand heav’nly voices/en/hymn/h/149"�
-
-Lead SheetC
-Piano:https://www.hymnal.net/Hymns/Children/pdfs/child0001_p.pdfD
-Guitar:https://www.hymnal.net/Hymns/Children/pdfs/child0001_g.pdfC
-Text;https://www.hymnal.net/Hymns/Children/pdfs/child0001_gt.pdf"�
-Music:
-mp33https://www.hymnal.net/Hymns/Children/mp3/c0001.mp3<
-MIDI4https://www.hymnal.net/Hymns/Children/midi/c0001.midS
-Tune (MIDI)Dhttps://www.hymnal.net/Hymns/Children/midi/tunes/child0001_tune.midi"�
-svgB
-Piano9https://www.hymnal.net/Hymns/Children/svg/child0001_p.svgC
-Guitar9https://www.hymnal.net/Hymns/Children/svg/child0001_g.svg
-�"
-
-ts1?gb=1Hymn: 當以嘴親子�
-verse看哪，地上萬民聚集，一同謀算虛妄事；君王臣宰起來商議，同聲一氣抵擋主。『我們掙開一切捆綁，脫去他們的繩索，』世上君王如此設謀，抵擋神並受膏者。-kàn nǎ ， dì shàng wàn mín jù jí ，'yī tóng móu suàn xū wàng shì ；-jūn wáng chén zǎi qǐ lái shāng yì ，'tóng shēng yī qì dǐ dǎng zhǔ 。/『 wǒ men zhēng kāi yī qiē kǔn bǎng ，'tuō qù tā men de shéng suǒ ， 』,shì shàng jūn wáng rú cǐ shè móu ，)dǐ dǎng shén bìng shòu gāo zhě 。�
-verse那坐天上的必發笑，主必定嗤笑他們；那時祂在怒中責備，烈怒中驚嚇他們。在祂的錫安聖山上，神已膏祂的君王─這是神自己的宣告，警戒地上的諸王。*nà zuò tiān shàng de bì fā xiào ，%zhǔ bì dìng chī xiào tā men ；)nà shí tā zài nù zhōng zé bèi ，&liè nù zhōng jīng xià tā men 。+zài tā de xí ān shèng shān shàng ，$shén yǐ gāo tā de jūn wáng ─)zhè shì shén zì jǐ de xuān gào ，'jǐng jiè dì shàng de zhū wáng 。�
-verse現今基督，神所膏者，傳揚主神的旨意：『你是我子（在復活裡），我在今日生了你。我將列國都賜給你，使你承受為基業，你顯王權，手拿鐵杖，將他們打破摔裂。』/xiàn jīn jī dū ， shén suǒ gāo zhě ，'chuán yáng zhǔ shén de zhǐ yì ：『 nǐ shì wǒ zǐ（ zài fù huó lǐ ） ，#wǒ zài jīn rì shēng le nǐ 。)wǒ jiāng liè guó dū cì gěi nǐ ，&shǐ nǐ chéng shòu wèi jī yè ，3nǐ xiǎn wáng quán ， shǒu ná tiě zhàng ，*jiāng tā men dǎ pò shuāi liè 。 』�
-verse你們君王應當省悟，審判官該受管教；當存畏懼事奉我主，又存戰兢而歡躍。當以嘴親子，消祂怒，免得你道中滅亡；!『投靠祂的是有福的，』讓我們同來歡唱！-nǐ men jūn wáng yīng dāng shěng wù ，+shěn pàn guān gāi shòu guǎn jiào ；+dāng cún wèi jù shì fèng wǒ zhǔ ，(yòu cún zhàn jīng ér huān yuè 。-dāng yǐ zǔi qīn zǐ ， xiāo tā nù ，(miǎn dé nǐ dào zhōng miè wáng ；-『 tóu kào tā de shì yǒu fú de ， 』)ràng wǒ men tóng lái huān chàng ！�
-verse哦，讚美神，我們看見你獨一受膏之子；從虛妄中我們悔改，在愛裡親你愛子。!『投靠祂的是有福的』─非那『遵守律法的；』只要信靠那復活者，就必蒙福永無已。-é ， zàn měi shén ， wǒ men kàn jiàn#nǐ dú yī shòu gāo zhī zǐ ；,cóng xū wàng zhōng wǒ men hǔi gǎi ，!zài ài lǐ qīn nǐ ài zǐ 。-『 tóu kào tā de shì yǒu fú de 』 ─+fēi nà 『 zūn shǒu lv̀ fǎ de ； 』)zhǐ yào xìn kào nà fù huó zhě ，$jìu bì méng fú yǒng wú yǐ 。"X
-CategoryL
-讚美的話</en/search/all/category/%E8%AE%9A%E7%BE%8E%E7%9A%84%E8%A9%B1"J
-MusicA
-J. B. O. Clemm//en/search/all/composer/J.+B.+O.+Clemm?t=ts&n=2",
-Key%
-F Major/en/search/all/key/F+Major"(
-Time 
-3/4/en/search/all/time/3%2F4"6
-Meter-
-
-8.7.8.7.D./en/search/all/meter/8.7.8.7.D."M
-	Hymn Code@
-333211121655113212*/en/search/all/hymncode/333211121655113212"R
-
-ScripturesD
-Psalms 28http://text.recoveryversion.bible/19_Psalms_2.htm#Psa2-1"J
-	Languages!
-诗歌(简)/en/hymn/ts/2?gb=1
-English/en/hymn/h/1094"�
-See Also
-披上喜樂/en/hymn/ts/5
-開口讚美/en/hymn/ts/1
-湧出美辭/en/hymn/ts/6)
-你名在全地何其美/en/hymn/ts/3)
-你的恩典一生之久/en/hymn/ts/4"�
-
-Lead SheetA
-Piano8https://www.hymnal.net/Hymns/ChineseTS/pdfs/ts0002_p.pdfB
-Guitar8https://www.hymnal.net/Hymns/ChineseTS/pdfs/ts0002_g.pdfA
-Text9https://www.hymnal.net/Hymns/ChineseTS/pdfs/ts0002_gt.pdf"�
-MusicG
-Singing<https://www.hymnal.net/Hymns/ChineseTS/mp3/ts_0002_vocal.mp3:
-mp33https://www.hymnal.net/Hymns/Hymnal/mp3/e0203_i.mp3<
-MIDI4https://www.hymnal.net/Hymns/Hymnal/midi/e0203_i.midQ
-Tune (MIDI)Bhttps://www.hymnal.net/Hymns/ChineseTS/midi/tunes/ts0002_tune.midi"�
-svg@
-Piano7https://www.hymnal.net/Hymns/ChineseTS/svg/ts0002_p.svgA
-Guitar7https://www.hymnal.net/Hymns/ChineseTS/svg/ts0002_g.svg
-�
-
-ns1#Hymn: The working of the Triune God�
-verse&God’s economy is to have God and man#Incorporated as one—divine-human,#To build up His Body—an organism,$Which consummates the New Jerusalem.�
-verse(God the Father loves man and chooses man$In eternity past, in His great plan,*According to His purpose, and not of works$But of Him, in the section of Jacob.�
-verse*God the Father calls man and justifies man#In time, in the section of Abraham;2That man may live by faith, know grace from within)That man may live in fellowship with Him.�
-verse+God the Son gives man His rich inheritance,"And a life enjoying His abundance,,And a life in peace, totally without lack—'Fully blessed, in the section of Isaac.�
-verse,God the Spirit transforms man and causes man"To be mature in life, enabling man3To bless and supply all, and rule o’er the earth,$In the section of Jacob with Joseph."T
-CategoryH
-Ultimate Manifestation./en/search/all/category/Ultimate+Manifestation"x
-Subcategoryi
-God’s Eternal PurposeN/en/search/all/category/Ultimate+Manifestation%E2%80%94God%27s+Eternal+Purpose"H
-Music?
-I. E. Rummery./en/search/all/composer/I.+E.+Rummery?t=ns&n=1",
-Key%
-G Major/en/search/all/key/G+Major"(
-Time 
-3/4/en/search/all/time/3%2F4":
-Meter1
-11.11.11.11.!/en/search/all/meter/11.11.11.11."?
-	Hymn Code2
-51123321271#/en/search/all/hymncode/51123321271"Z
-
-ScripturesL
-Genesis 12-50;http://text.recoveryversion.bible/01_Genesis_12.htm#Gen12-1"C
-Relevant7
-%The Spirit of life is within us today/en/hymn/h/278"�
-See Also5
-#In His Christ to head up all things/en/hymn/h/9811
-O Lord Jesus, Thy redeemed ones/en/hymn/h/9764
-"How glorious, how bright it shines/en/hymn/h/979:
-(He looked for a city and lived in a tent/en/hymn/h/974"�
-
-Lead Sheet@
-Piano7https://www.hymnal.net/Hymns/NewSongs/pdfs/ns0001_p.pdfA
-Guitar7https://www.hymnal.net/Hymns/NewSongs/pdfs/ns0001_g.pdf@
-Text8https://www.hymnal.net/Hymns/NewSongs/pdfs/ns0001_gt.pdf"�
-Music:
-mp33https://www.hymnal.net/Hymns/Hymnal/mp3/e0278_i.mp3<
-MIDI4https://www.hymnal.net/Hymns/Hymnal/midi/e0278_i.midP
-Tune (MIDI)Ahttps://www.hymnal.net/Hymns/NewSongs/midi/tunes/ns0001_tune.midi"�
-svg?
-Piano6https://www.hymnal.net/Hymns/NewSongs/svg/ns0001_p.svg@
-Guitar6https://www.hymnal.net/Hymns/NewSongs/svg/ns0001_g.svg�
-1 Hymn: Glory be to God the Fatherx
-verse
-Glory be to God the Father,
-  And to Christ the Son,
-Glory to the Holy Spirit—
-    Ever One.�
-verse
-As we view the vast creation,"
-   Planned with wondrous skill,&
-$So our hearts would move to worship,
-    And be still.�
-verse&
-$But, our God, how great Thy yearning
-  To have sons who love'
-%In the Son e’en now to praise Thee,
-    Love to prove!�
-verse$
-"’Twas Thy thought in revelation,
-  To present to men"
- Secrets of Thine own affections,
-    Theirs to win.�
-verse&
-$So in Christ, through His redemption
-  (Vanquished evil powers!)%
-#Thou hast brought, in new creation,
-    Worshippers!x
-verse
-Glory be to God the Father,
-  And to Christ the Son,
-Glory to the Holy Spirit—
-    Ever One."Blessing of the Trinity*His Plan2J. F. Garland:Ira David Sankey (1840-1908)BAb MajorJ4/4R8.5.8.3.b5553216153222jJ
-mp3 (whole song)6https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_full.mp3jL
-MIDI (whole song)7https://www.hymnal.net/Hymns/Hymnal/midi/e0001_full.midjA
-Singing6https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_sing.mp3j:
-mp33https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_i.mp3j<
-MIDI4https://www.hymnal.net/Hymns/Hymnal/midi/e0001_i.midjM
-Tune (MIDI)>https://www.hymnal.net/Hymns/Hymnal/midi/tunes/e0001_tune.midir<
-Piano3https://www.hymnal.net/Hymns/Hymnal/svg/e0001_p.svgr=
-Guitar3https://www.hymnal.net/Hymns/Hymnal/svg/e0001_g.svgz=
-Piano4https://www.hymnal.net/Hymns/Hymnal/pdfs/e0001_p.pdfz>
-Guitar4https://www.hymnal.net/Hymns/Hymnal/pdfs/e0001_g.pdfz=
-Text5https://www.hymnal.net/Hymns/Hymnal/pdfs/e0001_gt.pdf�
-Cebuano1�
-诗歌(简)	1�
-詩歌(繁)1�
-Spanish1�
-Tagalog1�
-1 Hymn: Gloria dad a Dios el Padrec
-verse
-Gloria dad a Dios el Padre,
-Y͜ al Hijo loor;
-Al Espíritu dad gloria;
-
-Uno son.e
-verse
-Su cr͡eación inmensurable,
-Fruto de Su plan;
-Al mirarla nos inspira
-A͜ adorar.z
-verse!
-Mas Tú͜ anhelas muchos hijos,
-Nuestro Dios de͜  amor,"
- Que͜ en el Hijo hoy te͜ alaben
-
-En unión.g
-verse
-Fue Tu pensamiento santo
-Dar al hombre ver,
-Lo profundo de Tu͜  afecto
-	Para él.i
-verse
-Cristo͜ el mal ha destruido
-Por Su redención;
-¡Le͜ adoramos como nueva
-
-Creación!e
-verse
-Hoy al Padre demos gloria,
-Y͜ al Hijo de Dios;
-Al Espíritu dad gloria;
-
-Uno son."Bendición a la Trinidad*Su plan2Translated from J. F. Garland:Ira David Sankey (1840-1908)BAb MajorJ4/4R8.5.8.3.b5553216153222�
-Cebuano1�
-诗歌(简)	1�
-詩歌(繁)1�
-English1�
-German1�
-Tagalog1�
-10Hymn: L’walhati sa Diyos Ama at sa Anak Kristo_
-verse-
-+L’walhati sa Diyos Ama at sa Anak Kristo,'
-%L’walhati sa Espiritu—laging Isa.V
-verse&
-$Sa pagmamasid ng malawak na nilikha,%
-#Puso nati’y tatahimik at sasamba.W
-verse(
-&O Diyos, nais Mo ang magkaroon sa Anak$
-"Mga anak nagpupuri’t nagmamahal.[
-verse+
-)Ang pagsinta Mo’y pinahayag sa nilalang%
-#Upang ang pagsinta nila ay makamtan`
-verse,
-*Sa pagtubos ni Kristo, masama’y napuksa;)
-'Mananamba’y nakamtan sa bagong likha._
-verse-
-+L’walhati sa Diyos Ama at sa Anak Kristo,'
-%L’walhati sa Espiritu—laging Isa."PAGPAPARANGAL SA TRINIDAD*KANYANG PLANO2Translated from J. F. Garland:Ira David Sankey (1840-1908)BAb MajorJ4/4R8.5.8.3.b5553216153222�
-Cebuano1�
-诗歌(简)	1�
-詩歌(繁)1�
-English1�
-Spanish1�
-1Hymn: Himayaong Dios AmahanW
-verse
-Himayaong Dios Amahan,
-Cristo nga Anak;
-Espiritu himayaon
-	Sa dayon.\
-verse
-Kabuhatan kon sud-ongon,
-O pagkatahum,
-Matandog mi ug magsimba
-	Maghilom.^
-verse
-Pagkadako’s pangandoy Mo
-May mga anak
-Nga mahigugma’g magdayeg	
-Kanimo!d
-verse
-Diha’s bugna pangagpas Mo,
-Ipadayag’s tawo
-Mailahang sekreto sa
-Pagmahal Mo.c
-verse
-Giwagtang dautang gahum
-Diha kang Cristo!
-Nia’s bag-ong kabuhatan
-Magsisimba!X
-verse
-Himayaong Dios Amahan,
-Cristo nga Anak;
-Espiritu himayaon,
-	Sa dayon."PANALANGIN SA TRINIDAD*SA IYANG PLANO2Translated from J. F. Garland:Ira David Sankey (1840-1908)BAb MajorJ4/4R8.5.8.3.b5553216153222�
-诗歌(简)	1�
-詩歌(繁)1�
-English1�
-Spanish1�
-Tagalog1�
-1Hymn: 但願榮耀歸於聖父�
-verseL
-但願榮耀歸於聖父，-dàn yuàn róng yào gūi yú shèng fù ，2
-並聖子基督，bìng shèng zǐ jī dū ，G
-且願榮耀歸於聖靈+qiě yuàn róng yào gūi yú shèng líng"
-到永古。dào yǒng gǔ 。�
-verseQ
-當我觀賞廣大創造－2dāng wǒ guān shǎng guǎng dà chuàng zào －4
-神智所制訂，shén zhì suǒ zhì dìng ，S
-我靈受感，立獻敬拜，1wǒ líng shòu gǎn ， lì xiàn jìng bài ，#
-並肅靜。bìng sù jìng 。�
-verseR
-但是我神，你是深願：0dàn shì wǒ shén ， nǐ shì shēn yuàn ：3
-能得有眾子，néng dé yǒu zhòng zǐ ，G
-今在子裡對你讚美，(jīn zài zǐ lǐ dùi nǐ zàn měi ，$
-並賞識。bìng shǎng shi 。�
-verseG
-你話已向我們啟示，(nǐ huà yǐ xiàng wǒ men qǐ shì ，/
-你情愛祕密，nǐ qíng ài mì mì ，J
-為要我們領略接受，+wèi yào wǒ men lǐng lvè jiē shòu ，
-以愛你。yǐ ài nǐ 。�
-verseG
-因此藉著基督救贖，(yīn cǐ jiè zhù jī dū jìu shú ，2
-既將敵全克，jì jiāng dí quán kè ，A
-在新造裡你就帶來%zài xīn zào lǐ nǐ jìu dài lái#
-敬拜者。jìng bài zhě 。�
-verseL
-但願榮耀歸於聖父，-dàn yuàn róng yào gūi yú shèng fù ，2
-並聖子基督，bìng shèng zǐ jī dū ，G
-且願榮耀歸於聖靈+qiě yuàn róng yào gūi yú shèng líng"
-到永古。dào yǒng gǔ 。"頌讚三一神*祂的計畫2J. F. Garland:Ira David Sankey (1840-1908)BAb MajorJ4/4R8.5.8.3.b5553216153222jJ
-mp3 (whole song)6https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_full.mp3jL
-MIDI (whole song)7https://www.hymnal.net/Hymns/Hymnal/midi/e0001_full.midjE
-Singing:https://www.hymnal.net/Hymns/Chinese/mp3/ch_0001_vocal.mp3j:
-mp33https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_i.mp3j<
-MIDI4https://www.hymnal.net/Hymns/Hymnal/midi/e0001_i.midjN
-Tune (MIDI)?https://www.hymnal.net/Hymns/Chinese/midi/tunes/c0001_tune.midir=
-Piano4https://www.hymnal.net/Hymns/Chinese/svg/c0001_p.svgr>
-Guitar4https://www.hymnal.net/Hymns/Chinese/svg/c0001_g.svgz>
-Piano5https://www.hymnal.net/Hymns/Chinese/pdfs/c0001_p.pdfz?
-Guitar5https://www.hymnal.net/Hymns/Chinese/pdfs/c0001_g.pdfz>
-Text6https://www.hymnal.net/Hymns/Chinese/pdfs/c0001_gt.pdf�
-诗歌(简)	1�
-Cebuano1�
-English1�
-Spanish1�
-Tagalog1�
+Ama, sinta Mo’y kay lalim/en/hymn/ht/4�
 60'Hymn: I’ve got the joy, joy, joy, joy�
 verse#
 !I’ve got the joy, joy, joy, joy
@@ -834,391 +639,4 @@ $Sa pagmamasid ng malawak na nilikha,%
 Guitar9https://www.hymnal.net/Hymns/Children/svg/child0060_g.svgzC
 Piano:https://www.hymnal.net/Hymns/Children/pdfs/child0060_p.pdfzD
 Guitar:https://www.hymnal.net/Hymns/Children/pdfs/child0060_g.pdfzC
-Text;https://www.hymnal.net/Hymns/Children/pdfs/child0060_gt.pdf�
-1#Hymn: The working of the Triune God�
-verse(
-&God’s economy is to have God and man%
-#Incorporated as one—divine-human,%
-#To build up His Body—an organism,&
-$Which consummates the New Jerusalem.�
-verse*
-(God the Father loves man and chooses man&
-$In eternity past, in His great plan,,
-*According to His purpose, and not of works&
-$But of Him, in the section of Jacob.�
-verse,
-*God the Father calls man and justifies man%
-#In time, in the section of Abraham;4
-2That man may live by faith, know grace from within+
-)That man may live in fellowship with Him.�
-verse-
-+God the Son gives man His rich inheritance,$
-"And a life enjoying His abundance,.
-,And a life in peace, totally without lack—)
-'Fully blessed, in the section of Isaac.�
-verse.
-,God the Spirit transforms man and causes man$
-"To be mature in life, enabling man5
-3To bless and supply all, and rule o’er the earth,&
-$In the section of Jacob with Joseph."Ultimate Manifestation*God’s Eternal Purpose:I. E. RummeryBG MajorJ3/4R11.11.11.11.ZGenesis 12-50b51123321271j:
-mp33https://www.hymnal.net/Hymns/Hymnal/mp3/e0278_i.mp3j<
-MIDI4https://www.hymnal.net/Hymns/Hymnal/midi/e0278_i.midjP
-Tune (MIDI)Ahttps://www.hymnal.net/Hymns/NewSongs/midi/tunes/ns0001_tune.midir?
-Piano6https://www.hymnal.net/Hymns/NewSongs/svg/ns0001_p.svgr@
-Guitar6https://www.hymnal.net/Hymns/NewSongs/svg/ns0001_g.svgz@
-Piano7https://www.hymnal.net/Hymns/NewSongs/pdfs/ns0001_p.pdfzA
-Guitar7https://www.hymnal.net/Hymns/NewSongs/pdfs/ns0001_g.pdfz@
-Text8https://www.hymnal.net/Hymns/NewSongs/pdfs/ns0001_gt.pdf�0
-%The Spirit of life is within us today278�
-11Hymn: Jezus, ‘k ben gevangen door Uw schoonheid�
-verse.
-,Jezus, ‘k ben gevangen door Uw schoonheid."
- U bent alles wat ik ooit begeer.*
-(Los van uiterlijk vertoon en tweestrijd,"
- laat mij wonen in Uzelf, o Heer.'
-%O, Uw glorie dwingt mij om te buigen,+
-)vul mijn hart met godd’lijk hemellicht./
--Voed, doordrenk mij, ‘k wil van U getuigen.+
-)Geest van God voor wie mijn leven zwicht.�
-verse0
-.Stralend licht, hoe schoon de lucht daarboven,)
-'zie ik, waar de Zoon des mensen troont.)
-'Uw heilig vuur in mij is niet te doven,.
-,verteer mij tot slechts U mijn hart bewoont..
-,Toen ik U voor ‘t eerst zag in Uw luister,*
-(zag ik pas mijn zelfzucht en mijn blaam.(
-&Nu tast ik niet langer in het duister,+
-)‘k proef de goedheid van Uw grote Naam.�
-verse+
-)Mijn narduskruik breek ik nu voor U open,,
-*en zalf met liefde, Heer, Uw heilig hoofd.*
-(Op U mijn meester blijf ik altijd hopen,%
-#want het beste heeft U mij beloofd.*
-(‘k Giet mijn leven uit voor U, o Here,(
-&want Uw liefde brengt mij in de geest.-
-+Uw liefdesstroom voor mij is niet te keren,(
-&het is als olie die mijn hart geneest.�
-verse)
-'Zie, Hij komt over de berg der kruiden,"
- laat Geliefde, Uw gedaante zien./
--Ontwaak nu winden van het noord’ en zuiden,,
-*aanschouw de stromen, waarmee ik Hem dien.4
-2‘k Weet dat ‘k in mijn liefde niet alleen sta,#
-!maar met alle heiligen, Uw bruid.!
-O, kom spoedig Here, maranatha,#
-!roepen wij verlangend naar U uit."Ervaren van Christus*Liefhebben van Hem2Translated from R. K.:Oscar AhnfeldtBEb MajorJ4/4R10.9.10.9.D.b
-3211112332�
-Cebuano1159�
-诗歌(简)305�
-詩歌(繁)
-305�
-English1159�
-French115�
-German1159�
-Spanish278�
-Tagalog1159�
-
-1Hymn: 當以嘴親子�
-verseO
-看哪，地上萬民聚集，-kàn nǎ ， dì shàng wàn mín jù jí ，C
-一同謀算虛妄事；'yī tóng móu suàn xū wàng shì ；L
-君王臣宰起來商議，-jūn wáng chén zǎi qǐ lái shāng yì ，C
-同聲一氣抵擋主。'tóng shēng yī qì dǐ dǎng zhǔ 。Q
-『我們掙開一切捆綁，/『 wǒ men zhēng kāi yī qiē kǔn bǎng ，F
-脫去他們的繩索，』'tuō qù tā men de shéng suǒ ， 』K
-世上君王如此設謀，,shì shàng jūn wáng rú cǐ shè móu ，E
-抵擋神並受膏者。)dǐ dǎng shén bìng shòu gāo zhě 。�
-verseI
-那坐天上的必發笑，*nà zuò tiān shàng de bì fā xiào ，A
-主必定嗤笑他們；%zhǔ bì dìng chī xiào tā men ；H
-那時祂在怒中責備，)nà shí tā zài nù zhōng zé bèi ，B
-烈怒中驚嚇他們。&liè nù zhōng jīng xià tā men 。J
-在祂的錫安聖山上，+zài tā de xí ān shèng shān shàng ，@
-神已膏祂的君王─$shén yǐ gāo tā de jūn wáng ─H
-這是神自己的宣告，)zhè shì shén zì jǐ de xuān gào ，C
-警戒地上的諸王。'jǐng jiè dì shàng de zhū wáng 。�
-verseQ
-現今基督，神所膏者，/xiàn jīn jī dū ， shén suǒ gāo zhě ，C
-傳揚主神的旨意：'chuán yáng zhǔ shén de zhǐ yì ：'
-『你是我子『 nǐ shì wǒ zǐ6
-（在復活裡），（ zài fù huó lǐ ） ，?
-我在今日生了你。#wǒ zài jīn rì shēng le nǐ 。H
-我將列國都賜給你，)wǒ jiāng liè guó dū cì gěi nǐ ，B
-使你承受為基業，&shǐ nǐ chéng shòu wèi jī yè ，U
-你顯王權，手拿鐵杖，3nǐ xiǎn wáng quán ， shǒu ná tiě zhàng ，I
-將他們打破摔裂。』*jiāng tā men dǎ pò shuāi liè 。 』�
-verseL
-你們君王應當省悟，-nǐ men jūn wáng yīng dāng shěng wù ，G
-審判官該受管教；+shěn pàn guān gāi shòu guǎn jiào ；J
-當存畏懼事奉我主，+dāng cún wèi jù shì fèng wǒ zhǔ ，D
-又存戰兢而歡躍。(yòu cún zhàn jīng ér huān yuè 。O
-當以嘴親子，消祂怒，-dāng yǐ zǔi qīn zǐ ， xiāo tā nù ，D
-免得你道中滅亡；(miǎn dé nǐ dào zhōng miè wáng ；R
-!『投靠祂的是有福的，』-『 tóu kào tā de shì yǒu fú de ， 』E
-讓我們同來歡唱！)ràng wǒ men tóng lái huān chàng ！�
-verseO
-哦，讚美神，我們看見-é ， zàn měi shén ， wǒ men kàn jiàn?
-你獨一受膏之子；#nǐ dú yī shòu gāo zhī zǐ ；K
-從虛妄中我們悔改，,cóng xū wàng zhōng wǒ men hǔi gǎi ，=
-在愛裡親你愛子。!zài ài lǐ qīn nǐ ài zǐ 。R
-!『投靠祂的是有福的』─-『 tóu kào tā de shì yǒu fú de 』 ─M
-非那『遵守律法的；』+fēi nà 『 zūn shǒu lv̀ fǎ de ； 』H
-只要信靠那復活者，)zhǐ yào xìn kào nà fù huó zhě ，@
-就必蒙福永無已。$jìu bì méng fú yǒng wú yǐ 。"讚美的話:J. B. O. ClemmBF MajorJ3/4R
-8.7.8.7.D.ZPsalms 2b333211121655113212jG
-Singing<https://www.hymnal.net/Hymns/ChineseTS/mp3/ts_0002_vocal.mp3j:
-mp33https://www.hymnal.net/Hymns/Hymnal/mp3/e0203_i.mp3j<
-MIDI4https://www.hymnal.net/Hymns/Hymnal/midi/e0203_i.midjQ
-Tune (MIDI)Bhttps://www.hymnal.net/Hymns/ChineseTS/midi/tunes/ts0002_tune.midir@
-Piano7https://www.hymnal.net/Hymns/ChineseTS/svg/ts0002_p.svgrA
-Guitar7https://www.hymnal.net/Hymns/ChineseTS/svg/ts0002_g.svgzA
-Piano8https://www.hymnal.net/Hymns/ChineseTS/pdfs/ts0002_p.pdfzB
-Guitar8https://www.hymnal.net/Hymns/ChineseTS/pdfs/ts0002_g.pdfzA
-Text9https://www.hymnal.net/Hymns/ChineseTS/pdfs/ts0002_gt.pdf�
-诗歌(简)2�
-English1094�	
-14Hymn: Praise Him, praise Him, all ye little children�
-verse1
-/Praise Him, praise Him, all ye little children,
-God is love, God is love;1
-/Praise Him, praise Him, all ye little children,
-God is love, God is love.�
-verse-
-+Love Him, love Him, all ye little children,#
-!    God is love, God is love;-
-+Love Him, love Him, all ye little children,#
-!    God is love, God is love.�
-verse/
--Thank Him, thank Him, all ye little children,#
-!    God is love, God is love;/
--Thank Him, thank Him, all ye little children,#
-!    God is love, God is love."Praise of the Lord*His Love:Carey Bonner (1859-1938)BC MajorJ2/4b
-1135671653j:
-mp33https://www.hymnal.net/Hymns/Children/mp3/c0001.mp3j<
-MIDI4https://www.hymnal.net/Hymns/Children/midi/c0001.midjS
-Tune (MIDI)Dhttps://www.hymnal.net/Hymns/Children/midi/tunes/child0001_tune.midirB
-Piano9https://www.hymnal.net/Hymns/Children/svg/child0001_p.svgrC
-Guitar9https://www.hymnal.net/Hymns/Children/svg/child0001_g.svgzC
-Piano:https://www.hymnal.net/Hymns/Children/pdfs/child0001_p.pdfzD
-Guitar:https://www.hymnal.net/Hymns/Children/pdfs/child0001_g.pdfzC
-Text;https://www.hymnal.net/Hymns/Children/pdfs/child0001_gt.pdf�
-1Hymn: 當以嘴親子�
-verseO
-看哪，地上萬民聚集，-kàn nǎ ， dì shàng wàn mín jù jí ，C
-一同謀算虛妄事；'yī tóng móu suàn xū wàng shì ；L
-君王臣宰起來商議，-jūn wáng chén zǎi qǐ lái shāng yì ，C
-同聲一氣抵擋主。'tóng shēng yī qì dǐ dǎng zhǔ 。Q
-『我們掙開一切捆綁，/『 wǒ men zhēng kāi yī qiē kǔn bǎng ，F
-脫去他們的繩索，』'tuō qù tā men de shéng suǒ ， 』K
-世上君王如此設謀，,shì shàng jūn wáng rú cǐ shè móu ，E
-抵擋神並受膏者。)dǐ dǎng shén bìng shòu gāo zhě 。�
-verseI
-那坐天上的必發笑，*nà zuò tiān shàng de bì fā xiào ，A
-主必定嗤笑他們；%zhǔ bì dìng chī xiào tā men ；H
-那時祂在怒中責備，)nà shí tā zài nù zhōng zé bèi ，B
-烈怒中驚嚇他們。&liè nù zhōng jīng xià tā men 。J
-在祂的錫安聖山上，+zài tā de xí ān shèng shān shàng ，@
-神已膏祂的君王─$shén yǐ gāo tā de jūn wáng ─H
-這是神自己的宣告，)zhè shì shén zì jǐ de xuān gào ，C
-警戒地上的諸王。'jǐng jiè dì shàng de zhū wáng 。�
-verseQ
-現今基督，神所膏者，/xiàn jīn jī dū ， shén suǒ gāo zhě ，C
-傳揚主神的旨意：'chuán yáng zhǔ shén de zhǐ yì ：'
-『你是我子『 nǐ shì wǒ zǐ6
-（在復活裡），（ zài fù huó lǐ ） ，?
-我在今日生了你。#wǒ zài jīn rì shēng le nǐ 。H
-我將列國都賜給你，)wǒ jiāng liè guó dū cì gěi nǐ ，B
-使你承受為基業，&shǐ nǐ chéng shòu wèi jī yè ，U
-你顯王權，手拿鐵杖，3nǐ xiǎn wáng quán ， shǒu ná tiě zhàng ，I
-將他們打破摔裂。』*jiāng tā men dǎ pò shuāi liè 。 』�
-verseL
-你們君王應當省悟，-nǐ men jūn wáng yīng dāng shěng wù ，G
-審判官該受管教；+shěn pàn guān gāi shòu guǎn jiào ；J
-當存畏懼事奉我主，+dāng cún wèi jù shì fèng wǒ zhǔ ，D
-又存戰兢而歡躍。(yòu cún zhàn jīng ér huān yuè 。O
-當以嘴親子，消祂怒，-dāng yǐ zǔi qīn zǐ ， xiāo tā nù ，D
-免得你道中滅亡；(miǎn dé nǐ dào zhōng miè wáng ；R
-!『投靠祂的是有福的，』-『 tóu kào tā de shì yǒu fú de ， 』E
-讓我們同來歡唱！)ràng wǒ men tóng lái huān chàng ！�
-verseO
-哦，讚美神，我們看見-é ， zàn měi shén ， wǒ men kàn jiàn?
-你獨一受膏之子；#nǐ dú yī shòu gāo zhī zǐ ；K
-從虛妄中我們悔改，,cóng xū wàng zhōng wǒ men hǔi gǎi ，=
-在愛裡親你愛子。!zài ài lǐ qīn nǐ ài zǐ 。R
-!『投靠祂的是有福的』─-『 tóu kào tā de shì yǒu fú de 』 ─M
-非那『遵守律法的；』+fēi nà 『 zūn shǒu lv̀ fǎ de ； 』H
-只要信靠那復活者，)zhǐ yào xìn kào nà fù huó zhě ，@
-就必蒙福永無已。$jìu bì méng fú yǒng wú yǐ 。"讚美的話:J. B. O. ClemmBF MajorJ3/4R
-8.7.8.7.D.ZPsalms 2b333211121655113212jG
-Singing<https://www.hymnal.net/Hymns/ChineseTS/mp3/ts_0002_vocal.mp3j:
-mp33https://www.hymnal.net/Hymns/Hymnal/mp3/e0203_i.mp3j<
-MIDI4https://www.hymnal.net/Hymns/Hymnal/midi/e0203_i.midjQ
-Tune (MIDI)Bhttps://www.hymnal.net/Hymns/ChineseTS/midi/tunes/ts0002_tune.midir@
-Piano7https://www.hymnal.net/Hymns/ChineseTS/svg/ts0002_p.svgrA
-Guitar7https://www.hymnal.net/Hymns/ChineseTS/svg/ts0002_g.svgzA
-Piano8https://www.hymnal.net/Hymns/ChineseTS/pdfs/ts0002_p.pdfzB
-Guitar8https://www.hymnal.net/Hymns/ChineseTS/pdfs/ts0002_g.pdfzA
-Text9https://www.hymnal.net/Hymns/ChineseTS/pdfs/ts0002_gt.pdf�
-诗歌(简)2�
-English1094�
-	1Hymn: 但願榮耀歸於聖父�
-verseL
-但願榮耀歸於聖父，-dàn yuàn róng yào gūi yú shèng fù ，2
-並聖子基督，bìng shèng zǐ jī dū ，G
-且願榮耀歸於聖靈+qiě yuàn róng yào gūi yú shèng líng"
-到永古。dào yǒng gǔ 。�
-verseQ
-當我觀賞廣大創造－2dāng wǒ guān shǎng guǎng dà chuàng zào －4
-神智所制訂，shén zhì suǒ zhì dìng ，S
-我靈受感，立獻敬拜，1wǒ líng shòu gǎn ， lì xiàn jìng bài ，#
-並肅靜。bìng sù jìng 。�
-verseR
-但是我神，你是深願：0dàn shì wǒ shén ， nǐ shì shēn yuàn ：3
-能得有眾子，néng dé yǒu zhòng zǐ ，G
-今在子裡對你讚美，(jīn zài zǐ lǐ dùi nǐ zàn měi ，$
-並賞識。bìng shǎng shi 。�
-verseG
-你話已向我們啟示，(nǐ huà yǐ xiàng wǒ men qǐ shì ，/
-你情愛祕密，nǐ qíng ài mì mì ，J
-為要我們領略接受，+wèi yào wǒ men lǐng lvè jiē shòu ，
-以愛你。yǐ ài nǐ 。�
-verseG
-因此藉著基督救贖，(yīn cǐ jiè zhù jī dū jìu shú ，2
-既將敵全克，jì jiāng dí quán kè ，A
-在新造裡你就帶來%zài xīn zào lǐ nǐ jìu dài lái#
-敬拜者。jìng bài zhě 。�
-verseL
-但願榮耀歸於聖父，-dàn yuàn róng yào gūi yú shèng fù ，2
-並聖子基督，bìng shèng zǐ jī dū ，G
-且願榮耀歸於聖靈+qiě yuàn róng yào gūi yú shèng líng"
-到永古。dào yǒng gǔ 。"頌讚三一神*祂的計畫2J. F. Garland:Ira David Sankey (1840-1908)BAb MajorJ4/4R8.5.8.3.b5553216153222jJ
-mp3 (whole song)6https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_full.mp3jL
-MIDI (whole song)7https://www.hymnal.net/Hymns/Hymnal/midi/e0001_full.midjE
-Singing:https://www.hymnal.net/Hymns/Chinese/mp3/ch_0001_vocal.mp3j:
-mp33https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_i.mp3j<
-MIDI4https://www.hymnal.net/Hymns/Hymnal/midi/e0001_i.midjN
-Tune (MIDI)?https://www.hymnal.net/Hymns/Chinese/midi/tunes/c0001_tune.midir=
-Piano4https://www.hymnal.net/Hymns/Chinese/svg/c0001_p.svgr>
-Guitar4https://www.hymnal.net/Hymns/Chinese/svg/c0001_g.svgz>
-Piano5https://www.hymnal.net/Hymns/Chinese/pdfs/c0001_p.pdfz?
-Guitar5https://www.hymnal.net/Hymns/Chinese/pdfs/c0001_g.pdfz>
-Text6https://www.hymnal.net/Hymns/Chinese/pdfs/c0001_gt.pdf�
-诗歌(简)	1�
-Cebuano1�
-English1�
-Spanish1�
-Tagalog1�
-1#Hymn: Rendons gloire à notre Père�
-verse 
-Rendons gloire à notre Père,
-Rendons toute gloire au Fils,"
- À l’Esprit rendons la gloire,
-Trois en Un, sois exalté !�
-chorus#
-!Nous Te louons ! Nous Te louons !
-Toi qui es un, qui es trois !$
-"Gloire à Toi ! À Toi la gloire !&
-$Des merveilles Tu as fait pour nous.�
-verse
-Le dessein de notre Père, 
-Christ le Fils l’a accompli,)
-'Tout est transmis par Dieu l’Esprit :
-Louée soit la Trinité !"La bénédiction de la Trinité*
-Sa louange24Translated from Margaret Jenkins Harris (1865-1919):$Margaret Jenkins Harris (1865-1919)BEb MajorJ4/4R8.7.8.7. with chorus.b334321444254323�
-Cebuano7�
-诗歌(简)	3�
-詩歌(繁)3�
-Dutch10�
-English7�
-German7�
-Spanish3�
-Tagalog7�
-12(Hymn: O God, Thou art the source of life�
-verse%
-#O God, Thou art the source of life, 
-  Divine, and rich and free!
-As living water flowing out
-  Unto eternity!$
-"In love Thou in the Son didst flow
-  Among the human race;
-Thou dost as Spirit also flow
-  Within us thru Thy grace.�
-verse!
-Though we in sin and wickedness
-  Went far from Thee apace,#
-!Yet in the Son Thou didst redeem,
-  Bestowing life and grace.%
-#Though we have often slighted Thee,
-  Thy Spirit often grieved,$
-"Yet Thou dost still as Spirit come
-  As life to be received.�
-verse
-Thou as the Spirit in the Son
-  Hast mingled heretofore;"
- Thou wilt thru fellowship anoint!
-  And increase more and more.'
-%The love of God, the grace of Christ,"
-   The Spirit’s flowing free,#
-!Enable us God’s wealth to share
-  Thru all eternity.�
-chorus$
-"The Father, Son, and Spirit—one,
-  So richly care for us;"
- Thy love with one accord we sing(
-&  And e’er would praise Thee thus."Worship of the Father*As the Source of Life:Grace Notes BrothersBC MajorJ4/4b11171765112355j>
-mp37https://www.hymnal.net/Hymns/NewTunes/mp3/e0012_new.mp3j@
-MIDI8https://www.hymnal.net/Hymns/NewTunes/midi/e0012_new.midjS
-Tune (MIDI)Dhttps://www.hymnal.net/Hymns/NewTunes/midi/tunes/e0012_new_tune.midirB
-Piano9https://www.hymnal.net/Hymns/NewTunes/svg/e0012_new_p.svgrC
-Guitar9https://www.hymnal.net/Hymns/NewTunes/svg/e0012_new_g.svgzC
-Piano:https://www.hymnal.net/Hymns/NewTunes/pdfs/e0012_new_p.pdfzD
-Guitar:https://www.hymnal.net/Hymns/NewTunes/pdfs/e0012_new_g.pdfzC
-Text;https://www.hymnal.net/Hymns/NewTunes/pdfs/e0012_new_gt.pdf�
-Original Tune12�
-1 Hymn: Ehre sei Gott unsrem Vaterq
-verse
-Ehre sei Gott unsrem Vater,
-Ehre sei dem Sohn,"
- Ehre sei dem Geist für ewig –
-Welch Person!o
-verse"
- Unermesslich ist die Schöpfung,
-Wunderbar der Plan,
-Unsre Herzen sind bewegt und
-	Beten an.z
-verse#
-!Vater, groß ist Deine Sehnsucht,
-Söhne willst für Dich,#
-!Die im Sohn Dich preisend lieben,
-	Ewiglich.o
-verse
-Das Geheimnis Deiner Liebe
-Offenbart hast hier,
-Dadurch unsre Liebe, Vater,
-Fließt zu Dir.y
-verse'
-%Bringst in Christus, durch Erlösung,
-(Mächte Er bezwang!)
-Anbeter in neue Schöpfung,
-Welch Zugang!q
-verse
-Ehre sei Gott unsrem Vater,
-Ehre sei dem Sohn,"
- Ehre sei dem Geist für ewig –
-Welch Person!"SEGEN DER DREIEINIGKEIT*	Sein Plan2Translated from J. F. Garland:Ira David Sankey (1840-1908)BAb MajorJ4/4R8.5.8.3.b5553216153222jJ
-mp3 (whole song)6https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_full.mp3jL
-MIDI (whole song)7https://www.hymnal.net/Hymns/Hymnal/midi/e0001_full.midj:
-mp33https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_i.mp3j<
-MIDI4https://www.hymnal.net/Hymns/Hymnal/midi/e0001_i.midjM
-Tune (MIDI)>https://www.hymnal.net/Hymns/German/midi/tunes/g0001_tune.midir<
-Piano3https://www.hymnal.net/Hymns/German/svg/g0001_p.svgr=
-Guitar3https://www.hymnal.net/Hymns/German/svg/g0001_g.svgz=
-Piano4https://www.hymnal.net/Hymns/German/pdfs/g0001_p.pdfz>
-Guitar4https://www.hymnal.net/Hymns/German/pdfs/g0001_g.pdfz=
-Text5https://www.hymnal.net/Hymns/German/pdfs/g0001_gt.pdf�
-Cebuano1�
-诗歌(简)	1�
-詩歌(繁)1�
-English1�
-Spanish1�
-Tagalog1
+Text;https://www.hymnal.net/Hymns/Children/pdfs/child0060_gt.pdf

@@ -27,6 +27,9 @@ dependencies {
     def dagger_version = "2.45"
     implementation "com.google.dagger:dagger:$dagger_version"
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
+
+    implementation "org.xerial:sqlite-jdbc:3.41.0.0"
+
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.9.2"
     testImplementation "org.mockito:mockito-core:4.4.0"
 
