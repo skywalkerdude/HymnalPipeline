@@ -5,7 +5,6 @@ import com.hymnsmobile.pipeline.hymnalnet.HymnType;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetJson;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetKey;
 import com.hymnsmobile.pipeline.models.Hymn;
-import com.hymnsmobile.pipeline.models.PipelineError;
 import dagger.Module;
 import dagger.Provides;
 import java.util.HashSet;
@@ -25,13 +24,6 @@ interface HymnalNetPipelineModule {
   @Provides
   @HymnalNetPipelineScope
   static Set<HymnalNetJson> hymnalNetJsons() {
-    return new HashSet<>();
-  }
-
-  @HymnalNet
-  @Provides
-  @HymnalNetPipelineScope
-  static Set<PipelineError> errors() {
     return new HashSet<>();
   }
 

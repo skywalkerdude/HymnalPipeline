@@ -3,7 +3,6 @@ package com.hymnsmobile.pipeline.hymnalnet;
 import com.google.protobuf.Descriptors.Descriptor;
 import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.google.protobuf.MapEntry;
-import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNet;
 import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNetPipelineScope;
 import com.hymnsmobile.pipeline.hymnalnet.models.Datum;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetJson;
@@ -31,7 +30,7 @@ public class Converter {
   private final Set<PipelineError> errors;
 
   @Inject
-  public Converter(@HymnalNet Set<PipelineError> errors) {
+  public Converter(Set<PipelineError> errors) {
     this.errors = errors;
   }
 
@@ -73,7 +72,7 @@ public class Converter {
             builder.putLanguages(datum.getValue(), toSongReference(relatedKey.get()));
           }
           if (metaDatumType.get() == MetaDatumType.RELEVANT) {
-            builder.putLanguages(datum.getValue(), toSongReference(relatedKey.get()));
+            builder.putRelevants(datum.getValue(), toSongReference(relatedKey.get()));
           }
         });
       } else if (metaDatumType.get() == MetaDatumType.MUSIC

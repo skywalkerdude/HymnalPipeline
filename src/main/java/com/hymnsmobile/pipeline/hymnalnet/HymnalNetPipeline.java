@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 @HymnalNetPipelineScope
@@ -43,10 +44,10 @@ public class HymnalNetPipeline {
       Fetcher fetcher,
       FileReadWriter fileReadWriter,
       ImmutableList<HymnalNetKey> songsToFetch,
+      Set<PipelineError> errors,
       ZonedDateTime currentTime,
       @HymnalNet Set<Hymn> hymns,
-      @HymnalNet Set<HymnalNetJson> hymnalNetJsons,
-      @HymnalNet Set<PipelineError> errors) {
+      @HymnalNet Set<HymnalNetJson> hymnalNetJsons) {
     this.converter = converter;
     this.errors = errors;
     this.fetcher = fetcher;
@@ -84,10 +85,12 @@ public class HymnalNetPipeline {
     }
 
     LOGGER.info(String.format("Reading file %s", mostRecentFile.get()));
-    com.hymnsmobile.pipeline.hymnalnet.models.HymnalNet hymnalNet = com.hymnsmobile.pipeline.hymnalnet.models.HymnalNet.parseFrom(
-        new FileInputStream(mostRecentFile.get()));
-    this.hymns.addAll(hymnalNet.getHymnsList());
+    com.hymnsmobile.pipeline.hymnalnet.models.HymnalNet hymnalNet =
+        com.hymnsmobile.pipeline.hymnalnet.models.HymnalNet.parseFrom(
+            new FileInputStream(mostRecentFile.get()));
     this.hymnalNetJsons.addAll(hymnalNet.getHymnanlNetJsonList());
+    this.hymns.addAll(
+        this.hymnalNetJsons.stream().map(converter::toHymn).collect(Collectors.toSet()));
     this.errors.addAll(hymnalNet.getErrorsList());
   }
 
@@ -148,7 +151,7 @@ public class HymnalNetPipeline {
         currentTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss_z")));
     LOGGER.info(String.format("Writing hymns to %s", fileName));
     fileReadWriter.writeProto(fileName,
-        com.hymnsmobile.pipeline.hymnalnet.models.HymnalNet.newBuilder().addAllHymns(hymns)
+        com.hymnsmobile.pipeline.hymnalnet.models.HymnalNet.newBuilder()
             .addAllHymnanlNetJson(hymnalNetJsons).addAllErrors(errors).build());
   }
 }

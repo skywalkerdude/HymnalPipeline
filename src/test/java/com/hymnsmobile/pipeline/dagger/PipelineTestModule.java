@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 import com.google.common.collect.ImmutableList;
 import com.hymnsmobile.pipeline.FileReadWriter;
 import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNetPipelineTestComponent;
+import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.testutil.MockHttpResponse;
 import dagger.Module;
 import dagger.Provides;
@@ -22,7 +23,9 @@ import java.net.http.HttpResponse.BodyHandlers;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Module(subcomponents = HymnalNetPipelineTestComponent.class)
 public interface PipelineTestModule {
@@ -77,5 +80,11 @@ public interface PipelineTestModule {
   @Provides
   static ZonedDateTime currentTime() {
     return LocalDateTime.of(1993, 7, 17, 10, 10, 0).atZone(ZoneId.of("America/Los_Angeles"));
+  }
+
+  @PipelineScope
+  @Provides
+  static Set<PipelineError> errors() {
+    return new HashSet<>();
   }
 }
