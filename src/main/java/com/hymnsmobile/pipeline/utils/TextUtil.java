@@ -52,7 +52,8 @@ public class TextUtil {
     JsonArray array = new JsonArray();
 
     for (M message : messages) {
-      array.add(JsonParser.parseString(JsonFormat.printer().print(message)));
+      array.add(
+          JsonParser.parseString(JsonFormat.printer().preservingProtoFieldNames().print(message)));
     }
     return array.toString();
   }
@@ -61,7 +62,7 @@ public class TextUtil {
     if (strings.isEmpty()) {
       return null;
     }
-    return String.join(",", strings);
+    return String.join(";", strings);
   }
 
   public static boolean isEmpty(String str) {
