@@ -1,10 +1,15 @@
 package com.hymnsmobile.pipeline.hymnalnet;
 
+import static com.hymnsmobile.pipeline.hymnalnet.BlockList.BLOCK_LIST;
+
+import com.google.common.collect.ImmutableList;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
+import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNet;
 import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNetPipelineScope;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetJson;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetKey;
+import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.SongReference;
 import java.io.IOException;
 import java.net.URI;
@@ -13,7 +18,9 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Logger;
 import javax.inject.Inject;
 
@@ -29,18 +36,80 @@ public class Fetcher {
 
   private final HttpClient client;
   private final Converter converter;
+  private final ImmutableList<HymnalNetKey> songsToFetch;
+
+  private final Set<Hymn> hymns;
+  private final Set<HymnalNetJson> hymnalNetJsons;
 
   @Inject
-  public Fetcher(HttpClient client, Converter converter) {
+  public Fetcher(HttpClient client, Converter converter,
+      ImmutableList<HymnalNetKey> songsToFetch,
+      @HymnalNet Set<Hymn> hymns,
+      @HymnalNet Set<HymnalNetJson> hymnalNetJsons) {
     this.client = client;
     this.converter = converter;
+    this.hymns = hymns;
+    this.hymnalNetJsons = hymnalNetJsons;
+    this.songsToFetch = songsToFetch;
+  }
+
+  /**
+   * Fetch hymns afresh from Hymnal.net.
+   */
+  public void fetchHymns() throws InterruptedException, IOException, URISyntaxException {
+    for (HymnalNetKey key : songsToFetch) {
+      HymnType hymnType = HymnType.fromString(key.getHymnType()).orElseThrow();
+      SongReference songReference = converter.toSongReference(key);
+      fetchHymn(songReference);
+      if (hymnType == HymnType.CHINESE) {
+        fetchHymn(songReference.toBuilder()
+            .setType(com.hymnsmobile.pipeline.models.HymnType.CHINESE_SIMPLIFIED).build());
+      }
+      if (hymnType == HymnType.CHINESE_SUPPLEMENTAL) {
+        fetchHymn(songReference.toBuilder()
+            .setType(com.hymnsmobile.pipeline.models.HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED)
+            .build());
+      }
+    }
+  }
+
+  private void fetchHymn(SongReference songReference)
+      throws InterruptedException, IOException, URISyntaxException {
+    LOGGER.info(String.format("Fetching %s", songReference));
+    if (hymns.stream().anyMatch(hymn -> hymn.getReference().equals(songReference))) {
+      LOGGER.info(String.format("%s already exists. Skipping...", songReference));
+      return;
+    }
+
+    if (BLOCK_LIST.contains(songReference)) {
+      LOGGER.info(String.format("%s contained in block list. Skipping...", songReference));
+      return;
+    }
+
+    Optional<HymnalNetJson> hymnalNetJson = getHymnalNet(songReference);
+    if (hymnalNetJson.isEmpty()) {
+      LOGGER.warning(String.format("Fetching %s was unsuccessful", songReference));
+      return;
+    }
+    this.hymnalNetJsons.add(hymnalNetJson.get());
+    Hymn hymn = converter.toHymn(hymnalNetJson.get());
+    this.hymns.add(hymn);
+
+    // Also fetch all related songs
+    List<SongReference> relatedSongs = ImmutableList.<SongReference>builder()
+        .addAll(hymn.getLanguagesMap().values()).addAll(hymn.getRelevantsMap().values())
+        .build();
+    LOGGER.info(String.format("Found %d related songs: %s", relatedSongs.size(), relatedSongs));
+    for (SongReference relatedSong : relatedSongs) {
+      fetchHymn(relatedSong);
+    }
   }
 
   /**
    * Fetches the hymn referenced by the song, unless it doesn't exist, in which case, return
    * {@link Optional#empty()}.
    */
-  public Optional<HymnalNetJson> fetchHymn(SongReference songReference)
+  private Optional<HymnalNetJson> getHymnalNet(SongReference songReference)
       throws IOException, InterruptedException, URISyntaxException {
     HymnalNetKey key = converter.toHymnalNetKey(songReference);
     HymnType hymnType = HymnType.fromString(key.getHymnType()).orElseThrow();
