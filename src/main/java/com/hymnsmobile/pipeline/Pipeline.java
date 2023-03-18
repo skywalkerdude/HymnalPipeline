@@ -7,8 +7,10 @@ import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNetPipelineComponent;
 import com.hymnsmobile.pipeline.storage.StoragePipeline;
 import com.hymnsmobile.pipeline.storage.dagger.StorageComponent;
 import java.io.IOException;
+import java.lang.System.Logger.Level;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
@@ -26,6 +28,8 @@ public class Pipeline {
   }
 
   public void run() throws IOException, InterruptedException, URISyntaxException, SQLException {
+    Logger.getGlobal()
+        .setFilter(record -> record.getLevel().intValue() > Level.ERROR.getSeverity());
     hymnalNetPipeline.run();
     storagePipeline.run(hymnalNetPipeline.getHymns());
   }

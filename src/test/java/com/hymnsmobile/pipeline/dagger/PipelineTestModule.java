@@ -24,7 +24,7 @@ import java.net.http.HttpResponse.BodyHandlers;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -32,6 +32,7 @@ import java.util.Set;
 public interface PipelineTestModule {
 
   FileReadWriter MOCK_FILE_WRITER = mock(FileReadWriter.class);
+  // FileReadWriter MOCK_FILE_WRITER = spy(new FileReadWriter());
 
   private static String readInputStreamAsString(File file) throws IOException {
     BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
@@ -86,6 +87,6 @@ public interface PipelineTestModule {
   @PipelineScope
   @Provides
   static Set<PipelineError> errors() {
-    return new HashSet<>();
+    return new LinkedHashSet<>();
   }
 }

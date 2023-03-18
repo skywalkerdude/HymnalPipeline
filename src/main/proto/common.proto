@@ -49,7 +49,7 @@ message SongReference {
 }
 
 message SongLink {
-  string name = 1;
+  optional string name = 1;
   SongReference reference = 2;
 }
 

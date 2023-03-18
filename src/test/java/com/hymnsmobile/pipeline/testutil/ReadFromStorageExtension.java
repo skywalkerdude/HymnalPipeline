@@ -1,7 +1,7 @@
 package com.hymnsmobile.pipeline.testutil;
 
 import static com.hymnsmobile.pipeline.dagger.PipelineTestModule.MOCK_FILE_WRITER;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doAnswer;
 
 import java.io.File;
 import java.util.Optional;
@@ -17,9 +17,10 @@ public class ReadFromStorageExtension implements BeforeEachCallback, AfterEachCa
     ReadFromStorage methodAnnotation = context.getRequiredTestMethod().getAnnotation(
         ReadFromStorage.class);
     if (methodAnnotation != null) {
-      when(MOCK_FILE_WRITER.readLargestFile("storage/hymnalnet",
-          Optional.of("\\d\\d\\d\\d-\\d\\d-\\d\\d_\\d\\d-\\d\\d-\\d\\d_PST.txt"))).thenAnswer(
-          invocation -> Optional.of(new File("src/test/resources/hymnalnet/storage/c60.txt")));
+      doAnswer(
+          invocation -> Optional.of(new File("src/test/resources/hymnalnet/storage/c60.txt"))).when(
+          MOCK_FILE_WRITER).readLargestFile("storage/hymnalnet",
+          Optional.of("\\d\\d\\d\\d-\\d\\d-\\d\\d_\\d\\d-\\d\\d-\\d\\d_PDT.txt"));
     }
   }
 

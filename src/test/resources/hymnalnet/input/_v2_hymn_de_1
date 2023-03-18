@@ -131,35 +131,6 @@
     {
       "data": [
         {
-          "path": "/en/hymn/cb/1",
-          "value": "Cebuano"
-        },
-        {
-          "path": "/en/hymn/ch/1?gb=1",
-          "value": "诗歌(简)"
-        },
-        {
-          "path": "/en/hymn/ch/1",
-          "value": "詩歌(繁)"
-        },
-        {
-          "path": "/en/hymn/h/1",
-          "value": "English"
-        },
-        {
-          "path": "/en/hymn/hs/1",
-          "value": "Spanish"
-        },
-        {
-          "path": "/en/hymn/ht/1",
-          "value": "Tagalog"
-        }
-      ],
-      "name": "Languages"
-    },
-    {
-      "data": [
-        {
           "path": "/en/hymn/de/6",
           "value": "Heilig, heilig, heilig, Gott, Du bist allmächtig"
         },

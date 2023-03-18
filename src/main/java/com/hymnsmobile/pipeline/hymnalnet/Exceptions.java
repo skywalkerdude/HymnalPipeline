@@ -17,14 +17,14 @@ import com.hymnsmobile.pipeline.models.SongReference;
 public final class Exceptions {
 
   static final ImmutableSet<ImmutableSet<SongReference>> HYMNAL_DB_LANGUAGES_EXCEPTIONS = ImmutableSet.of(
-      // Both h/1353 and h/8476 are valid translations of the Chinese song ch/476 and the French song hf/129.
+      // h/1353 and h/8476 are essentially two slightly different versions of the same song. So both should link to
+      // the same set of translations, since the lyrics are very similar.
       ImmutableSet.of(
           SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("1353").build(),
           SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("8476").build(),
-          SongReference.newBuilder().setType(FRENCH).setNumber("1353").build(),
           SongReference.newBuilder().setType(TAGALOG).setNumber("1353").build(),
-          SongReference.newBuilder().setType(CHINESE).setNumber("1353").build(),
-          SongReference.newBuilder().setType(CHINESE_SIMPLIFIED).setNumber("1353").build()),
+          SongReference.newBuilder().setType(CHINESE).setNumber("476").build(),
+          SongReference.newBuilder().setType(CHINESE_SIMPLIFIED).setNumber("476").build()),
 
       // Both h/8330 and ns/154 are valid translations of the Chinese song ch/330.
       ImmutableSet.of(
@@ -52,22 +52,13 @@ public final class Exceptions {
           SongReference.newBuilder().setType(CHINESE_SIMPLIFIED).setNumber("641").build(),
           SongReference.newBuilder().setType(CHINESE_SUPPLEMENTAL).setNumber("917").build(),
           SongReference.newBuilder().setType(CHINESE_SUPPLEMENTAL_SIMPLIFIED).setNumber("917")
-              .build()),
+              .build())
 
-      // h/1353 and h/8476 are essentially two slightly different versions of the same song. So both should link to
-      // the same set of translations, since the lyrics are very similar.
-      ImmutableSet.of(
-          SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("1353").build(),
-          SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("8476").build(),
-          SongReference.newBuilder().setType(TAGALOG).setNumber("1353").build(),
-          SongReference.newBuilder().setType(CHINESE).setNumber("476").build(),
-          SongReference.newBuilder().setType(CHINESE_SIMPLIFIED).setNumber("476").build()),
-
-      // TODO H4A
-      // T437 is from H4A, and seems like also a valid translation of h/437 as well as ht/c333
-      ImmutableSet.of(
-          SongReference.newBuilder().setType(TAGALOG).setNumber("c333").build(),
-          SongReference.newBuilder().setType(TAGALOG).setNumber("437").build())
+      // // TODO H4A
+      // // T437 is from H4A, and seems like also a valid translation of h/437 as well as ht/c333
+      // ImmutableSet.of(
+      //     SongReference.newBuilder().setType(TAGALOG).setNumber("c333").build(),
+      //     SongReference.newBuilder().setType(TAGALOG).setNumber("437").build())
   );
 
   static final ImmutableSet<ImmutableSet<SongReference>> HYMNAL_DB_RELEVANT_EXCEPTIONS = ImmutableSet.of(
@@ -130,11 +121,6 @@ public final class Exceptions {
           SongReference.newBuilder().setType(CHILDREN_SONG).setNumber("21").build(),
           SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("70").build()),
 
-      // c/162 is a shortened version of h/993
-      ImmutableSet.of(
-          SongReference.newBuilder().setType(CHILDREN_SONG).setNumber("162").build(),
-          SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("993").build()),
-
       // ns/179 is the adapted version of h/1248
       ImmutableSet.of(
           SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("1248").build(),
@@ -143,7 +129,13 @@ public final class Exceptions {
       // Both ns/154 and h/8330 are valid translations of the Chinese song ch/330.
       ImmutableSet.of(
           SongReference.newBuilder().setType(NEW_SONG).setNumber("154").build(),
-          SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("8330").build())
+          SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("8330").build()),
+
+      // ns/547 and ns/945 don't have the same tune, but are very similar and based on the same
+      // scripture passage.
+      ImmutableSet.of(
+          SongReference.newBuilder().setType(NEW_SONG).setNumber("547").build(),
+          SongReference.newBuilder().setType(NEW_SONG).setNumber("945").build())
   );
 
   private Exceptions() {

@@ -28,9 +28,10 @@ public class HymnalNetPipeline {
   private final Set<PipelineError> errors;
   private final Fetcher fetcher;
   private final FileReadWriter fileReadWriter;
-  private final Auditor auditor;
   private final Set<Hymn> hymns;
   private final Set<HymnalNetJson> hymnalNetJsons;
+  private final Fixer fixer;
+  private final Patcher patcher;
   private final ZonedDateTime currentTime;
 
   @Inject
@@ -38,7 +39,8 @@ public class HymnalNetPipeline {
       Converter converter,
       Fetcher fetcher,
       FileReadWriter fileReadWriter,
-      Auditor auditor,
+      Fixer fixer,
+      Patcher patcher,
       Set<PipelineError> errors,
       ZonedDateTime currentTime,
       @HymnalNet Set<Hymn> hymns,
@@ -47,10 +49,11 @@ public class HymnalNetPipeline {
     this.errors = errors;
     this.fetcher = fetcher;
     this.fileReadWriter = fileReadWriter;
-    this.auditor = auditor;
+    this.fixer = fixer;
     this.hymns = hymns;
     this.hymnalNetJsons = hymnalNetJsons;
     this.currentTime = currentTime;
+    this.patcher = patcher;
   }
 
   public ImmutableList<Hymn> getHymns() {
@@ -67,14 +70,15 @@ public class HymnalNetPipeline {
 
   public void run() throws IOException, InterruptedException, URISyntaxException {
     readFile();
-    // fetcher.fetchHymns();
-    auditor.auditHymns();
+    fetcher.fetchHymns();
+    patcher.patch();
+    fixer.fix();
     writeAllHymns();
   }
 
   private void readFile() throws IOException {
     Optional<File> mostRecentFile = fileReadWriter.readLargestFile("storage/hymnalnet",
-        Optional.of("\\d\\d\\d\\d-\\d\\d-\\d\\d_\\d\\d-\\d\\d-\\d\\d_PST.txt"));
+        Optional.of("\\d\\d\\d\\d-\\d\\d-\\d\\d_\\d\\d-\\d\\d-\\d\\d_PDT.txt"));
     // No file to read
     if (mostRecentFile.isEmpty()) {
       return;
