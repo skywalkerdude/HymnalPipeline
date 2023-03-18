@@ -16,6 +16,7 @@ import com.hymnsmobile.pipeline.hymnalnet.models.MetaDatum;
 import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.HymnType;
 import com.hymnsmobile.pipeline.models.Line;
+import com.hymnsmobile.pipeline.models.SongLink;
 import com.hymnsmobile.pipeline.models.SongReference;
 import com.hymnsmobile.pipeline.models.Verse;
 import com.hymnsmobile.pipeline.testutil.FetchHymns;
@@ -79,8 +80,9 @@ class HymnalNetPipelineTest {
         .putPdfSheet("Guitar", "https://www.hymnal.net/Hymns/Hymnal/pdfs/e1336_g.pdf")
         .putPdfSheet("Piano", "https://www.hymnal.net/Hymns/Hymnal/pdfs/e1336_p.pdf")
         .putPdfSheet("Text", "https://www.hymnal.net/Hymns/Hymnal/pdfs/e1336_gt.pdf")
-        .putLanguages("French",
-            SongReference.newBuilder().setType(HymnType.FRENCH).setNumber("9336").build()).build());
+        .addLanguages(SongLink.newBuilder().setName("French")
+            .setReference(SongReference.newBuilder().setType(HymnType.FRENCH).setNumber("9336")))
+        .build());
 
     assertThat(hymnalNetPipeline.getHymnalNetJsons()).hasSize(1);
     assertThat(hymnalNetPipeline.getHymnalNetJsons().get(0)).isEqualTo(HymnalNetJson.newBuilder()
@@ -143,6 +145,11 @@ class HymnalNetPipelineTest {
                 .addData(Datum.newBuilder().setValue("This is My rest forever")
                     .setPath("/en/hymn/h/1338")))
         .addMetaData(
+            MetaDatum.newBuilder().setName("Link")
+                .addData(Datum.newBuilder()
+                    .setValue("Is Jesus in Your Boat?")
+                    .setPath("https://gospel.biblesforamerica.org/is-jesus-in-your-boat/")))
+        .addMetaData(
             MetaDatum.newBuilder().setName("Lead Sheet")
                 .addData(Datum.newBuilder().setValue("Piano")
                     .setPath("https://www.hymnal.net/Hymns/Hymnal/pdfs/e1336_p.pdf"))
@@ -195,6 +202,29 @@ class HymnalNetPipelineTest {
     assertThat(hymnalNetPipeline.getErrors()).isEmpty();
   }
 
+  /**
+   * Test Chinese songs of the form "ns/510c"
+   */
+  @Test
+  @FetchHymns(keysToFetch = {"ns/510c"})
+  public void songsWithNewSongChinese__shouldConvertToChineseSongs()
+      throws IOException, URISyntaxException, InterruptedException {
+    hymnalNetPipeline.run();
+
+    assertThat(hymnalNetPipeline.getHymns().stream().map(hymn -> hymn.getReference().toString())
+        .collect(toImmutableList())).containsExactly(
+        "type: NEW_SONG\nnumber: \"510\"\n",
+        "type: CHINESE_SIMPLIFIED\nnumber: \"ns510c\"\n",
+        "type: CHINESE\nnumber: \"ns510c\"\n");
+    assertThat(hymnalNetPipeline.getHymnalNetJsons().stream()
+        .map(hymnalNetJson -> hymnalNetJson.getKey().toString())
+        .collect(toImmutableList())).containsExactly(
+        "hymn_type: \"ns\"\nhymn_number: \"510c\"\n",
+        "hymn_type: \"ns\"\nhymn_number: \"510c\"\nquery_params: \"?gb=1\"\n",
+        "hymn_type: \"ns\"\nhymn_number: \"510\"\n");
+    assertThat(hymnalNetPipeline.getErrors()).isEmpty();
+  }
+
   @Test
   @FetchHymns(keysToFetch = {
       "h/1",
@@ -211,6 +241,7 @@ class HymnalNetPipelineTest {
       "ht/1",
       "hf/1",
       "hs/1",
+      "ns/510", // chinese languages of this song are of the form "ns/510c" and "ns/510c?gb=1"
       "c/60"// should be read from stored file
   })
   @ReadFromStorage
@@ -221,7 +252,7 @@ class HymnalNetPipelineTest {
         "src/test/resources/hymnalnet/output/hymnal_net_pipeline_test_run.txt");
     HymnalNet expected = HymnalNet.parseFrom(new FileInputStream(storedResult));
 
-    assertThat(hymnalNetPipeline.getHymns()).hasSize(15);
+    assertThat(hymnalNetPipeline.getHymns()).hasSize(18);
     assertThat(hymnalNetPipeline.getHymnalNetJsons()).containsExactlyElementsIn(
         expected.getHymnanlNetJsonList());
     assertThat(hymnalNetPipeline.getErrors()).containsExactlyElementsIn(expected.getErrorsList());

@@ -18,6 +18,9 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
+### Very large file that cannot be pushed into git
+java_pid4960.hprof
+
 ### Eclipse ###
 .apt_generated
 .classpath

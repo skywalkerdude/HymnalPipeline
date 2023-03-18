@@ -1,5 +1,6 @@
 package com.hymnsmobile.pipeline.hymnalnet;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
 import static com.hymnsmobile.pipeline.hymnalnet.BlockList.BLOCK_LIST;
 
 import com.google.common.collect.ImmutableList;
@@ -10,6 +11,7 @@ import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNetPipelineScope;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetJson;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetKey;
 import com.hymnsmobile.pipeline.models.Hymn;
+import com.hymnsmobile.pipeline.models.SongLink;
 import com.hymnsmobile.pipeline.models.SongReference;
 import java.io.IOException;
 import java.net.URI;
@@ -59,7 +61,11 @@ public class Fetcher {
   public void fetchHymns() throws InterruptedException, IOException, URISyntaxException {
     for (HymnalNetKey key : songsToFetch) {
       HymnType hymnType = HymnType.fromString(key.getHymnType()).orElseThrow();
-      SongReference songReference = converter.toSongReference(key);
+      Optional<SongReference> songReferenceOptional = converter.toSongReference(key);
+      if (songReferenceOptional.isEmpty()) {
+        continue;
+      }
+      SongReference songReference = songReferenceOptional.get();
       fetchHymn(songReference);
       if (hymnType == HymnType.CHINESE) {
         fetchHymn(songReference.toBuilder()
@@ -92,12 +98,19 @@ public class Fetcher {
       return;
     }
     this.hymnalNetJsons.add(hymnalNetJson.get());
-    Hymn hymn = converter.toHymn(hymnalNetJson.get());
+    Optional<Hymn> hymnOptional = converter.toHymn(hymnalNetJson.get());
+    if (hymnOptional.isEmpty()) {
+      return;
+    }
+    Hymn hymn = hymnOptional.get();
     this.hymns.add(hymn);
 
     // Also fetch all related songs
     List<SongReference> relatedSongs = ImmutableList.<SongReference>builder()
-        .addAll(hymn.getLanguagesMap().values()).addAll(hymn.getRelevantsMap().values())
+        .addAll(
+            hymn.getLanguagesList().stream().map(SongLink::getReference).collect(toImmutableList()))
+        .addAll(
+            hymn.getRelevantsList().stream().map(SongLink::getReference).collect(toImmutableList()))
         .build();
     LOGGER.info(String.format("Found %d related songs: %s", relatedSongs.size(), relatedSongs));
     for (SongReference relatedSong : relatedSongs) {

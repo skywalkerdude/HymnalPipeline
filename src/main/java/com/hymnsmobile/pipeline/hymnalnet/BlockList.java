@@ -10,5 +10,6 @@ import com.hymnsmobile.pipeline.models.SongReference;
 public final class BlockList {
 
   public static final ImmutableSet<SongReference> BLOCK_LIST = ImmutableSet.of(
+      // Non-existent song
       SongReference.newBuilder().setType(HymnType.NEW_SONG).setNumber("582").build());
 }

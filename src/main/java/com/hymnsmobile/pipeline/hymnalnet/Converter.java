@@ -12,6 +12,7 @@ import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.Line;
 import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
+import com.hymnsmobile.pipeline.models.SongLink;
 import com.hymnsmobile.pipeline.models.SongReference;
 import java.util.Optional;
 import java.util.Set;
@@ -34,17 +35,24 @@ public class Converter {
     this.errors = errors;
   }
 
-  public Hymn toHymn(HymnalNetJson hymn) {
+  public Optional<Hymn> toHymn(HymnalNetJson hymn) {
     HymnalNetKey key = hymn.getKey();
-    Hymn.Builder builder = Hymn.newBuilder().setReference(toSongReference(key))
-        .setTitle(hymn.getTitle());
+    Optional<SongReference> songReferenceOptional = toSongReference(key);
+    if (songReferenceOptional.isEmpty()) {
+      return Optional.empty();
+    }
+    SongReference songReference = songReferenceOptional.get();
+
+    Hymn.Builder builder = Hymn.newBuilder().setReference(songReference).setTitle(hymn.getTitle());
 
     hymn.getLyricsList().forEach(verse -> builder.addLyrics(toVerse(key, verse)));
 
     hymn.getMetaDataList().forEach(metaDatum -> {
       String name = metaDatum.getName();
       // Ignore the "See Also" item because it changes every time you call it.
-      if (name.equals("See Also")) {
+      // Also ignore the "Link" item because it links out to external links, which is not yet
+      // supported. However, TODO we should support that eventually.
+      if (name.equals("See Also") || name.equals("Link")) {
         return;
       }
 
@@ -69,10 +77,16 @@ public class Converter {
             return;
           }
           if (metaDatumType.get() == MetaDatumType.LANGUAGES) {
-            builder.putLanguages(datum.getValue(), toSongReference(relatedKey.get()));
+            toSongReference(relatedKey.get()).ifPresent(
+                languageReference -> builder.addLanguages(SongLink.newBuilder()
+                    .setName(datum.getValue())
+                    .setReference(languageReference).build()));
           }
           if (metaDatumType.get() == MetaDatumType.RELEVANT) {
-            builder.putRelevants(datum.getValue(), toSongReference(relatedKey.get()));
+            toSongReference(relatedKey.get()).ifPresent(
+                relevantReference -> builder.addRelevants(SongLink.newBuilder()
+                    .setName(datum.getValue())
+                    .setReference(relevantReference).build()));
           }
         });
       } else if (metaDatumType.get() == MetaDatumType.MUSIC
@@ -95,43 +109,73 @@ public class Converter {
       }
     });
     LOGGER.info(String.format("%s successfully converted", key));
-    return builder.build();
+    return Optional.of(builder.build());
   }
 
-  public SongReference toSongReference(HymnalNetKey key) {
+  public Optional<SongReference> toSongReference(HymnalNetKey key) {
     HymnType hymnType = HymnType.fromString(key.getHymnType()).orElseThrow();
-    Optional<String> queryParams =
+    String hymnNumber = key.getHymnNumber();
+
+    Optional<String> queryParamsOptional =
         key.hasQueryParams() ? Optional.of(key.getQueryParams()) : Optional.empty();
 
-    SongReference.Builder builder = SongReference.newBuilder();
-    if (hymnType == HymnType.CHINESE && queryParams.map(s -> s.equals("?gb=1")).orElse(false)) {
-      builder.setType(com.hymnsmobile.pipeline.models.HymnType.CHINESE_SIMPLIFIED);
-    } else if (hymnType == HymnType.CHINESE_SUPPLEMENTAL && queryParams.map(s -> s.equals("?gb=1"))
-        .orElse(false)) {
-      builder.setType(com.hymnsmobile.pipeline.models.HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED);
-    } else {
-      builder.setType(com.hymnsmobile.pipeline.models.HymnType.valueOf(hymnType.name()));
+    // Songs that end with "c" are actually Chinese songs, so we change their type to being Chinese
+    if (hymnNumber.matches("\\d+c")) {
+      hymnNumber = hymnType.abbreviation + hymnNumber;
+      hymnType = HymnType.CHINESE;
     }
-    return builder.setNumber(key.getHymnNumber()).build();
+
+    SongReference.Builder builder = SongReference.newBuilder().setNumber(hymnNumber);
+    if (queryParamsOptional.isEmpty()) {
+      return Optional.of(
+          builder.setType(com.hymnsmobile.pipeline.models.HymnType.valueOf(hymnType.name()))
+              .build());
+    }
+
+    String queryParams = queryParamsOptional.get();;
+    if (queryParams.equals("?gb=1")) {
+      if (hymnType == HymnType.CHINESE) {
+        return Optional.of(
+            builder.setType(com.hymnsmobile.pipeline.models.HymnType.CHINESE_SIMPLIFIED).build());
+      }
+
+      if (hymnType == HymnType.CHINESE_SUPPLEMENTAL) {
+        return Optional.of(
+            builder.setType(
+                com.hymnsmobile.pipeline.models.HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED).build());
+      }
+    }
+    errors.add(PipelineError.newBuilder().setSeverity(Severity.ERROR)
+        .setMessage(String.format("%s is an invalid key", key)).build());
+    return Optional.empty();
   }
 
   public HymnalNetKey toHymnalNetKey(SongReference reference) {
+    HymnalNetKey.Builder builder = HymnalNetKey.newBuilder();
+
     String hymnNumber = reference.getNumber();
 
     if (reference.getType() == com.hymnsmobile.pipeline.models.HymnType.CHINESE_SIMPLIFIED) {
-      return HymnalNetKey.newBuilder().setHymnType(HymnType.CHINESE.abbreviation)
-          .setHymnNumber(hymnNumber).setQueryParams("?gb=1").build();
-    }
-
-    if (reference.getType()
+      builder.setHymnType(HymnType.CHINESE.abbreviation).setQueryParams("?gb=1").build();
+    } else if (reference.getType()
         == com.hymnsmobile.pipeline.models.HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED) {
-      return HymnalNetKey.newBuilder().setHymnType(HymnType.CHINESE_SUPPLEMENTAL.abbreviation)
-          .setHymnNumber(hymnNumber).setQueryParams("?gb=1").build();
+      builder.setHymnType(HymnType.CHINESE_SUPPLEMENTAL.abbreviation).setQueryParams("?gb=1").build();
+    } else {
+      builder.setHymnType(HymnType.valueOf(reference.getType().name()).abbreviation);
     }
 
-    return HymnalNetKey.newBuilder()
-        .setHymnType(HymnType.valueOf(reference.getType().name()).abbreviation)
-        .setHymnNumber(hymnNumber).build();
+    // Some Hymnal.net songs that are of the form NS/618c are actually Chinese songs, and are thus
+    // converted into an internal representation of CH/ns618c. So here, we need to convert them back
+    // into the Hymnal.net form.
+    Pattern pattern = Pattern.compile("(\\D+)(\\d+c)");
+    Matcher matcher = pattern.matcher(hymnNumber);
+    if (matcher.find()) {
+      builder.setHymnType(matcher.group(1));
+      builder.setHymnNumber(matcher.group(2));
+    } else {
+      builder.setHymnNumber(hymnNumber);
+    }
+    return builder.build();
   }
 
   public static Optional<HymnalNetKey> extractFromPath(String path) {

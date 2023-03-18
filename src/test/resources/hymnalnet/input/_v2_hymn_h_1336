@@ -112,6 +112,15 @@
     {
       "data": [
         {
+          "path": "https://gospel.biblesforamerica.org/is-jesus-in-your-boat/",
+          "value": "Is Jesus in Your Boat?"
+        }
+      ],
+      "name": "Link"
+    },
+    {
+      "data": [
+        {
           "path": "https://www.hymnal.net/Hymns/Hymnal/pdfs/e1336_p.pdf",
           "value": "Piano"
         },

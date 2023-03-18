@@ -8,16 +8,13 @@ import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.MalformedJsonException;
-import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 import com.google.protobuf.util.JsonFormat;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class TextUtil {
 
@@ -27,21 +24,6 @@ public class TextUtil {
     }
 
     return new Gson().toJson(stringMap);
-  }
-
-  public static <M extends Message> String toJson(Map<String, M> map)
-      throws InvalidProtocolBufferException {
-    if (map.isEmpty()) {
-      return null;
-    }
-
-    Map<String, String> newMap = new HashMap<>();
-    for (Entry<String, M> entry : map.entrySet()) {
-      String title = entry.getKey();
-      String json = JsonParser.parseString(JsonFormat.printer().print(entry.getValue())).toString();
-      newMap.put(title, json);
-    }
-    return strMapToJson(newMap);
   }
 
   public static <M extends Message> String toJson(List<M> messages) throws IOException {

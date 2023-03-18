@@ -28,6 +28,7 @@ public class HymnalNetPipeline {
   private final Set<PipelineError> errors;
   private final Fetcher fetcher;
   private final FileReadWriter fileReadWriter;
+  private final Auditor auditor;
   private final Set<Hymn> hymns;
   private final Set<HymnalNetJson> hymnalNetJsons;
   private final ZonedDateTime currentTime;
@@ -37,6 +38,7 @@ public class HymnalNetPipeline {
       Converter converter,
       Fetcher fetcher,
       FileReadWriter fileReadWriter,
+      Auditor auditor,
       Set<PipelineError> errors,
       ZonedDateTime currentTime,
       @HymnalNet Set<Hymn> hymns,
@@ -45,6 +47,7 @@ public class HymnalNetPipeline {
     this.errors = errors;
     this.fetcher = fetcher;
     this.fileReadWriter = fileReadWriter;
+    this.auditor = auditor;
     this.hymns = hymns;
     this.hymnalNetJsons = hymnalNetJsons;
     this.currentTime = currentTime;
@@ -64,7 +67,8 @@ public class HymnalNetPipeline {
 
   public void run() throws IOException, InterruptedException, URISyntaxException {
     readFile();
-    fetcher.fetchHymns();
+    // fetcher.fetchHymns();
+    auditor.auditHymns();
     writeAllHymns();
   }
 
@@ -82,7 +86,8 @@ public class HymnalNetPipeline {
             new FileInputStream(mostRecentFile.get()));
     this.hymnalNetJsons.addAll(hymnalNet.getHymnanlNetJsonList());
     this.hymns.addAll(
-        this.hymnalNetJsons.stream().map(converter::toHymn).collect(Collectors.toSet()));
+        this.hymnalNetJsons.stream().map(converter::toHymn).filter(Optional::isPresent)
+            .map(Optional::get).collect(Collectors.toSet()));
     this.errors.addAll(hymnalNet.getErrorsList());
   }
 

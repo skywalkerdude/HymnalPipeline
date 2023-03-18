@@ -1,0 +1,204 @@
+{
+  "lyrics": [
+    {
+      "verse_content": [
+        "Into our care did God entrust",
+        "The children, an inheritance,",
+        "We must equipped in spirit be,",
+        "To match God’s heart in shepherding."
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "To shepherd them, seize every chance,",
+        "Impart the faith with diligence;",
+        "Build character without delay,",
+        "Raise up the vessels of the age."
+      ],
+      "verse_type": "chorus"
+    },
+    {
+      "verse_content": [
+        "Enjoy the grace of Christ each day,",
+        "Each moment live the God-man way;",
+        "For the right timing, watch and pray,",
+        "And be good patterns every day."
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "verse_content": [
+        "This crooked age defiled all lands;",
+        "The church alone most holy stands.",
+        "Coordinate with other saints,",
+        "Young vessels unto honor gain."
+      ],
+      "verse_type": "verse"
+    }
+  ],
+  "meta_data": [
+    {
+      "data": [
+        {
+          "path": "/en/search/all/category/Encouragement",
+          "value": "Encouragement"
+        }
+      ],
+      "name": "Category"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/category/Encouragement%E2%80%94For+Shepherding+the+Children",
+          "value": "For Shepherding the Children"
+        }
+      ],
+      "name": "Subcategory"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/author/B.+C.?t=ns&n=510",
+          "value": "B. C."
+        },
+        {
+          "path": "/en/search/all/author/R.+C.?t=ns&n=510",
+          "value": "R. C."
+        },
+        {
+          "path": "/en/search/all/author/Anonymous?t=ns&n=510",
+          "value": "Translated by Anonymous"
+        }
+      ],
+      "name": "Lyrics"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/composer/Charles+Hutchinson+Gabriel?t=ns&n=510",
+          "value": "Charles Hutchinson Gabriel (1856-1932)"
+        }
+      ],
+      "name": "Music"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/key/G+Major",
+          "value": "G Major"
+        }
+      ],
+      "name": "Key"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/time/3%2F4",
+          "value": "3/4"
+        }
+      ],
+      "name": "Time"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/meter/8.8.8.8.D.",
+          "value": "8.8.8.8.D."
+        }
+      ],
+      "name": "Meter"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/hymncode/5513321621651312",
+          "value": "5513321621651312"
+        }
+      ],
+      "name": "Hymn Code"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/hymn/ns/510c?gb=1",
+          "value": "诗歌(简)"
+        },
+        {
+          "path": "/en/hymn/ns/510c",
+          "value": "詩歌(繁)"
+        }
+      ],
+      "name": "Languages"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/hymn/ns/187",
+          "value": "Turn to your spirit, where the Spirit of Jesus is"
+        },
+        {
+          "path": "/en/hymn/h/655",
+          "value": "Feed on His faithfulness, my soul"
+        },
+        {
+          "path": "/en/hymn/ns/835",
+          "value": "We Will Choose Life!"
+        },
+        {
+          "path": "/en/hymn/ns/291",
+          "value": "If God leads you to walk a way"
+        }
+      ],
+      "name": "See Also"
+    },
+    {
+      "data": [
+        {
+          "path": "https://www.hymnal.net/Hymns/NewSongs/pdfs/ns0510_p.pdf",
+          "value": "Piano"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/NewSongs/pdfs/ns0510_g.pdf",
+          "value": "Guitar"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/NewSongs/pdfs/ns0510_gt.pdf",
+          "value": "Text"
+        }
+      ],
+      "name": "Lead Sheet"
+    },
+    {
+      "data": [
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/mp3/e0396_i.mp3",
+          "value": "mp3"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/midi/e0396_i.mid",
+          "value": "MIDI"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/NewSongs/midi/tunes/ns0510_tune.midi",
+          "value": "Tune (MIDI)"
+        }
+      ],
+      "name": "Music"
+    },
+    {
+      "data": [
+        {
+          "path": "https://www.hymnal.net/Hymns/NewSongs/svg/ns0510_p.svg",
+          "value": "Piano"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/NewSongs/svg/ns0510_g.svg",
+          "value": "Guitar"
+        }
+      ],
+      "name": "svg"
+    }
+  ],
+  "title": "Hymn: Into our care did God entrust"
+}

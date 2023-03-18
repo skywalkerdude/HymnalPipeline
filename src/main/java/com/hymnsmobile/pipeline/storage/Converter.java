@@ -10,7 +10,6 @@ import javax.inject.Inject;
 @StorageScope
 public class Converter {
 
-
   private static final Map<HymnType, String> HYMN_TYPE_TO_STRING_VALUE_MAP = new HashMap<>() {{
     put(HymnType.CLASSIC_HYMN, "h");
     put(HymnType.NEW_TUNE, "nt");
@@ -28,7 +27,6 @@ public class Converter {
     put(HymnType.FRENCH, "hf");
     put(HymnType.SPANISH, "S");
   }};
-
 
   @Inject
   public Converter() {

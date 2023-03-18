@@ -15,7 +15,6 @@ import java.util.Set;
 @Module
 public interface HymnalNetPipelineTestModule {
 
-  List<HymnalNetKey> STORED_SONGS = new ArrayList<>();
   List<HymnalNetKey> SONGS_TO_FETCH = new ArrayList<>();
 
   @HymnalNet

@@ -1,0 +1,228 @@
+{
+  "lyrics": [
+    {
+      "transliteration": [
+        "shén sì ér nv̌ zuò wèi chǎn yè ，",
+        "jiāo tuō fù mǔ zhào gù wèi yǎng 。",
+        "wǒ xū xiān dé shǔ líng zhuāng bèi ，",
+        "fāng néng zhào shén xīn yì mù yǎng 。"
+      ],
+      "verse_content": [
+        "神赐儿女作为产业，",
+        "交托父母照顾喂养。",
+        "我需先得属灵装备，",
+        "方能照神心意牧养。"
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "transliteration": [
+        "zhōng xìn mù yǎng bǎ wò jī hùi ，",
+        "zhèng què xìn yǎng yīn qín chuán shū ，",
+        "gāo shàng pǐn gé chèn zǎo jiàn lì ，",
+        "shí dài qì mǐn chéng xiàn yú zhǔ 。"
+      ],
+      "verse_content": [
+        "忠信牧养把握机会，",
+        "正确信仰殷勤传输，",
+        "高尚品格趁早建立，",
+        "时代器皿呈献于主。"
+      ],
+      "verse_type": "chorus"
+    },
+    {
+      "transliteration": [
+        "tiān tiān xiǎng shòu jī dū ēn diǎn ，",
+        "shí shí huó chū shén rén xīn yáng 。",
+        "jǐng xǐng dài dǎo shì dāng chéng quán ，",
+        "liáng hǎo bǎng yáng zùi jiā mù yǎng 。"
+      ],
+      "verse_content": [
+        "天天享受基督恩典，",
+        "时时活出神人新样。",
+        "儆醒代祷适当成全，",
+        "良好榜样最佳牧养。"
+      ],
+      "verse_type": "verse"
+    },
+    {
+      "transliteration": [
+        "shì dài wān qū wū rǎn biàn dì ，",
+        "wéi dú zhào hùi shèng bié měi dì 。",
+        "zhī tǐ pèi dā fú chí mù yǎng ，",
+        "gùi zhòng qì mǐn ràng shén mǎn yì 。"
+      ],
+      "verse_content": [
+        "世代弯曲污染遍地，",
+        "惟独召会圣别美地。",
+        "肢体配搭扶持牧养，",
+        "贵重器皿让神满意。"
+      ],
+      "verse_type": "verse"
+    }
+  ],
+  "meta_data": [
+    {
+      "data": [
+        {
+          "path": "/en/search/all/category/%E9%BC%93%E5%8B%B5",
+          "value": "鼓励"
+        }
+      ],
+      "name": "Category"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/category/%E9%BC%93%E5%8B%B5%E2%80%94%E7%89%A7%E9%A4%8A%E5%85%92%E7%AB%A5",
+          "value": "牧养儿童"
+        }
+      ],
+      "name": "Subcategory"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/author/B.+C.?t=ns&n=510c",
+          "value": "B. C."
+        },
+        {
+          "path": "/en/search/all/author/R.+C.?t=ns&n=510c",
+          "value": "R. C."
+        }
+      ],
+      "name": "Lyrics"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/composer/Charles+Hutchinson+Gabriel?t=ns&n=510c",
+          "value": "Charles Hutchinson Gabriel (1856-1932)"
+        }
+      ],
+      "name": "Music"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/key/G+Major",
+          "value": "G Major"
+        }
+      ],
+      "name": "Key"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/time/3%2F4",
+          "value": "3/4"
+        }
+      ],
+      "name": "Time"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/meter/8.8.8.8.D.",
+          "value": "8.8.8.8.D."
+        }
+      ],
+      "name": "Meter"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/search/all/hymncode/5513321621651312",
+          "value": "5513321621651312"
+        }
+      ],
+      "name": "Hymn Code"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/hymn/ns/510",
+          "value": "English"
+        },
+        {
+          "path": "/en/hymn/ns/510c",
+          "value": "詩歌(繁)"
+        }
+      ],
+      "name": "Languages"
+    },
+    {
+      "data": [
+        {
+          "path": "/en/hymn/ch/480",
+          "value": "你们能否顺从"
+        },
+        {
+          "path": "/en/hymn/ch/488",
+          "value": "何必耽心一握不释"
+        },
+        {
+          "path": "/en/hymn/ch/475",
+          "value": "转眼将耶稣观看"
+        },
+        {
+          "path": "/en/hymn/ch/478",
+          "value": "亲爱基督精兵"
+        },
+        {
+          "path": "/en/hymn/ch/485",
+          "value": "靠着恩主全能神"
+        }
+      ],
+      "name": "See Also"
+    },
+    {
+      "data": [
+        {
+          "path": "https://www.hymnal.net/Hymns/NewSongs/pdfs/ns0510c_cn_p.pdf",
+          "value": "Piano"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/NewSongs/pdfs/ns0510c_cn_g.pdf",
+          "value": "Guitar"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/NewSongs/pdfs/ns0510c_cn_gt.pdf",
+          "value": "Text"
+        }
+      ],
+      "name": "Lead Sheet"
+    },
+    {
+      "data": [
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/mp3/e0396_i.mp3",
+          "value": "mp3"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/Hymnal/midi/e0396_i.mid",
+          "value": "MIDI"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/NewSongs/midi/tunes/ns0510c_tune.midi",
+          "value": "Tune (MIDI)"
+        }
+      ],
+      "name": "Music"
+    },
+    {
+      "data": [
+        {
+          "path": "https://www.hymnal.net/Hymns/NewSongs/svg/ns0510c_cn_p.svg",
+          "value": "Piano"
+        },
+        {
+          "path": "https://www.hymnal.net/Hymns/NewSongs/svg/ns0510c_cn_g.svg",
+          "value": "Guitar"
+        }
+      ],
+      "name": "svg"
+    }
+  ],
+  "title": "Hymn: 忠信牧养神赐产业"
+}

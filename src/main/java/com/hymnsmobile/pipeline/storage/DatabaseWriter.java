@@ -82,8 +82,8 @@ public class DatabaseWriter {
     insertStatement.setString(14, strMapToJson(hymn.getMusicMap()));
     insertStatement.setString(15, strMapToJson(hymn.getSvgSheetMap()));
     insertStatement.setString(16, strMapToJson(hymn.getPdfSheetMap()));
-    insertStatement.setString(17, toJson(hymn.getLanguagesMap()));
-    insertStatement.setString(18, toJson(hymn.getRelevantsMap()));
+    insertStatement.setString(17, toJson(hymn.getLanguagesList()));
+    insertStatement.setString(18, toJson(hymn.getRelevantsList()));
     return insertStatement.execute();
   }
 }
