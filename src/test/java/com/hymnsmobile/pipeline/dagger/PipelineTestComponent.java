@@ -1,6 +1,7 @@
 package com.hymnsmobile.pipeline.dagger;
 
 import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNetPipelineTestComponent;
+import com.hymnsmobile.pipeline.sanitization.dagger.SanitizationTestComponent;
 import dagger.Component;
 
 @PipelineScope
@@ -8,4 +9,6 @@ import dagger.Component;
 public interface PipelineTestComponent extends PipelineComponent {
 
   HymnalNetPipelineTestComponent.Builder hymnalNetTestComponent();
+
+  SanitizationTestComponent.Builder sanitizationTestComponent();
 }

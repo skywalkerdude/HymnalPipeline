@@ -15,6 +15,7 @@ public class Converter {
     put(HymnType.NEW_TUNE, "nt");
     put(HymnType.NEW_SONG, "ns");
     put(HymnType.CHILDREN_SONG, "c");
+    put(HymnType.BE_FILLED, "bf");
     put(HymnType.HOWARD_HIGASHI, "lb");
     put(HymnType.DUTCH, "hd");
     put(HymnType.GERMAN, "de");
@@ -25,7 +26,11 @@ public class Converter {
     put(HymnType.CEBUANO, "cb");
     put(HymnType.TAGALOG, "ht");
     put(HymnType.FRENCH, "hf");
-    put(HymnType.SPANISH, "S");
+    put(HymnType.SPANISH, "hs");
+    put(HymnType.KOREAN, "k");
+    put(HymnType.INDONESIAN, "i");
+    put(HymnType.JAPANESE, "j");
+    put(HymnType.FARSI, "f");
   }};
 
   @Inject

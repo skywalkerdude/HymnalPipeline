@@ -19,8 +19,8 @@ protobuf {
 }
 
 dependencies {
-    implementation "com.google.protobuf:protobuf-java:3.22.0"
-    implementation "com.google.protobuf:protobuf-java-util:3.22.0"
+    implementation "com.google.protobuf:protobuf-java:3.22.2"
+    implementation "com.google.protobuf:protobuf-java-util:3.22.2"
     implementation "org.apache.commons:commons-lang3:3.12.0"
     implementation "org.apache.commons:commons-text:1.10.0"
     implementation "org.apache.commons:commons-collections4:4.4"
@@ -28,7 +28,17 @@ dependencies {
     implementation "com.google.dagger:dagger:$dagger_version"
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
 
+    // Google Auto Factory
+    // https://github.com/google/auto/tree/master/factory
+    def auto_factory_version = '1.0.1'
+    implementation "com.google.auto.factory:auto-factory:$auto_factory_version"
+    annotationProcessor "com.google.auto.factory:auto-factory:$auto_factory_version"
+
     implementation "org.xerial:sqlite-jdbc:3.41.0.0"
+
+    implementation "com.belerweb:pinyin4j:2.5.1"
+
+    implementation "com.github.mertakdut:EpubParser:1.0.95"
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.9.2"
     testImplementation "org.mockito:mockito-core:4.4.0"

@@ -1,18 +1,13 @@
 package com.hymnsmobile.pipeline.hymnalnet;
 
-import static com.google.common.collect.ImmutableList.toImmutableList;
 import static com.hymnsmobile.pipeline.hymnalnet.BlockList.BLOCK_LIST;
 
 import com.google.common.collect.ImmutableList;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
-import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNet;
 import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNetPipelineScope;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetJson;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetKey;
-import com.hymnsmobile.pipeline.models.Hymn;
-import com.hymnsmobile.pipeline.models.SongLink;
-import com.hymnsmobile.pipeline.models.SongReference;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -40,17 +35,14 @@ public class Fetcher {
   private final Converter converter;
   private final ImmutableList<HymnalNetKey> songsToFetch;
 
-  private final Set<Hymn> hymns;
   private final Set<HymnalNetJson> hymnalNetJsons;
 
   @Inject
   public Fetcher(HttpClient client, Converter converter,
       ImmutableList<HymnalNetKey> songsToFetch,
-      @HymnalNet Set<Hymn> hymns,
-      @HymnalNet Set<HymnalNetJson> hymnalNetJsons) {
+      Set<HymnalNetJson> hymnalNetJsons) {
     this.client = client;
     this.converter = converter;
-    this.hymns = hymns;
     this.hymnalNetJsons = hymnalNetJsons;
     this.songsToFetch = songsToFetch;
   }
@@ -60,60 +52,37 @@ public class Fetcher {
    */
   public void fetchHymns() throws InterruptedException, IOException, URISyntaxException {
     for (HymnalNetKey key : songsToFetch) {
-      HymnType hymnType = HymnType.fromString(key.getHymnType()).orElseThrow();
-      Optional<SongReference> songReferenceOptional = converter.toSongReference(key);
-      if (songReferenceOptional.isEmpty()) {
-        continue;
-      }
-      SongReference songReference = songReferenceOptional.get();
-      fetchHymn(songReference);
-      if (hymnType == HymnType.CHINESE) {
-        fetchHymn(songReference.toBuilder()
-            .setType(com.hymnsmobile.pipeline.models.HymnType.CHINESE_SIMPLIFIED).build());
-      }
-      if (hymnType == HymnType.CHINESE_SUPPLEMENTAL) {
-        fetchHymn(songReference.toBuilder()
-            .setType(com.hymnsmobile.pipeline.models.HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED)
-            .build());
-      }
+      fetchHymn(key);
     }
   }
 
-  private void fetchHymn(SongReference songReference)
+  private void fetchHymn(HymnalNetKey key)
       throws InterruptedException, IOException, URISyntaxException {
-    LOGGER.info(String.format("Fetching %s", songReference));
-    if (hymns.stream().anyMatch(hymn -> hymn.getReference().equals(songReference))) {
-      LOGGER.info(String.format("%s already exists. Skipping...", songReference));
+    LOGGER.fine(String.format("Fetching %s", key));
+    if (hymnalNetJsons.stream().anyMatch(hymn -> hymn.getKey().equals(key))) {
+      LOGGER.fine(String.format("%s already exists. Skipping...", key));
       return;
     }
 
-    if (BLOCK_LIST.contains(songReference)) {
-      LOGGER.info(String.format("%s contained in block list. Skipping...", songReference));
+    if (BLOCK_LIST.contains(key)) {
+      LOGGER.fine(String.format("%s contained in block list. Skipping...", key));
       return;
     }
 
-    Optional<HymnalNetJson> hymnalNetJson = getHymnalNet(songReference);
-    if (hymnalNetJson.isEmpty()) {
-      LOGGER.warning(String.format("Fetching %s was unsuccessful", songReference));
+    Optional<HymnalNetJson> hymn = getHymnalNet(key);
+    if (hymn.isEmpty()) {
+      LOGGER.warning(String.format("Fetching %s was unsuccessful", key));
       return;
     }
-    this.hymnalNetJsons.add(hymnalNetJson.get());
-    Optional<Hymn> hymnOptional = converter.toHymn(hymnalNetJson.get());
-    if (hymnOptional.isEmpty()) {
-      return;
-    }
-    Hymn hymn = hymnOptional.get();
-    this.hymns.add(hymn);
+    this.hymnalNetJsons.add(hymn.get());
 
     // Also fetch all related songs
-    List<SongReference> relatedSongs = ImmutableList.<SongReference>builder()
-        .addAll(
-            hymn.getLanguagesList().stream().map(SongLink::getReference).collect(toImmutableList()))
-        .addAll(
-            hymn.getRelevantsList().stream().map(SongLink::getReference).collect(toImmutableList()))
+    List<HymnalNetKey> relatedSongs = ImmutableList.<HymnalNetKey>builder()
+        .addAll(converter.getRelated(MetaDatumType.LANGUAGES.jsonKey, hymn.get()))
+        .addAll(converter.getRelated(MetaDatumType.RELEVANT.jsonKey, hymn.get()))
         .build();
-    LOGGER.info(String.format("Found %d related songs: %s", relatedSongs.size(), relatedSongs));
-    for (SongReference relatedSong : relatedSongs) {
+    LOGGER.fine(String.format("Found %d related songs: %s", relatedSongs.size(), relatedSongs));
+    for (HymnalNetKey relatedSong : relatedSongs) {
       fetchHymn(relatedSong);
     }
   }
@@ -122,9 +91,8 @@ public class Fetcher {
    * Fetches the hymn referenced by the song, unless it doesn't exist, in which case, return
    * {@link Optional#empty()}.
    */
-  private Optional<HymnalNetJson> getHymnalNet(SongReference songReference)
+  private Optional<HymnalNetJson> getHymnalNet(HymnalNetKey key)
       throws IOException, InterruptedException, URISyntaxException {
-    HymnalNetKey key = converter.toHymnalNetKey(songReference);
     HymnType hymnType = HymnType.fromString(key.getHymnType()).orElseThrow();
     String hymnNumber = key.getHymnNumber();
 
@@ -137,15 +105,14 @@ public class Fetcher {
       return Optional.empty();
     }
 
-    HymnalNetJson.Builder builder = HymnalNetJson.newBuilder()
-        .setKey(converter.toHymnalNetKey(songReference));
+    HymnalNetJson.Builder builder = HymnalNetJson.newBuilder().setKey(key);
     try {
       JsonFormat.parser().merge(response.body(), builder);
     } catch (InvalidProtocolBufferException e) {
       throw new RuntimeException(
           String.format("Unable to parse %s/%s: %s", hymnType, hymnNumber, response.body()), e);
     }
-    LOGGER.info(String.format("%s successfully fetched", key));
+    LOGGER.fine(String.format("%s successfully fetched", key));
     return Optional.of(builder.build());
   }
 

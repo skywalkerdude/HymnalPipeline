@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 import javax.inject.Scope;
 
 /**
- * Objects will last the lifetime of Hymnal.net portion of the pipeline.
+ * Objects will last the lifetime of Hymnal.net step of the pipeline.
  */
 @Scope
 @Retention(RetentionPolicy.RUNTIME)

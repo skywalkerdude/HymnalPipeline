@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 import javax.inject.Scope;
 
 /**
- * Objects will last the lifetime of storage portion of the pipeline.
+ * Objects will last the lifetime of storage step of the pipeline.
  */
 @Scope
 @Retention(RetentionPolicy.RUNTIME)

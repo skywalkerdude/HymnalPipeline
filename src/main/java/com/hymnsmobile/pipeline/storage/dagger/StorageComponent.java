@@ -7,7 +7,7 @@ import dagger.Subcomponent;
 @Subcomponent(modules = StorageModule.class)
 public interface StorageComponent {
 
-  StoragePipeline storagePipeline();
+  StoragePipeline pipeline();
 
   @Subcomponent.Builder
   interface Builder {

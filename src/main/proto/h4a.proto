@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package com.hymnsmobile.pipeline.h4a.models;
+
+option java_multiple_files = true;
+
+message H4A {
+  repeated H4aHymn hymns = 1;
+  repeated com.hymnsmobile.pipeline.models.PipelineError errors = 2;
+}
+
+message H4aKey {
+  string type = 1;
+  string number = 2;
+}
+
+message H4aHymn {
+  H4aKey id = 1;
+  optional string author = 2;
+  optional string composer = 3;
+  optional string first_stanza_line = 4;
+  optional string key = 5;
+  optional string main_category = 6;
+  optional string meter = 7;
+  optional string sub_category = 8;
+  optional string time = 9;
+  optional string hymn_code = 10;
+  optional H4aKey parent_hymn = 11;
+  optional string piano_svg = 12;
+  optional string guitar_svg = 13;
+  optional string scriptures = 14;
+  repeated H4aKey related = 15;
+  repeated com.hymnsmobile.pipeline.models.Verse verses = 16;
+  repeated Youtube youtube = 17;
+}
+
+// Link to youtube piano rendition
+message Youtube {
+  string comment = 1;
+  string video_id = 2;
+}

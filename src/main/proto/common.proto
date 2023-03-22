@@ -21,26 +21,32 @@ enum HymnType {
   TAGALOG = 13;
   FRENCH = 14;
   SPANISH = 15;
+  KOREAN = 16;
+  JAPANESE = 17;
+  INDONESIAN = 18;
+  FARSI = 19;
+  BE_FILLED = 20;
 }
 
 message Hymn {
-  SongReference reference = 1;
-  string title = 2;
-  repeated Verse lyrics = 3;
-  repeated string category = 4;
-  repeated string sub_category = 5;
-  repeated string author = 6;
-  repeated string composer = 7;
-  repeated string key = 8;
-  repeated string time = 9;
-  repeated string meter = 10;
-  repeated string scriptures = 11;
-  repeated string hymn_code = 12;
-  map<string, string> music = 13;
-  map<string, string> svg_sheet = 14;
-  map<string, string> pdf_sheet = 15;
-  repeated SongLink languages = 16;
-  repeated SongLink relevants = 17;
+  int32 id = 1;
+  SongReference reference = 2;
+  string title = 3;
+  repeated Verse lyrics = 4;
+  repeated string category = 5;
+  repeated string sub_category = 6;
+  repeated string author = 7;
+  repeated string composer = 8;
+  repeated string key = 9;
+  repeated string time = 10;
+  repeated string meter = 11;
+  repeated string scriptures = 12;
+  repeated string hymn_code = 13;
+  map<string, string> music = 14;
+  map<string, string> svg_sheet = 15;
+  map<string, string> pdf_sheet = 16;
+  repeated SongLink languages = 17;
+  repeated SongLink relevants = 18;
 }
 
 message SongReference {
@@ -61,6 +67,10 @@ message Verse {
 message Line {
   string line_content = 1;
   optional string transliteration = 2;
+}
+
+message PipelineErrors {
+  repeated PipelineError errors = 1;
 }
 
 // An error encountered during processing of the pipeline.
