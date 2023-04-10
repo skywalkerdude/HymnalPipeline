@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package com.hymnsmobile.pipeline.liederbuch.models;
+
+option java_multiple_files = true;
+
+message Liederbuch {
+  repeated LiederbuchHymn liederbuchXml = 1;
+  repeated com.hymnsmobile.pipeline.models.PipelineError errors = 2;
+}
+
+message LiederbuchKey {
+  string type = 1;
+  string number = 2;
+}
+
+// Liederbuch hymn from the epub file. Used to make deserialization easier.
+message LiederbuchHymn {
+  LiederbuchKey key = 1;
+  string title = 2;
+  string meter = 3;
+  repeated LiederbuchKey related = 4;
+  repeated Verse verses = 5;
+}
+
+message Verse {
+  repeated string verse_content = 1;
+}

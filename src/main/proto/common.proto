@@ -26,6 +26,7 @@ enum HymnType {
   INDONESIAN = 18;
   FARSI = 19;
   BE_FILLED = 20;
+  LIEDERBUCH = 21;
 }
 
 message Hymn {

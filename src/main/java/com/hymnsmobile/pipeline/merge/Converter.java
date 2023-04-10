@@ -1,6 +1,7 @@
 package com.hymnsmobile.pipeline.merge;
 
 import static com.hymnsmobile.pipeline.models.HymnType.HOWARD_HIGASHI;
+import static com.hymnsmobile.pipeline.models.HymnType.LIEDERBUCH;
 
 import com.google.protobuf.Descriptors.Descriptor;
 import com.google.protobuf.Descriptors.FieldDescriptor;
@@ -13,6 +14,7 @@ import com.hymnsmobile.pipeline.hymnalnet.models.Datum;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetJson;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetKey;
 import com.hymnsmobile.pipeline.hymnalnet.models.Verse;
+import com.hymnsmobile.pipeline.liederbuch.models.LiederbuchKey;
 import com.hymnsmobile.pipeline.merge.dagger.Merge;
 import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
 import com.hymnsmobile.pipeline.models.Hymn;
@@ -88,6 +90,23 @@ public class Converter {
     }
     return reference.setType(com.hymnsmobile.pipeline.models.HymnType.valueOf(type.name()))
         .setNumber(number).build();
+  }
+
+  public SongReference toSongReference(LiederbuchKey key) {
+    SongReference.Builder reference = SongReference.newBuilder().setNumber(key.getNumber());
+
+    com.hymnsmobile.pipeline.liederbuch.HymnType type =
+        com.hymnsmobile.pipeline.liederbuch.HymnType.fromString(key.getType()).orElseThrow();
+
+    if (type == com.hymnsmobile.pipeline.liederbuch.HymnType.GERMAN) {
+      return reference.setType(LIEDERBUCH).build();
+    }
+
+    int numberInt = Integer.parseInt(key.getNumber());
+    if (type == com.hymnsmobile.pipeline.liederbuch.HymnType.NEW_SONG && numberInt > 1000) {
+      return reference.setType(HOWARD_HIGASHI).setNumber(String.valueOf(numberInt - 1000)).build();
+    }
+    return reference.setType(com.hymnsmobile.pipeline.models.HymnType.valueOf(type.name())).build();
   }
 
   /**

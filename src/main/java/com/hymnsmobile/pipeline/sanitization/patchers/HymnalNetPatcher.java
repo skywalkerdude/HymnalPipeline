@@ -296,8 +296,8 @@ public class HymnalNetPatcher extends Patcher {
   }
 
   /**
-   *  ts/142 and ts/142?gb=1 -> mapped to h/1193 for some reason, but it actually is the chinese version of h/1198.
-   *  So it should map to h/1198 and its related songs
+   *  ts/142 and ts/142?gb=1 -> mapped to h/1193 for some reason, but it actually is the chinese
+   *  version of h/1198. So it should map to h/1198 and its related songs
    */
   void fix_ts142() {
     getHymn(SongReference.newBuilder().setType(HymnType.CHINESE_SUPPLEMENTAL).setNumber("142"))

@@ -3,16 +3,13 @@ package com.hymnsmobile.pipeline.h4a;
 import static com.google.common.collect.ImmutableList.toImmutableList;
 
 import com.google.common.collect.ImmutableList;
-import com.hymnsmobile.pipeline.FileReadWriter;
 import com.hymnsmobile.pipeline.h4a.dagger.H4a;
 import com.hymnsmobile.pipeline.h4a.dagger.H4aPipelineScope;
 import com.hymnsmobile.pipeline.h4a.models.H4aHymn;
 import com.hymnsmobile.pipeline.h4a.models.H4aKey;
 import com.hymnsmobile.pipeline.models.PipelineError;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -26,21 +23,16 @@ public class H4aPipeline {
 
   private static final Logger LOGGER = Logger.getGlobal();
 
-  private final FileReadWriter fileReadWriter;
   private final Reader reader;
   private final Set<PipelineError> errors;
   private final Set<H4aHymn> h4aHymns;
-  private final ZonedDateTime currentTime;
 
   @Inject
   public H4aPipeline(
-      FileReadWriter fileReadWriter,
       @H4a Set<PipelineError> errors,
       Set<H4aHymn> h4aHymns,
       Reader reader,
       ZonedDateTime currentTime) {
-    this.fileReadWriter = fileReadWriter;
-    this.currentTime = currentTime;
     this.errors = errors;
     this.h4aHymns = h4aHymns;
     this.reader = reader;
@@ -54,11 +46,10 @@ public class H4aPipeline {
     return ImmutableList.copyOf(errors);
   }
 
-  public void run() throws BadHanyuPinyinOutputFormatCombination, SQLException, IOException {
+  public void run() throws BadHanyuPinyinOutputFormatCombination, SQLException {
     LOGGER.info("H4a pipeline starting");
     reader.readDb();
     fixGermanSongs();
-    writeAllHymns();
     LOGGER.info("H4a pipeline finished");
   }
 
@@ -140,14 +131,5 @@ public class H4aPipeline {
           "There should be at most be one hymn matching each reference.");
     }
     return possibilities.stream().findFirst();
-  }
-
-  private void writeAllHymns() throws IOException {
-    String fileName = String.format("storage/h4a/%s.txt",
-        currentTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss_z")));
-    LOGGER.fine(String.format("Writing hymns to %s", fileName));
-    fileReadWriter.writeProto(fileName,
-        com.hymnsmobile.pipeline.h4a.models.H4A.newBuilder().addAllHymns(h4aHymns)
-            .addAllErrors(errors).build());
   }
 }

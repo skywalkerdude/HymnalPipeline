@@ -8,7 +8,7 @@ import java.util.Optional;
 public enum HymnType {
   CLASSIC_HYMN("h", Optional.of(1360)),
   NEW_TUNE("nt", Optional.empty()),
-  NEW_SONG("ns", Optional.of(952)),
+  NEW_SONG("ns", Optional.of(955)),
   CHILDREN_SONG("c", Optional.of(214)),
   HOWARD_HIGASHI("lb", Optional.of(87)),
   DUTCH("hd", Optional.of(120)),

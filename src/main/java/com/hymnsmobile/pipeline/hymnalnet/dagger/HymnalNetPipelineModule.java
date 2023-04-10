@@ -31,7 +31,7 @@ interface HymnalNetPipelineModule {
   static ImmutableList<HymnalNetKey> songsToFetch() {
     ImmutableList.Builder<HymnalNetKey> builder = ImmutableList.builder();
     for (HymnType hymnType : HymnType.values()) {
-      for (int hymnNumber = 1; hymnNumber < hymnType.maxNumber.orElse(0); hymnNumber++) {
+      for (int hymnNumber = 1; hymnNumber < hymnType.maxNumber.orElse(1000); hymnNumber++) {
         builder.add(HymnalNetKey.newBuilder().setHymnType(hymnType.abbreviation)
             .setHymnNumber(String.valueOf(hymnNumber)).build());
       }

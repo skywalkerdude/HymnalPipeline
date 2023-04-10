@@ -41,7 +41,6 @@ public abstract class Patcher {
     this.builders = allHymns.entrySet().stream()
         .collect(
             toMap(entry -> new ArrayList<>(entry.getKey()), entry -> entry.getValue().toBuilder()));
-        // .collect(toImmutableMap(Entry::getKey, entry -> entry.getValue().toBuilder()));
 
     performPatch();
 

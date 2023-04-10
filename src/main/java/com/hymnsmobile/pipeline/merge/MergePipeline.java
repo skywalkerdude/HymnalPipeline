@@ -1,8 +1,12 @@
 package com.hymnsmobile.pipeline.merge;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
 import static com.google.common.collect.ImmutableMap.toImmutableMap;
 import static com.hymnsmobile.pipeline.h4a.HymnType.CHINESE;
 import static com.hymnsmobile.pipeline.h4a.HymnType.CLASSIC_HYMN;
+import static com.hymnsmobile.pipeline.models.HymnType.GERMAN;
+import static com.hymnsmobile.pipeline.models.HymnType.LIEDERBUCH;
+import static com.hymnsmobile.pipeline.models.HymnType.NEW_SONG;
 import static java.util.stream.Collectors.toMap;
 
 import com.google.common.collect.ImmutableList;
@@ -11,11 +15,13 @@ import com.hymnsmobile.pipeline.h4a.HymnType;
 import com.hymnsmobile.pipeline.h4a.models.H4aHymn;
 import com.hymnsmobile.pipeline.h4a.models.H4aKey;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetJson;
+import com.hymnsmobile.pipeline.liederbuch.models.LiederbuchHymn;
 import com.hymnsmobile.pipeline.merge.dagger.Merge;
 import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
 import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
+import com.hymnsmobile.pipeline.models.SongLink;
 import com.hymnsmobile.pipeline.models.SongReference;
 import com.hymnsmobile.pipeline.models.Verse;
 import java.util.ArrayList;
@@ -51,7 +57,8 @@ public class MergePipeline {
 
   public ImmutableMap<ImmutableList<SongReference>, Hymn> mergeHymns(
       ImmutableList<HymnalNetJson> hymnalNetHymns,
-      ImmutableList<H4aHymn> h4aHymns) {
+      ImmutableList<H4aHymn> h4aHymns,
+      ImmutableList<LiederbuchHymn> liederbuchHymns) {
     LOGGER.info("Merge pipeline finished");
     // Create mutable versions of everything fo collection.
     Map<List<SongReference>, Hymn.Builder> mergedHymns = new LinkedHashMap<>();
@@ -73,11 +80,71 @@ public class MergePipeline {
         // Merge in H4a hymns
         .forEach(h4aHymn -> mergeH4aHymn(h4aHymn, h4aHymns, mergedHymns));
 
+    liederbuchHymns.forEach(liederbuchHymn -> {
+      SongReference songReference = converter.toSongReference(liederbuchHymn.getKey());
+
+      // Only interested in the Liederbuch (German) songs, since all the other songs are covered
+      // by Hymnal.net or H4a
+      if (songReference.getType() != LIEDERBUCH) {
+        return;
+      }
+
+      ImmutableList<SongReference> relatedReferences =
+          liederbuchHymn.getRelatedList().stream()
+              .map(converter::toSongReference)
+              .collect(toImmutableList());
+
+      // Try to find the associated German song that has already been processed and add the
+      // liederbuch song as an alternate key to that song.
+      List<Entry<List<SongReference>, Hymn.Builder>> germanSongs =
+          relatedReferences.stream()
+              .map(relatedReference -> getHymnFrom(relatedReference, mergedHymns).orElseThrow())
+              .flatMap(relatedReference -> relatedReference.getLanguagesList().stream())
+              .map(SongLink::getReference)
+              .filter(relatedReference -> relatedReference.getType() == GERMAN)
+              .map(relatedReference ->
+                  getMatchingReferences(relatedReference, mergedHymns).orElseThrow())
+              // Add a link to the Liederbuch song to the German song
+              // todo need to figure out how to handle the references. maybe in relevants?
+              // .peek(entry ->
+              //     entry.getValue().addLanguages(
+              //         SongLink.newBuilder().setName("Liederbuch").setReference(songReference)))
+              .collect(Collectors.toList());
+
+      // Apply a manual mapping if it is appropriate
+      manualMapping(songReference)
+          .flatMap(manualMapping -> getMatchingReferences(manualMapping, mergedHymns))
+          .ifPresent(germanSongs::add);
+
+      if (germanSongs.isEmpty()) {
+        this.errors.add(
+            PipelineError.newBuilder()
+                .setSeverity(Severity.WARNING)
+                .setMessage("Couldn't find mapping for " + songReference)
+                .build());
+        return;
+      }
+      if (germanSongs.size() > 1) {
+        throw new IllegalStateException("Shouldn't have more than 1 matching German song");
+      }
+      germanSongs.get(0).getKey().add(songReference);
+    });
+
     ImmutableMap<ImmutableList<SongReference>, Hymn> rtn = mergedHymns.entrySet().stream()
         .collect(toImmutableMap(
             entry -> ImmutableList.copyOf(entry.getKey()), entry -> entry.getValue().build()));
     LOGGER.info("Merge pipeline finished");
     return rtn;
+  }
+
+  @SafeVarargs
+  public final ImmutableList<PipelineError> mergeErrors(
+      ImmutableList<PipelineError>... errorLists) {
+    ImmutableList.Builder<PipelineError> allErrors = ImmutableList.builder();
+    for (ImmutableList<PipelineError> errorList : errorLists) {
+      allErrors.addAll(errorList);
+    }
+    return allErrors.build();
   }
 
   private void mergeH4aHymn(H4aHymn h4aHymn, ImmutableList<H4aHymn> h4aHymns,
@@ -144,16 +211,6 @@ public class MergePipeline {
     }
   }
 
-  @SafeVarargs
-  public final ImmutableList<PipelineError> mergeErrors(
-      ImmutableList<PipelineError>... errorLists) {
-    ImmutableList.Builder<PipelineError> allErrors = ImmutableList.builder();
-    for (ImmutableList<PipelineError> errorList : errorLists) {
-      allErrors.addAll(errorList);
-    }
-    return allErrors.build();
-  }
-
   /**
    * Try to get a song's parent explicitly if possible. If that's not possible, try to infer it.
    */
@@ -214,6 +271,9 @@ public class MergePipeline {
     return inferredParents;
   }
 
+  /**
+   * Gets the entry that matches the passed-in song reference.
+   */
   private Optional<Entry<List<SongReference>, Hymn.Builder>> getMatchingReferences(
       SongReference songReference, Map<List<SongReference>, Hymn.Builder> mergedHymns) {
     List<Entry<List<SongReference>, Hymn.Builder>> connections = mergedHymns.entrySet().stream()
@@ -263,5 +323,25 @@ public class MergePipeline {
       }
     }
     return true;
+  }
+
+  /**
+   * There are certain Liederbuch songs that do map to an already-processed song, but there's no
+   * explicit mapping in the file, so we need to manually fix them here.
+   */
+  private Optional<SongReference> manualMapping(SongReference songReference) {
+    if (songReference.getType() != LIEDERBUCH) {
+      return Optional.empty();
+    }
+    switch (songReference.getNumber()) {
+      case "419":
+        return Optional.of(
+            SongReference.newBuilder().setType(NEW_SONG).setNumber("180de").build());
+      case "420":
+        return Optional.of(
+            SongReference.newBuilder().setType(NEW_SONG).setNumber("151de").build());
+      default:
+        return Optional.empty();
+    }
   }
 }
