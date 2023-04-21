@@ -56,23 +56,23 @@ public class Converter {
       hymnType = HymnType.CHINESE;
     }
 
-    SongReference.Builder builder = SongReference.newBuilder().setNumber(hymnNumber);
+    SongReference.Builder builder = SongReference.newBuilder().setHymnNumber(hymnNumber);
     if (queryParamsOptional.isPresent()) {
       String queryParams = queryParamsOptional.get();
       if (queryParams.equals("?gb=1")) {
         if (hymnType == HymnType.CHINESE) {
-          return builder.setType(com.hymnsmobile.pipeline.models.HymnType.CHINESE_SIMPLIFIED)
+          return builder.setHymnType(com.hymnsmobile.pipeline.models.HymnType.CHINESE_SIMPLIFIED)
               .build();
         }
 
         if (hymnType == HymnType.CHINESE_SUPPLEMENTAL) {
-          return builder.setType(
+          return builder.setHymnType(
               com.hymnsmobile.pipeline.models.HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED).build();
         }
       }
       throw new IllegalArgumentException("Unexpected query param found");
     }
-    return builder.setType(com.hymnsmobile.pipeline.models.HymnType.valueOf(hymnType.name()))
+    return builder.setHymnType(com.hymnsmobile.pipeline.models.HymnType.valueOf(hymnType.name()))
         .build();
   }
 
@@ -85,28 +85,28 @@ public class Converter {
 
     // Howard Higashi songs in H4a are NS10XX
     if (isHowardHigashi(type, number)) {
-      return reference.setType(HOWARD_HIGASHI)
-          .setNumber(Integer.toString(Integer.parseInt(number) - 1000)).build();
+      return reference.setHymnType(HOWARD_HIGASHI)
+          .setHymnNumber(Integer.toString(Integer.parseInt(number) - 1000)).build();
     }
-    return reference.setType(com.hymnsmobile.pipeline.models.HymnType.valueOf(type.name()))
-        .setNumber(number).build();
+    return reference.setHymnType(com.hymnsmobile.pipeline.models.HymnType.valueOf(type.name()))
+        .setHymnNumber(number).build();
   }
 
   public SongReference toSongReference(LiederbuchKey key) {
-    SongReference.Builder reference = SongReference.newBuilder().setNumber(key.getNumber());
+    SongReference.Builder reference = SongReference.newBuilder().setHymnNumber(key.getNumber());
 
     com.hymnsmobile.pipeline.liederbuch.HymnType type =
         com.hymnsmobile.pipeline.liederbuch.HymnType.fromString(key.getType()).orElseThrow();
 
     if (type == com.hymnsmobile.pipeline.liederbuch.HymnType.GERMAN) {
-      return reference.setType(LIEDERBUCH).build();
+      return reference.setHymnType(LIEDERBUCH).build();
     }
 
     int numberInt = Integer.parseInt(key.getNumber());
     if (type == com.hymnsmobile.pipeline.liederbuch.HymnType.NEW_SONG && numberInt > 1000) {
-      return reference.setType(HOWARD_HIGASHI).setNumber(String.valueOf(numberInt - 1000)).build();
+      return reference.setHymnType(HOWARD_HIGASHI).setHymnNumber(String.valueOf(numberInt - 1000)).build();
     }
-    return reference.setType(com.hymnsmobile.pipeline.models.HymnType.valueOf(type.name())).build();
+    return reference.setHymnType(com.hymnsmobile.pipeline.models.HymnType.valueOf(type.name())).build();
   }
 
   /**
@@ -115,7 +115,7 @@ public class Converter {
    */
   public SongLink toLanguageLink(SongReference reference) {
     final String name;
-    switch (reference.getType()) {
+    switch (reference.getHymnType()) {
       case TAGALOG:
         name = "Tagalog";
         break;

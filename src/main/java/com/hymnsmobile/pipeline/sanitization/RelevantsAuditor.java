@@ -54,7 +54,7 @@ public class RelevantsAuditor {
 
     // Extract the hymn types for audit.
     ImmutableList<HymnType> hymnTypes =
-        setToAudit.stream().map(SongReference::getType).collect(toImmutableList());
+        setToAudit.stream().map(SongReference::getHymnType).collect(toImmutableList());
 
     // Verify that the same hymn type doesn't appear more than the allowed number of times the relevant list.
     for (HymnType hymnType : HymnType.values()) {
@@ -65,7 +65,7 @@ public class RelevantsAuditor {
       if (ImmutableSet.of(CLASSIC_HYMN, NEW_TUNE, NEW_SONG, GERMAN, CHINESE, CHINESE_SIMPLIFIED)
           .contains(hymnType)) {
         for (SongReference songReference : setToAudit) {
-          if (songReference.getType() == hymnType && songReference.getNumber()
+          if (songReference.getHymnType() == hymnType && songReference.getHymnNumber()
               .matches("(\\D+\\d+\\D*)|(\\D*\\d+\\D+)")) {
             timesAllowed++;
           }

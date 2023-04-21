@@ -4,10 +4,12 @@ import static com.google.gson.stream.JsonToken.END_DOCUMENT;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.MalformedJsonException;
+import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 import com.google.protobuf.util.JsonFormat;
 import java.io.IOException;
@@ -22,7 +24,6 @@ public class TextUtil {
     if (stringMap.isEmpty()) {
       return null;
     }
-
     return new Gson().toJson(stringMap);
   }
 
@@ -34,10 +35,14 @@ public class TextUtil {
     JsonArray array = new JsonArray();
 
     for (M message : messages) {
-      array.add(
-          JsonParser.parseString(JsonFormat.printer().preservingProtoFieldNames().print(message)));
+      array.add(toJson(message));
     }
     return array.toString();
+  }
+
+  public static <M extends Message> JsonElement toJson(M message)
+      throws InvalidProtocolBufferException {
+    return JsonParser.parseString(JsonFormat.printer().preservingProtoFieldNames().print(message));
   }
 
   public static String join(List<String> strings) {

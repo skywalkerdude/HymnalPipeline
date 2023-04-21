@@ -179,15 +179,17 @@ public class SanitizationPipeline {
       FieldDescriptor descriptor,
       SongLink songLink,
       Set<SongLink> songLinkSet) {
-    if (songLinkSet.contains(songLink)) {
-      return;
-    }
 
     // Contains the nameless version
-    if (songLinkSet.contains(songLink.toBuilder().clearName().build())) {
+    SongLink namelessLink = songLink.toBuilder().clearName().build();
+    if (songLinkSet.contains(namelessLink)) {
       // Replace nameless version with named version
-      songLinkSet.remove(songLink.toBuilder().clearName().build());
+      songLinkSet.remove(namelessLink);
       songLinkSet.add(songLink);
+    } else if (songLinkSet.stream()
+        .anyMatch(existing -> existing.getReference().equals(songLink.getReference()))) {
+      // Reference already exists in the link (even if it's under a different name)
+      return;
     }
 
     songLinkSet.add(songLink);
@@ -207,24 +209,24 @@ public class SanitizationPipeline {
    * up some errors.
    */
   private Optional<String> inferName(SongReference songReference) {
-    if (songReference.getType() == HymnType.GERMAN) {
+    if (songReference.getHymnType() == HymnType.GERMAN) {
       // Large portion of songs on Hymnal.net have only a one-way reference to the German song,
       // meaning that the German song references other languages, but they don't reference it
       // back. In this case, we fall back to inferring the name.
       return Optional.of("German");
-    } else if (songReference.getType() == HymnType.JAPANESE) {
+    } else if (songReference.getHymnType() == HymnType.JAPANESE) {
       // H4a added Japanese songs, but in general, existing songs yet map to it, so we need to infer
       // the name.
       return Optional.of("Japanese");
-    } else if (songReference.getType() == HymnType.KOREAN) {
+    } else if (songReference.getHymnType() == HymnType.KOREAN) {
       // H4a added Korean songs, but in general, existing songs yet map to it, so we need to infer
       // the name.
       return Optional.of("Korean");
-    } else if (songReference.getType() == HymnType.FARSI) {
+    } else if (songReference.getHymnType() == HymnType.FARSI) {
       // H4a added Farsi songs, but in general, existing songs yet map to it, so we need to infer
       // the name.
       return Optional.of("Farsi");
-    } else if (songReference.getType() == HymnType.INDONESIAN) {
+    } else if (songReference.getHymnType() == HymnType.INDONESIAN) {
       // H4a added Indonesian songs, but in general, existing songs yet map to it, so we need to
       // infer the name.
       return Optional.of("Indonesian");

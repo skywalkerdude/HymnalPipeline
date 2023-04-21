@@ -51,7 +51,7 @@ public class LanguageAuditor {
 
     // Extract the hymn types for audit.
     ImmutableList<com.hymnsmobile.pipeline.models.HymnType> hymnTypes =
-        setToAudit.stream().map(SongReference::getType).collect(toImmutableList());
+        setToAudit.stream().map(SongReference::getHymnType).collect(toImmutableList());
 
     // Verify that the same hymn type doesn't appear more than the allowed number of times the languages list.
     for (com.hymnsmobile.pipeline.models.HymnType hymnType : com.hymnsmobile.pipeline.models.HymnType.values()) {
@@ -60,7 +60,7 @@ public class LanguageAuditor {
       int timesAllowed = 1;
       if (ImmutableSet.of(NEW_SONG, HOWARD_HIGASHI).contains(hymnType)) {
         for (SongReference songReference : setToAudit) {
-          if (songReference.getType() == hymnType && songReference.getNumber()
+          if (songReference.getHymnType() == hymnType && songReference.getHymnNumber()
               .matches("(\\D+\\d+\\D*)|(\\D*\\d+\\D+)")) {
             timesAllowed++;
           }

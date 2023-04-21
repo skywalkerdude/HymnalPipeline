@@ -51,8 +51,8 @@ message Hymn {
 }
 
 message SongReference {
-  HymnType type = 1;
-  string number = 2;
+  HymnType hymn_type = 1;
+  string hymn_number = 2;
 }
 
 message SongLink {

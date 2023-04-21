@@ -65,8 +65,8 @@ public class H4aPatcher extends Patcher {
    * a reference.
    */
   private void fix_i68() {
-    removeLanguages(SongReference.newBuilder().setType(INDONESIAN).setNumber("68"),
-        SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("79"));
+    removeLanguages(SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("68"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("79"));
   }
 
   /**
@@ -74,13 +74,13 @@ public class H4aPatcher extends Patcher {
    * Indonesian translation of ch/330.
    */
   private void fix_i330() {
-    removeLanguages(SongReference.newBuilder().setType(INDONESIAN).setNumber("330"),
-        SongReference.newBuilder().setType(BE_FILLED).setNumber("157"));
-    addLanguages(SongReference.newBuilder().setType(INDONESIAN).setNumber("330"),
+    removeLanguages(SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("330"),
+        SongReference.newBuilder().setHymnType(BE_FILLED).setHymnNumber("157"));
+    addLanguages(SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("330"),
         SongLink.newBuilder().setName("詩歌(繁)")
-            .setReference(SongReference.newBuilder().setType(CHINESE).setNumber("330")),
+            .setReference(SongReference.newBuilder().setHymnType(CHINESE).setHymnNumber("330")),
         SongLink.newBuilder().setName("诗歌(简)")
-            .setReference(SongReference.newBuilder().setType(CHINESE_SIMPLIFIED).setNumber("330")));
+            .setReference(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED).setHymnNumber("330")));
   }
 
   /**
@@ -88,13 +88,13 @@ public class H4aPatcher extends Patcher {
    * Indonesian translation of ch/773.
    */
   private void fix_i773() {
-    removeLanguages(SongReference.newBuilder().setType(INDONESIAN).setNumber("773"),
-        SongReference.newBuilder().setType(BE_FILLED).setNumber("69"));
-    addLanguages(SongReference.newBuilder().setType(INDONESIAN).setNumber("773"),
+    removeLanguages(SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("773"),
+        SongReference.newBuilder().setHymnType(BE_FILLED).setHymnNumber("69"));
+    addLanguages(SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("773"),
         SongLink.newBuilder().setName("詩歌(繁)")
-            .setReference(SongReference.newBuilder().setType(CHINESE).setNumber("773")),
+            .setReference(SongReference.newBuilder().setHymnType(CHINESE).setHymnNumber("773")),
         SongLink.newBuilder().setName("诗歌(简)")
-            .setReference(SongReference.newBuilder().setType(CHINESE_SIMPLIFIED).setNumber("773")));
+            .setReference(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED).setHymnNumber("773")));
   }
 
   /**
@@ -102,7 +102,7 @@ public class H4aPatcher extends Patcher {
    * H4a.
    */
   private void fix_bf69() {
-    removeReference(SongReference.newBuilder().setType(BE_FILLED).setNumber("69"));
+    removeReference(SongReference.newBuilder().setHymnType(BE_FILLED).setHymnNumber("69"));
   }
 
   /**
@@ -110,15 +110,15 @@ public class H4aPatcher extends Patcher {
    * i/289, but it also includes i/269.
    */
   private void fix_i269_h367() {
-    clearLanguages(SongReference.newBuilder().setType(INDONESIAN).setNumber("269"));
-    addLanguages(SongReference.newBuilder().setType(INDONESIAN).setNumber("269"),
+    clearLanguages(SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("269"));
+    addLanguages(SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("269"),
         SongLink.newBuilder().setName("詩歌(繁)")
-            .setReference(SongReference.newBuilder().setType(CHINESE).setNumber("269")),
+            .setReference(SongReference.newBuilder().setHymnType(CHINESE).setHymnNumber("269")),
         SongLink.newBuilder().setName("诗歌(简)")
-            .setReference(SongReference.newBuilder().setType(CHINESE_SIMPLIFIED).setNumber("269")));
+            .setReference(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED).setHymnNumber("269")));
 
-    removeLanguages(SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("367"),
-        SongReference.newBuilder().setType(INDONESIAN).setNumber("269"));
+    removeLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("367"),
+        SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("269"));
   }
 
   /**
@@ -127,18 +127,18 @@ public class H4aPatcher extends Patcher {
    * as a reference.
    */
   private void fix_i526() {
-    removeLanguages(SongReference.newBuilder().setType(INDONESIAN).setNumber("526"),
-        SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("720"));
+    removeLanguages(SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("526"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("720"));
   }
 
   /**
    * i/485 has h/666 as a mapping, but that is a mistake. i/485 has no English translation yet.
    */
   private void fix_i485_h666() {
-    removeLanguages(SongReference.newBuilder().setType(INDONESIAN).setNumber("485"),
-        SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("666"));
-    removeLanguages(SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("666"),
-        SongReference.newBuilder().setType(INDONESIAN).setNumber("485"));
+    removeLanguages(SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("485"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("666"));
+    removeLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("666"),
+        SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("485"));
   }
 
   /**
@@ -150,10 +150,10 @@ public class H4aPatcher extends Patcher {
    * and ch/664. We need to remove h/921.
    */
   private void fix_i664() {
-    removeLanguages(SongReference.newBuilder().setType(INDONESIAN).setNumber("664"),
-        SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("921"));
-    removeLanguages(SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("921"),
-        SongReference.newBuilder().setType(INDONESIAN).setNumber("664"));
+    removeLanguages(SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("664"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("921"));
+    removeLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("921"),
+        SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("664"));
   }
 
   /**
@@ -166,21 +166,21 @@ public class H4aPatcher extends Patcher {
    * mapping.
    */
   private void fix_i643_j643() {
-    removeLanguages(SongReference.newBuilder().setType(INDONESIAN).setNumber("643"),
-        SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("1017"));
-    removeLanguages(SongReference.newBuilder().setType(JAPANESE).setNumber("643"),
-        SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("1017"));
-    removeLanguages(SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("1017"),
-        SongReference.newBuilder().setType(INDONESIAN).setNumber("643"),
-        SongReference.newBuilder().setType(JAPANESE).setNumber("643"));
+    removeLanguages(SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("643"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1017"));
+    removeLanguages(SongReference.newBuilder().setHymnType(JAPANESE).setHymnNumber("643"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1017"));
+    removeLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1017"),
+        SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("643"),
+        SongReference.newBuilder().setHymnType(JAPANESE).setHymnNumber("643"));
 
-    addLanguages(SongReference.newBuilder().setType(JAPANESE).setNumber("643"),
+    addLanguages(SongReference.newBuilder().setHymnType(JAPANESE).setHymnNumber("643"),
         SongLink.newBuilder().setName("詩歌(繁)")
             .setReference(
-                SongReference.newBuilder().setType(CHINESE).setNumber("643")),
+                SongReference.newBuilder().setHymnType(CHINESE).setHymnNumber("643")),
         SongLink.newBuilder().setName("诗歌(简)")
-            .setReference(SongReference.newBuilder().setType(CHINESE_SIMPLIFIED)
-                .setNumber("643")));
+            .setReference(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED)
+                .setHymnNumber("643")));
   }
 
   /**
@@ -188,10 +188,10 @@ public class H4aPatcher extends Patcher {
    * not ts/401. So we need to remove h/1191 as a mapping of i/1401.
    */
   private void fix_i1401() {
-    removeLanguages(SongReference.newBuilder().setType(INDONESIAN).setNumber("1401"),
-        SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("1191"));
-    removeLanguages(SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("1191"),
-        SongReference.newBuilder().setType(INDONESIAN).setNumber("1401"));
+    removeLanguages(SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("1401"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1191"));
+    removeLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1191"),
+        SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("1401"));
   }
 
   /**
@@ -203,81 +203,81 @@ public class H4aPatcher extends Patcher {
    * the few tagalog songs that are legitimate translations but are missing from Hymnal.net.
    */
   private void fix_h31() {
-    addLanguages(SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("31"),
+    addLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("31"),
         SongLink.newBuilder().setName("Tagalog")
-            .setReference(SongReference.newBuilder().setType(TAGALOG).setNumber("31")));
+            .setReference(SongReference.newBuilder().setHymnType(TAGALOG).setHymnNumber("31")));
   }
 
   /**
    * k/1014 matches to h/1248, but it should match to h/1295 instead
    */
   private void fix_k1014_h1248() {
-    removeLanguages(SongReference.newBuilder().setType(KOREAN).setNumber("1014"),
-        SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("1248"));
-    addLanguages(SongReference.newBuilder().setType(KOREAN).setNumber("1014"),
+    removeLanguages(SongReference.newBuilder().setHymnType(KOREAN).setHymnNumber("1014"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1248"));
+    addLanguages(SongReference.newBuilder().setHymnType(KOREAN).setHymnNumber("1014"),
         SongLink.newBuilder().setName("English")
-            .setReference(SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("1295")));
+            .setReference(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1295")));
 
-    removeLanguages(SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("1248"),
-        SongReference.newBuilder().setType(KOREAN).setNumber("1014"));
+    removeLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1248"),
+        SongReference.newBuilder().setHymnType(KOREAN).setHymnNumber("1014"));
   }
 
   /**
    * i/1832 is mapped to ts/823, but it should be mapped to ts/832 instead. Most likely a typo.
    */
   private void fix_i1832() {
-    removeLanguages(SongReference.newBuilder().setType(INDONESIAN).setNumber("1832"),
-        SongReference.newBuilder().setType(CHINESE_SUPPLEMENTAL).setNumber("823"),
-        SongReference.newBuilder().setType(CHINESE_SUPPLEMENTAL_SIMPLIFIED).setNumber("823"));
-    removeLanguages(SongReference.newBuilder().setType(CHINESE_SUPPLEMENTAL).setNumber("823"),
-        SongReference.newBuilder().setType(INDONESIAN).setNumber("1832"));
+    removeLanguages(SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("1832"),
+        SongReference.newBuilder().setHymnType(CHINESE_SUPPLEMENTAL).setHymnNumber("823"),
+        SongReference.newBuilder().setHymnType(CHINESE_SUPPLEMENTAL_SIMPLIFIED).setHymnNumber("823"));
+    removeLanguages(SongReference.newBuilder().setHymnType(CHINESE_SUPPLEMENTAL).setHymnNumber("823"),
+        SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("1832"));
 
-    addLanguages(SongReference.newBuilder().setType(INDONESIAN).setNumber("1832"),
+    addLanguages(SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("1832"),
         SongLink.newBuilder().setName("詩歌(繁)")
             .setReference(
-                SongReference.newBuilder().setType(CHINESE_SUPPLEMENTAL).setNumber("832")),
+                SongReference.newBuilder().setHymnType(CHINESE_SUPPLEMENTAL).setHymnNumber("832")),
         SongLink.newBuilder().setName("诗歌(简)")
-            .setReference(SongReference.newBuilder().setType(CHINESE_SUPPLEMENTAL_SIMPLIFIED)
-                .setNumber("832")));
+            .setReference(SongReference.newBuilder().setHymnType(CHINESE_SUPPLEMENTAL_SIMPLIFIED)
+                .setHymnNumber("832")));
   }
 
   /**
    * i/42's parent should be ch/42, not ch/43. Mostly likely a typo in H4a.
    */
   private void fix_i43() {
-    removeLanguages(SongReference.newBuilder().setType(INDONESIAN).setNumber("42"),
-        SongReference.newBuilder().setType(CHINESE).setNumber("43"));
-    removeLanguages(SongReference.newBuilder().setType(CHINESE).setNumber("43"),
-        SongReference.newBuilder().setType(INDONESIAN).setNumber("42"));
+    removeLanguages(SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("42"),
+        SongReference.newBuilder().setHymnType(CHINESE).setHymnNumber("43"));
+    removeLanguages(SongReference.newBuilder().setHymnType(CHINESE).setHymnNumber("43"),
+        SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("42"));
 
-    addLanguages(SongReference.newBuilder().setType(INDONESIAN).setNumber("42"),
+    addLanguages(SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("42"),
         SongLink.newBuilder().setName("詩歌(繁)")
             .setReference(
-                SongReference.newBuilder().setType(CHINESE).setNumber("42")),
+                SongReference.newBuilder().setHymnType(CHINESE).setHymnNumber("42")),
         SongLink.newBuilder().setName("诗歌(简)")
-            .setReference(SongReference.newBuilder().setType(CHINESE_SIMPLIFIED)
-                .setNumber("42")));
+            .setReference(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED)
+                .setHymnNumber("42")));
   }
 
   /**
    * i/1531's should be linked ts/531, not ts/513 and h/1348. Mostly likely a typo in H4a.
    */
   private void fix_i1531() {
-    removeLanguages(SongReference.newBuilder().setType(INDONESIAN).setNumber("1531"),
-        SongReference.newBuilder().setType(CHINESE_SUPPLEMENTAL).setNumber("513"),
-        SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("1348"));
-    removeLanguages(SongReference.newBuilder().setType(CHINESE_SUPPLEMENTAL).setNumber("513"),
-        SongReference.newBuilder().setType(INDONESIAN).setNumber("1531"));
-    removeLanguages(SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("1348"),
-        SongReference.newBuilder().setType(INDONESIAN).setNumber("1531"));
+    removeLanguages(SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("1531"),
+        SongReference.newBuilder().setHymnType(CHINESE_SUPPLEMENTAL).setHymnNumber("513"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1348"));
+    removeLanguages(SongReference.newBuilder().setHymnType(CHINESE_SUPPLEMENTAL).setHymnNumber("513"),
+        SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("1531"));
+    removeLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1348"),
+        SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("1531"));
 
-    addLanguages(SongReference.newBuilder().setType(INDONESIAN).setNumber("1531"),
+    addLanguages(SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("1531"),
         SongLink.newBuilder().setName("詩歌(繁)")
             .setReference(
-                SongReference.newBuilder().setType(CHINESE_SUPPLEMENTAL).setNumber("531")),
+                SongReference.newBuilder().setHymnType(CHINESE_SUPPLEMENTAL).setHymnNumber("531")),
         SongLink.newBuilder().setName("诗歌(简)")
-            .setReference(SongReference.newBuilder().setType(CHINESE_SUPPLEMENTAL_SIMPLIFIED)
-                .setNumber("531")));
+            .setReference(SongReference.newBuilder().setHymnType(CHINESE_SUPPLEMENTAL_SIMPLIFIED)
+                .setHymnNumber("531")));
   }
 
   /**
@@ -285,18 +285,18 @@ public class H4aPatcher extends Patcher {
    * h/623.
    */
   private void fix_k460() {
-    removeLanguages(SongReference.newBuilder().setType(KOREAN).setNumber("460"),
-        SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("605"));
-    removeLanguages(SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("605"),
-        SongReference.newBuilder().setType(KOREAN).setNumber("460"));
+    removeLanguages(SongReference.newBuilder().setHymnType(KOREAN).setHymnNumber("460"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("605"));
+    removeLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("605"),
+        SongReference.newBuilder().setHymnType(KOREAN).setHymnNumber("460"));
 
-    addLanguages(SongReference.newBuilder().setType(KOREAN).setNumber("460"),
+    addLanguages(SongReference.newBuilder().setHymnType(KOREAN).setHymnNumber("460"),
         SongLink.newBuilder().setName("詩歌(繁)")
             .setReference(
-                SongReference.newBuilder().setType(CHINESE).setNumber("460")),
+                SongReference.newBuilder().setHymnType(CHINESE).setHymnNumber("460")),
         SongLink.newBuilder().setName("诗歌(简)")
-            .setReference(SongReference.newBuilder().setType(CHINESE_SIMPLIFIED)
-                .setNumber("460")));
+            .setReference(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED)
+                .setHymnNumber("460")));
   }
 
   /**
@@ -304,18 +304,18 @@ public class H4aPatcher extends Patcher {
    * h/743.
    */
   private void fix_j539() {
-    removeLanguages(SongReference.newBuilder().setType(JAPANESE).setNumber("539"),
-        SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("734"));
-    removeLanguages(SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("734"),
-        SongReference.newBuilder().setType(JAPANESE).setNumber("539"));
+    removeLanguages(SongReference.newBuilder().setHymnType(JAPANESE).setHymnNumber("539"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("734"));
+    removeLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("734"),
+        SongReference.newBuilder().setHymnType(JAPANESE).setHymnNumber("539"));
 
-    addLanguages(SongReference.newBuilder().setType(JAPANESE).setNumber("539"),
+    addLanguages(SongReference.newBuilder().setHymnType(JAPANESE).setHymnNumber("539"),
         SongLink.newBuilder().setName("詩歌(繁)")
             .setReference(
-                SongReference.newBuilder().setType(CHINESE).setNumber("539")),
+                SongReference.newBuilder().setHymnType(CHINESE).setHymnNumber("539")),
         SongLink.newBuilder().setName("诗歌(简)")
-            .setReference(SongReference.newBuilder().setType(CHINESE_SIMPLIFIED)
-                .setNumber("539")));
+            .setReference(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED)
+                .setHymnNumber("539")));
   }
 
   /**
@@ -323,57 +323,57 @@ public class H4aPatcher extends Patcher {
    * h/61.
    */
   private void fix_k57() {
-    removeLanguages(SongReference.newBuilder().setType(KOREAN).setNumber("57"),
-        SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("51"));
-    removeLanguages(SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("51"),
-        SongReference.newBuilder().setType(KOREAN).setNumber("57"));
+    removeLanguages(SongReference.newBuilder().setHymnType(KOREAN).setHymnNumber("57"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("51"));
+    removeLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("51"),
+        SongReference.newBuilder().setHymnType(KOREAN).setHymnNumber("57"));
 
-    addLanguages(SongReference.newBuilder().setType(KOREAN).setNumber("57"),
+    addLanguages(SongReference.newBuilder().setHymnType(KOREAN).setHymnNumber("57"),
         SongLink.newBuilder().setName("詩歌(繁)")
             .setReference(
-                SongReference.newBuilder().setType(CHINESE).setNumber("57")),
+                SongReference.newBuilder().setHymnType(CHINESE).setHymnNumber("57")),
         SongLink.newBuilder().setName("诗歌(简)")
-            .setReference(SongReference.newBuilder().setType(CHINESE_SIMPLIFIED)
-                .setNumber("57")));
+            .setReference(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED)
+                .setHymnNumber("57")));
   }
 
   /**
    * k/319 shouldn't map to h/419, but should instead map to ch/319.
    */
   private void fix_k319() {
-    removeLanguages(SongReference.newBuilder().setType(KOREAN).setNumber("319"),
-        SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("419"));
-    removeLanguages(SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("419"),
-        SongReference.newBuilder().setType(KOREAN).setNumber("319"));
+    removeLanguages(SongReference.newBuilder().setHymnType(KOREAN).setHymnNumber("319"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("419"));
+    removeLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("419"),
+        SongReference.newBuilder().setHymnType(KOREAN).setHymnNumber("319"));
 
-    addLanguages(SongReference.newBuilder().setType(KOREAN).setNumber("319"),
+    addLanguages(SongReference.newBuilder().setHymnType(KOREAN).setHymnNumber("319"),
         SongLink.newBuilder().setName("詩歌(繁)")
             .setReference(
-                SongReference.newBuilder().setType(CHINESE).setNumber("319")),
+                SongReference.newBuilder().setHymnType(CHINESE).setHymnNumber("319")),
         SongLink.newBuilder().setName("诗歌(简)")
-            .setReference(SongReference.newBuilder().setType(CHINESE_SIMPLIFIED)
-                .setNumber("319")));
+            .setReference(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED)
+                .setHymnNumber("319")));
   } // should have 6 errors left
 
   /**
    * i/709's should be linked ch/709, not ch/708 and h/1028. Mostly likely a typo in H4a.
    */
   private void fix_i709() {
-    removeLanguages(SongReference.newBuilder().setType(INDONESIAN).setNumber("709"),
-        SongReference.newBuilder().setType(CHINESE).setNumber("708"),
-        SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("1028"));
-    removeLanguages(SongReference.newBuilder().setType(CHINESE).setNumber("708"),
-        SongReference.newBuilder().setType(INDONESIAN).setNumber("709"));
-    removeLanguages(SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("1028"),
-        SongReference.newBuilder().setType(INDONESIAN).setNumber("709"));
+    removeLanguages(SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("709"),
+        SongReference.newBuilder().setHymnType(CHINESE).setHymnNumber("708"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1028"));
+    removeLanguages(SongReference.newBuilder().setHymnType(CHINESE).setHymnNumber("708"),
+        SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("709"));
+    removeLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1028"),
+        SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("709"));
 
-    addLanguages(SongReference.newBuilder().setType(INDONESIAN).setNumber("709"),
+    addLanguages(SongReference.newBuilder().setHymnType(INDONESIAN).setHymnNumber("709"),
         SongLink.newBuilder().setName("詩歌(繁)")
             .setReference(
-                SongReference.newBuilder().setType(CHINESE).setNumber("709")),
+                SongReference.newBuilder().setHymnType(CHINESE).setHymnNumber("709")),
         SongLink.newBuilder().setName("诗歌(简)")
-            .setReference(SongReference.newBuilder().setType(CHINESE_SIMPLIFIED)
-                .setNumber("709")));
+            .setReference(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED)
+                .setHymnNumber("709")));
   }
 
   /**
@@ -381,18 +381,18 @@ public class H4aPatcher extends Patcher {
    * h/1349.
    */
   private void fix_k667() {
-    removeLanguages(SongReference.newBuilder().setType(KOREAN).setNumber("667"),
-        SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("894"));
-    removeLanguages(SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("894"),
-        SongReference.newBuilder().setType(KOREAN).setNumber("667"));
+    removeLanguages(SongReference.newBuilder().setHymnType(KOREAN).setHymnNumber("667"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("894"));
+    removeLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("894"),
+        SongReference.newBuilder().setHymnType(KOREAN).setHymnNumber("667"));
 
-    addLanguages(SongReference.newBuilder().setType(KOREAN).setNumber("667"),
+    addLanguages(SongReference.newBuilder().setHymnType(KOREAN).setHymnNumber("667"),
         SongLink.newBuilder().setName("詩歌(繁)")
             .setReference(
-                SongReference.newBuilder().setType(CHINESE).setNumber("667")),
+                SongReference.newBuilder().setHymnType(CHINESE).setHymnNumber("667")),
         SongLink.newBuilder().setName("诗歌(简)")
-            .setReference(SongReference.newBuilder().setType(CHINESE_SIMPLIFIED)
-                .setNumber("667")));
+            .setReference(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED)
+                .setHymnNumber("667")));
   }
 
   /**
@@ -400,18 +400,18 @@ public class H4aPatcher extends Patcher {
    * h/495.
    */
   private void fix_k372() {
-    removeLanguages(SongReference.newBuilder().setType(KOREAN).setNumber("372"),
-        SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("494"));
-    removeLanguages(SongReference.newBuilder().setType(CLASSIC_HYMN).setNumber("494"),
-        SongReference.newBuilder().setType(KOREAN).setNumber("372"));
+    removeLanguages(SongReference.newBuilder().setHymnType(KOREAN).setHymnNumber("372"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("494"));
+    removeLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("494"),
+        SongReference.newBuilder().setHymnType(KOREAN).setHymnNumber("372"));
 
-    addLanguages(SongReference.newBuilder().setType(KOREAN).setNumber("372"),
+    addLanguages(SongReference.newBuilder().setHymnType(KOREAN).setHymnNumber("372"),
         SongLink.newBuilder().setName("詩歌(繁)")
             .setReference(
-                SongReference.newBuilder().setType(CHINESE).setNumber("372")),
+                SongReference.newBuilder().setHymnType(CHINESE).setHymnNumber("372")),
         SongLink.newBuilder().setName("诗歌(简)")
-            .setReference(SongReference.newBuilder().setType(CHINESE_SIMPLIFIED)
-                .setNumber("372")));
+            .setReference(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED)
+                .setHymnNumber("372")));
   }
 
   /**
@@ -421,13 +421,13 @@ public class H4aPatcher extends Patcher {
    * translation, since here there are clearly two.
    */
   private void fix_bf231() {
-    addLanguages(SongReference.newBuilder().setType(CHINESE).setNumber("276"),
+    addLanguages(SongReference.newBuilder().setHymnType(CHINESE).setHymnNumber("276"),
         SongLink.newBuilder().setName("Be Filled")
             .setReference(
-                SongReference.newBuilder().setType(BE_FILLED).setNumber("231")));
-    addLanguages(SongReference.newBuilder().setType(CHINESE_SIMPLIFIED).setNumber("276"),
+                SongReference.newBuilder().setHymnType(BE_FILLED).setHymnNumber("231")));
+    addLanguages(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED).setHymnNumber("276"),
         SongLink.newBuilder().setName("Be Filled")
             .setReference(
-                SongReference.newBuilder().setType(BE_FILLED).setNumber("231")));
+                SongReference.newBuilder().setHymnType(BE_FILLED).setHymnNumber("231")));
   }
 }

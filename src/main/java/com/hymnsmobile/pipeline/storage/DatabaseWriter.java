@@ -147,8 +147,8 @@ public class DatabaseWriter {
       PreparedStatement songIdInsert = connection.prepareStatement(
           "INSERT INTO SONG_IDS (HYMN_TYPE, HYMN_NUMBER, SONG_ID) VALUES (?, ?, ?)");
       for (SongReference songReference : hymnReference.getKey()) {
-        songIdInsert.setString(1, converter.serialize(songReference.getType()));
-        songIdInsert.setString(2, songReference.getNumber());
+        songIdInsert.setString(1, converter.serialize(songReference.getHymnType()));
+        songIdInsert.setString(2, songReference.getHymnNumber());
         songIdInsert.setLong(3, id);
         songIdInsert.execute();
         songIdInsert.clearParameters();

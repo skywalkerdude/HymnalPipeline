@@ -13,6 +13,7 @@ import com.hymnsmobile.pipeline.liederbuch.dagger.LiederbuchPipelineComponent;
 import com.hymnsmobile.pipeline.merge.MergePipeline;
 import com.hymnsmobile.pipeline.merge.dagger.MergeComponent;
 import com.hymnsmobile.pipeline.models.Hymn;
+import com.hymnsmobile.pipeline.models.HymnType;
 import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.SongReference;
 import com.hymnsmobile.pipeline.sanitization.SanitizationPipeline;
@@ -22,7 +23,11 @@ import com.hymnsmobile.pipeline.storage.dagger.StorageComponent;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.xml.parsers.ParserConfigurationException;
@@ -67,7 +72,7 @@ public class Pipeline {
         hymnalNetPipeline.getHymnalNetJsons(), h4aPipeline.getH4aHymns(),
         liederbuchPipeline.getLiederbuchSong());
 
-    sanitizationPipeline.sanitize(allHymns);
+    allHymns = sanitizationPipeline.sanitize(allHymns);
 
     ImmutableList<PipelineError> allErrors = mergePipeline.mergeErrors(
         hymnalNetPipeline.getErrors(), h4aPipeline.getErrors(), sanitizationPipeline.getErrors());

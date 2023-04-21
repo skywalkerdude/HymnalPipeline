@@ -85,7 +85,7 @@ public class MergePipeline {
 
       // Only interested in the Liederbuch (German) songs, since all the other songs are covered
       // by Hymnal.net or H4a
-      if (songReference.getType() != LIEDERBUCH) {
+      if (songReference.getHymnType() != LIEDERBUCH) {
         return;
       }
 
@@ -101,7 +101,7 @@ public class MergePipeline {
               .map(relatedReference -> getHymnFrom(relatedReference, mergedHymns).orElseThrow())
               .flatMap(relatedReference -> relatedReference.getLanguagesList().stream())
               .map(SongLink::getReference)
-              .filter(relatedReference -> relatedReference.getType() == GERMAN)
+              .filter(relatedReference -> relatedReference.getHymnType() == GERMAN)
               .map(relatedReference ->
                   getMatchingReferences(relatedReference, mergedHymns).orElseThrow())
               // Add a link to the Liederbuch song to the German song
@@ -151,7 +151,7 @@ public class MergePipeline {
       Map<List<SongReference>, Hymn.Builder> mergedHymns) {
     SongReference h4aReference = converter.toSongReference(h4aHymn.getId());
 
-    switch (h4aReference.getType()) {
+    switch (h4aReference.getHymnType()) {
       case CLASSIC_HYMN:
       case NEW_SONG:
       case CHILDREN_SONG:
@@ -330,16 +330,16 @@ public class MergePipeline {
    * explicit mapping in the file, so we need to manually fix them here.
    */
   private Optional<SongReference> manualMapping(SongReference songReference) {
-    if (songReference.getType() != LIEDERBUCH) {
+    if (songReference.getHymnType() != LIEDERBUCH) {
       return Optional.empty();
     }
-    switch (songReference.getNumber()) {
+    switch (songReference.getHymnNumber()) {
       case "419":
         return Optional.of(
-            SongReference.newBuilder().setType(NEW_SONG).setNumber("180de").build());
+            SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("180de").build());
       case "420":
         return Optional.of(
-            SongReference.newBuilder().setType(NEW_SONG).setNumber("151de").build());
+            SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("151de").build());
       default:
         return Optional.empty();
     }
