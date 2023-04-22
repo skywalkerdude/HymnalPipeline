@@ -59,6 +59,7 @@ public class LiederbuchPipeline {
   }
 
   public void run() throws IOException {
+    LOGGER.info("Liederbuch pipeline starting");
     Book book = reader.readEpub(new FileInputStream(EPUB_PATH));
     ImmutableList<Resource> allResources = book.getResources().getAll().stream()
         .sorted(Comparator.comparing(Resource::getHref))
@@ -126,6 +127,7 @@ public class LiederbuchPipeline {
         songs.add(liederbuchSong.build());
       }
     }
+    LOGGER.info("Liederbuch pipeline finished");
   }
 
   public static void main(String[] args)

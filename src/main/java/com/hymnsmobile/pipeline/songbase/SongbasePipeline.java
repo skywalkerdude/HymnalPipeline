@@ -45,11 +45,11 @@ public class SongbasePipeline {
   }
 
   public void run() throws IOException, InterruptedException {
-    LOGGER.fine("Songbase pipeline starting");
+    LOGGER.info("Songbase pipeline starting");
     String response = fetcher.fetch();
     songbaseHymns.addAll(converter.convert(response));
     writer.write(response);
-    LOGGER.fine("Songbase pipeline finished");
+    LOGGER.info("Songbase pipeline finished");
   }
 
   public static void main(String[] args) throws InterruptedException, IOException {

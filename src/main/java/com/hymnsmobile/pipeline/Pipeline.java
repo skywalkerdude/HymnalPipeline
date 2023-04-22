@@ -79,7 +79,7 @@ public class Pipeline {
         hymnalNetPipeline.getErrors(), h4aPipeline.getErrors(), sanitizationPipeline.getErrors(),
         songbasePipeline.getErrors());
     storagePipeline.run(allHymns, allErrors);
-    LOGGER.info("Pipeline completed succesfully");
+    LOGGER.info("Pipeline completed successfully");
     System.exit(0);
   }
 
