@@ -22,7 +22,6 @@ public class HymnalNetPipeline {
 
   private static final Logger LOGGER = Logger.getGlobal();
 
-  private final Converter converter;
   private final Set<PipelineError> errors;
   private final Fetcher fetcher;
   private final FileReadWriter fileReadWriter;
@@ -37,7 +36,6 @@ public class HymnalNetPipeline {
       @HymnalNet Set<PipelineError> errors,
       ZonedDateTime currentTime,
       Set<HymnalNetJson> hymnalNetJsons) {
-    this.converter = converter;
     this.errors = errors;
     this.fetcher = fetcher;
     this.fileReadWriter = fileReadWriter;

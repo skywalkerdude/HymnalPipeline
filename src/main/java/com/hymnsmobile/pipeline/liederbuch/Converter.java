@@ -19,10 +19,6 @@ public class Converter {
   public Converter() {
   }
 
-  public HymnType toHymnType(String stringRepresentation) {
-    return HymnType.fromString(stringRepresentation).orElseThrow();
-  }
-
   public Optional<LiederbuchKey> toKey(String id) {
     Optional<String> type = extractTypeFromId(id);
     Optional<String> number = extractNumberFromId(id);

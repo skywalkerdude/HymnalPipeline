@@ -3,8 +3,10 @@ package com.hymnsmobile.pipeline;
 import com.google.common.collect.ImmutableList;
 import com.google.protobuf.Message;
 import com.hymnsmobile.pipeline.dagger.PipelineScope;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.Optional;
@@ -40,5 +42,11 @@ public class FileReadWriter {
     try (FileOutputStream output = new FileOutputStream(fileName)) {
       message.writeTo(output);
     }
+  }
+
+  public void writeString(String fileName, String content) throws IOException {
+    BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
+    writer.write(content);
+    writer.close();
   }
 }

@@ -13,21 +13,18 @@ import com.hymnsmobile.pipeline.liederbuch.dagger.LiederbuchPipelineComponent;
 import com.hymnsmobile.pipeline.merge.MergePipeline;
 import com.hymnsmobile.pipeline.merge.dagger.MergeComponent;
 import com.hymnsmobile.pipeline.models.Hymn;
-import com.hymnsmobile.pipeline.models.HymnType;
 import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.SongReference;
 import com.hymnsmobile.pipeline.sanitization.SanitizationPipeline;
 import com.hymnsmobile.pipeline.sanitization.dagger.SanitizationComponent;
+import com.hymnsmobile.pipeline.songbase.SongbasePipeline;
+import com.hymnsmobile.pipeline.songbase.dagger.SongbasePipelineComponent;
 import com.hymnsmobile.pipeline.storage.StoragePipeline;
 import com.hymnsmobile.pipeline.storage.dagger.StorageComponent;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.function.Predicate;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.xml.parsers.ParserConfigurationException;
@@ -44,6 +41,7 @@ public class Pipeline {
   private final LiederbuchPipeline liederbuchPipeline;
   private final MergePipeline mergePipeline;
   private final SanitizationPipeline sanitizationPipeline;
+  private final SongbasePipeline songbasePipeline;
   private final StoragePipeline storagePipeline;
 
   @Inject
@@ -53,12 +51,14 @@ public class Pipeline {
       Provider<LiederbuchPipelineComponent.Builder> liederbuchPipelineBuilder,
       Provider<MergeComponent.Builder> mergePipelineBuilder,
       Provider<SanitizationComponent.Builder> sanitizationPipelineBuilder,
+      Provider<SongbasePipelineComponent.Builder> songbasePipelineComponentBuilder,
       Provider<StorageComponent.Builder> storagePipelineBuilder) {
     this.hymnalNetPipeline = hymnalNetPipelineBuilder.get().build().pipeline();
     this.h4aPipeline = h4aPipelineBuilder.get().build().pipeline();
     this.liederbuchPipeline = liederbuchPipelineBuilder.get().build().pipeline();
     this.mergePipeline = mergePipelineBuilder.get().build().pipeline();
     this.sanitizationPipeline = sanitizationPipelineBuilder.get().build().pipeline();
+    this.songbasePipeline = songbasePipelineComponentBuilder.get().build().pipeline();
     this.storagePipeline = storagePipelineBuilder.get().build().pipeline();
   }
 
@@ -67,15 +67,17 @@ public class Pipeline {
     hymnalNetPipeline.run();
     h4aPipeline.run();
     liederbuchPipeline.run();
+    songbasePipeline.run();
 
     ImmutableMap<ImmutableList<SongReference>, Hymn> allHymns = mergePipeline.mergeHymns(
         hymnalNetPipeline.getHymnalNetJsons(), h4aPipeline.getH4aHymns(),
-        liederbuchPipeline.getLiederbuchSong());
+        liederbuchPipeline.getLiederbuchSong(), songbasePipeline.getSongbaseHymns());
 
     allHymns = sanitizationPipeline.sanitize(allHymns);
 
     ImmutableList<PipelineError> allErrors = mergePipeline.mergeErrors(
-        hymnalNetPipeline.getErrors(), h4aPipeline.getErrors(), sanitizationPipeline.getErrors());
+        hymnalNetPipeline.getErrors(), h4aPipeline.getErrors(), sanitizationPipeline.getErrors(),
+        songbasePipeline.getErrors());
     storagePipeline.run(allHymns, allErrors);
     LOGGER.info("Pipeline completed succesfully");
     System.exit(0);

@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package com.hymnsmobile.pipeline.songbase.models;
+
+option java_multiple_files = true;
+
+message SongbaseResponse {
+  repeated SongResponse songs = 1;
+  repeated BookResponse books = 2;
+  repeated ReferenceResponse references = 3;
+  DestroyedResponse destroyed = 4;
+  int32 song_count = 5;
+}
+
+//  {
+//    "id": 965,
+//    "title": "Glory, glory, glory, praise and adoration",
+//    "lang": "english",
+//    "lyrics": "1\n[G]Glory, glory, glo[D7]ry, [G]praise and adorati[D7]on!\n[C]Hear the anthems swelling [C]out thro' all [D]ete[A]rn[D7]ity!\n[G]Father, Son, and [D7]Spirit-[G]God in revelation-\n[G]Prostrate each [C]soul before the [G]De[D]it[G]y! \n\n2\nFather, source of glory, naming every fam'ly;\nAnd the Son upholding all by His almighty power; \nHoly Spirit, filling the vast scene of glory-\nO glorious Fulness, let our hearts adore!\n\n3\nGod supreme, we worship now in holy splendour, \nHead of the vast scene of bliss, before Thy face we fall!\nMajesty and greatness, glory, praise and power\nTo Thee belong, eternal Source of all!\n"
+//  },
+message SongResponse {
+  int32 id = 1;
+  string title = 2;
+  string lang = 3;
+  string lyrics = 4;
+}
+
+//  {
+//    "id": 1,
+//    "name": "Blue Songbook",
+//    "lang": "english",
+//    "slug": "blue_songbook"
+//  },
+message BookResponse {
+  int32 id = 1;
+  string name = 2;
+  string lang = 3;
+  string slug = 4;
+}
+
+//  {
+//    "id": 1,
+//    "song_id": 303,
+//    "book_id": 1,
+//    "index": "1"
+//  },
+message ReferenceResponse {
+  int32 id = 1;
+  int32 song_id = 2;
+  int32 book_id = 3;
+  string index = 4;
+}
+
+message DestroyedResponse {
+  repeated int32 songs = 1;
+  repeated int32 books = 2;
+  repeated int32 references = 3;
+}
+
+message Songbase {
+  repeated SongbaseHymn songbaseHymn = 1;
+  repeated com.hymnsmobile.pipeline.models.PipelineError errors = 2;
+}
+
+message SongbaseKey {
+  string hymn_type = 1;
+  string hymn_number = 2;
+}
+
+message SongbaseHymn {
+  repeated SongbaseKey key = 1;
+  string title = 2;
+  string language = 3;
+  string lyrics = 4;
+}

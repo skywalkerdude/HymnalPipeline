@@ -24,6 +24,7 @@ import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import com.hymnsmobile.pipeline.models.SongLink;
 import com.hymnsmobile.pipeline.models.SongReference;
 import com.hymnsmobile.pipeline.models.Verse;
+import com.hymnsmobile.pipeline.songbase.models.SongbaseHymn;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -58,7 +59,8 @@ public class MergePipeline {
   public ImmutableMap<ImmutableList<SongReference>, Hymn> mergeHymns(
       ImmutableList<HymnalNetJson> hymnalNetHymns,
       ImmutableList<H4aHymn> h4aHymns,
-      ImmutableList<LiederbuchHymn> liederbuchHymns) {
+      ImmutableList<LiederbuchHymn> liederbuchHymns,
+      ImmutableList<SongbaseHymn> songbaseHymns) {
     LOGGER.info("Merge pipeline finished");
     // Create mutable versions of everything fo collection.
     Map<List<SongReference>, Hymn.Builder> mergedHymns = new LinkedHashMap<>();
