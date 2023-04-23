@@ -1,11 +1,14 @@
 package com.hymnsmobile.pipeline.merge;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
 import static com.hymnsmobile.pipeline.models.HymnType.BLUE_SONGBOOK;
 import static com.hymnsmobile.pipeline.models.HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED;
 import static com.hymnsmobile.pipeline.models.HymnType.CLASSIC_HYMN;
+import static com.hymnsmobile.pipeline.models.HymnType.FRENCH;
 import static com.hymnsmobile.pipeline.models.HymnType.HOWARD_HIGASHI;
 import static com.hymnsmobile.pipeline.models.HymnType.LIEDERBUCH;
 import static com.hymnsmobile.pipeline.models.HymnType.SONGBASE;
+import static com.hymnsmobile.pipeline.models.HymnType.SPANISH;
 
 import com.google.protobuf.Descriptors.Descriptor;
 import com.google.protobuf.Descriptors.FieldDescriptor;
@@ -27,6 +30,7 @@ import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import com.hymnsmobile.pipeline.models.SongLink;
 import com.hymnsmobile.pipeline.models.SongReference;
+import com.hymnsmobile.pipeline.songbase.models.SongbaseHymn;
 import com.hymnsmobile.pipeline.songbase.models.SongbaseKey;
 import com.hymnsmobile.pipeline.utils.TextUtil;
 import java.util.Optional;
@@ -128,8 +132,14 @@ public class Converter {
         hymnType = BLUE_SONGBOOK;
         break;
       case HIMNOS:
+        hymnType = SPANISH;
+        break;
       case LIEDERBUCH:
+        hymnType = LIEDERBUCH;
+        break;
       case CANTIQUES:
+        hymnType = FRENCH;
+        break;
       case SONGBASE:
         hymnType = SONGBASE;
         break;
@@ -371,5 +381,14 @@ public class Converter {
       return Integer.parseInt(number) >= 1001 && Integer.parseInt(number) <= 1087;
     }
     return false;
+  }
+
+  public Hymn toHymn(SongbaseHymn hymn) {
+    return Hymn.newBuilder()
+        .setId(nextHymnId++)
+        .addAllReferences(
+            hymn.getKeyList().stream().map(this::toSongReference).collect(toImmutableList()))
+        .setTitle(hymn.getTitle())
+        .setInlineChords(hymn.getLyrics()).build();
   }
 }

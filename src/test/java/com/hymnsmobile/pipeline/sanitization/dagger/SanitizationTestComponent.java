@@ -1,6 +1,6 @@
 package com.hymnsmobile.pipeline.sanitization.dagger;
 
-import com.hymnsmobile.pipeline.sanitization.SanitizationPipeline;
+import com.hymnsmobile.pipeline.merge.SanitizationPipeline;
 import dagger.Subcomponent;
 
 @SanitizationScope

@@ -80,7 +80,7 @@ public class LiederbuchPipeline {
         LiederbuchKey key = converter.toKey(songId).orElseThrow();
         if (BLOCK_LIST.contains(key)) {
           LOGGER.fine(String.format("%s contained in block list. Skipping...", key));
-          return;
+          continue;
         }
 
         Element headerElement = document.getElementById(songId);
@@ -109,7 +109,7 @@ public class LiederbuchPipeline {
             .collect(toImmutableList()));
         liederbuchSong.setMeter(infoElement.text().replace(",", "").trim());
 
-        Element nextElement = infoElement;
+        Element nextElement = infoElement.nextElementSibling();
         // if nextElement is null, then that indicates the end of the file
         // if the nextElement's class is calibre5, indicates that it's onto the next song
         while (nextElement != null && !nextElement.hasClass("calibre5")) {

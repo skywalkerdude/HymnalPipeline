@@ -13,8 +13,6 @@ import com.hymnsmobile.pipeline.merge.MergePipeline;
 import com.hymnsmobile.pipeline.merge.dagger.MergeComponent;
 import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.PipelineError;
-import com.hymnsmobile.pipeline.sanitization.SanitizationPipeline;
-import com.hymnsmobile.pipeline.sanitization.dagger.SanitizationComponent;
 import com.hymnsmobile.pipeline.songbase.SongbasePipeline;
 import com.hymnsmobile.pipeline.songbase.dagger.SongbasePipelineComponent;
 import com.hymnsmobile.pipeline.storage.StoragePipeline;
@@ -38,7 +36,6 @@ public class Pipeline {
   private final H4aPipeline h4aPipeline;
   private final LiederbuchPipeline liederbuchPipeline;
   private final MergePipeline mergePipeline;
-  private final SanitizationPipeline sanitizationPipeline;
   private final SongbasePipeline songbasePipeline;
   private final StoragePipeline storagePipeline;
 
@@ -48,14 +45,12 @@ public class Pipeline {
       Provider<H4aPipelineComponent.Builder> h4aPipelineBuilder,
       Provider<LiederbuchPipelineComponent.Builder> liederbuchPipelineBuilder,
       Provider<MergeComponent.Builder> mergePipelineBuilder,
-      Provider<SanitizationComponent.Builder> sanitizationPipelineBuilder,
       Provider<SongbasePipelineComponent.Builder> songbasePipelineComponentBuilder,
       Provider<StorageComponent.Builder> storagePipelineBuilder) {
     this.hymnalNetPipeline = hymnalNetPipelineBuilder.get().build().pipeline();
     this.h4aPipeline = h4aPipelineBuilder.get().build().pipeline();
     this.liederbuchPipeline = liederbuchPipelineBuilder.get().build().pipeline();
     this.mergePipeline = mergePipelineBuilder.get().build().pipeline();
-    this.sanitizationPipeline = sanitizationPipelineBuilder.get().build().pipeline();
     this.songbasePipeline = songbasePipelineComponentBuilder.get().build().pipeline();
     this.storagePipeline = storagePipelineBuilder.get().build().pipeline();
   }
@@ -67,16 +62,16 @@ public class Pipeline {
     liederbuchPipeline.run();
     songbasePipeline.run();
 
-    ImmutableList<Hymn> allHymns = mergePipeline.mergeHymns(
-        hymnalNetPipeline.getHymnalNetJsons(), h4aPipeline.getH4aHymns(),
-        liederbuchPipeline.getLiederbuchSong(), songbasePipeline.getSongbaseHymns());
-
-    allHymns = sanitizationPipeline.sanitize(allHymns);
+    ImmutableList<Hymn> mergedHymns =
+        mergePipeline.convertHymnalNet(hymnalNetPipeline.getHymnalNetJsons());
+    mergedHymns = mergePipeline.mergeH4a(h4aPipeline.getH4aHymns(), mergedHymns);
+    mergedHymns = mergePipeline.mergeLiederbuch(liederbuchPipeline.getLiederbuchSong(), mergedHymns);
+    mergedHymns = mergePipeline.mergeSongbase(songbasePipeline.getSongbaseHymns(), mergedHymns);
 
     ImmutableList<PipelineError> allErrors = mergePipeline.mergeErrors(
-        hymnalNetPipeline.getErrors(), h4aPipeline.getErrors(), sanitizationPipeline.getErrors(),
+        hymnalNetPipeline.getErrors(), h4aPipeline.getErrors(), mergePipeline.getErrors(),
         songbasePipeline.getErrors());
-    storagePipeline.run(allHymns, allErrors);
+    storagePipeline.run(mergedHymns, allErrors);
     LOGGER.info("Pipeline completed successfully");
     System.exit(0);
   }

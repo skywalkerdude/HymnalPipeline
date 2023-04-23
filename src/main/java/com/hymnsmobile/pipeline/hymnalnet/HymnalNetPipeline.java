@@ -30,7 +30,6 @@ public class HymnalNetPipeline {
 
   @Inject
   public HymnalNetPipeline(
-      Converter converter,
       Fetcher fetcher,
       FileReadWriter fileReadWriter,
       @HymnalNet Set<PipelineError> errors,

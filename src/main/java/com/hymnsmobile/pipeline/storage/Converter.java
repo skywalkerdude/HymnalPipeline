@@ -32,6 +32,8 @@ public class Converter {
     put(HymnType.JAPANESE, "j");
     put(HymnType.FARSI, "f");
     put(HymnType.LIEDERBUCH, "lde");
+    put(HymnType.BLUE_SONGBOOK, "bsb");
+    put(HymnType.SONGBASE, "sb");
   }};
 
   @Inject

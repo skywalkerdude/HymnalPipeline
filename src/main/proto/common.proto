@@ -50,6 +50,7 @@ message Hymn {
   map<string, string> pdf_sheet = 16;
   repeated SongLink languages = 17;
   repeated SongLink relevants = 18;
+  optional string inline_chords = 19;
 }
 
 message SongReference {

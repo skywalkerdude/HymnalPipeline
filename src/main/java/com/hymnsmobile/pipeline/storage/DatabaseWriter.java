@@ -59,6 +59,7 @@ public class DatabaseWriter {
               + "`ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
               + "`SONG_TITLE` TEXT NOT NULL, "
               + "`SONG_LYRICS` TEXT, "
+              + "`INLINE_CHORDS` TEXT, "
               + "`SONG_META_DATA_CATEGORY` TEXT, "
               + "`SONG_META_DATA_SUBCATEGORY` TEXT, "
               + "`SONG_META_DATA_AUTHOR` TEXT, "
@@ -109,31 +110,32 @@ public class DatabaseWriter {
       throws SQLException, IOException {
     PreparedStatement insertStatement = connection.prepareStatement(
         "INSERT INTO SONG_DATA ("
-            + "ID, SONG_TITLE, SONG_LYRICS, SONG_META_DATA_CATEGORY, "
+            + "ID, SONG_TITLE, SONG_LYRICS, INLINE_CHORDS, SONG_META_DATA_CATEGORY, "
             + "SONG_META_DATA_SUBCATEGORY, SONG_META_DATA_AUTHOR, SONG_META_DATA_COMPOSER, "
             + "SONG_META_DATA_KEY, SONG_META_DATA_TIME, SONG_META_DATA_METER, "
             + "SONG_META_DATA_SCRIPTURES, SONG_META_DATA_HYMN_CODE, SONG_META_DATA_MUSIC, "
             + "SONG_META_DATA_SVG_SHEET_MUSIC, SONG_META_DATA_PDF_SHEET_MUSIC, "
             + "SONG_META_DATA_LANGUAGES, SONG_META_DATA_RELEVANT)"
-            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
         Statement.RETURN_GENERATED_KEYS);
     insertStatement.setInt(1, hymn.getId());
     insertStatement.setString(2, hymn.getTitle());
     insertStatement.setString(3, toJson(hymn.getLyricsList()));
-    insertStatement.setString(4, join(hymn.getCategoryList()));
-    insertStatement.setString(5, join(hymn.getSubCategoryList()));
-    insertStatement.setString(6, join(hymn.getAuthorList()));
-    insertStatement.setString(7, join(hymn.getComposerList()));
-    insertStatement.setString(8, join(hymn.getKeyList()));
-    insertStatement.setString(9, join(hymn.getTimeList()));
-    insertStatement.setString(10, join(hymn.getMeterList()));
-    insertStatement.setString(11, join(hymn.getScripturesList()));
-    insertStatement.setString(12, join(hymn.getHymnCodeList()));
-    insertStatement.setString(13, strMapToJson(hymn.getMusicMap()));
-    insertStatement.setString(14, strMapToJson(hymn.getSvgSheetMap()));
-    insertStatement.setString(15, strMapToJson(hymn.getPdfSheetMap()));
-    insertStatement.setString(16, toJson(hymn.getLanguagesList()));
-    insertStatement.setString(17, toJson(hymn.getRelevantsList()));
+    insertStatement.setString(4, hymn.getInlineChords());
+    insertStatement.setString(5, join(hymn.getCategoryList()));
+    insertStatement.setString(6, join(hymn.getSubCategoryList()));
+    insertStatement.setString(7, join(hymn.getAuthorList()));
+    insertStatement.setString(8, join(hymn.getComposerList()));
+    insertStatement.setString(9, join(hymn.getKeyList()));
+    insertStatement.setString(10, join(hymn.getTimeList()));
+    insertStatement.setString(11, join(hymn.getMeterList()));
+    insertStatement.setString(12, join(hymn.getScripturesList()));
+    insertStatement.setString(13, join(hymn.getHymnCodeList()));
+    insertStatement.setString(14, strMapToJson(hymn.getMusicMap()));
+    insertStatement.setString(15, strMapToJson(hymn.getSvgSheetMap()));
+    insertStatement.setString(16, strMapToJson(hymn.getPdfSheetMap()));
+    insertStatement.setString(17, toJson(hymn.getLanguagesList()));
+    insertStatement.setString(18, toJson(hymn.getRelevantsList()));
     insertStatement.execute();
 
     try (ResultSet generatedKeys = insertStatement.getGeneratedKeys()) {
@@ -141,6 +143,7 @@ public class DatabaseWriter {
         throw new SQLException("Unable to obtain ID from recently inserted hymn.");
       }
       long id = generatedKeys.getLong(1);
+      assert (int) id == hymn.getId();
       PreparedStatement songIdInsert = connection.prepareStatement(
           "INSERT INTO SONG_IDS (HYMN_TYPE, HYMN_NUMBER, SONG_ID) VALUES (?, ?, ?)");
       for (SongReference songReference : hymn.getReferencesList()) {

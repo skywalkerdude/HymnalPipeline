@@ -15,6 +15,8 @@ import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetJson;
 import com.hymnsmobile.pipeline.liederbuch.models.LiederbuchHymn;
 import com.hymnsmobile.pipeline.merge.dagger.Merge;
 import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
+import com.hymnsmobile.pipeline.merge.patchers.H4aPatcher;
+import com.hymnsmobile.pipeline.merge.patchers.HymnalNetPatcher;
 import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
@@ -41,32 +43,56 @@ public class MergePipeline {
   private static final Logger LOGGER = Logger.getGlobal();
 
   private final Converter converter;
+  private final H4aPatcher h4aPatcher;
+  private final HymnalNetPatcher hymnalNetPatcher;
+  private final SanitizationPipeline sanitizationPipeline;
   private final Set<PipelineError> errors;
 
   @Inject
-  public MergePipeline(Converter converter, @Merge Set<PipelineError> errors) {
+  public MergePipeline(
+      Converter converter,
+      H4aPatcher h4aPatcher,
+      HymnalNetPatcher hymnalNetPatcher,
+      SanitizationPipeline sanitizationPipeline,
+      @Merge Set<PipelineError> errors) {
     this.converter = converter;
     this.errors = errors;
+    this.h4aPatcher = h4aPatcher;
+    this.hymnalNetPatcher = hymnalNetPatcher;
+    this.sanitizationPipeline = sanitizationPipeline;
   }
 
-  public ImmutableList<Hymn> mergeHymns(
-      ImmutableList<HymnalNetJson> hymnalNetHymns,
-      ImmutableList<H4aHymn> h4aHymns,
-      ImmutableList<LiederbuchHymn> liederbuchHymns,
-      ImmutableList<SongbaseHymn> songbaseHymns) {
-    LOGGER.info("Merge pipeline finished");
-    // Create mutable versions of everything fo collection.
+  /**
+   * Initially, just convert all Hymnal.net songs into the common format
+   */
+  public ImmutableList<Hymn> convertHymnalNet(ImmutableList<HymnalNetJson> hymnalNetHymns) {
+    LOGGER.info("Converting Hymnal.net");
+    ImmutableList<Hymn> hymns = hymnalNetHymns.stream().map(converter::toHymn).collect(toImmutableList());
+    LOGGER.info("Sanitizing Hymnal.net");
+    return sanitizationPipeline.sanitize(hymns, hymnalNetPatcher);
+  }
 
-    // Populate the initial list with hymnal.net songs
-    List<Hymn.Builder> mergedHymns =  hymnalNetHymns.stream().map(
-        hymn -> converter.toHymn(hymn).toBuilder()).collect(Collectors.toList());
+  public ImmutableList<Hymn> mergeH4a(ImmutableList<H4aHymn> h4aHymns, ImmutableList<Hymn> mergedHymns) {
+    LOGGER.info("Merging Hymns for Android");
+    List<Hymn.Builder> builders =
+        mergedHymns.stream().map(Hymn::toBuilder).collect(Collectors.toList());
 
     h4aHymns.stream()
         // Sort by hymn type
         .sorted(Comparator.comparingInt(
             o -> HymnType.fromString(o.getId().getType()).orElseThrow().ordinal()))
         // Merge in H4a hymns
-        .forEach(h4aHymn -> mergeH4aHymn(h4aHymn, h4aHymns, mergedHymns));
+        .forEach(h4aHymn -> mergeH4aHymn(h4aHymn, h4aHymns, builders));
+    LOGGER.info("Sanitizing Hymns for Android");
+    return sanitizationPipeline.sanitize(
+        builders.stream().map(Hymn.Builder::build).collect(toImmutableList()), h4aPatcher);
+  }
+
+  public ImmutableList<Hymn> mergeLiederbuch(
+      ImmutableList<LiederbuchHymn> liederbuchHymns, ImmutableList<Hymn> mergedHymns) {
+    LOGGER.info("Merging Liederbuch");
+    List<Hymn.Builder> builders =
+        mergedHymns.stream().map(Hymn::toBuilder).collect(Collectors.toList());
 
     liederbuchHymns.forEach(liederbuchHymn -> {
       SongReference songReference = converter.toSongReference(liederbuchHymn.getKey());
@@ -86,11 +112,12 @@ public class MergePipeline {
       // liederbuch song as an alternate key to that song.
       List<Hymn.Builder> germanSongs =
           relatedReferences.stream()
-              .map(relatedReference -> getHymnFrom(relatedReference, mergedHymns).orElseThrow())
+              .map(relatedReference -> getHymnFrom(relatedReference, builders).orElseThrow())
               .flatMap(relatedBuilder -> relatedBuilder.getLanguagesList().stream())
               .map(SongLink::getReference)
               .filter(relatedReference -> relatedReference.getHymnType() == GERMAN)
-              .map(germanReference -> getHymnFrom(germanReference, mergedHymns).orElseThrow())
+              .map(germanReference -> getHymnFrom(germanReference, builders).orElseThrow())
+              .distinct()
               // Add a link to the Liederbuch song to the German song
               // todo need to figure out how to handle the references. maybe in relevants?
               // .peek(entry ->
@@ -100,7 +127,7 @@ public class MergePipeline {
 
       // Apply a manual mapping if it is appropriate
       manualMapping(songReference)
-          .flatMap(manualMapping -> getHymnFrom(manualMapping, mergedHymns))
+          .flatMap(manualMapping -> getHymnFrom(manualMapping, builders))
           .ifPresent(germanSongs::add);
 
       if (germanSongs.isEmpty()) {
@@ -116,9 +143,44 @@ public class MergePipeline {
       }
       germanSongs.get(0).addReferences(songReference);
     });
+    LOGGER.info("Sanitizing Liederbuch");
+    return sanitizationPipeline.sanitize(
+        builders.stream().map(Hymn.Builder::build).collect(toImmutableList()));
+  }
 
-    LOGGER.info("Merge pipeline finished");
-    return mergedHymns.stream().map(Hymn.Builder::build).collect(toImmutableList());
+  public ImmutableList<Hymn> mergeSongbase(
+      ImmutableList<SongbaseHymn> songbaseHymns, ImmutableList<Hymn> mergedHymns) {
+    LOGGER.info("Merging Songbase");
+    List<Hymn.Builder> builders =
+        mergedHymns.stream().map(Hymn::toBuilder).collect(Collectors.toList());
+
+    songbaseHymns.forEach(songbaseHymn -> {
+      Hymn.Builder songbaseBuilder = converter.toHymn(songbaseHymn).toBuilder();
+
+      // Find a hymn that already matches one of the songbase song's references, if it exists
+      ImmutableList<Hymn.Builder> matchingReference =
+          songbaseBuilder.getReferencesList().stream()
+              .map(reference -> getHymnFrom(reference, builders))
+              .filter(Optional::isPresent)
+              .map(Optional::get)
+              .collect(toImmutableList());
+      if (matchingReference.isEmpty()) {
+        // No matching references, so the songbase song
+        builders.add(songbaseBuilder);
+        return;
+      }
+
+      assert matchingReference.size() == 1;
+      // Add the new references
+      songbaseBuilder.getReferencesList().stream()
+          .filter(reference -> !matchingReference.get(0).getReferencesList().contains(reference))
+          .forEach(reference -> matchingReference.get(0).addReferences(reference));
+      // Set inline chords property
+      matchingReference.get(0).setInlineChords(songbaseBuilder.getInlineChords());
+    });
+    LOGGER.info("Sanitizing Songbase");
+    return sanitizationPipeline.sanitize(
+        builders.stream().map(Hymn.Builder::build).collect(toImmutableList()));
   }
 
   @SafeVarargs
@@ -131,16 +193,20 @@ public class MergePipeline {
     return allErrors.build();
   }
 
+  public final ImmutableList<PipelineError> getErrors() {
+    return ImmutableList.copyOf(errors);
+  }
+
   private void mergeH4aHymn(
       H4aHymn h4aHymn,
       ImmutableList<H4aHymn> h4aHymns,
-      List<Hymn.Builder> mergedHymns) {
+      List<Hymn.Builder> builders) {
     SongReference h4aReference = converter.toSongReference(h4aHymn.getId());
 
     // We're only interested in adding new songs, so if the song itself already exists, then we
     // can skip it. Note: At this point, we don't actually need to port over the languages of
     // existing hymns, since they will be added when we encounter them.
-    if (getHymnFrom(h4aReference, mergedHymns).isPresent()) {
+    if (getHymnFrom(h4aReference, builders).isPresent()) {
       return;
     }
 
@@ -173,9 +239,9 @@ public class MergePipeline {
         guessParent(h4aHymn, h4aHymns)
             .map(parent -> converter.toSongReference(parent.getId()))
             .ifPresent(parent ->
-                getHymnFrom(parent, mergedHymns).orElseThrow()
+                getHymnFrom(parent, builders).orElseThrow()
                     .addLanguages(converter.toLanguageLink(h4aReference)));
-        mergedHymns.add(converter.toHymn(h4aHymn).orElseThrow().toBuilder());
+        builders.add(converter.toHymn(h4aHymn).orElseThrow().toBuilder());
         break;
       case BE_FILLED:
         if (h4aHymn.hasParentHymn()) {
@@ -183,9 +249,9 @@ public class MergePipeline {
           // Add the BE_FILLED song as another reference, not as a new song since it's more than
           // likely a duplicate in terms of content.
           SongReference parentReference = converter.toSongReference(parentKey);
-          getHymnFrom(parentReference, mergedHymns).orElseThrow().addReferences(h4aReference);
+          getHymnFrom(parentReference, builders).orElseThrow().addReferences(h4aReference);
         } else {
-          mergedHymns.add(converter.toHymn(h4aHymn).orElseThrow().toBuilder());
+          builders.add(converter.toHymn(h4aHymn).orElseThrow().toBuilder());
         }
     }
   }
