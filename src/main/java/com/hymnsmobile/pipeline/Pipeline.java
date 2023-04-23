@@ -1,7 +1,6 @@
 package com.hymnsmobile.pipeline;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import com.hymnsmobile.pipeline.dagger.DaggerPipelineComponent;
 import com.hymnsmobile.pipeline.dagger.PipelineScope;
 import com.hymnsmobile.pipeline.h4a.H4aPipeline;
@@ -14,7 +13,6 @@ import com.hymnsmobile.pipeline.merge.MergePipeline;
 import com.hymnsmobile.pipeline.merge.dagger.MergeComponent;
 import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.PipelineError;
-import com.hymnsmobile.pipeline.models.SongReference;
 import com.hymnsmobile.pipeline.sanitization.SanitizationPipeline;
 import com.hymnsmobile.pipeline.sanitization.dagger.SanitizationComponent;
 import com.hymnsmobile.pipeline.songbase.SongbasePipeline;
@@ -69,7 +67,7 @@ public class Pipeline {
     liederbuchPipeline.run();
     songbasePipeline.run();
 
-    ImmutableMap<ImmutableList<SongReference>, Hymn> allHymns = mergePipeline.mergeHymns(
+    ImmutableList<Hymn> allHymns = mergePipeline.mergeHymns(
         hymnalNetPipeline.getHymnalNetJsons(), h4aPipeline.getH4aHymns(),
         liederbuchPipeline.getLiederbuchSong(), songbasePipeline.getSongbaseHymns());
 

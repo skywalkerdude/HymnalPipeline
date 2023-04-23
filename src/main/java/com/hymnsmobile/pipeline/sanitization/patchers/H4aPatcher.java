@@ -103,6 +103,8 @@ public class H4aPatcher extends Patcher {
    */
   private void fix_bf69() {
     removeReference(SongReference.newBuilder().setHymnType(BE_FILLED).setHymnNumber("69"));
+    getHymn(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("8773"))
+        .addReferences(SongReference.newBuilder().setHymnType(BE_FILLED).setHymnNumber("69"));
   }
 
   /**

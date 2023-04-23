@@ -202,13 +202,12 @@ public class Converter {
   /**
    * Converts a {@link HymnalNetJson} to a {@link Hymn}.
    */
-  public Optional<Hymn> toHymn(HymnalNetJson hymn) {
+  public Hymn toHymn(HymnalNetJson hymn) {
     HymnalNetKey key = hymn.getKey();
-    SongReference songReference = toSongReference(key);
 
     Hymn.Builder builder = Hymn.newBuilder()
         .setId(nextHymnId++)
-        .setReference(songReference)
+        .addReferences(toSongReference(hymn.getKey()))
         .setTitle(hymn.getTitle());
 
     hymn.getLyricsList().forEach(verse -> builder.addLyrics(toVerse(key, verse)));
@@ -274,7 +273,7 @@ public class Converter {
       }
     });
     LOGGER.fine(String.format("%s successfully converted", key));
-    return Optional.of(builder.build());
+    return builder.build();
   }
 
   private com.hymnsmobile.pipeline.models.Verse toVerse(HymnalNetKey key, Verse verse) {
@@ -313,7 +312,7 @@ public class Converter {
 
     Hymn.Builder builder = Hymn.newBuilder()
         .setId(nextHymnId++)
-        .setReference(toSongReference(hymn.getId()))
+        .addReferences(toSongReference(hymn.getId()))
         .setTitle(hymn.getFirstStanzaLine())
         .addAllLyrics(hymn.getVersesList());
 

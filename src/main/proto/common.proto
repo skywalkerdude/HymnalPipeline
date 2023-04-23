@@ -33,15 +33,7 @@ enum HymnType {
 
 message Hymn {
   int32 id = 1;
-  // Each hymn as a reference, but that doesn't mean it's the ONLY reference.
-  // There exists a many-to-one relationship between references and hymns, as
-  // many hymn books may reference the same hymn. However, for now, we still
-  // keep this around because we need a "key" during the sanitization step,
-  // where we try to reconcile language/relevant mappings. This is definitely
-  // an area of improvement. If we can get rid of this field, and find another
-  // way to key each song during the sanitization step, that would be best.
-  // TODO figure out how we can get rid of this field
-  SongReference reference = 2;
+  repeated SongReference references = 2;
   string title = 3;
   repeated Verse lyrics = 4;
   repeated string category = 5;

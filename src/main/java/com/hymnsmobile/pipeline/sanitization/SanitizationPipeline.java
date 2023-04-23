@@ -1,10 +1,8 @@
 package com.hymnsmobile.pipeline.sanitization;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
-import static com.google.common.collect.ImmutableMap.toImmutableMap;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.HymnType;
@@ -20,8 +18,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map.Entry;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -56,58 +52,39 @@ public class SanitizationPipeline {
     this.relevantsAuditor = relevantsAuditor;
   }
 
-  public ImmutableMap<ImmutableList<SongReference>, Hymn> sanitize(
-      ImmutableMap<ImmutableList<SongReference>, Hymn> allHymns) {
+  public ImmutableList<Hymn> sanitize(ImmutableList<Hymn> allHymns) {
     LOGGER.info("Sanitization pipeline starting");
-    ImmutableMap<ImmutableList<SongReference>, Hymn> hymnalNetPatchedHymns =
-        hymnalNetPatcher.patch(allHymns);
-    ImmutableMap<ImmutableList<SongReference>, Hymn> patchedHymens =
-        h4aPatcher.patch(hymnalNetPatchedHymns);
+    ImmutableList<Hymn> hymnalNetPatchedHymns = hymnalNetPatcher.patch(allHymns);
+    ImmutableList<Hymn> patchedHymns = h4aPatcher.patch(hymnalNetPatchedHymns);
 
-    ImmutableList<Hymn> hymns = patchedHymens.values().stream().collect(toImmutableList());
-    ImmutableMap<SongReference, Hymn.Builder> referenceHymnMap = hymns.stream()
-        .collect(toImmutableMap(Hymn::getReference, Hymn::toBuilder));
+    ImmutableList<Hymn.Builder> builders =
+        patchedHymns.stream().map(Hymn::toBuilder).collect(toImmutableList());
 
-    fixLanguages(hymns, referenceHymnMap);
-    fixRelevants(hymns, referenceHymnMap);
+    fixLanguages(builders);
+    fixRelevants(builders);
 
-    ImmutableMap.Builder<ImmutableList<SongReference>, Hymn> fixedHymns = ImmutableMap.builder();
-    referenceHymnMap.forEach((songReference, builder) -> {
-      ImmutableList<ImmutableList<SongReference>> matchingReferences = patchedHymens.entrySet()
-          .stream()
-          .filter(entry -> entry.getValue().getReference().equals(songReference))
-          .map(Entry::getKey)
-          .collect(toImmutableList());
-      if (matchingReferences.size() != 1) {
-        throw new IllegalStateException(
-            "Couldn't find single set of song references matching " + songReference);
-      }
-      fixedHymns.put(matchingReferences.get(0), builder.build());
-    });
     LOGGER.info("Sanitization pipeline finished");
-    return fixedHymns.build();
+    return builders.stream().map(Hymn.Builder::build).collect(toImmutableList());
   }
 
   public ImmutableList<PipelineError> getErrors() {
     return ImmutableList.copyOf(errors);
   }
 
-  private void fixLanguages(ImmutableList<Hymn> hymns,
-      ImmutableMap<SongReference, Hymn.Builder> referenceHymnMap) {
+  private void fixLanguages(ImmutableList<Hymn.Builder> builders) {
     FieldDescriptor languageFieldDescriptor = Hymn.getDescriptor().findFieldByName("languages");
-    Set<Set<SongLink>> languageSets = generateSongLinkSets(hymns, referenceHymnMap,
-        languageFieldDescriptor);
+    Set<Set<SongLink>> languageSets =
+        generateSongLinkSets(builders, languageFieldDescriptor);
     languageAuditor.audit(languageSets);
-    writeSongLinks(referenceHymnMap, languageFieldDescriptor, languageSets);
+    writeSongLinks(builders, languageFieldDescriptor, languageSets);
   }
 
-  private void fixRelevants(ImmutableList<Hymn> hymns,
-      ImmutableMap<SongReference, Hymn.Builder> referenceHymnMap) {
+  private void fixRelevants(ImmutableList<Hymn.Builder> builders) {
     FieldDescriptor relevantFieldDescriptor = Hymn.getDescriptor().findFieldByName("relevants");
-    Set<Set<SongLink>> relevantsSets = generateSongLinkSets(hymns, referenceHymnMap,
-        relevantFieldDescriptor);
+    Set<Set<SongLink>> relevantsSets =
+        generateSongLinkSets(builders, relevantFieldDescriptor);
     relevantsAuditor.audit(relevantsSets);
-    writeSongLinks(referenceHymnMap, relevantFieldDescriptor, relevantsSets);
+    writeSongLinks(builders, relevantFieldDescriptor, relevantsSets);
   }
 
   /**
@@ -115,11 +92,10 @@ public class SanitizationPipeline {
    * described by the {@link FieldDescriptor}.
    */
   private Set<Set<SongLink>> generateSongLinkSets(
-      ImmutableList<Hymn> hymns,
-      ImmutableMap<SongReference, Hymn.Builder> referenceHymnMap,
-      FieldDescriptor descriptor) {
+      ImmutableList<Hymn.Builder> builders, FieldDescriptor descriptor) {
     Set<Set<SongLink>> songLinkSets = new HashSet<>();
-    hymns.forEach(hymn -> {
+    builders.forEach(builder -> {
+      Hymn hymn = builder.build();
       // noinspection unchecked
       List<SongLink> links = (List<SongLink>) hymn.getField(descriptor);
 
@@ -131,8 +107,10 @@ public class SanitizationPipeline {
       // Start the populating with a nameless SongLink containing the current hymn's SongReference.
       // We should get the name of the reference for free as we process the rest of the songs, but
       // if that doesn't happen, then we add it manually later.
-      populateSongLinkSet(referenceHymnMap, descriptor,
-          SongLink.newBuilder().setReference(hymn.getReference()).build(), songLinkSet);
+      assert hymn.getReferencesCount() > 0;
+      populateSongLinkSet(
+          builders, descriptor,
+          SongLink.newBuilder().setReference(hymn.getReferences(0)).build(), songLinkSet);
 
       // If the nameless song we added is still nameless, that means there was something wrong with
       // the mapping. We will try to infer it, but if that is not possible, then we add an error
@@ -151,9 +129,11 @@ public class SanitizationPipeline {
         Optional<String> inferredName = inferName(namelessSong.getReference());
         inferredName.ifPresentOrElse(
             name -> songLinkSet.add(namelessSong.toBuilder().setName(name).build()),
-            () -> errors.add(PipelineError.newBuilder().setSeverity(Severity.ERROR).setMessage(
-                    String.format("Dangling reference: %s in %s", hymn.getReference(), songLinkSet))
-                .build()));
+            () -> errors.add(
+                PipelineError.newBuilder()
+                    .setSeverity(Severity.ERROR)
+                    .setMessage(String.format("Dangling reference: %s in %s", builder, songLinkSet))
+                    .build()));
       }
 
       // Once we have the song link set for this hymn populated correctly, we attempt to merge it
@@ -175,7 +155,7 @@ public class SanitizationPipeline {
   }
 
   private void populateSongLinkSet(
-      ImmutableMap<SongReference, Hymn.Builder> referenceHymnMap,
+      ImmutableList<Hymn.Builder> builders,
       FieldDescriptor descriptor,
       SongLink songLink,
       Set<SongLink> songLinkSet) {
@@ -193,11 +173,22 @@ public class SanitizationPipeline {
     }
 
     songLinkSet.add(songLink);
+
     // noinspection unchecked
-    ((List<SongLink>) Objects.requireNonNull(referenceHymnMap.get(songLink.getReference()))
+    ((List<SongLink>) getReferencedHymnBuilder(builders, songLink.getReference())
         .getField(descriptor))
-        .forEach(linkedSong -> populateSongLinkSet(referenceHymnMap, descriptor, linkedSong,
-            songLinkSet));
+        .forEach(linkedSong ->
+            populateSongLinkSet(builders, descriptor, linkedSong, songLinkSet));
+  }
+
+  private Hymn.Builder getReferencedHymnBuilder(
+      ImmutableList<Hymn.Builder> builders,
+      SongReference songReference) {
+    ImmutableList<Hymn.Builder> results = builders.stream()
+        .filter(builder -> builder.getReferencesList().contains(songReference))
+        .collect(toImmutableList());
+    assert results.size() == 1;
+    return results.get(0);
   }
 
   /**
@@ -237,31 +228,32 @@ public class SanitizationPipeline {
   /**
    * Write the newly aggregated {@link SongLink} sets onto each hymn.
    */
-  private void writeSongLinks(ImmutableMap<SongReference, Hymn.Builder> referenceHymnMap,
+  private void writeSongLinks(
+      ImmutableList<Hymn.Builder> builders,
       FieldDescriptor descriptor, Set<Set<SongLink>> songLinkSets) {
-    referenceHymnMap.keySet().forEach(songReference -> {
-      List<Set<SongLink>> setsContainingHymn = songLinkSets.stream().filter(
-              songLinks -> songLinks.stream().map(SongLink::getReference)
-                  .anyMatch(songLink -> songLink.equals(songReference)))
-          .collect(Collectors.toList());
+    builders.forEach(builder -> {
+      ImmutableList<SongReference> references = ImmutableList.copyOf(builder.getReferencesList());
+      ImmutableList<Set<SongLink>> setContainingHymn =
+          songLinkSets.stream()
+              .filter(songLinks ->
+                  songLinks.stream()
+                      .map(SongLink::getReference)
+                      .anyMatch(references::contains))
+              .collect(toImmutableList());
 
-      if (setsContainingHymn.isEmpty()) {
+      if (setContainingHymn.isEmpty()) {
         return;
       }
 
-      if (setsContainingHymn.size() > 1) {
-        throw new IllegalStateException("Multiple language sets containing " + songReference);
-      }
+      assert setContainingHymn.size() == 1;
 
       // Make a copy of the list, so we aren't destructively altering it within a loop
-      List<SongLink> newLinks = new ArrayList<>(setsContainingHymn.get(0));
+      List<SongLink> newLinks = new ArrayList<>(setContainingHymn.get(0));
       // Remove self from set
-      if (!newLinks.removeIf(songLink -> songLink.getReference().equals(songReference))) {
-        throw new IllegalStateException(songReference + " not found");
+      if (!newLinks.removeIf(songLink -> references.contains(songLink.getReference()))) {
+        throw new IllegalStateException(references + " not found");
       }
-      Objects.requireNonNull(referenceHymnMap.get(songReference))
-          .clearField(descriptor)
-          .setField(descriptor, newLinks);
+      builder.clearField(descriptor).setField(descriptor, newLinks);
     });
   }
 }

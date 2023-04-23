@@ -1,21 +1,15 @@
 package com.hymnsmobile.pipeline.sanitization.patchers;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
-import static com.google.common.collect.ImmutableMap.toImmutableMap;
-import static java.util.stream.Collectors.toMap;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.PipelineError;
-import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import com.hymnsmobile.pipeline.models.SongLink;
 import com.hymnsmobile.pipeline.models.SongReference;
 import com.hymnsmobile.pipeline.sanitization.dagger.SanitizationScope;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -26,7 +20,7 @@ import java.util.stream.Collectors;
 @SanitizationScope
 public abstract class Patcher {
 
-  protected Map<List<SongReference>, Hymn.Builder> builders;
+  protected List<Hymn.Builder> builders;
 
   protected final Set<PipelineError> errors;
 
@@ -36,17 +30,10 @@ public abstract class Patcher {
 
   protected abstract void performPatch();
 
-  public ImmutableMap<ImmutableList<SongReference>, Hymn> patch(
-      ImmutableMap<ImmutableList<SongReference>, Hymn> allHymns) {
-    this.builders = allHymns.entrySet().stream()
-        .collect(
-            toMap(entry -> new ArrayList<>(entry.getKey()), entry -> entry.getValue().toBuilder()));
-
+  public ImmutableList<Hymn> patch(ImmutableList<Hymn> allHymns) {
+    this.builders = allHymns.stream().map(Hymn::toBuilder).collect(Collectors.toList());
     performPatch();
-
-    return builders.entrySet().stream()
-        .collect(toImmutableMap(
-            entry -> ImmutableList.copyOf(entry.getKey()), entry -> entry.getValue().build()));
+    return builders.stream().map(Hymn.Builder::build).collect(toImmutableList());
   }
 
   protected void removeRelevants(SongReference.Builder songReference,
@@ -135,13 +122,17 @@ public abstract class Patcher {
   }
 
   protected Hymn.Builder getHymn(SongReference songReference) {
-    ImmutableList<Hymn.Builder> builder = builders.values().stream().filter(
-        hymn -> hymn.getReference().equals(songReference)).collect(toImmutableList());
-    if (builder.size() != 1) {
+    ImmutableList<Hymn.Builder> hymn =
+        builders.stream().filter(
+                builder -> builder.getReferencesList().stream()
+                    .anyMatch(reference -> reference.equals(songReference)))
+            .collect(toImmutableList());
+    if (hymn.size() != 1) {
       throw new IllegalStateException(
-          String.format("Wrong number of songs with %s were found: %s", songReference, builder));
+          String.format("Wrong number of songs with %s were found: %s", songReference,
+              hymn.stream().map(Hymn.Builder::getReferencesList).collect(toImmutableList())));
     }
-    return builder.stream().findAny().get();
+    return hymn.stream().findAny().get();
   }
 
   protected void removeReference(SongReference.Builder songReference) {
@@ -149,23 +140,11 @@ public abstract class Patcher {
   }
 
   protected void removeReference(SongReference songReference) {
-    ImmutableList<List<SongReference>> songReferences = builders.keySet().stream().filter(
-        references -> references.contains(songReference)).collect(toImmutableList());
-    if (songReferences.isEmpty()) {
-      errors.add(PipelineError.newBuilder().setSeverity(Severity.WARNING)
-          .setMessage(String.format("Tried to remove %s but didn't find it", songReference))
-          .build());
-      return;
-    }
-    if (songReferences.size() != 1) {
-      throw new IllegalStateException(
-          String.format("Wrong number of songs with %s were found: %s", songReference,
-              songReferences));
-    }
-    if (songReferences.get(0).size() == 1) {
-      builders.remove(songReferences.get(0));
+    Hymn.Builder builder = getHymn(songReference);
+    if (builder.getReferencesList().size() == 1) {
+      builders.remove(builder);
     } else {
-      songReferences.get(0).remove(songReference);
+      builder.removeReferences(builder.getReferencesList().indexOf(songReference));
     }
   }
 }

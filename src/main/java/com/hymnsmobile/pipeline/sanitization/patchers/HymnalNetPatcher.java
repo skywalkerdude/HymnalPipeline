@@ -50,8 +50,10 @@ public class HymnalNetPatcher extends Patcher {
     // appended to the hymn number (e.g. h/81b, h/12b, etc). In these cases, we should clear their
     // languages because it shouldn't be part of the languages map, but should be part of the
     // relevants map.
-    this.builders.values().stream()
-        .filter(builder -> builder.getReference().getHymnNumber().matches("\\d+b"))
+    this.builders.stream()
+        .filter(builder ->
+            builder.getReferencesList().stream()
+                .anyMatch(reference -> reference.getHymnNumber().matches("\\d+b")))
         .forEach(Hymn.Builder::clearLanguages);
 
     fix_danglingReferences();

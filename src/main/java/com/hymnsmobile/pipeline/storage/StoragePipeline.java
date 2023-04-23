@@ -1,7 +1,6 @@
 package com.hymnsmobile.pipeline.storage;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import com.hymnsmobile.pipeline.FileReadWriter;
 import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.PipelineError;
@@ -32,15 +31,14 @@ public class StoragePipeline {
     this.outputDirectory = outputDirectory;
   }
 
-  public void run(
-      ImmutableMap<ImmutableList<SongReference>, Hymn> hymns,
-      ImmutableList<PipelineError> errors) throws SQLException, IOException {
+  public void run(ImmutableList<Hymn> hymns, ImmutableList<PipelineError> errors)
+      throws SQLException, IOException {
     LOGGER.info("Storage pipeline starting");
 
     writeErrors(errors);
 
     Connection connection = databaseWriter.createDatabase();
-    for (Entry<ImmutableList<SongReference>, Hymn> hymn : hymns.entrySet()) {
+    for (Hymn hymn : hymns) {
       databaseWriter.writeHymn(connection, hymn);
     }
     databaseWriter.closeDatabase(connection);

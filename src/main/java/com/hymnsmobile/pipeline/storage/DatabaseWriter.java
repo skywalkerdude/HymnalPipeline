@@ -4,7 +4,6 @@ import static com.hymnsmobile.pipeline.utils.TextUtil.join;
 import static com.hymnsmobile.pipeline.utils.TextUtil.strMapToJson;
 import static com.hymnsmobile.pipeline.utils.TextUtil.toJson;
 
-import com.google.common.collect.ImmutableList;
 import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.SongReference;
 import com.hymnsmobile.pipeline.storage.dagger.StorageScope;
@@ -17,7 +16,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Map.Entry;
 import javax.inject.Inject;
 
 @StorageScope
@@ -107,9 +105,8 @@ public class DatabaseWriter {
     connection.close();
   }
 
-  void writeHymn(Connection connection, Entry<ImmutableList<SongReference>, Hymn> hymnReference)
+  void writeHymn(Connection connection, Hymn hymn)
       throws SQLException, IOException {
-    Hymn hymn = hymnReference.getValue();
     PreparedStatement insertStatement = connection.prepareStatement(
         "INSERT INTO SONG_DATA ("
             + "ID, SONG_TITLE, SONG_LYRICS, SONG_META_DATA_CATEGORY, "
@@ -146,7 +143,7 @@ public class DatabaseWriter {
       long id = generatedKeys.getLong(1);
       PreparedStatement songIdInsert = connection.prepareStatement(
           "INSERT INTO SONG_IDS (HYMN_TYPE, HYMN_NUMBER, SONG_ID) VALUES (?, ?, ?)");
-      for (SongReference songReference : hymnReference.getKey()) {
+      for (SongReference songReference : hymn.getReferencesList()) {
         songIdInsert.setString(1, converter.serialize(songReference.getHymnType()));
         songIdInsert.setString(2, songReference.getHymnNumber());
         songIdInsert.setLong(3, id);
