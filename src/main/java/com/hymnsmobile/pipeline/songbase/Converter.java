@@ -53,7 +53,7 @@ public class Converter {
         builder.addAllKey(songIdToKeys.get(song.getId()));
       } else {
         builder.addKey(SongbaseKey.newBuilder()
-            .setHymnType(HymnType.SONGBASE.codeName)
+            .setHymnType(HymnType.SONGBASE_OTHER.codeName)
             .setHymnNumber(String.valueOf(song.getId()))
             .build());
       }

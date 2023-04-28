@@ -28,7 +28,8 @@ enum HymnType {
   BE_FILLED = 20;
   LIEDERBUCH = 21;
   BLUE_SONGBOOK = 22;
-  SONGBASE = 23;
+  // Uncategorized songbase songs
+  SONGBASE_OTHER = 23;
 }
 
 message Hymn {

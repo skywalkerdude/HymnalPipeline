@@ -26,14 +26,14 @@ public class Converter {
     put(HymnType.CEBUANO, "cb");
     put(HymnType.TAGALOG, "ht");
     put(HymnType.FRENCH, "hf");
-    put(HymnType.SPANISH, "hs");
-    put(HymnType.KOREAN, "k");
-    put(HymnType.INDONESIAN, "i");
-    put(HymnType.JAPANESE, "j");
-    put(HymnType.FARSI, "f");
+    put(HymnType.SPANISH, "S");
+    put(HymnType.KOREAN, "K");
+    put(HymnType.INDONESIAN, "I");
+    put(HymnType.JAPANESE, "J");
+    put(HymnType.FARSI, "F");
     put(HymnType.LIEDERBUCH, "lde");
-    put(HymnType.BLUE_SONGBOOK, "bsb");
-    put(HymnType.SONGBASE, "sb");
+    put(HymnType.BLUE_SONGBOOK, "sb");
+    put(HymnType.SONGBASE_OTHER, "sbx");
   }};
 
   @Inject

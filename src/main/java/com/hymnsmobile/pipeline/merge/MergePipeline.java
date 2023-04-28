@@ -165,7 +165,7 @@ public class MergePipeline {
               .map(Optional::get)
               .collect(toImmutableList());
       if (matchingReference.isEmpty()) {
-        // No matching references, so the songbase song
+        // No matching references, so add the songbase song
         builders.add(songbaseBuilder);
         return;
       }

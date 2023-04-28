@@ -46,7 +46,7 @@ public class StoragePipeline {
   }
 
   private void writeErrors(ImmutableList<PipelineError> errors) throws IOException {
-    fileReadWriter.writeProto(outputDirectory.get().getPath() + "/errors.txt",
-        PipelineErrors.newBuilder().addAllErrors(errors).build());
+    fileReadWriter.writeString(outputDirectory.get().getPath() + "/errors.txt",
+        PipelineErrors.newBuilder().addAllErrors(errors).build().toString());
   }
 }

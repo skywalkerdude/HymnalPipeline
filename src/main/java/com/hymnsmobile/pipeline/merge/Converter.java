@@ -7,7 +7,7 @@ import static com.hymnsmobile.pipeline.models.HymnType.CLASSIC_HYMN;
 import static com.hymnsmobile.pipeline.models.HymnType.FRENCH;
 import static com.hymnsmobile.pipeline.models.HymnType.HOWARD_HIGASHI;
 import static com.hymnsmobile.pipeline.models.HymnType.LIEDERBUCH;
-import static com.hymnsmobile.pipeline.models.HymnType.SONGBASE;
+import static com.hymnsmobile.pipeline.models.HymnType.SONGBASE_OTHER;
 import static com.hymnsmobile.pipeline.models.HymnType.SPANISH;
 
 import com.google.protobuf.Descriptors.Descriptor;
@@ -19,7 +19,6 @@ import com.hymnsmobile.pipeline.hymnalnet.MetaDatumType;
 import com.hymnsmobile.pipeline.hymnalnet.models.Datum;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetJson;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetKey;
-import com.hymnsmobile.pipeline.hymnalnet.models.Verse;
 import com.hymnsmobile.pipeline.liederbuch.models.LiederbuchKey;
 import com.hymnsmobile.pipeline.merge.dagger.Merge;
 import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
@@ -30,6 +29,7 @@ import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import com.hymnsmobile.pipeline.models.SongLink;
 import com.hymnsmobile.pipeline.models.SongReference;
+import com.hymnsmobile.pipeline.models.Verse;
 import com.hymnsmobile.pipeline.songbase.models.SongbaseHymn;
 import com.hymnsmobile.pipeline.songbase.models.SongbaseKey;
 import com.hymnsmobile.pipeline.utils.TextUtil;
@@ -140,8 +140,8 @@ public class Converter {
       case CANTIQUES:
         hymnType = FRENCH;
         break;
-      case SONGBASE:
-        hymnType = SONGBASE;
+      case SONGBASE_OTHER:
+        hymnType = SONGBASE_OTHER;
         break;
       default:
         throw new IllegalStateException("Unexpected hymn type: " + type);
@@ -286,7 +286,8 @@ public class Converter {
     return builder.build();
   }
 
-  private com.hymnsmobile.pipeline.models.Verse toVerse(HymnalNetKey key, Verse verse) {
+  private com.hymnsmobile.pipeline.models.Verse toVerse(
+      HymnalNetKey key, com.hymnsmobile.pipeline.hymnalnet.models.Verse verse) {
     com.hymnsmobile.pipeline.models.Verse.Builder verseBuilder = com.hymnsmobile.pipeline.models.Verse.newBuilder()
         .setVerseType(verse.getVerseType());
 
@@ -300,7 +301,8 @@ public class Converter {
     return verseBuilder.build();
   }
 
-  private boolean shouldTransliterate(HymnalNetKey key, Verse verse) {
+  private boolean shouldTransliterate(
+      HymnalNetKey key, com.hymnsmobile.pipeline.hymnalnet.models.Verse verse) {
     if (verse.getTransliterationCount() == 0) {
       return false;
     }
@@ -389,6 +391,17 @@ public class Converter {
         .addAllReferences(
             hymn.getKeyList().stream().map(this::toSongReference).collect(toImmutableList()))
         .setTitle(hymn.getTitle())
+        // Add into lyrics for FTS
+        .addLyrics(
+            Verse.newBuilder().setVerseType("do_not_display").addAllLines(
+                hymn.getLyrics()
+                    .lines()
+                    .map(line -> line.replaceAll("\\[.*?]", ""))
+                    .filter(line -> !TextUtil.isEmpty(line))
+                    .map(String::trim)
+                    .map(line -> Line.newBuilder().setLineContent(line))
+                    .map(Line.Builder::build)
+                    .collect(toImmutableList())))
         .setInlineChords(hymn.getLyrics()).build();
   }
 }

@@ -16,20 +16,24 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.ZonedDateTime;
 import javax.inject.Inject;
 
 @StorageScope
 public class DatabaseWriter {
 
   private static final String DATABASE_PATH_FORMAT = "jdbc:sqlite:%s/hymnaldb-v%d.sqlite";
-  private static final int DATABASE_VERSION = 20;
+  private static final int DATABASE_VERSION = 21;
 
   private final Converter converter;
   private final Lazy<File> outputDirectory;
+  private final ZonedDateTime currentTime;
 
   @Inject
-  public DatabaseWriter(Converter converter, Lazy<File> outputDirectory) {
+  public DatabaseWriter(
+      Converter converter, Lazy<File> outputDirectory, ZonedDateTime currentTime) {
     this.converter = converter;
+    this.currentTime = currentTime;
     this.outputDirectory = outputDirectory;
   }
 
@@ -95,7 +99,16 @@ public class DatabaseWriter {
       connection.createStatement().execute(
           "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
       connection.createStatement().execute(
-          "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f819eb1ebc0bf409f08bd3d9b85c872d')");
+          "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7d8082126277a124272c2466125120e4')");
+
+      connection.createStatement().execute(
+          "CREATE TABLE IF NOT EXISTS misc_meta_data (metadata_key TEXT, metadata_value TEXT)");
+      PreparedStatement insertStatement = connection.prepareStatement(
+          "INSERT INTO misc_meta_data (metadata_key, metadata_value) VALUES (?, ?)");
+      insertStatement.setString(1, "time_generated");
+      insertStatement.setString(2, String.valueOf(currentTime.toInstant().toEpochMilli()));
+      insertStatement.execute();
+
       return connection;
     } catch (ClassNotFoundException | SQLException e) {
       throw new RuntimeException("Unable to connect to database", e);
