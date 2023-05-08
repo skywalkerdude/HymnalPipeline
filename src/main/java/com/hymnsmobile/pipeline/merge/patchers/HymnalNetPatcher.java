@@ -1,26 +1,26 @@
 package com.hymnsmobile.pipeline.merge.patchers;
 
-import static com.hymnsmobile.pipeline.models.HymnType.CEBUANO;
-import static com.hymnsmobile.pipeline.models.HymnType.CHILDREN_SONG;
-import static com.hymnsmobile.pipeline.models.HymnType.CHINESE;
-import static com.hymnsmobile.pipeline.models.HymnType.CHINESE_SIMPLIFIED;
-import static com.hymnsmobile.pipeline.models.HymnType.CHINESE_SUPPLEMENTAL;
-import static com.hymnsmobile.pipeline.models.HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED;
-import static com.hymnsmobile.pipeline.models.HymnType.CLASSIC_HYMN;
-import static com.hymnsmobile.pipeline.models.HymnType.DUTCH;
-import static com.hymnsmobile.pipeline.models.HymnType.FRENCH;
-import static com.hymnsmobile.pipeline.models.HymnType.GERMAN;
-import static com.hymnsmobile.pipeline.models.HymnType.HOWARD_HIGASHI;
-import static com.hymnsmobile.pipeline.models.HymnType.NEW_SONG;
-import static com.hymnsmobile.pipeline.models.HymnType.NEW_TUNE;
-import static com.hymnsmobile.pipeline.models.HymnType.SPANISH;
-import static com.hymnsmobile.pipeline.models.HymnType.TAGALOG;
+import static com.hymnsmobile.pipeline.merge.HymnType.CEBUANO;
+import static com.hymnsmobile.pipeline.merge.HymnType.CHILDREN_SONG;
+import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE;
+import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE_SIMPLIFIED;
+import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE_SUPPLEMENTAL;
+import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED;
+import static com.hymnsmobile.pipeline.merge.HymnType.CLASSIC_HYMN;
+import static com.hymnsmobile.pipeline.merge.HymnType.DUTCH;
+import static com.hymnsmobile.pipeline.merge.HymnType.FRENCH;
+import static com.hymnsmobile.pipeline.merge.HymnType.GERMAN;
+import static com.hymnsmobile.pipeline.merge.HymnType.HOWARD_HIGASHI;
+import static com.hymnsmobile.pipeline.merge.HymnType.NEW_SONG;
+import static com.hymnsmobile.pipeline.merge.HymnType.NEW_TUNE;
+import static com.hymnsmobile.pipeline.merge.HymnType.SPANISH;
+import static com.hymnsmobile.pipeline.merge.HymnType.TAGALOG;
 
 import com.hymnsmobile.pipeline.merge.Exceptions;
 import com.hymnsmobile.pipeline.merge.dagger.Merge;
 import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
 import com.hymnsmobile.pipeline.models.Hymn;
-import com.hymnsmobile.pipeline.models.HymnType;
+import com.hymnsmobile.pipeline.merge.HymnType;
 import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.SongLink;
 import com.hymnsmobile.pipeline.models.SongReference;
@@ -114,26 +114,26 @@ public class HymnalNetPatcher extends Patcher {
    * h/1351 should also map to ht/1351,so we need to update all songs in that graph.
    */
   void fix_h1351() {
-    addLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1351"),
+    addLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1351"),
         SongLink.newBuilder().setName("Tagalog")
-            .setReference(SongReference.newBuilder().setHymnType(TAGALOG).setHymnNumber("1351")));
-    addLanguages(SongReference.newBuilder().setHymnType(TAGALOG).setHymnNumber("1351"),
+            .setReference(SongReference.newBuilder().setHymnType(TAGALOG.abbreviatedValue).setHymnNumber("1351")));
+    addLanguages(SongReference.newBuilder().setHymnType(TAGALOG.abbreviatedValue).setHymnNumber("1351"),
         SongLink.newBuilder().setName("Tagalog")
-            .setReference(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1351")));
+            .setReference(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1351")));
   }
 
   /**
    * ch/1090 and chx/1090 should map to the english, and tagalog 1090, not 1089
    */
   void fix_ch1090() {
-    getHymn(SongReference.newBuilder().setHymnType(HymnType.CHINESE).setHymnNumber("1090"))
+    getHymn(SongReference.newBuilder().setHymnType(CHINESE.abbreviatedValue).setHymnNumber("1090"))
         .clearLanguages()
         .addLanguages(SongLink.newBuilder().setName("English").setReference(
-            SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1090")));
-    getHymn(SongReference.newBuilder().setHymnType(HymnType.CHINESE_SIMPLIFIED).setHymnNumber("1090"))
+            SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1090")));
+    getHymn(SongReference.newBuilder().setHymnType(HymnType.CHINESE_SIMPLIFIED.abbreviatedValue).setHymnNumber("1090"))
         .clearLanguages()
         .addLanguages(SongLink.newBuilder().setName("English").setReference(
-            SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1090")));
+            SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1090")));
   }
 
   /**
@@ -165,18 +165,18 @@ public class HymnalNetPatcher extends Patcher {
    *    hs/192->h/1359,ch/339,ht/1359;
    */
   void fix_h445_h1359() {
-    resetLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("445"),
-        SongLink.newBuilder().setName("Cebuano").setReference(SongReference.newBuilder().setHymnType(CEBUANO).setHymnNumber("445")),
-        SongLink.newBuilder().setName("Tagalog").setReference(SongReference.newBuilder().setHymnType(TAGALOG).setHymnNumber("445")),
-        SongLink.newBuilder().setName("French").setReference(SongReference.newBuilder().setHymnType(FRENCH).setHymnNumber("79")),
-        SongLink.newBuilder().setName("German").setReference(SongReference.newBuilder().setHymnType(GERMAN).setHymnNumber("445")),
-        SongLink.newBuilder().setName("Spanish").setReference(SongReference.newBuilder().setHymnType(SPANISH).setHymnNumber("190")));
+    resetLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("445"),
+        SongLink.newBuilder().setName("Cebuano").setReference(SongReference.newBuilder().setHymnType(CEBUANO.abbreviatedValue).setHymnNumber("445")),
+        SongLink.newBuilder().setName("Tagalog").setReference(SongReference.newBuilder().setHymnType(TAGALOG.abbreviatedValue).setHymnNumber("445")),
+        SongLink.newBuilder().setName("French").setReference(SongReference.newBuilder().setHymnType(FRENCH.abbreviatedValue).setHymnNumber("79")),
+        SongLink.newBuilder().setName("German").setReference(SongReference.newBuilder().setHymnType(GERMAN.abbreviatedValue).setHymnNumber("445")),
+        SongLink.newBuilder().setName("Spanish").setReference(SongReference.newBuilder().setHymnType(SPANISH.abbreviatedValue).setHymnNumber("190")));
 
-    resetLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1359"),
-        SongLink.newBuilder().setName("詩歌(繁)").setReference(SongReference.newBuilder().setHymnType(CHINESE).setHymnNumber("339")),
-        SongLink.newBuilder().setName("诗歌(简)").setReference(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED).setHymnNumber("339")),
-        SongLink.newBuilder().setName("Tagalog").setReference(SongReference.newBuilder().setHymnType(TAGALOG).setHymnNumber("1359")),
-        SongLink.newBuilder().setName("Spanish").setReference(SongReference.newBuilder().setHymnType(SPANISH).setHymnNumber("192")));
+    resetLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1359"),
+        SongLink.newBuilder().setName("詩歌(繁)").setReference(SongReference.newBuilder().setHymnType(CHINESE.abbreviatedValue).setHymnNumber("339")),
+        SongLink.newBuilder().setName("诗歌(简)").setReference(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED.abbreviatedValue).setHymnNumber("339")),
+        SongLink.newBuilder().setName("Tagalog").setReference(SongReference.newBuilder().setHymnType(TAGALOG.abbreviatedValue).setHymnNumber("1359")),
+        SongLink.newBuilder().setName("Spanish").setReference(SongReference.newBuilder().setHymnType(SPANISH.abbreviatedValue).setHymnNumber("192")));
   }
 
 
@@ -187,7 +187,7 @@ public class HymnalNetPatcher extends Patcher {
    * Category and subcategory seem to be correct, though.
    */
   void fix_hf15() {
-    getHymn(SongReference.newBuilder().setHymnType(HymnType.FRENCH).setHymnNumber("15"))
+    getHymn(SongReference.newBuilder().setHymnType(HymnType.FRENCH.abbreviatedValue).setHymnNumber("15"))
         .clearLanguages()
         .clearAuthor()
         .clearComposer()
@@ -197,7 +197,7 @@ public class HymnalNetPatcher extends Patcher {
         .clearHymnCode()
         .clearScriptures()
         .addLanguages(SongLink.newBuilder().setName("English").setReference(
-            SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1084")))
+            SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1084")))
         .addKey("F Major").addTime("3/4").addMeter("8.8.8.8")
         .addHymnCode("51712165172321").addScriptures("Song of Songs");
   }
@@ -224,16 +224,16 @@ public class HymnalNetPatcher extends Patcher {
    *    ht/79->h/8079,ch/68;
    */
   void fix_h79_h8079() {
-    resetLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("79"),
+    resetLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("79"),
         SongLink.newBuilder().setName("Cebuano").setReference(SongReference.newBuilder().setHymnType(
-            CEBUANO).setHymnNumber("79")),
+            CEBUANO.abbreviatedValue).setHymnNumber("79")),
         SongLink.newBuilder().setName("Spanish").setReference(SongReference.newBuilder().setHymnType(
-            SPANISH).setHymnNumber("44")));
+            SPANISH.abbreviatedValue).setHymnNumber("44")));
 
-    resetLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("8079"),
-        SongLink.newBuilder().setName("詩歌(繁)").setReference(SongReference.newBuilder().setHymnType(HymnType.CHINESE).setHymnNumber("68")),
-        SongLink.newBuilder().setName("诗歌(简)").setReference(SongReference.newBuilder().setHymnType(HymnType.CHINESE_SIMPLIFIED).setHymnNumber("68")),
-        SongLink.newBuilder().setName("Tagalog").setReference(SongReference.newBuilder().setHymnType(HymnType.TAGALOG).setHymnNumber("79")));
+    resetLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("8079"),
+        SongLink.newBuilder().setName("詩歌(繁)").setReference(SongReference.newBuilder().setHymnType(HymnType.CHINESE.abbreviatedValue).setHymnNumber("68")),
+        SongLink.newBuilder().setName("诗歌(简)").setReference(SongReference.newBuilder().setHymnType(HymnType.CHINESE_SIMPLIFIED.abbreviatedValue).setHymnNumber("68")),
+        SongLink.newBuilder().setName("Tagalog").setReference(SongReference.newBuilder().setHymnType(HymnType.TAGALOG.abbreviatedValue).setHymnNumber("79")));
   }
 
   /**
@@ -264,19 +264,19 @@ public class HymnalNetPatcher extends Patcher {
    *    hf/46->ch/217,h/1360,ht/1360;
    */
   void fix_h267_h1360() {
-    resetLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("267"),
+    resetLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("267"),
         SongLink.newBuilder().setName("Cebuano").setReference(SongReference.newBuilder().setHymnType(
-            CEBUANO).setHymnNumber("267")),
-        SongLink.newBuilder().setName("Tagalog").setReference(SongReference.newBuilder().setHymnType(HymnType.TAGALOG).setHymnNumber("267")),
+            CEBUANO.abbreviatedValue).setHymnNumber("267")),
+        SongLink.newBuilder().setName("Tagalog").setReference(SongReference.newBuilder().setHymnType(HymnType.TAGALOG.abbreviatedValue).setHymnNumber("267")),
         SongLink.newBuilder().setName("Spanish").setReference(SongReference.newBuilder().setHymnType(
-            SPANISH).setHymnNumber("127")),
-        SongLink.newBuilder().setName("German").setReference(SongReference.newBuilder().setHymnType(HymnType.GERMAN).setHymnNumber("267")));
+            SPANISH.abbreviatedValue).setHymnNumber("127")),
+        SongLink.newBuilder().setName("German").setReference(SongReference.newBuilder().setHymnType(HymnType.GERMAN.abbreviatedValue).setHymnNumber("267")));
 
-    resetLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1360"),
-        SongLink.newBuilder().setName("詩歌(繁)").setReference(SongReference.newBuilder().setHymnType(HymnType.CHINESE).setHymnNumber("217")),
-        SongLink.newBuilder().setName("诗歌(简)").setReference(SongReference.newBuilder().setHymnType(HymnType.CHINESE_SIMPLIFIED).setHymnNumber("217")),
-        SongLink.newBuilder().setName("Tagalog").setReference(SongReference.newBuilder().setHymnType(HymnType.TAGALOG).setHymnNumber("1360")),
-        SongLink.newBuilder().setName("French").setReference(SongReference.newBuilder().setHymnType(HymnType.FRENCH).setHymnNumber("46")));
+    resetLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1360"),
+        SongLink.newBuilder().setName("詩歌(繁)").setReference(SongReference.newBuilder().setHymnType(HymnType.CHINESE.abbreviatedValue).setHymnNumber("217")),
+        SongLink.newBuilder().setName("诗歌(简)").setReference(SongReference.newBuilder().setHymnType(HymnType.CHINESE_SIMPLIFIED.abbreviatedValue).setHymnNumber("217")),
+        SongLink.newBuilder().setName("Tagalog").setReference(SongReference.newBuilder().setHymnType(HymnType.TAGALOG.abbreviatedValue).setHymnNumber("1360")),
+        SongLink.newBuilder().setName("French").setReference(SongReference.newBuilder().setHymnType(HymnType.FRENCH.abbreviatedValue).setHymnNumber("46")));
   }
 
   /**
@@ -284,17 +284,17 @@ public class HymnalNetPatcher extends Patcher {
    * version of h/1164. So it should map to h/1164 and its related songs
    */
   void fix_ts253() {
-    getHymn(SongReference.newBuilder().setHymnType(HymnType.CHINESE_SUPPLEMENTAL).setHymnNumber("253"))
+    getHymn(SongReference.newBuilder().setHymnType(HymnType.CHINESE_SUPPLEMENTAL.abbreviatedValue).setHymnNumber("253"))
         .clearLanguages()
         .addLanguages(SongLink.newBuilder().setName("English")
             .setReference(
-                SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1164")));
-    getHymn(SongReference.newBuilder().setHymnType(HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED)
+                SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1164")));
+    getHymn(SongReference.newBuilder().setHymnType(HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED.abbreviatedValue)
         .setHymnNumber("253"))
         .clearLanguages()
         .addLanguages(SongLink.newBuilder().setName("English")
             .setReference(
-                SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1164")));
+                SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1164")));
   }
 
   /**
@@ -302,15 +302,15 @@ public class HymnalNetPatcher extends Patcher {
    *  version of h/1198. So it should map to h/1198 and its related songs
    */
   void fix_ts142() {
-    getHymn(SongReference.newBuilder().setHymnType(HymnType.CHINESE_SUPPLEMENTAL).setHymnNumber("142"))
+    getHymn(SongReference.newBuilder().setHymnType(HymnType.CHINESE_SUPPLEMENTAL.abbreviatedValue).setHymnNumber("142"))
         .clearLanguages()
         .addLanguages(SongLink.newBuilder().setName("English")
             .setReference(
-                SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1198")));
-    getHymn(SongReference.newBuilder().setHymnType(HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED).setHymnNumber("142"))
+                SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1198")));
+    getHymn(SongReference.newBuilder().setHymnType(HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED.abbreviatedValue).setHymnNumber("142"))
         .clearLanguages()
         .addLanguages(SongLink.newBuilder().setName("English")
-            .setReference(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1198")));
+            .setReference(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1198")));
   }
 
   /**
@@ -334,27 +334,27 @@ public class HymnalNetPatcher extends Patcher {
    *    translations of each other
    */
   void fix_h720_h8526() {
-    resetLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("720"),
+    resetLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("720"),
         SongLink.newBuilder().setName("Cebuano")
-            .setReference(SongReference.newBuilder().setHymnType(CEBUANO).setHymnNumber("720")),
+            .setReference(SongReference.newBuilder().setHymnType(CEBUANO.abbreviatedValue).setHymnNumber("720")),
         SongLink.newBuilder().setName("Tagalog")
-            .setReference(SongReference.newBuilder().setHymnType(HymnType.TAGALOG).setHymnNumber("720")),
+            .setReference(SongReference.newBuilder().setHymnType(HymnType.TAGALOG.abbreviatedValue).setHymnNumber("720")),
         SongLink.newBuilder().setName("German")
-            .setReference(SongReference.newBuilder().setHymnType(HymnType.GERMAN).setHymnNumber("720")));
+            .setReference(SongReference.newBuilder().setHymnType(HymnType.GERMAN.abbreviatedValue).setHymnNumber("720")));
 
-    resetLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("8526"),
+    resetLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("8526"),
         SongLink.newBuilder().setName("詩歌(繁)")
-            .setReference(SongReference.newBuilder().setHymnType(HymnType.CHINESE).setHymnNumber("526")),
+            .setReference(SongReference.newBuilder().setHymnType(HymnType.CHINESE.abbreviatedValue).setHymnNumber("526")),
         SongLink.newBuilder().setName("诗歌(简)")
             .setReference(
-                SongReference.newBuilder().setHymnType(HymnType.CHINESE_SIMPLIFIED).setHymnNumber("526")));
+                SongReference.newBuilder().setHymnType(HymnType.CHINESE_SIMPLIFIED.abbreviatedValue).setHymnNumber("526")));
   }
 
   /**
    * h/379 should be by itself. The Chinese song it's linked to (ch/385) is actually translated by h/8385.
    */
   void fix_h379() {
-    getHymn(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("379").build()).clearLanguages();
+    getHymn(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("379").build()).clearLanguages();
   }
 
   /**
@@ -365,28 +365,28 @@ public class HymnalNetPatcher extends Patcher {
    * languages.
    */
   void fix_ch643() {
-    getHymn(SongReference.newBuilder().setHymnType(HymnType.CHINESE).setHymnNumber("643")).clearLanguages()
+    getHymn(SongReference.newBuilder().setHymnType(HymnType.CHINESE.abbreviatedValue).setHymnNumber("643")).clearLanguages()
         .addLanguages(SongLink.newBuilder().setName("诗歌(简)").setReference(
-            SongReference.newBuilder().setHymnType(HymnType.CHINESE_SIMPLIFIED).setHymnNumber("643")
+            SongReference.newBuilder().setHymnType(HymnType.CHINESE_SIMPLIFIED.abbreviatedValue).setHymnNumber("643")
                 .build()));
-    getHymn(SongReference.newBuilder().setHymnType(HymnType.CHINESE_SIMPLIFIED)
+    getHymn(SongReference.newBuilder().setHymnType(HymnType.CHINESE_SIMPLIFIED.abbreviatedValue)
         .setHymnNumber("643")).clearLanguages().addLanguages(SongLink.newBuilder().setName("诗歌(简)")
         .setReference(
-            SongReference.newBuilder().setHymnType(HymnType.CHINESE).setHymnNumber("643").build()));
+            SongReference.newBuilder().setHymnType(HymnType.CHINESE.abbreviatedValue).setHymnNumber("643").build()));
   }
 
   /**
    * h/528 should be by itself. The Chinese song it's linked to (ch/444) is actually translated by h/8444.
    */
   void fix_h528() {
-    getHymn(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("528").build()).clearLanguages();
+    getHymn(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("528").build()).clearLanguages();
   }
 
   /**
    * h/480 should be by itself. The Chinese song it's linked to (ch/357) is actually translated by h/8357.
    */
   void fix_h480() {
-    getHymn(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("480").build()).clearLanguages();
+    getHymn(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("480").build()).clearLanguages();
   }
 
   /**
@@ -394,13 +394,13 @@ public class HymnalNetPatcher extends Patcher {
    * to h/8330. So we need to add that mapping to both ns/154 and ch/330.
    */
   void fix_ns154() {
-    addLanguages(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("154"),
-        SongLink.newBuilder().setName("詩歌(繁)").setReference(SongReference.newBuilder().setHymnType(CHINESE).setHymnNumber("330")),
-        SongLink.newBuilder().setName("诗歌(简)").setReference(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED).setHymnNumber("330")));
-    addLanguages(SongReference.newBuilder().setHymnType(CHINESE).setHymnNumber("330"),
-        SongLink.newBuilder().setName("English").setReference(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("154")));
-    addLanguages(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED).setHymnNumber("330"),
-        SongLink.newBuilder().setName("English").setReference(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("154")));
+    addLanguages(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("154"),
+        SongLink.newBuilder().setName("詩歌(繁)").setReference(SongReference.newBuilder().setHymnType(CHINESE.abbreviatedValue).setHymnNumber("330")),
+        SongLink.newBuilder().setName("诗歌(简)").setReference(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED.abbreviatedValue).setHymnNumber("330")));
+    addLanguages(SongReference.newBuilder().setHymnType(CHINESE.abbreviatedValue).setHymnNumber("330"),
+        SongLink.newBuilder().setName("English").setReference(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("154")));
+    addLanguages(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED.abbreviatedValue).setHymnNumber("330"),
+        SongLink.newBuilder().setName("English").setReference(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("154")));
   }
 
   /**
@@ -408,13 +408,13 @@ public class HymnalNetPatcher extends Patcher {
    * need to add ns/474 as well.
    */
   void fix_ts438() {
-    addLanguages(SongReference.newBuilder().setHymnType(CHINESE_SUPPLEMENTAL).setHymnNumber("428"),
+    addLanguages(SongReference.newBuilder().setHymnType(CHINESE_SUPPLEMENTAL.abbreviatedValue).setHymnNumber("428"),
         SongLink.newBuilder().setName("English")
-            .setReference(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("474")));
+            .setReference(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("474")));
     addLanguages(
-        SongReference.newBuilder().setHymnType(CHINESE_SUPPLEMENTAL_SIMPLIFIED).setHymnNumber("428"),
+        SongReference.newBuilder().setHymnType(CHINESE_SUPPLEMENTAL_SIMPLIFIED.abbreviatedValue).setHymnNumber("428"),
         SongLink.newBuilder().setName("English")
-            .setReference(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("474")));
+            .setReference(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("474")));
   }
 
   /**
@@ -424,7 +424,7 @@ public class HymnalNetPatcher extends Patcher {
    * classic hymn than from the new tune.
    */
   void fix_nt723() {
-    getHymn(SongReference.newBuilder().setHymnType(NEW_TUNE).setHymnNumber("723").build()).clearLanguages();
+    getHymn(SongReference.newBuilder().setHymnType(NEW_TUNE.abbreviatedValue).setHymnNumber("723").build()).clearLanguages();
   }
 
   /**
@@ -434,7 +434,7 @@ public class HymnalNetPatcher extends Patcher {
    * from the classic hymn than from the new tune.
    */
   void fix_nt1307() {
-    getHymn(SongReference.newBuilder().setHymnType(NEW_TUNE).setHymnNumber("1307").build()).clearLanguages();
+    getHymn(SongReference.newBuilder().setHymnType(NEW_TUNE.abbreviatedValue).setHymnNumber("1307").build()).clearLanguages();
   }
 
   /**
@@ -450,9 +450,9 @@ public class HymnalNetPatcher extends Patcher {
    * solve any invalid reference checks.
    */
   void fix_de10_h10b() {
-    resetLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("10b"),
+    resetLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("10b"),
         SongLink.newBuilder().setName("German").setReference(
-            SongReference.newBuilder().setHymnType(GERMAN).setHymnNumber("10b").build()));
+            SongReference.newBuilder().setHymnType(GERMAN.abbreviatedValue).setHymnNumber("10b").build()));
   }
 
   /**
@@ -460,9 +460,9 @@ public class HymnalNetPatcher extends Patcher {
    * references to songs with the same tune as h/786 and only keep h/786b.
    */
   void fix_de786b_h786b() {
-    resetLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("786b"),
+    resetLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("786b"),
         SongLink.newBuilder().setName("German")
-            .setReference(SongReference.newBuilder().setHymnType(GERMAN).setHymnNumber("786b")));
+            .setReference(SongReference.newBuilder().setHymnType(GERMAN.abbreviatedValue).setHymnNumber("786b")));
   }
 
   /**
@@ -470,14 +470,14 @@ public class HymnalNetPatcher extends Patcher {
    * else is correct. so just change ch/9166 to the correct mapping.
    */
   void fix_ch9166() {
-    getHymn(SongReference.newBuilder().setHymnType(CHINESE).setHymnNumber("9166")).clearLanguages()
+    getHymn(SongReference.newBuilder().setHymnType(CHINESE.abbreviatedValue).setHymnNumber("9166")).clearLanguages()
         .addLanguages(
             SongLink.newBuilder().setName("English")
-                .setReference(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("166")));
-    getHymn(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED).setHymnNumber("9166")).clearLanguages()
+                .setReference(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("166")));
+    getHymn(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED.abbreviatedValue).setHymnNumber("9166")).clearLanguages()
         .addLanguages(
             SongLink.newBuilder().setName("English")
-                .setReference(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("166")));
+                .setReference(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("166")));
   }
 
   /**
@@ -485,36 +485,36 @@ public class HymnalNetPatcher extends Patcher {
    * references itself also as German. So we need to fix ns/54de to point back to ns/54.
    */
   void fix_ns54de() {
-    getHymn(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("54de")).clearLanguages()
+    getHymn(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("54de")).clearLanguages()
         .addLanguages(
             SongLink.newBuilder().setName("English")
-                .setReference(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("54")));
+                .setReference(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("54")));
   }
 
   /**
    * hd/31 is the Dutch song of ns/79 but is referenced by h/31. So we need to remove that mapping.
    */
   void fix_hd31() {
-    resetLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("31"),
+    resetLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("31"),
         SongLink.newBuilder().setName("詩歌(繁)")
-            .setReference(SongReference.newBuilder().setHymnType(CHINESE).setHymnNumber("29")),
+            .setReference(SongReference.newBuilder().setHymnType(CHINESE.abbreviatedValue).setHymnNumber("29")),
         SongLink.newBuilder().setName("诗歌(简)")
-            .setReference(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED).setHymnNumber("29")));
+            .setReference(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED.abbreviatedValue).setHymnNumber("29")));
   }
 
   /**
    * ch/632 is the Chinese song of h/870, but it references h/870b instead, which is a new tune.
    */
   void fix_ch632() {
-    getHymn(SongReference.newBuilder().setHymnType(CHINESE).setHymnNumber("632")).clearLanguages()
+    getHymn(SongReference.newBuilder().setHymnType(CHINESE.abbreviatedValue).setHymnNumber("632")).clearLanguages()
         .addLanguages(
             SongLink.newBuilder().setName("English")
-                .setReference(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("870")));
+                .setReference(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("870")));
     getHymn(
-        SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED).setHymnNumber("632")).clearLanguages()
+        SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED.abbreviatedValue).setHymnNumber("632")).clearLanguages()
         .addLanguages(
             SongLink.newBuilder().setName("English")
-                .setReference(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("870")));
+                .setReference(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("870")));
   }
 
   /**
@@ -522,16 +522,16 @@ public class HymnalNetPatcher extends Patcher {
    */
   void fix_ts248() {
     getHymn(
-        SongReference.newBuilder().setHymnType(CHINESE_SUPPLEMENTAL).setHymnNumber("248")).clearLanguages()
+        SongReference.newBuilder().setHymnType(CHINESE_SUPPLEMENTAL.abbreviatedValue).setHymnNumber("248")).clearLanguages()
         .addLanguages(
             SongLink.newBuilder().setName("English")
-                .setReference(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("300")));
+                .setReference(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("300")));
     getHymn(
-        SongReference.newBuilder().setHymnType(CHINESE_SUPPLEMENTAL_SIMPLIFIED)
+        SongReference.newBuilder().setHymnType(CHINESE_SUPPLEMENTAL_SIMPLIFIED.abbreviatedValue)
             .setHymnNumber("248")).clearLanguages()
         .addLanguages(
             SongLink.newBuilder().setName("English")
-                .setReference(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("300")));
+                .setReference(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("300")));
   }
 
   /**
@@ -539,13 +539,13 @@ public class HymnalNetPatcher extends Patcher {
    */
   void fix_nt_477b() {
     // Replace self link with nt/477
-    SongReference nt477b = SongReference.newBuilder().setHymnType(NEW_TUNE).setHymnNumber("477b").build();
+    SongReference nt477b = SongReference.newBuilder().setHymnType(NEW_TUNE.abbreviatedValue).setHymnNumber("477b").build();
     List<SongLink> newRelevants = getHymn(nt477b).getRelevantsList().stream()
         .map(
             songLink -> {
               if (songLink.getReference().equals(nt477b)) {
                 return SongLink.newBuilder().setName(songLink.getName()).setReference(
-                    SongReference.newBuilder().setHymnType(NEW_TUNE).setHymnNumber("477").build()).build();
+                    SongReference.newBuilder().setHymnType(NEW_TUNE.abbreviatedValue).setHymnNumber("477").build()).build();
               }
               return songLink;
             }).collect(Collectors.toList());
@@ -556,18 +556,18 @@ public class HymnalNetPatcher extends Patcher {
    * nt/377 has a relevant song of nt/1079, but they are not really related. So remove it from the relevant list
    */
   void fix_nt377() {
-    removeRelevants(SongReference.newBuilder().setHymnType(NEW_TUNE).setHymnNumber("377"),
-        SongReference.newBuilder().setHymnType(NEW_TUNE).setHymnNumber("1079"));
+    removeRelevants(SongReference.newBuilder().setHymnType(NEW_TUNE.abbreviatedValue).setHymnNumber("377"),
+        SongReference.newBuilder().setHymnType(NEW_TUNE.abbreviatedValue).setHymnNumber("1079"));
   }
 
   /**
    * ns/98 has a relevant song of ns/80, but they are not really related. So remove it from the relevant list
    */
   void fix_ns98() {
-    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("98"),
-        SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("80"));
-    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("80"),
-        SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("98"));
+    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("98"),
+        SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("80"));
+    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("80"),
+        SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("98"));
   }
 
   /**
@@ -585,10 +585,10 @@ public class HymnalNetPatcher extends Patcher {
    * that it is not related to, so we should remove them.
    */
   void fix_nt575() {
-    removeRelevants(SongReference.newBuilder().setHymnType(NEW_TUNE).setHymnNumber("575"),
-        SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("34"),
-        SongReference.newBuilder().setHymnType(NEW_TUNE).setHymnNumber("711"),
-        SongReference.newBuilder().setHymnType(NEW_TUNE).setHymnNumber("1079"));
+    removeRelevants(SongReference.newBuilder().setHymnType(NEW_TUNE.abbreviatedValue).setHymnNumber("575"),
+        SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("34"),
+        SongReference.newBuilder().setHymnType(NEW_TUNE.abbreviatedValue).setHymnNumber("711"),
+        SongReference.newBuilder().setHymnType(NEW_TUNE.abbreviatedValue).setHymnNumber("1079"));
   }
 
   /**
@@ -596,14 +596,14 @@ public class HymnalNetPatcher extends Patcher {
    * Chinese is ch/nt575c
    */
   void fix_ch9575_chnt575c() {
-    resetRelevants(SongReference.newBuilder().setHymnType(CHINESE).setHymnNumber("9575"),
+    resetRelevants(SongReference.newBuilder().setHymnType(CHINESE.abbreviatedValue).setHymnNumber("9575"),
         SongLink.newBuilder().setName("New Tune")
-            .setReference(SongReference.newBuilder().setHymnType(CHINESE).setHymnNumber("nt575c")));
+            .setReference(SongReference.newBuilder().setHymnType(CHINESE.abbreviatedValue).setHymnNumber("nt575c")));
 
-    resetRelevants(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED).setHymnNumber("9575"),
+    resetRelevants(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED.abbreviatedValue).setHymnNumber("9575"),
         SongLink.newBuilder().setName("New Tune")
             .setReference(
-                SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED).setHymnNumber("nt575c")));
+                SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED.abbreviatedValue).setHymnNumber("nt575c")));
   }
 
   /**
@@ -611,7 +611,7 @@ public class HymnalNetPatcher extends Patcher {
    * related to. So we can just clear the relevants list there.
    */
   void fix_ns34() {
-    getHymn(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("34").build()).clearRelevants();
+    getHymn(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("34").build()).clearRelevants();
   }
 
   /**
@@ -619,196 +619,196 @@ public class HymnalNetPatcher extends Patcher {
    * related.
    */
   void fix_h711() {
-    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("711"),
-        SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("34"));
+    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("711"),
+        SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("34"));
   }
 
   /**
    * h/635, h/481, h/631 reference each other, but they're not really related
    */
   void fix_h635_h481_h631() {
-    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("635"),
-        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("481"),
-        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("631"));
-    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("481"),
-        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("635"),
-        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("631"));
-    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("631"),
-        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("481"),
-        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("635"));
+    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("635"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("481"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("631"));
+    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("481"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("635"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("631"));
+    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("631"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("481"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("635"));
   }
 
   /**
    * ns/59, ns/110, ns/111 reference each other, but they're not really related
    */
   void fix_ns59_ns110_ns111() {
-    getHymn(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("59")).clearRelevants();
-    getHymn(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("110")).clearRelevants();
-    getHymn(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("111")).clearRelevants();
+    getHymn(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("59")).clearRelevants();
+    getHymn(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("110")).clearRelevants();
+    getHymn(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("111")).clearRelevants();
   }
 
   /**
    * ns/2 references ns/3, but they're not really related
    */
   void fix_ns2() {
-    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("2"),
-        SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("3"));
-    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("3"),
-        SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("2"));
+    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("2"),
+        SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("3"));
+    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("3"),
+        SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("2"));
   }
 
   /**
    * ns/4 references ns/5 and h/36, but they're not really related
    */
   void fix_ns4() {
-    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("4"),
-        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("36"));
-    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("4"),
-        SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("5"));
-    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("5"),
-        SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("4"));
-    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("5"),
-        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("36"));
-    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("36"),
-        SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("4"));
-    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("36"),
-        SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("5"));
+    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("4"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("36"));
+    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("4"),
+        SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("5"));
+    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("5"),
+        SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("4"));
+    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("5"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("36"));
+    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("36"),
+        SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("4"));
+    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("36"),
+        SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("5"));
   }
 
   /**
    * ns/10, ns/142 reference each other, but they're not really related
    */
   void fix_ns10_ns142() {
-    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("10"),
-        SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("142"));
-    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("142"),
-        SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("10"));
+    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("10"),
+        SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("142"));
+    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("142"),
+        SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("10"));
   }
 
   /**
    * h/1033 references h/1007, but they're not really related
    */
   void fix_h1033() {
-    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1033"),
-        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1007"));
-    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1007"),
-        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1033"));
+    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1033"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1007"));
+    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1007"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1033"));
   }
 
   /**
    * h/1162, h/1163 reference each other, but they're not really related
    */
   void fix_h1162_h1163() {
-    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1162"),
-        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1163"));
-    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1163"),
-        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1162"));
+    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1162"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1163"));
+    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1163"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1162"));
   }
 
   /**
    * ns/73 references ns/34 and nt/711 but is not really related to those
    */
   void fix_ns73() {
-    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("73"),
-        SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("34"),
-        SongReference.newBuilder().setHymnType(NEW_TUNE).setHymnNumber("711"));
+    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("73"),
+        SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("34"),
+        SongReference.newBuilder().setHymnType(NEW_TUNE.abbreviatedValue).setHymnNumber("711"));
   }
 
   /**
    * ns/53 references ns/34, but they're not really related
    */
   void fix_ns53() {
-    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("53"),
-        SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("34"));
+    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("53"),
+        SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("34"));
   }
 
   /**
    * ns/1 references h/278, but they're not really related, apart from having the same tune
    */
   void fix_ns1() {
-    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("1"),
-        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("278"));
+    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("1"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("278"));
   }
 
   /**
    * ns/8 references h/1282, but they're not really related, apart from having the same tune
    */
   void fix_ns8() {
-    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("8"),
-        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1282"));
-    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1282"),
-        SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("8"));
+    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("8"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1282"));
+    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1282"),
+        SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("8"));
   }
 
   /**
    * ns/12 references h/661, but they're not really related, apart from having the same tune
    */
   void fix_ns12() {
-    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("12"),
-        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("661"));
-    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("661"),
-        SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("12"));
+    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("12"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("661"));
+    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("661"),
+        SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("12"));
   }
 
   /**
    * ns/22 references h/313, but they're not really related, apart from having the same tune
    */
   void fix_ns22() {
-    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("22"),
-        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("313"));
-    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("313"),
-        SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("22"));
+    removeRelevants(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("22"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("313"));
+    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("313"),
+        SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("22"));
   }
 
   /**
    * c/31 references h/1014, but they're not really related, apart from having the same tune in the chorus
    */
   void fix_c31() {
-    removeRelevants(SongReference.newBuilder().setHymnType(CHILDREN_SONG).setHymnNumber("31"),
-        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1014"));
-    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("1014"),
-        SongReference.newBuilder().setHymnType(CHILDREN_SONG).setHymnNumber("31"));
+    removeRelevants(SongReference.newBuilder().setHymnType(CHILDREN_SONG.abbreviatedValue).setHymnNumber("31"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1014"));
+    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1014"),
+        SongReference.newBuilder().setHymnType(CHILDREN_SONG.abbreviatedValue).setHymnNumber("31"));
   }
 
   /**
    * c/113 references h/556, but they're not really related, apart from having the same tune
    */
   void fix_c113() {
-    removeRelevants(SongReference.newBuilder().setHymnType(CHILDREN_SONG).setHymnNumber("113"),
-        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("556"));
+    removeRelevants(SongReference.newBuilder().setHymnType(CHILDREN_SONG.abbreviatedValue).setHymnNumber("113"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("556"));
   }
 
   /**
    * h/396 and ns/313 references each other, but they're not really related, apart from having the same tune
    */
   void fix_h396_ns313() {
-    getHymn(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("396")).clearRelevants();
-    getHymn(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("313")).clearRelevants();
+    getHymn(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("396")).clearRelevants();
+    getHymn(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("313")).clearRelevants();
   }
 
   /**
    * h/383 references itself when it should really be referencing nt/383
    */
   void fix_h383() {
-    resetRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("383"),
+    resetRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("383"),
         SongLink.newBuilder().setName("New Tune")
-            .setReference(SongReference.newBuilder().setHymnType(NEW_TUNE).setHymnNumber("383")));
+            .setReference(SongReference.newBuilder().setHymnType(NEW_TUNE.abbreviatedValue).setHymnNumber("383")));
   }
 
   /**
    * c/162 has a relevant song of h/993, but they are not really related. So remove it from the relevant list
    */
   void fix_c162() {
-    removeRelevants(SongReference.newBuilder().setHymnType(CHILDREN_SONG).setHymnNumber("162"),
-        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("993"));
+    removeRelevants(SongReference.newBuilder().setHymnType(CHILDREN_SONG.abbreviatedValue).setHymnNumber("162"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("993"));
   }
 
   /**
    * h/163 references itself when it should really be referencing nothing
    */
   void fix_h163() {
-    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("163"),
-        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("163"));
+    removeRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("163"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("163"));
   }
 
   /**
@@ -822,52 +822,52 @@ public class HymnalNetPatcher extends Patcher {
    */
   void fix_danglingReferences() {
     // ns/568 references ch/ns568c and chx/ns568. However, those songs don't reference it back. Fix the mapping so they reference each other.
-    addLanguages(SongReference.newBuilder().setHymnType(HymnType.CHINESE).setHymnNumber("ns568c"),
+    addLanguages(SongReference.newBuilder().setHymnType(HymnType.CHINESE.abbreviatedValue).setHymnNumber("ns568c"),
         SongLink.newBuilder().setName("English")
-            .setReference(SongReference.newBuilder().setHymnType(HymnType.NEW_SONG).setHymnNumber("568")));
+            .setReference(SongReference.newBuilder().setHymnType(HymnType.NEW_SONG.abbreviatedValue).setHymnNumber("568")));
     addLanguages(
-        SongReference.newBuilder().setHymnType(HymnType.CHINESE_SIMPLIFIED).setHymnNumber("ns568c"),
+        SongReference.newBuilder().setHymnType(HymnType.CHINESE_SIMPLIFIED.abbreviatedValue).setHymnNumber("ns568c"),
         SongLink.newBuilder().setName("English")
-            .setReference(SongReference.newBuilder().setHymnType(HymnType.NEW_SONG).setHymnNumber("568")));
+            .setReference(SongReference.newBuilder().setHymnType(HymnType.NEW_SONG.abbreviatedValue).setHymnNumber("568")));
 
     // ns/195 references ts/228 and ts/228?gb=1 but those songs don't reference it back. Fix the
     // mapping so they reference each other.
-    addLanguages(SongReference.newBuilder().setHymnType(CHINESE_SUPPLEMENTAL).setHymnNumber("228"),
+    addLanguages(SongReference.newBuilder().setHymnType(CHINESE_SUPPLEMENTAL.abbreviatedValue).setHymnNumber("228"),
         SongLink.newBuilder().setName("English")
-            .setReference(SongReference.newBuilder().setHymnType(HymnType.NEW_SONG).setHymnNumber("195")));
+            .setReference(SongReference.newBuilder().setHymnType(HymnType.NEW_SONG.abbreviatedValue).setHymnNumber("195")));
     addLanguages(
-        SongReference.newBuilder().setHymnType(CHINESE_SUPPLEMENTAL_SIMPLIFIED).setHymnNumber("228"),
+        SongReference.newBuilder().setHymnType(CHINESE_SUPPLEMENTAL_SIMPLIFIED.abbreviatedValue).setHymnNumber("228"),
         SongLink.newBuilder().setName("English")
-            .setReference(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("195")));
+            .setReference(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("195")));
 
     // hd/4 references ns/257 but ns/257 doesn't reference it back. Fix the mapping so it does.
-    addLanguages(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("257"),
+    addLanguages(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("257"),
         SongLink.newBuilder().setName("Dutch")
-            .setReference(SongReference.newBuilder().setHymnType(DUTCH).setHymnNumber("4")));
+            .setReference(SongReference.newBuilder().setHymnType(DUTCH.abbreviatedValue).setHymnNumber("4")));
 
     // ns/7 references h/18 because it is an adaptation of it. However, h/18 doesn't reference it
     // back. Fix h/18 to reference it back.
-    addRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("18"),
+    addRelevants(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("18"),
         SongLink.newBuilder().setName("O Father God, how faithful You are")
-            .setReference(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("7")));
+            .setReference(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("7")));
 
     // ns/20 references lb/12 because it is an adaptation of it. However, lb/12 doesn't reference it back.
-    addRelevants(SongReference.newBuilder().setHymnType(HOWARD_HIGASHI).setHymnNumber("12"),
+    addRelevants(SongReference.newBuilder().setHymnType(HOWARD_HIGASHI.abbreviatedValue).setHymnNumber("12"),
         SongLink.newBuilder().setName("Lord, I still love You")
-            .setReference(SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("20")));
+            .setReference(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("20")));
 
     // c/21 references h/70 because it is a shortened version of it. Since they are essentially the same song, we
     // should change the name to "Related" instead of the song title, because otherwise it'll just be the same as
     // the current song title.
-    removeRelevants(SongReference.newBuilder().setHymnType(CHILDREN_SONG).setHymnNumber("21"),
-        SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("70"));
-    removeRelevants(SongReference.newBuilder().setHymnType(HymnType.CLASSIC_HYMN).setHymnNumber("70"),
-        SongReference.newBuilder().setHymnType(CHILDREN_SONG).setHymnNumber("21"));
-    addRelevants(SongReference.newBuilder().setHymnType(CHILDREN_SONG).setHymnNumber("21"),
+    removeRelevants(SongReference.newBuilder().setHymnType(CHILDREN_SONG.abbreviatedValue).setHymnNumber("21"),
+        SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("70"));
+    removeRelevants(SongReference.newBuilder().setHymnType(HymnType.CLASSIC_HYMN.abbreviatedValue).setHymnNumber("70"),
+        SongReference.newBuilder().setHymnType(CHILDREN_SONG.abbreviatedValue).setHymnNumber("21"));
+    addRelevants(SongReference.newBuilder().setHymnType(CHILDREN_SONG.abbreviatedValue).setHymnNumber("21"),
         SongLink.newBuilder().setName("Related")
-            .setReference(SongReference.newBuilder().setHymnType(CLASSIC_HYMN).setHymnNumber("70")));
-    addRelevants(SongReference.newBuilder().setHymnType(HymnType.CLASSIC_HYMN).setHymnNumber("70"),
+            .setReference(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("70")));
+    addRelevants(SongReference.newBuilder().setHymnType(HymnType.CLASSIC_HYMN.abbreviatedValue).setHymnNumber("70"),
         SongLink.newBuilder().setName("Related")
-            .setReference(SongReference.newBuilder().setHymnType(CHILDREN_SONG).setHymnNumber("21")));
+            .setReference(SongReference.newBuilder().setHymnType(CHILDREN_SONG.abbreviatedValue).setHymnNumber("21")));
   }
 }

@@ -42,7 +42,7 @@ public class TextUtil {
 
   public static <M extends Message> JsonElement toJson(M message)
       throws InvalidProtocolBufferException {
-    return JsonParser.parseString(JsonFormat.printer().preservingProtoFieldNames().print(message));
+    return JsonParser.parseString(JsonFormat.printer().preservingProtoFieldNames().printingEnumsAsInts().print(message));
   }
 
   public static String join(List<String> strings) {

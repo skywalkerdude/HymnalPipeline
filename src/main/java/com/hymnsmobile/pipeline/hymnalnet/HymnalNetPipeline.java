@@ -53,8 +53,8 @@ public class HymnalNetPipeline {
   public void run() throws IOException, InterruptedException, URISyntaxException {
     LOGGER.fine("Hymnal.net pipeline starting");
     readFile();
-    fetcher.fetchHymns();
-    writeAllHymns();
+    // fetcher.fetchHymns();
+    // writeAllHymns();
     LOGGER.fine("Hymnal.net pipeline finished");
   }
 

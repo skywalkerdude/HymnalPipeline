@@ -1,14 +1,9 @@
 package com.hymnsmobile.pipeline.merge;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
-import static com.hymnsmobile.pipeline.h4a.HymnType.CHINESE;
-import static com.hymnsmobile.pipeline.h4a.HymnType.CLASSIC_HYMN;
-import static com.hymnsmobile.pipeline.models.HymnType.GERMAN;
-import static com.hymnsmobile.pipeline.models.HymnType.LIEDERBUCH;
-import static com.hymnsmobile.pipeline.models.HymnType.NEW_SONG;
+import static com.hymnsmobile.pipeline.merge.HymnType.LIEDERBUCH;
 
 import com.google.common.collect.ImmutableList;
-import com.hymnsmobile.pipeline.h4a.HymnType;
 import com.hymnsmobile.pipeline.h4a.models.H4aHymn;
 import com.hymnsmobile.pipeline.h4a.models.H4aKey;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetJson;
@@ -80,7 +75,7 @@ public class MergePipeline {
     h4aHymns.stream()
         // Sort by hymn type
         .sorted(Comparator.comparingInt(
-            o -> HymnType.fromString(o.getId().getType()).orElseThrow().ordinal()))
+            o -> com.hymnsmobile.pipeline.h4a.HymnType.fromString(o.getId().getType()).orElseThrow().ordinal()))
         // Merge in H4a hymns
         .forEach(h4aHymn -> mergeH4aHymn(h4aHymn, h4aHymns, builders));
     LOGGER.info("Sanitizing Hymns for Android");
@@ -99,7 +94,7 @@ public class MergePipeline {
 
       // Only interested in the Liederbuch (German) songs, since all the other songs are covered
       // by Hymnal.net or H4a
-      if (songReference.getHymnType() != LIEDERBUCH) {
+      if (HymnType.fromString(songReference.getHymnType()) != LIEDERBUCH) {
         return;
       }
 
@@ -115,7 +110,7 @@ public class MergePipeline {
               .map(relatedReference -> getHymnFrom(relatedReference, builders).orElseThrow())
               .flatMap(relatedBuilder -> relatedBuilder.getLanguagesList().stream())
               .map(SongLink::getReference)
-              .filter(relatedReference -> relatedReference.getHymnType() == GERMAN)
+              .filter(relatedReference -> HymnType.fromString(relatedReference.getHymnType()) == HymnType.GERMAN)
               .map(germanReference -> getHymnFrom(germanReference, builders).orElseThrow())
               .distinct()
               // Add a link to the Liederbuch song to the German song
@@ -210,7 +205,7 @@ public class MergePipeline {
       return;
     }
 
-    switch (h4aReference.getHymnType()) {
+    switch (HymnType.fromString(h4aReference.getHymnType())) {
       case CLASSIC_HYMN:
       case NEW_SONG:
       case CHILDREN_SONG:
@@ -299,16 +294,18 @@ public class MergePipeline {
    */
   private Set<H4aKey> inferParent(H4aKey key) {
     Set<H4aKey> inferredParents = new LinkedHashSet<>();
-    switch (HymnType.fromString(key.getType()).orElseThrow()) {
+    switch (com.hymnsmobile.pipeline.h4a.HymnType.fromString(key.getType()).orElseThrow()) {
       case INDONESIAN:
       case JAPANESE:
       case KOREAN:
         inferredParents.add(
-            H4aKey.newBuilder().setType(CHINESE.abbreviation).setNumber(key.getNumber()).build());
+            H4aKey.newBuilder().setType(com.hymnsmobile.pipeline.h4a.HymnType.CHINESE.abbreviation)
+                .setNumber(key.getNumber()).build());
         break;
       case FRENCH:
         inferredParents.add(
-            H4aKey.newBuilder().setType(CLASSIC_HYMN.abbreviation).setNumber(key.getNumber())
+            H4aKey.newBuilder().setType(com.hymnsmobile.pipeline.h4a.HymnType.CLASSIC_HYMN.abbreviation)
+                .setNumber(key.getNumber())
                 .build());
         break;
       default:
@@ -371,16 +368,16 @@ public class MergePipeline {
    * explicit mapping in the file, so we need to manually fix them here.
    */
   private Optional<SongReference> manualMapping(SongReference songReference) {
-    if (songReference.getHymnType() != LIEDERBUCH) {
+    if (HymnType.fromString(songReference.getHymnType()) != LIEDERBUCH) {
       return Optional.empty();
     }
     switch (songReference.getHymnNumber()) {
       case "419":
         return Optional.of(
-            SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("180de").build());
+            SongReference.newBuilder().setHymnType(HymnType.NEW_SONG.abbreviatedValue).setHymnNumber("180de").build());
       case "420":
         return Optional.of(
-            SongReference.newBuilder().setHymnType(NEW_SONG).setHymnNumber("151de").build());
+            SongReference.newBuilder().setHymnType(HymnType.NEW_SONG.abbreviatedValue).setHymnNumber("151de").build());
       default:
         return Optional.empty();
     }

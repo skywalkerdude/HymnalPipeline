@@ -1,14 +1,14 @@
 package com.hymnsmobile.pipeline.merge;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
-import static com.hymnsmobile.pipeline.models.HymnType.BLUE_SONGBOOK;
-import static com.hymnsmobile.pipeline.models.HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED;
-import static com.hymnsmobile.pipeline.models.HymnType.CLASSIC_HYMN;
-import static com.hymnsmobile.pipeline.models.HymnType.FRENCH;
-import static com.hymnsmobile.pipeline.models.HymnType.HOWARD_HIGASHI;
-import static com.hymnsmobile.pipeline.models.HymnType.LIEDERBUCH;
-import static com.hymnsmobile.pipeline.models.HymnType.SONGBASE_OTHER;
-import static com.hymnsmobile.pipeline.models.HymnType.SPANISH;
+import static com.hymnsmobile.pipeline.merge.HymnType.BLUE_SONGBOOK;
+import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED;
+import static com.hymnsmobile.pipeline.merge.HymnType.CLASSIC_HYMN;
+import static com.hymnsmobile.pipeline.merge.HymnType.FRENCH;
+import static com.hymnsmobile.pipeline.merge.HymnType.HOWARD_HIGASHI;
+import static com.hymnsmobile.pipeline.merge.HymnType.LIEDERBUCH;
+import static com.hymnsmobile.pipeline.merge.HymnType.SONGBASE_OTHER;
+import static com.hymnsmobile.pipeline.merge.HymnType.SPANISH;
 
 import com.google.protobuf.Descriptors.Descriptor;
 import com.google.protobuf.Descriptors.FieldDescriptor;
@@ -23,7 +23,6 @@ import com.hymnsmobile.pipeline.liederbuch.models.LiederbuchKey;
 import com.hymnsmobile.pipeline.merge.dagger.Merge;
 import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
 import com.hymnsmobile.pipeline.models.Hymn;
-import com.hymnsmobile.pipeline.models.HymnType;
 import com.hymnsmobile.pipeline.models.Line;
 import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
@@ -71,17 +70,17 @@ public class Converter {
       String queryParams = queryParamsOptional.get();
       if (queryParams.equals("?gb=1")) {
         if (hymnType == com.hymnsmobile.pipeline.hymnalnet.HymnType.CHINESE) {
-          return builder.setHymnType(HymnType.CHINESE_SIMPLIFIED)
+          return builder.setHymnType(HymnType.CHINESE_SIMPLIFIED.abbreviatedValue)
               .build();
         }
 
         if (hymnType == com.hymnsmobile.pipeline.hymnalnet.HymnType.CHINESE_SUPPLEMENTAL) {
-          return builder.setHymnType(CHINESE_SUPPLEMENTAL_SIMPLIFIED).build();
+          return builder.setHymnType(CHINESE_SUPPLEMENTAL_SIMPLIFIED.abbreviatedValue).build();
         }
       }
       throw new IllegalArgumentException("Unexpected query param found");
     }
-    return builder.setHymnType(HymnType.valueOf(hymnType.name()))
+    return builder.setHymnType(HymnType.valueOf(hymnType.name()).abbreviatedValue)
         .build();
   }
 
@@ -94,10 +93,10 @@ public class Converter {
 
     // Howard Higashi songs in H4a are NS10XX
     if (isHowardHigashi(type, number)) {
-      return reference.setHymnType(HOWARD_HIGASHI)
+      return reference.setHymnType(HOWARD_HIGASHI.abbreviatedValue)
           .setHymnNumber(Integer.toString(Integer.parseInt(number) - 1000)).build();
     }
-    return reference.setHymnType(HymnType.valueOf(type.name())).setHymnNumber(number).build();
+    return reference.setHymnType(HymnType.valueOf(type.name()).abbreviatedValue).setHymnNumber(number).build();
   }
 
   public SongReference toSongReference(LiederbuchKey key) {
@@ -107,14 +106,14 @@ public class Converter {
         com.hymnsmobile.pipeline.liederbuch.HymnType.fromString(key.getType()).orElseThrow();
 
     if (type == com.hymnsmobile.pipeline.liederbuch.HymnType.GERMAN) {
-      return reference.setHymnType(LIEDERBUCH).build();
+      return reference.setHymnType(LIEDERBUCH.abbreviatedValue).build();
     }
 
     int numberInt = Integer.parseInt(key.getNumber());
     if (type == com.hymnsmobile.pipeline.liederbuch.HymnType.NEW_SONG && numberInt > 1000) {
-      return reference.setHymnType(HOWARD_HIGASHI).setHymnNumber(String.valueOf(numberInt - 1000)).build();
+      return reference.setHymnType(HOWARD_HIGASHI.abbreviatedValue).setHymnNumber(String.valueOf(numberInt - 1000)).build();
     }
-    return reference.setHymnType(com.hymnsmobile.pipeline.models.HymnType.valueOf(type.name())).build();
+    return reference.setHymnType(HymnType.valueOf(type.name()).abbreviatedValue).build();
   }
 
   public SongReference toSongReference(SongbaseKey key) {
@@ -146,7 +145,7 @@ public class Converter {
       default:
         throw new IllegalStateException("Unexpected hymn type: " + type);
     }
-    return reference.setHymnType(hymnType).build();
+    return reference.setHymnType(hymnType.abbreviatedValue).build();
   }
 
   /**
@@ -155,7 +154,7 @@ public class Converter {
    */
   public SongLink toLanguageLink(SongReference reference) {
     final String name;
-    switch (reference.getHymnType()) {
+    switch (HymnType.fromString(reference.getHymnType())) {
       case TAGALOG:
         name = "Tagalog";
         break;

@@ -2,18 +2,17 @@ package com.hymnsmobile.pipeline.merge;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
 import static com.hymnsmobile.pipeline.merge.Exceptions.RELEVANT_EXCEPTIONS;
-import static com.hymnsmobile.pipeline.models.HymnType.CHINESE;
-import static com.hymnsmobile.pipeline.models.HymnType.CHINESE_SIMPLIFIED;
-import static com.hymnsmobile.pipeline.models.HymnType.CLASSIC_HYMN;
-import static com.hymnsmobile.pipeline.models.HymnType.GERMAN;
-import static com.hymnsmobile.pipeline.models.HymnType.NEW_SONG;
-import static com.hymnsmobile.pipeline.models.HymnType.NEW_TUNE;
+import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE;
+import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE_SIMPLIFIED;
+import static com.hymnsmobile.pipeline.merge.HymnType.CLASSIC_HYMN;
+import static com.hymnsmobile.pipeline.merge.HymnType.GERMAN;
+import static com.hymnsmobile.pipeline.merge.HymnType.NEW_SONG;
+import static com.hymnsmobile.pipeline.merge.HymnType.NEW_TUNE;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.hymnsmobile.pipeline.merge.dagger.Merge;
 import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
-import com.hymnsmobile.pipeline.models.HymnType;
 import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import com.hymnsmobile.pipeline.models.SongLink;
@@ -54,7 +53,10 @@ public class RelevantsAuditor {
 
     // Extract the hymn types for audit.
     ImmutableList<HymnType> hymnTypes =
-        setToAudit.stream().map(SongReference::getHymnType).collect(toImmutableList());
+        setToAudit.stream()
+            .map(SongReference::getHymnType)
+            .map(HymnType::fromString)
+            .collect(toImmutableList());
 
     // Verify that the same hymn type doesn't appear more than the allowed number of times the relevant list.
     for (HymnType hymnType : HymnType.values()) {
@@ -65,7 +67,7 @@ public class RelevantsAuditor {
       if (ImmutableSet.of(CLASSIC_HYMN, NEW_TUNE, NEW_SONG, GERMAN, CHINESE, CHINESE_SIMPLIFIED)
           .contains(hymnType)) {
         for (SongReference songReference : setToAudit) {
-          if (songReference.getHymnType() == hymnType && songReference.getHymnNumber()
+          if (HymnType.fromString(songReference.getHymnType()) == hymnType && songReference.getHymnNumber()
               .matches("(\\D+\\d+\\D*)|(\\D*\\d+\\D+)")) {
             timesAllowed++;
           }

@@ -2,14 +2,14 @@ package com.hymnsmobile.pipeline.merge;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
 import static com.hymnsmobile.pipeline.merge.Exceptions.LANGUAGES_EXCEPTIONS;
-import static com.hymnsmobile.pipeline.models.HymnType.CHILDREN_SONG;
-import static com.hymnsmobile.pipeline.models.HymnType.CHINESE;
-import static com.hymnsmobile.pipeline.models.HymnType.CHINESE_SIMPLIFIED;
-import static com.hymnsmobile.pipeline.models.HymnType.CHINESE_SUPPLEMENTAL;
-import static com.hymnsmobile.pipeline.models.HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED;
-import static com.hymnsmobile.pipeline.models.HymnType.CLASSIC_HYMN;
-import static com.hymnsmobile.pipeline.models.HymnType.HOWARD_HIGASHI;
-import static com.hymnsmobile.pipeline.models.HymnType.NEW_SONG;
+import static com.hymnsmobile.pipeline.merge.HymnType.CHILDREN_SONG;
+import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE;
+import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE_SIMPLIFIED;
+import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE_SUPPLEMENTAL;
+import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED;
+import static com.hymnsmobile.pipeline.merge.HymnType.CLASSIC_HYMN;
+import static com.hymnsmobile.pipeline.merge.HymnType.HOWARD_HIGASHI;
+import static com.hymnsmobile.pipeline.merge.HymnType.NEW_SONG;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -50,17 +50,20 @@ public class LanguageAuditor {
     }
 
     // Extract the hymn types for audit.
-    ImmutableList<com.hymnsmobile.pipeline.models.HymnType> hymnTypes =
-        setToAudit.stream().map(SongReference::getHymnType).collect(toImmutableList());
+    ImmutableList<HymnType> hymnTypes =
+        setToAudit.stream()
+            .map(SongReference::getHymnType)
+            .map(HymnType::fromString)
+            .collect(toImmutableList());
 
     // Verify that the same hymn type doesn't appear more than the allowed number of times the languages list.
-    for (com.hymnsmobile.pipeline.models.HymnType hymnType : com.hymnsmobile.pipeline.models.HymnType.values()) {
+    for (HymnType hymnType : HymnType.values()) {
       // For each song like ns/151de, lb/12s,  or , increment the allowance of that type of hymn, since those are valid
       // alternates.
       int timesAllowed = 1;
       if (ImmutableSet.of(NEW_SONG, HOWARD_HIGASHI).contains(hymnType)) {
         for (SongReference songReference : setToAudit) {
-          if (songReference.getHymnType() == hymnType && songReference.getHymnNumber()
+          if (HymnType.fromString(songReference.getHymnType()) == hymnType && songReference.getHymnNumber()
               .matches("(\\D+\\d+\\D*)|(\\D*\\d+\\D+)")) {
             timesAllowed++;
           }

@@ -1,36 +1,10 @@
 syntax = "proto3";
 
+import "google/protobuf/descriptor.proto";
+
 package com.hymnsmobile.pipeline.models;
 
 option java_multiple_files = true;
-
-enum HymnType {
-  DEFAULT = 0;
-  CLASSIC_HYMN = 1;
-  NEW_TUNE = 2;
-  NEW_SONG = 3;
-  CHILDREN_SONG = 4;
-  HOWARD_HIGASHI = 5;
-  DUTCH = 6;
-  GERMAN = 7;
-  CHINESE = 8;
-  CHINESE_SIMPLIFIED = 9;
-  CHINESE_SUPPLEMENTAL = 10;
-  CHINESE_SUPPLEMENTAL_SIMPLIFIED = 11;
-  CEBUANO = 12;
-  TAGALOG = 13;
-  FRENCH = 14;
-  SPANISH = 15;
-  KOREAN = 16;
-  JAPANESE = 17;
-  INDONESIAN = 18;
-  FARSI = 19;
-  BE_FILLED = 20;
-  LIEDERBUCH = 21;
-  BLUE_SONGBOOK = 22;
-  // Uncategorized songbase songs
-  SONGBASE_OTHER = 23;
-}
 
 message Hymn {
   int32 id = 1;
@@ -55,7 +29,7 @@ message Hymn {
 }
 
 message SongReference {
-  HymnType hymn_type = 1;
+  string hymn_type = 1;
   string hymn_number = 2;
 }
 

@@ -23,16 +23,13 @@ import javax.inject.Inject;
 public class DatabaseWriter {
 
   private static final String DATABASE_PATH_FORMAT = "jdbc:sqlite:%s/hymnaldb-v%d.sqlite";
-  private static final int DATABASE_VERSION = 21;
+  private static final int DATABASE_VERSION = 22;
 
-  private final Converter converter;
   private final Lazy<File> outputDirectory;
   private final ZonedDateTime currentTime;
 
   @Inject
-  public DatabaseWriter(
-      Converter converter, Lazy<File> outputDirectory, ZonedDateTime currentTime) {
-    this.converter = converter;
+  public DatabaseWriter(Lazy<File> outputDirectory, ZonedDateTime currentTime) {
     this.currentTime = currentTime;
     this.outputDirectory = outputDirectory;
   }
@@ -160,7 +157,7 @@ public class DatabaseWriter {
       PreparedStatement songIdInsert = connection.prepareStatement(
           "INSERT INTO SONG_IDS (HYMN_TYPE, HYMN_NUMBER, SONG_ID) VALUES (?, ?, ?)");
       for (SongReference songReference : hymn.getReferencesList()) {
-        songIdInsert.setString(1, converter.serialize(songReference.getHymnType()));
+        songIdInsert.setString(1, songReference.getHymnType());
         songIdInsert.setString(2, songReference.getHymnNumber());
         songIdInsert.setLong(3, id);
         songIdInsert.execute();
