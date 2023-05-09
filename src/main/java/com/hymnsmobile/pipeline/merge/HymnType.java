@@ -1,7 +1,5 @@
 package com.hymnsmobile.pipeline.merge;
 
-import java.util.Optional;
-
 /**
  * Represents the type of hymn
  */

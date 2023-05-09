@@ -150,7 +150,7 @@ public class MergePipeline {
         mergedHymns.stream().map(Hymn::toBuilder).collect(Collectors.toList());
 
     songbaseHymns.forEach(songbaseHymn -> {
-      Hymn.Builder songbaseBuilder = converter.toHymn(songbaseHymn).toBuilder();
+      Hymn.Builder songbaseBuilder = converter.toHymn(songbaseHymn).toBuilder().addProvenance("songbase");
 
       // Find a hymn that already matches one of the songbase song's references, if it exists
       ImmutableList<Hymn.Builder> matchingReference =
@@ -235,8 +235,9 @@ public class MergePipeline {
             .map(parent -> converter.toSongReference(parent.getId()))
             .ifPresent(parent ->
                 getHymnFrom(parent, builders).orElseThrow()
-                    .addLanguages(converter.toLanguageLink(h4aReference)));
-        builders.add(converter.toHymn(h4aHymn).orElseThrow().toBuilder());
+                    .addLanguages(converter.toLanguageLink(h4aReference))
+                    .addProvenance("h4a"));
+        builders.add(converter.toHymn(h4aHymn).orElseThrow().toBuilder().addProvenance("h4a"));
         break;
       case BE_FILLED:
         if (h4aHymn.hasParentHymn()) {
@@ -244,9 +245,9 @@ public class MergePipeline {
           // Add the BE_FILLED song as another reference, not as a new song since it's more than
           // likely a duplicate in terms of content.
           SongReference parentReference = converter.toSongReference(parentKey);
-          getHymnFrom(parentReference, builders).orElseThrow().addReferences(h4aReference);
+          getHymnFrom(parentReference, builders).orElseThrow().addReferences(h4aReference).addProvenance("h4a");
         } else {
-          builders.add(converter.toHymn(h4aHymn).orElseThrow().toBuilder());
+          builders.add(converter.toHymn(h4aHymn).orElseThrow().toBuilder().addProvenance("h4a"));
         }
     }
   }

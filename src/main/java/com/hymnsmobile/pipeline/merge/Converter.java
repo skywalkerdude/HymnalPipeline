@@ -217,7 +217,8 @@ public class Converter {
     Hymn.Builder builder = Hymn.newBuilder()
         .setId(nextHymnId++)
         .addReferences(toSongReference(hymn.getKey()))
-        .setTitle(hymn.getTitle());
+        .setTitle(hymn.getTitle())
+        .addProvenance("hymnal.net");
 
     hymn.getLyricsList().forEach(verse -> builder.addLyrics(toVerse(key, verse)));
 
