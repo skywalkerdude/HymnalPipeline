@@ -13,6 +13,8 @@ import com.hymnsmobile.pipeline.merge.MergePipeline;
 import com.hymnsmobile.pipeline.merge.dagger.MergeComponent;
 import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.PipelineError;
+import com.hymnsmobile.pipeline.russian.RussianPipeline;
+import com.hymnsmobile.pipeline.russian.dagger.RussianPipelineComponent;
 import com.hymnsmobile.pipeline.songbase.SongbasePipeline;
 import com.hymnsmobile.pipeline.songbase.dagger.SongbasePipelineComponent;
 import com.hymnsmobile.pipeline.storage.StoragePipeline;
@@ -36,6 +38,7 @@ public class Pipeline {
   private final H4aPipeline h4aPipeline;
   private final LiederbuchPipeline liederbuchPipeline;
   private final MergePipeline mergePipeline;
+  private final RussianPipeline russianPipeline;
   private final SongbasePipeline songbasePipeline;
   private final StoragePipeline storagePipeline;
 
@@ -45,12 +48,14 @@ public class Pipeline {
       Provider<H4aPipelineComponent.Builder> h4aPipelineBuilder,
       Provider<LiederbuchPipelineComponent.Builder> liederbuchPipelineBuilder,
       Provider<MergeComponent.Builder> mergePipelineBuilder,
+      Provider<RussianPipelineComponent.Builder> russianPipelineComponent,
       Provider<SongbasePipelineComponent.Builder> songbasePipelineComponentBuilder,
       Provider<StorageComponent.Builder> storagePipelineBuilder) {
     this.hymnalNetPipeline = hymnalNetPipelineBuilder.get().build().pipeline();
     this.h4aPipeline = h4aPipelineBuilder.get().build().pipeline();
     this.liederbuchPipeline = liederbuchPipelineBuilder.get().build().pipeline();
     this.mergePipeline = mergePipelineBuilder.get().build().pipeline();
+    this.russianPipeline = russianPipelineComponent.get().build().pipeline();
     this.songbasePipeline = songbasePipelineComponentBuilder.get().build().pipeline();
     this.storagePipeline = storagePipelineBuilder.get().build().pipeline();
   }
@@ -61,11 +66,13 @@ public class Pipeline {
     h4aPipeline.run();
     liederbuchPipeline.run();
     songbasePipeline.run();
+    russianPipeline.run();
 
     ImmutableList<Hymn> mergedHymns =
         mergePipeline.convertHymnalNet(hymnalNetPipeline.getHymnalNetJsons());
     mergedHymns = mergePipeline.mergeH4a(h4aPipeline.getH4aHymns(), mergedHymns);
     mergedHymns = mergePipeline.mergeLiederbuch(liederbuchPipeline.getLiederbuchSong(), mergedHymns);
+    mergedHymns = mergePipeline.mergeRussian(russianPipeline.getRussianHymns(), mergedHymns);
     mergedHymns = mergePipeline.mergeSongbase(songbasePipeline.getSongbaseHymns(), mergedHymns);
 
     ImmutableList<PipelineError> allErrors = mergePipeline.mergeErrors(

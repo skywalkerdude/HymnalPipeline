@@ -145,12 +145,12 @@ public class HymnalNetPatcher extends Patcher {
    *    de/445->cb/445,ch/339,h/445,hf/79,ht/1359,hs/192;
    *    hf/79->h/445,cb/445,ch/339,de/445,ht/1359,hs/192;
    *    hs/192->cb/445,ch/339,h/1359,de/445,ht/1359;
-   *
+   * </p>
    *    h/1359->cb/445,ch/339,ht/1359,hs/192;
    *    ch/339->h/1359,cb/445,ht/1359,hs/192;
    *    ht/1359->h/1359,cb/445,ch/339,hs/192;
    *    hs/190->h/445,cb/445,ch/339,ht/1359;
-   *
+   * </p>
    *  Here is the correct mapping:
    *    h/445->cb/445,ht/445,hf/79,de/445,hs/190;
    *    cb/445->h/445,ht/445,hf/79,de/445,hs/190;
@@ -158,7 +158,7 @@ public class HymnalNetPatcher extends Patcher {
    *    hf/79->h/445,cb/445,ht/445,de/445,hs/190;
    *    de/445->h/445,cb/445,ht/445,hf/79,hs/190;
    *    hs/190->h/445,cb/445,ht/445,hf/79,de/445;
-   *
+   * </p>
    *    h/1359->ch/339,ht/1359,hs/192;
    *    ch/339->h/1359,ht/1359,hs/192;
    *    ht/1359->h/1359,ch/339,hs/192;
@@ -204,21 +204,21 @@ public class HymnalNetPatcher extends Patcher {
 
   /**
    * h/8079 and h/79 are related. However, the language mappings for each is all messed up.
-   *
+   * </p>
    *  Here is the current mapping:
    *    h/79->cb/79,ch/68,ht/79,hs/44;
    *    cb/79->h/79,ch/68,ht/79,hs/44;
    *    hs/44->h/79,ch/68,ht/79,cb/79;
-   *
+   * </p>
    *    h/8079->cb/79,ch/68,ht/79,hs/44;
    *    ht/79->h/79,ch/68,cb/79,hs/44;
    *    ch/68->h/8079,cb/79,ht/79,hs/44;
-   *
+   * </p>
    *  Here is the correct mapping:
    *    h/79->cb/79,hs/44;
    *    cb/79->h/79,hs/44;
    *    hs/44->h/79,cb/79;
-   *
+   * </p>
    *    h/8079->ch/68,ht/79;
    *    ch/68->h/8079,ht/79;
    *    ht/79->h/8079,ch/68;
@@ -238,7 +238,7 @@ public class HymnalNetPatcher extends Patcher {
 
   /**
    * h/267 and h/1360 are related. However, the language mappings for each is all messed up.
-   *
+   * </p>
    *  Here is the current mapping:
    *    h/267->cb/267,ch/217,hf/46,ht/267,hs/127;
    *    cb/267->h/267,ch/217,hf/46,ht/267,hs/127;
@@ -247,17 +247,17 @@ public class HymnalNetPatcher extends Patcher {
    *    ht/267->h/267,cb/267,ch/217hf/46,hs/127;
    *    hs/127->cb/267,ch/217,h/267,hf/46,de/267,ht/267;
    *    de/267->cb/267,ch/217,h/267,hf/46,hs/127,ht/267
-   *
+   * </p>
    *    h/1360->cb/267,ch/217,hs/127,ht/1360;
    *    ht/1360->cb/267,ch/217,h/1360,hs/127;
-   *
+   * </p>
    *  Here is the correct mapping:
    *    h/267->cb/267,ht/267,de/267,hs/127;
    *    cb/267->h/267,ht/267,de/267,hs/127;
    *    de/267->cb/267,h/267,ht/267,hs/127;
    *    ht/267->h/267,cb/267,de/267,hs/127;
    *    hs/127->h/267,cb/267,ht/267,de/267;
-   *
+   * </p>
    *    h/1360->ch/217,ht/1360,hf/46;
    *    ch/217->h/1360,ht/1360,hf/46;
    *    ht/1360->ch/217,h/1360,hf/46;
@@ -321,14 +321,14 @@ public class HymnalNetPatcher extends Patcher {
    *    cb/720->h/720,ht/720,de/720;
    *    ht/720->h/720,cb/720,de/720;
    *    de/720->h/720,cb/720,ht/720;
-   *
+   * </p>
    *    h/8526-> ch/526,chx/526;
    *    ch/526-> h/8526,chx/526;
    *    chx/526-> h/8526,ch/526;
-   *
+   * </p>
    *  In {@link Exceptions}, there is an exception, but that is for the relevants list. But here
    *  we still need to clean up the languages list.
-   *
+   * </p>
    *  TODO figure out if this should really be changed, or if it should be just an exception, since
    *    everything is the same song with the same lyrics, all the translations technically are
    *    translations of each other
@@ -444,7 +444,7 @@ public class HymnalNetPatcher extends Patcher {
    * and h/10b to de/10b, even though it's technically incorrect. The mitigation here is that it
    * will still be possible to navigate between then because of the Relevant relationship between
    * each of the two songs.
-   *
+   * </p>
    * The good news though, is that there exists only a one-way mapping from h/10b to the original
    * tunes, so we can just remove all languages from h/10b and set it only to de/10b and that should
    * solve any invalid reference checks.
@@ -813,7 +813,7 @@ public class HymnalNetPatcher extends Patcher {
 
   /**
    * Fix references where something points to a hymn, but it doesn't point back (i.e. dangling).
-   *
+   * </p>
    * This is difficult to automate because we don't often know what the language of the dangling
    * reference is. For instance, ns/568 references ns/568c and ns/568?gb=1. However, those songs
    * don't reference it back. It is difficult in code to know that ns/568c is the Chinese version of

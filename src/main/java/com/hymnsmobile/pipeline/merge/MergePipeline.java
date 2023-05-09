@@ -1,7 +1,6 @@
 package com.hymnsmobile.pipeline.merge;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
-import static com.hymnsmobile.pipeline.merge.HymnType.LIEDERBUCH;
 
 import com.google.common.collect.ImmutableList;
 import com.hymnsmobile.pipeline.h4a.models.H4aHymn;
@@ -18,6 +17,7 @@ import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import com.hymnsmobile.pipeline.models.SongLink;
 import com.hymnsmobile.pipeline.models.SongReference;
 import com.hymnsmobile.pipeline.models.Verse;
+import com.hymnsmobile.pipeline.russian.RussianHymn;
 import com.hymnsmobile.pipeline.songbase.models.SongbaseHymn;
 import java.util.Comparator;
 import java.util.LinkedHashSet;
@@ -67,6 +67,30 @@ public class MergePipeline {
     return sanitizationPipeline.sanitize(hymns, hymnalNetPatcher);
   }
 
+  public ImmutableList<Hymn> mergeRussian(ImmutableList<RussianHymn> russianHymns, ImmutableList<Hymn> mergedHymns) {
+    LOGGER.info("Merging Russian");
+    List<Hymn.Builder> builders =
+        mergedHymns.stream().map(Hymn::toBuilder).collect(Collectors.toList());
+
+    russianHymns.forEach(russianHymn -> {
+      builders.add(converter.toHymn(russianHymn).toBuilder());
+
+      // Set the parent to also reference the Russian hymn.
+      SongReference parentReference = russianHymn.getParent().getReference();
+      Hymn.Builder parent = getHymnFrom(parentReference, builders).orElseThrow();
+      parent.addLanguages(
+          SongLink.newBuilder()
+              .setName("Russian")
+              .setReference(SongReference.newBuilder()
+                  .setHymnType(HymnType.RUSSIAN.abbreviatedValue)
+                  .setHymnNumber(String.valueOf(russianHymn.getNumber())))
+              .build());
+    });
+    LOGGER.info("Sanitizing Russian");
+    return sanitizationPipeline.sanitize(
+        builders.stream().map(Hymn.Builder::build).collect(toImmutableList()));
+  }
+
   public ImmutableList<Hymn> mergeH4a(ImmutableList<H4aHymn> h4aHymns, ImmutableList<Hymn> mergedHymns) {
     LOGGER.info("Merging Hymns for Android");
     List<Hymn.Builder> builders =
@@ -94,7 +118,7 @@ public class MergePipeline {
 
       // Only interested in the Liederbuch (German) songs, since all the other songs are covered
       // by Hymnal.net or H4a
-      if (HymnType.fromString(songReference.getHymnType()) != LIEDERBUCH) {
+      if (HymnType.fromString(songReference.getHymnType()) != HymnType.LIEDERBUCH) {
         return;
       }
 
@@ -369,7 +393,7 @@ public class MergePipeline {
    * explicit mapping in the file, so we need to manually fix them here.
    */
   private Optional<SongReference> manualMapping(SongReference songReference) {
-    if (HymnType.fromString(songReference.getHymnType()) != LIEDERBUCH) {
+    if (HymnType.fromString(songReference.getHymnType()) != HymnType.LIEDERBUCH) {
       return Optional.empty();
     }
     switch (songReference.getHymnNumber()) {

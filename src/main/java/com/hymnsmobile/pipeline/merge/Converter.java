@@ -7,6 +7,7 @@ import static com.hymnsmobile.pipeline.merge.HymnType.CLASSIC_HYMN;
 import static com.hymnsmobile.pipeline.merge.HymnType.FRENCH;
 import static com.hymnsmobile.pipeline.merge.HymnType.HOWARD_HIGASHI;
 import static com.hymnsmobile.pipeline.merge.HymnType.LIEDERBUCH;
+import static com.hymnsmobile.pipeline.merge.HymnType.RUSSIAN;
 import static com.hymnsmobile.pipeline.merge.HymnType.SONGBASE_OTHER;
 import static com.hymnsmobile.pipeline.merge.HymnType.SPANISH;
 
@@ -29,6 +30,7 @@ import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import com.hymnsmobile.pipeline.models.SongLink;
 import com.hymnsmobile.pipeline.models.SongReference;
 import com.hymnsmobile.pipeline.models.Verse;
+import com.hymnsmobile.pipeline.russian.RussianHymn;
 import com.hymnsmobile.pipeline.songbase.models.SongbaseHymn;
 import com.hymnsmobile.pipeline.songbase.models.SongbaseKey;
 import com.hymnsmobile.pipeline.utils.TextUtil;
@@ -313,6 +315,25 @@ public class Converter {
               verse.getTransliterationCount(), verse.getVerseContentCount()));
     }
     return true;
+  }
+
+  /**
+   * Converts a {@link HymnalNetJson} to a {@link Hymn}.
+   */
+  public Hymn toHymn(RussianHymn hymn) {
+    Hymn.Builder builder = Hymn.newBuilder()
+        .setId(nextHymnId++)
+        .addAllLyrics(hymn.getLyricsList())
+        .addReferences(SongReference.newBuilder()
+            .setHymnType(RUSSIAN.abbreviatedValue)
+            .setHymnNumber(String.valueOf(hymn.getNumber())))
+        .setTitle(hymn.getTitle())
+        .addCategory(hymn.getCategory())
+        .addSubCategory(hymn.getSubCategory())
+        .addMeter(hymn.getMeter())
+        .addLanguages(hymn.getParent())
+        .addProvenance("russian");
+    return builder.build();
   }
 
   public Optional<Hymn> toHymn(H4aHymn hymn) {
