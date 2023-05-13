@@ -23,7 +23,7 @@ import javax.inject.Inject;
 public class DatabaseWriter {
 
   private static final String DATABASE_PATH_FORMAT = "jdbc:sqlite:%s/hymnaldb-v%d.sqlite";
-  private static final int DATABASE_VERSION = 22;
+  private static final int DATABASE_VERSION = 23;
 
   private final Lazy<File> outputDirectory;
   private final ZonedDateTime currentTime;
@@ -129,7 +129,7 @@ public class DatabaseWriter {
             + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
         Statement.RETURN_GENERATED_KEYS);
     insertStatement.setInt(1, hymn.getId());
-    insertStatement.setString(2, hymn.getTitle());
+    insertStatement.setString(2, stripHymnColon(hymn.getTitle()));
     insertStatement.setString(3, toJson(hymn.getLyricsList()));
     insertStatement.setString(4, hymn.getInlineChords());
     insertStatement.setString(5, join(hymn.getCategoryList()));
@@ -164,5 +164,13 @@ public class DatabaseWriter {
         songIdInsert.clearParameters();
       }
     }
+  }
+
+  /**
+   * Many hymn titles prepend "Hymn: " to the title. It is unnecessary and takes up screen space, so
+   * we strip it out whenever possible.
+   */
+  public static String stripHymnColon(String title) {
+    return title.replace("Hymn: ", "");
   }
 }
