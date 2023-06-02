@@ -23,7 +23,7 @@ import javax.inject.Inject;
 public class DatabaseWriter {
 
   private static final String DATABASE_PATH_FORMAT = "jdbc:sqlite:%s/hymnaldb-v%d.sqlite";
-  public static final int DATABASE_VERSION = 23;
+  public static final int DATABASE_VERSION = 24;
 
   private final Lazy<File> outputDirectory;
   private final ZonedDateTime currentTime;

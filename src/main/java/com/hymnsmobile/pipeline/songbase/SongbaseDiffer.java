@@ -59,7 +59,7 @@ public class SongbaseDiffer {
 
     List<Pair<String, Integer>> notFound = new ArrayList<>();
     List<Pair<String, Integer>> unchanged = new ArrayList<>();
-    Multimap<Integer, SongReference> changed = LinkedListMultimap.create();
+    Multimap<Integer, Pair<SongReference, String>> changed = LinkedListMultimap.create();
     songbaseMap.forEach((title, songbaseNumber) -> {
       ImmutableList<SongReference> hymnsWithSameTitle =
           hymnsMap.entries().stream()
@@ -79,7 +79,7 @@ public class SongbaseDiffer {
         unchanged.add(Pair.of(title, songbaseNumber));
         return;
       }
-      changed.put(songbaseNumber, firstHymnWithSameTitle.get());
+      changed.put(songbaseNumber, Pair.of(firstHymnWithSameTitle.get(), title));
     });
     System.out.println(notFound.size() + " dropped");
     notFound.forEach(pair -> System.out.println(pair.getValue()));
@@ -90,8 +90,11 @@ public class SongbaseDiffer {
     System.out.println(changed.size() + " changed");
     changed.entries().forEach(entry -> {
       System.out.println(
-          String.join("|", String.valueOf(entry.getKey()), entry.getValue().getHymnType(),
-              entry.getValue().getHymnNumber()));
+          String.join("|",
+              String.valueOf(entry.getKey()),
+              entry.getValue().getKey().getHymnType(),
+              entry.getValue().getKey().getHymnNumber(),
+              entry.getValue().getValue()));
     });
   }
 

@@ -162,6 +162,39 @@ public class MergePipeline {
       }
       germanSongs.get(0).addReferences(songReference);
     });
+
+    // Go through all the songs and replace German numbering with Liederbuch numbering
+    builders.forEach(builder -> {
+      List<SongLink> languages = builder.getLanguagesList();
+      ImmutableList<SongLink> germanLinks = languages.stream()
+          .filter(language ->
+              HymnType.fromString(language.getReference().getHymnType()) == HymnType.GERMAN)
+          .collect(toImmutableList());
+      if (germanLinks.isEmpty()) {
+        return;
+      }
+      if (germanLinks.size() > 1) {
+        throw new IllegalStateException("Shouldn't have more than 1 German song");
+      }
+      SongLink germanLink = germanLinks.get(0);
+      Hymn.Builder germanSong = getHymnFrom(germanLink.getReference(), builders).orElseThrow();
+      List<SongReference> germanReferences = germanSong.getReferencesList();
+      if (germanReferences.stream().anyMatch(germanReference -> HymnType.fromString(germanReference.getHymnType()) == HymnType.GERMAN) &&
+          germanReferences.stream().anyMatch(germanReference -> HymnType.fromString(germanReference.getHymnType()) == HymnType.LIEDERBUCH)) {
+        ImmutableList<SongReference> liederbuchReferences =
+            germanReferences.stream()
+                .filter(germanReference ->
+                    HymnType.fromString(germanReference.getHymnType()) == HymnType.LIEDERBUCH)
+                .collect(toImmutableList());
+        if (liederbuchReferences.size() > 1) {
+          throw new IllegalStateException("Should have exactly 1 Liederbuch song");
+        }
+        SongReference liederbuchReference = liederbuchReferences.get(0);
+        int index = languages.indexOf(germanLink);
+        builder.setLanguages(index, germanLink.toBuilder().setReference(liederbuchReference));
+      }
+    });
+
     LOGGER.info("Sanitizing Liederbuch");
     return sanitizationPipeline.sanitize(
         builders.stream().map(Hymn.Builder::build).collect(toImmutableList()));
