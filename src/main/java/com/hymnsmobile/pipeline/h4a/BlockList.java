@@ -12,16 +12,11 @@ public final class BlockList {
       // Non-existent song
       .add(H4aKey.newBuilder().setType("NS").setNumber("582").build())
 
-      // Here are the only two German versions of new songs in the H4A db. These songs are covered
-      // by Hymnal.net, so it's easier to just remove them than to create a special cases to handle
-      // just two songs:
-      //
-      // G419 and G10002 are two different translations of "God's eternal economy" (NS180)
-      .add(H4aKey.newBuilder().setType("G").setNumber("419").build())
+      // G10001 is a duplicate of "God's eternal economy" (NS180) and thus can just be ignored.
       .add(H4aKey.newBuilder().setType("G").setNumber("10001").build())
-      //
-      // G10002 and G420 are two different translations of "What miracle! What mystery!" (NS151)
-      .add(H4aKey.newBuilder().setType("G").setNumber("420").build())
+
+      // G10002 is a different translation of "What miracle! What mystery!" (NS151), but the
+      // translation we want is already covered by G420, so we can ski this song.
       .add(H4aKey.newBuilder().setType("G").setNumber("10002").build())
 
       // Songs that show up in "related" column but don't actually exist in the h4a db. These should

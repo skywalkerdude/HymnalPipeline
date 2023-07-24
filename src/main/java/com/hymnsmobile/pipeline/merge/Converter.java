@@ -98,6 +98,9 @@ public class Converter {
       return reference.setHymnType(HOWARD_HIGASHI.abbreviatedValue)
           .setHymnNumber(Integer.toString(Integer.parseInt(number) - 1000)).build();
     }
+    if (isGermanHymn(type)) {
+      return reference.setHymnType(LIEDERBUCH.abbreviatedValue).setHymnNumber(number).build();
+    }
     return reference.setHymnType(HymnType.valueOf(type.name()).abbreviatedValue).setHymnNumber(number).build();
   }
 
@@ -336,18 +339,17 @@ public class Converter {
     return builder.build();
   }
 
-  public Optional<Hymn> toHymn(H4aHymn hymn) {
+  public Hymn toHymn(H4aHymn hymn) {
     if (TextUtil.isEmpty(hymn.getFirstStanzaLine())) {
-      this.errors.add(PipelineError.newBuilder().setSeverity(Severity.ERROR)
-          .setMessage(String.format("Unable to convert to hymn: %s", hymn)).build());
-      return Optional.empty();
+      throw new IllegalStateException(String.format("Unable to convert to hymn: %s", hymn));
     }
 
     Hymn.Builder builder = Hymn.newBuilder()
         .setId(nextHymnId++)
         .addReferences(toSongReference(hymn.getId()))
         .setTitle(hymn.getFirstStanzaLine())
-        .addAllLyrics(hymn.getVersesList());
+        .addAllLyrics(hymn.getVersesList())
+        .addProvenance("h4a");
 
     if (hymn.hasMainCategory() && !TextUtil.isEmpty(hymn.getMainCategory())) {
       builder.addCategory(hymn.getMainCategory());
@@ -396,7 +398,7 @@ public class Converter {
       }
     }
 
-    return Optional.of(builder.build());
+    return builder.build();
   }
 
   private boolean isHowardHigashi(com.hymnsmobile.pipeline.h4a.HymnType type, String number) {
@@ -404,6 +406,10 @@ public class Converter {
       return Integer.parseInt(number) >= 1001 && Integer.parseInt(number) <= 1087;
     }
     return false;
+  }
+
+  private boolean isGermanHymn(com.hymnsmobile.pipeline.h4a.HymnType type) {
+    return type == com.hymnsmobile.pipeline.h4a.HymnType.GERMAN;
   }
 
   public Hymn toHymn(SongbaseHymn hymn) {

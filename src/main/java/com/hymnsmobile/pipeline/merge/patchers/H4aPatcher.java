@@ -151,7 +151,7 @@ public class H4aPatcher extends Patcher {
    *    cb/720->h/720,ht/720,de/720;
    *    ht/720->h/720,cb/720,de/720;
    *    de/720->h/720,cb/720,ht/720;
-   *
+   * <p/>
    *    h/8526-> ch/526,chx/526,i/526;
    *    ch/526-> h/8526,chx/526,i/526;
    *    chx/526-> h/8526,ch/526,i/526;
