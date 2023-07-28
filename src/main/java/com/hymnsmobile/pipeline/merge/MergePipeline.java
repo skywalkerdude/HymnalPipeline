@@ -19,11 +19,11 @@ import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import com.hymnsmobile.pipeline.models.SongLink;
 import com.hymnsmobile.pipeline.models.SongReference;
 import com.hymnsmobile.pipeline.russian.RussianHymn;
+import com.hymnsmobile.pipeline.songbase.models.Songbase;
 import com.hymnsmobile.pipeline.songbase.models.SongbaseHymn;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Consumer;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
@@ -43,6 +43,7 @@ public class MergePipeline {
   private final HymnalNetPatcher hymnalNetPatcher;
   private final SanitizationPipeline sanitizationPipeline;
   private final Set<PipelineError> errors;
+  private final SongbaseMerger songbaseMerger;
 
   @Inject
   public MergePipeline(
@@ -51,6 +52,7 @@ public class MergePipeline {
       H4aPatcher h4aPatcher,
       HymnalNetPatcher hymnalNetPatcher,
       SanitizationPipeline sanitizationPipeline,
+      SongbaseMerger songbaseMerger,
       @Merge Set<PipelineError> errors) {
     this.converter = converter;
     this.errors = errors;
@@ -58,6 +60,7 @@ public class MergePipeline {
     this.h4aPatcher = h4aPatcher;
     this.hymnalNetPatcher = hymnalNetPatcher;
     this.sanitizationPipeline = sanitizationPipeline;
+    this.songbaseMerger = songbaseMerger;
   }
 
   /**
@@ -128,36 +131,9 @@ public class MergePipeline {
   public ImmutableList<Hymn> mergeSongbase(
       ImmutableList<SongbaseHymn> songbaseHymns, ImmutableList<Hymn> mergedHymns) {
     LOGGER.info("Merging Songbase");
-    List<Hymn.Builder> builders =
-        mergedHymns.stream().map(Hymn::toBuilder).collect(Collectors.toList());
-
-    songbaseHymns.forEach(songbaseHymn -> {
-      Hymn.Builder songbaseBuilder = converter.toHymn(songbaseHymn).toBuilder().addProvenance("songbase");
-
-      // Find a hymn that already matches one of the songbase song's references, if it exists
-      ImmutableList<Hymn.Builder> matchingReference =
-          songbaseBuilder.getReferencesList().stream()
-              .map(reference -> getHymnFrom(reference, builders))
-              .filter(Optional::isPresent)
-              .map(Optional::get)
-              .collect(toImmutableList());
-      if (matchingReference.isEmpty()) {
-        // No matching references, so add the songbase song
-        builders.add(songbaseBuilder);
-        return;
-      }
-
-      assert matchingReference.size() == 1;
-      // Add the new references
-      songbaseBuilder.getReferencesList().stream()
-          .filter(reference -> !matchingReference.get(0).getReferencesList().contains(reference))
-          .forEach(reference -> matchingReference.get(0).addReferences(reference));
-      // Set inline chords property
-      matchingReference.get(0).setInlineChords(songbaseBuilder.getInlineChords());
-    });
+    ImmutableList<Hymn> merged = songbaseMerger.merge(songbaseHymns, mergedHymns);
     LOGGER.info("Sanitizing Songbase");
-    return sanitizationPipeline.sanitize(
-        builders.stream().map(Hymn.Builder::build).collect(toImmutableList()));
+    return sanitizationPipeline.sanitize(merged, h4aPatcher);
   }
 
   @SafeVarargs
