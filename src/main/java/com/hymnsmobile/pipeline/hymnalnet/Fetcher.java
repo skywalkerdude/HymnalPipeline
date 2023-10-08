@@ -5,9 +5,12 @@ import static com.hymnsmobile.pipeline.hymnalnet.BlockList.BLOCK_LIST;
 import com.google.common.collect.ImmutableList;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
+import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNet;
 import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNetPipelineScope;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetJson;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetKey;
+import com.hymnsmobile.pipeline.models.PipelineError;
+import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -36,15 +39,18 @@ public class Fetcher {
   private final ImmutableList<HymnalNetKey> songsToFetch;
 
   private final Set<HymnalNetJson> hymnalNetJsons;
+  private final Set<PipelineError> errors;
 
   @Inject
   public Fetcher(HttpClient client, Converter converter,
       ImmutableList<HymnalNetKey> songsToFetch,
-      Set<HymnalNetJson> hymnalNetJsons) {
+      Set<HymnalNetJson> hymnalNetJsons,
+      @HymnalNet Set<PipelineError> errors) {
     this.client = client;
     this.converter = converter;
     this.hymnalNetJsons = hymnalNetJsons;
     this.songsToFetch = songsToFetch;
+    this.errors = errors;
   }
 
   /**
@@ -71,7 +77,8 @@ public class Fetcher {
 
     Optional<HymnalNetJson> hymn = getHymnalNet(key);
     if (hymn.isEmpty()) {
-      LOGGER.warning(String.format("Fetching %s was unsuccessful", key));
+      errors.add(PipelineError.newBuilder().setSeverity(Severity.WARNING)
+          .setMessage(String.format("Fetching %s was unsuccessful", key)).build());
       return;
     }
     this.hymnalNetJsons.add(hymn.get());

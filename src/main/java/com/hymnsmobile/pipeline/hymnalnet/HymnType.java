@@ -8,17 +8,18 @@ import java.util.Optional;
 public enum HymnType {
   CLASSIC_HYMN("h", Optional.of(1360)),
   NEW_TUNE("nt", Optional.empty()),
-  NEW_SONG("ns", Optional.of(955)),
+  NEW_SONG("ns", Optional.of(989)),
   CHILDREN_SONG("c", Optional.of(214)),
   HOWARD_HIGASHI("lb", Optional.of(87)),
-  DUTCH("hd", Optional.of(120)),
+  DUTCH("hd", Optional.empty()),
   GERMAN("de", Optional.empty()),
   CHINESE("ch", Optional.empty()),
   CHINESE_SUPPLEMENTAL("ts", Optional.empty()),
   CEBUANO("cb", Optional.empty()),
   TAGALOG("ht", Optional.empty()),
   FRENCH("hf", Optional.of(215)),
-  SPANISH("hs", Optional.of(500));
+  SPANISH("hs", Optional.of(500)),
+  PORTUGUESE("pt", Optional.empty());
 
   public final String abbreviation;
 

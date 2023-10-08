@@ -18,6 +18,7 @@ public class Converter {
   private static final Logger LOGGER = Logger.getGlobal();
 
   private static final Pattern PATH_PATTERN = Pattern.compile("(\\w+)/(c?\\d+[a-z]*)(\\?gb=1)?");
+  private static final Pattern HINARIO_PATH_PATTERN = Pattern.compile("hymn=(\\d+)");
 
   @Inject
   public Converter() {
@@ -51,20 +52,30 @@ public class Converter {
   }
 
   private static Optional<String> extractTypeFromPath(String path) {
+    if (path.contains("hinario")) {
+      return Optional.of(HymnType.PORTUGUESE.abbreviation);
+    }
+
     Matcher matcher = PATH_PATTERN.matcher(path);
     if (!matcher.find()) {
       return Optional.empty();
     }
-
     return Optional.of(matcher.group(1));
   }
 
   private static Optional<String> extractNumberFromPath(String path) {
+    if (path.contains("hinario")) {
+      Matcher matcher = HINARIO_PATH_PATTERN.matcher(path);
+      if (!matcher.find()) {
+        return Optional.empty();
+      }
+      return Optional.of(matcher.group(1));
+    }
+
     Matcher matcher = PATH_PATTERN.matcher(path);
     if (!matcher.find()) {
       return Optional.empty();
     }
-
     return Optional.of(matcher.group(2));
   }
 
