@@ -26,6 +26,7 @@ public enum HymnType {
   RUSSIAN("R"),
   BE_FILLED("bf"),
   LIEDERBUCH("lde"),
+  HINOS("pt"),
   BLUE_SONGBOOK("sb"),
   // Uncategorized songbase songs.
   SONGBASE_OTHER("sbx");

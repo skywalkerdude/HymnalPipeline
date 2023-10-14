@@ -11,6 +11,7 @@ public enum HymnType {
   HIMNOS("spanish_hymnal"),
   LIEDERBUCH("german_hymnal"),
   CANTIQUES("french_hymnal"),
+  HINOS("hinos"),
   SONGBASE_OTHER("songbase_other");
 
   public final String codeName;

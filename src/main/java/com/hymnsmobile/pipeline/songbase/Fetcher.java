@@ -12,7 +12,7 @@ import javax.inject.Inject;
 @SongbasePipelineScope
 public class Fetcher {
 
-  private static final String SONGBASE_DB_DUMP_URL = "https://songbase.life/api/v1/app_data";
+  private static final String SONGBASE_DB_DUMP_URL = "https://songbase.life/api/v2/app_data";
 
   private final HttpClient client;
 

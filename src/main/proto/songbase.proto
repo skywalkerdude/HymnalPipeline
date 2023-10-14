@@ -9,9 +9,9 @@ option java_multiple_files = true;
 message SongbaseResponse {
   repeated SongResponse songs = 1;
   repeated BookResponse books = 2;
-  repeated ReferenceResponse references = 3;
-  DestroyedResponse destroyed = 4;
-  int32 song_count = 5;
+  DestroyedResponse destroyed = 3;
+  int32 song_count = 4;
+  repeated string data_updated_between = 5;
 }
 
 //  {
@@ -30,38 +30,28 @@ message SongResponse {
 //  {
 //    "id": 1,
 //    "name": "Blue Songbook",
-//    "lang": "english",
-//    "slug": "blue_songbook"
+//    "slug": "blue_songbook",
+//    "songs": {
+//      "303": "1",
+//      "304": "2",
+//      "305": "3",
+//      ...
+//    }
+//    "languages": [
+//      "english"
+//    ]
 //  },
 message BookResponse {
   int32 id = 1;
   string name = 2;
-  string lang = 3;
-  string slug = 4;
-}
-
-//  {
-//    "id": 1,
-//    "song_id": 303,
-//    "book_id": 1,
-//    "index": "1"
-//  },
-message ReferenceResponse {
-  int32 id = 1;
-  int32 song_id = 2;
-  int32 book_id = 3;
-  string index = 4;
+  string slug = 3;
+  map<string, string> songs = 4;
+  repeated string languages = 5;
 }
 
 message DestroyedResponse {
   repeated int32 songs = 1;
   repeated int32 books = 2;
-  repeated int32 references = 3;
-}
-
-message Songbase {
-  repeated SongbaseHymn songbaseHymn = 1;
-  repeated com.hymnsmobile.pipeline.models.PipelineError errors = 2;
 }
 
 message SongbaseKey {
@@ -74,4 +64,9 @@ message SongbaseHymn {
   string title = 2;
   string language = 3;
   string lyrics = 4;
+}
+
+message Songbase {
+  repeated SongbaseHymn songbaseHymn = 1;
+  repeated com.hymnsmobile.pipeline.models.PipelineError errors = 2;
 }

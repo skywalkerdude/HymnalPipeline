@@ -5,6 +5,7 @@ import static com.hymnsmobile.pipeline.merge.HymnType.BLUE_SONGBOOK;
 import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED;
 import static com.hymnsmobile.pipeline.merge.HymnType.CLASSIC_HYMN;
 import static com.hymnsmobile.pipeline.merge.HymnType.FRENCH;
+import static com.hymnsmobile.pipeline.merge.HymnType.HINOS;
 import static com.hymnsmobile.pipeline.merge.HymnType.HOWARD_HIGASHI;
 import static com.hymnsmobile.pipeline.merge.HymnType.LIEDERBUCH;
 import static com.hymnsmobile.pipeline.merge.HymnType.RUSSIAN;
@@ -146,6 +147,9 @@ public class Converter {
         break;
       case SONGBASE_OTHER:
         hymnType = SONGBASE_OTHER;
+        break;
+      case HINOS:
+        hymnType = HINOS;
         break;
       default:
         throw new IllegalStateException("Unexpected hymn type: " + type);
