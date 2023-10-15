@@ -2,6 +2,7 @@ package com.hymnsmobile.pipeline.hymnalnet;
 
 import com.google.common.collect.ImmutableList;
 import com.hymnsmobile.pipeline.FileReadWriter;
+import com.hymnsmobile.pipeline.dagger.DaggerPipelineComponent;
 import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNet;
 import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNetPipelineScope;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetJson;
@@ -81,5 +82,10 @@ public class HymnalNetPipeline {
     fileReadWriter.writeProto(fileName,
         com.hymnsmobile.pipeline.hymnalnet.models.HymnalNet.newBuilder()
             .addAllHymnanlNetJson(hymnalNetJsons).addAllErrors(errors).build());
+  }
+
+  public static void main(String[] args)
+      throws IOException, URISyntaxException, InterruptedException {
+    DaggerPipelineComponent.create().hymnalNetComponent().build().pipeline().run();
   }
 }
