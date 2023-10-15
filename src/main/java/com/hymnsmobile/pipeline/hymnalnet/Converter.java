@@ -11,36 +11,53 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.inject.Inject;
+import com.hymnsmobile.pipeline.models.PipelineError;
+import java.util.Set;
+
 
 @HymnalNetPipelineScope
 public class Converter {
 
   private static final Logger LOGGER = Logger.getGlobal();
 
-  private static final Pattern PATH_PATTERN = Pattern.compile("(\\w+)/(c?\\d+[a-z]*)(\\?gb=1)?");
+  private static final Pattern PATH_PATTERN = Pattern.compile(
+      "(\\w+)/([c|s]?\\d+[a-z]*)(\\?gb=1)?");
   private static final Pattern HINARIO_PATH_PATTERN = Pattern.compile("hymn=(\\d+)");
 
   @Inject
   public Converter() {
   }
 
-  public ImmutableList<HymnalNetKey> getRelated(String field, HymnalNetJson hymn) {
+  public ImmutableList<HymnalNetKey> getRelated(String field, HymnalNetJson hymn,
+      Set<PipelineError> errors) {
     return hymn.getMetaDataList().stream()
         .filter(metaDatum -> metaDatum.getName().equals(field))
         .flatMap(metaDatum -> metaDatum.getDataList().stream()
-            .map(datum -> extractFromPath(datum.getPath()))
+            .map(datum -> extractFromPath(datum.getPath(), hymn.getKey(), errors))
             .filter(Optional::isPresent)
             .map(Optional::get))
         .collect(toImmutableList());
   }
 
-  public static Optional<HymnalNetKey> extractFromPath(String path) {
+  public static Optional<HymnalNetKey> extractFromPath(String path, HymnalNetKey parentHymn,
+      Set<PipelineError> errors) {
     Optional<String> hymnType = extractTypeFromPath(path);
     Optional<String> hymnNumber = extractNumberFromPath(path);
     Optional<String> queryParam = extractQueryParamFromPath(path);
 
     if (hymnType.isEmpty() || hymnNumber.isEmpty()) {
-      LOGGER.severe(String.format("%s was unable to be parsed into a HymnalDbKey", path));
+      errors.add(PipelineError.newBuilder()
+          .setMessage(
+              String.format("Unable to extract type and/or number from %s, a related song of %s",
+                  path, parentHymn)).build());
+      return Optional.empty();
+    }
+
+    if (HymnType.fromString(hymnType.get()).isEmpty()) {
+      errors.add(PipelineError.newBuilder()
+          .setMessage(String.format("Unable to parse hymn type from %s, a related song of %s", path,
+              parentHymn))
+          .build());
       return Optional.empty();
     }
 
@@ -53,7 +70,7 @@ public class Converter {
 
   private static Optional<String> extractTypeFromPath(String path) {
     if (path.contains("hinario")) {
-      return Optional.of(HymnType.PORTUGUESE.abbreviation);
+      return Optional.of(HymnType.HINOS.abbreviation);
     }
 
     Matcher matcher = PATH_PATTERN.matcher(path);

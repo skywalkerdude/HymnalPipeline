@@ -19,7 +19,7 @@ public enum HymnType {
   TAGALOG("ht", Optional.empty()),
   FRENCH("hf", Optional.of(215)),
   SPANISH("hs", Optional.of(500)),
-  PORTUGUESE("pt", Optional.empty());
+  HINOS("pt", Optional.empty());
 
   public final String abbreviation;
 

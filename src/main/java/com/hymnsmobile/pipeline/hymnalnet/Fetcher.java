@@ -58,11 +58,11 @@ public class Fetcher {
    */
   public void fetchHymns() throws InterruptedException, IOException, URISyntaxException {
     for (HymnalNetKey key : songsToFetch) {
-      fetchHymn(key);
+      fetchHymn(key, true);
     }
   }
 
-  private void fetchHymn(HymnalNetKey key)
+  private void fetchHymn(HymnalNetKey key, boolean isRoot)
       throws InterruptedException, IOException, URISyntaxException {
     LOGGER.fine(String.format("Fetching %s", key));
     if (hymnalNetJsons.stream().anyMatch(hymn -> hymn.getKey().equals(key))) {
@@ -70,36 +70,43 @@ public class Fetcher {
       return;
     }
 
-    if (BLOCK_LIST.contains(key)) {
-      LOGGER.fine(String.format("%s contained in block list. Skipping...", key));
-      return;
-    }
+    // TODO we aren't using this for now, but it still contains a list of currently missing songs...
+    //  Might be useful for bug filing or just for keeping around, seeing if it reconciles with H4a
+    //  or songbase.
+    // if (BLOCK_LIST.contains(key)) {
+    //   LOGGER.fine(String.format("%s contained in block list. Skipping...", key));
+    //   return;
+    // }
 
-    Optional<HymnalNetJson> hymn = getHymnalNet(key);
+    Optional<HymnalNetJson> hymn = getHymnalNet(key, isRoot);
     if (hymn.isEmpty()) {
-      errors.add(PipelineError.newBuilder().setSeverity(Severity.WARNING)
-          .setMessage(String.format("Fetching %s was unsuccessful", key)).build());
+      LOGGER.warning(String.format("Unable to fetch %s", key));
       return;
     }
     this.hymnalNetJsons.add(hymn.get());
 
     // Also fetch all related songs
     List<HymnalNetKey> relatedSongs = ImmutableList.<HymnalNetKey>builder()
-        .addAll(converter.getRelated(MetaDatumType.LANGUAGES.jsonKey, hymn.get()))
-        .addAll(converter.getRelated(MetaDatumType.RELEVANT.jsonKey, hymn.get()))
+        .addAll(converter.getRelated(MetaDatumType.LANGUAGES.jsonKey, hymn.get(), errors))
+        .addAll(converter.getRelated(MetaDatumType.RELEVANT.jsonKey, hymn.get(), errors))
         .build();
     LOGGER.fine(String.format("Found %d related songs: %s", relatedSongs.size(), relatedSongs));
     for (HymnalNetKey relatedSong : relatedSongs) {
-      fetchHymn(relatedSong);
+      fetchHymn(relatedSong, false);
     }
   }
 
   /**
    * Fetches the hymn referenced by the song, unless it doesn't exist, in which case, return
    * {@link Optional#empty()}.
+   * @param key key to fetch
+   * @param isRoot whether it's a root request (versus a linked request), which is when the song
+   *               that's being fetched is linked (language/relevant) from another song during the
+   *               graph traversal.
    */
-  private Optional<HymnalNetJson> getHymnalNet(HymnalNetKey key)
+  private Optional<HymnalNetJson> getHymnalNet(HymnalNetKey key, boolean isRoot)
       throws IOException, InterruptedException, URISyntaxException {
+    // Ensuring that hymn type parses correctly should already be done at this point.
     HymnType hymnType = HymnType.fromString(key.getHymnType()).orElseThrow();
     String hymnNumber = key.getHymnNumber();
 
@@ -107,8 +114,21 @@ public class Fetcher {
         BodyHandlers.ofString());
 
     if (response.statusCode() != 200) {
-      LOGGER.warning(
-          String.format("%s returned with status code: %d", buildUri(key), response.statusCode()));
+      // If there is a max number, that means the song *should* be continuous meaning a missing song
+      // should theoretically be an error.
+      //
+      // Another case where we log an error is if the request is a branch request (i.e. not root).
+      // This means that the request originated not from the pipeline, but rather is linked from
+      // another song, meaning it's a language and/or relevant song of that song. In this case, we
+      // expect the song to exist, and when it doesn't we log an error.
+      //
+      // In both cases, the error is probably on Hymnal.net's end though, so not much we can do here
+      // other than log it and monitor it.
+      if (hymnType.maxNumber.isPresent() || !isRoot) {
+        errors.add(PipelineError.newBuilder().setSeverity(Severity.WARNING)
+            .setMessage(String.format("%s returned with status code: %d", buildUri(key),
+                response.statusCode())).build());
+      }
       return Optional.empty();
     }
 

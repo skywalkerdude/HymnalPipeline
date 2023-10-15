@@ -253,8 +253,8 @@ public class Converter {
       if (metaDatumType.get() == MetaDatumType.LANGUAGES
           || metaDatumType.get() == MetaDatumType.RELEVANT) {
         metaDatum.getDataList().forEach(datum -> {
-          Optional<HymnalNetKey> relatedKey =
-              com.hymnsmobile.pipeline.hymnalnet.Converter.extractFromPath(datum.getPath());
+          Optional<HymnalNetKey> relatedKey = com.hymnsmobile.pipeline.hymnalnet.Converter.extractFromPath(
+              datum.getPath(), hymn.getKey(), errors);
           if (relatedKey.isEmpty()) {
             errors.add(PipelineError.newBuilder().setSeverity(Severity.WARNING).setMessage(
                     String.format("%s had an unrecognized related song: %s", key, datum.getPath()))
