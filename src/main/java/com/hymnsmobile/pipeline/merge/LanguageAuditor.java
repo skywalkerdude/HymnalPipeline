@@ -20,6 +20,7 @@ import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import com.hymnsmobile.pipeline.models.SongLink;
 import com.hymnsmobile.pipeline.models.SongReference;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
@@ -37,16 +38,22 @@ public class LanguageAuditor {
     this.errors = errors;
   }
 
-  public void audit(Set<Set<SongLink>> languageSets) {
-    languageSets.forEach(
-        languageSet -> auditLanguageSet(
-            languageSet.stream().map(SongLink::getReference).collect(Collectors.toSet())));
+  public void audit(Set<Set<SongReference>> languageSets) {
+    languageSets.forEach(this::auditLanguageSet);
   }
 
   private void auditLanguageSet(Set<SongReference> setToAudit) {
     if (setToAudit.size() == 1) {
-      throw new IllegalStateException(
-          "Dangling language set. Should have been taken care of by fixer");
+      errors.add(
+          PipelineError
+              .newBuilder()
+              .setSeverity(Severity.ERROR).
+              setMessage(String.format("Dangling language: %s", setToAudit))
+              .build());
+      return;
+      // TODO uncomment next section and delete previous section
+      // throw new IllegalStateException(
+      //     "Dangling language set. Should have been taken care of by patcher");
     }
 
     // Extract the hymn types for audit.

@@ -16,13 +16,10 @@ import com.hymnsmobile.pipeline.merge.patchers.HymnalNetPatcher;
 import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
-import com.hymnsmobile.pipeline.models.SongLink;
 import com.hymnsmobile.pipeline.models.SongReference;
 import com.hymnsmobile.pipeline.russian.RussianHymn;
-import com.hymnsmobile.pipeline.songbase.models.Songbase;
 import com.hymnsmobile.pipeline.songbase.models.SongbaseHymn;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -82,15 +79,10 @@ public class MergePipeline {
       builders.add(converter.toHymn(russianHymn).toBuilder());
 
       // Set the parent to also reference the Russian hymn.
-      SongReference parentReference = russianHymn.getParent().getReference();
+      SongReference parentReference = russianHymn.getParent();
       Hymn.Builder parent = getHymnFrom(parentReference, builders).orElseThrow();
-      parent.addLanguages(
-          SongLink.newBuilder()
-              .setName("Russian")
-              .setReference(SongReference.newBuilder()
-                  .setHymnType(HymnType.RUSSIAN.abbreviatedValue)
-                  .setHymnNumber(String.valueOf(russianHymn.getNumber())))
-              .build());
+      parent.addLanguages(SongReference.newBuilder().setHymnType(HymnType.RUSSIAN.abbreviatedValue)
+          .setHymnNumber(String.valueOf(russianHymn.getNumber())).build());
     });
     LOGGER.info("Sanitizing Russian");
     return sanitizationPipeline.sanitize(

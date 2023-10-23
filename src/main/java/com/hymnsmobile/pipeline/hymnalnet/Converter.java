@@ -6,13 +6,13 @@ import com.google.common.collect.ImmutableList;
 import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNetPipelineScope;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetJson;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetKey;
+import com.hymnsmobile.pipeline.models.PipelineError;
 import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.inject.Inject;
-import com.hymnsmobile.pipeline.models.PipelineError;
-import java.util.Set;
 
 
 @HymnalNetPipelineScope
@@ -28,10 +28,10 @@ public class Converter {
   public Converter() {
   }
 
-  public ImmutableList<HymnalNetKey> getRelated(String field, HymnalNetJson hymn,
+  public ImmutableList<HymnalNetKey> getRelated(MetaDatumType metaDatumType, HymnalNetJson hymn,
       Set<PipelineError> errors) {
     return hymn.getMetaDataList().stream()
-        .filter(metaDatum -> metaDatum.getName().equals(field))
+        .filter(metaDatum -> metaDatumType.jsonKeys.contains(metaDatum.getName()))
         .flatMap(metaDatum -> metaDatum.getDataList().stream()
             .map(datum -> extractFromPath(datum.getPath(), hymn.getKey(), errors))
             .filter(Optional::isPresent)

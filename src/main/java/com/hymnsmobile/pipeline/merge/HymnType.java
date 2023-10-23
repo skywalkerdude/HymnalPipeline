@@ -1,5 +1,7 @@
 package com.hymnsmobile.pipeline.merge;
 
+import java.util.Optional;
+
 /**
  * Represents the type of hymn
  */
@@ -24,6 +26,7 @@ public enum HymnType {
   INDONESIAN("I"),
   FARSI("F"),
   RUSSIAN("R"),
+  PORTUGUESE("pt"),
   BE_FILLED("bf"),
   LIEDERBUCH("lde"),
   HINOS("pt"),

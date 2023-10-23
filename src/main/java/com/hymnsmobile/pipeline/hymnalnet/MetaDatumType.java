@@ -1,5 +1,6 @@
 package com.hymnsmobile.pipeline.hymnalnet;
 
+import com.google.common.collect.ImmutableSet;
 import com.hymnsmobile.pipeline.hymnalnet.models.Datum;
 import com.hymnsmobile.pipeline.hymnalnet.models.MetaDatum;
 import java.util.Optional;
@@ -7,7 +8,7 @@ import java.util.Optional;
 public enum MetaDatumType {
   CATEGORY("Category"),
   SUB_CATEGORY("Subcategory"),
-  AUTHOR("Lyrics"),
+  AUTHOR("Lyrics", "Author"),
   COMPOSER("Music"),
   KEY("Key"),
   TIME("Time"),
@@ -20,10 +21,10 @@ public enum MetaDatumType {
   LANGUAGES("Languages"),
   RELEVANT("Relevant");
 
-  public final String jsonKey;
+  public final ImmutableSet<String> jsonKeys;
 
-  MetaDatumType(String jsonKey) {
-    this.jsonKey = jsonKey;
+  MetaDatumType(String... jsonKeys) {
+    this.jsonKeys = ImmutableSet.copyOf(jsonKeys);
   }
 
   public static Optional<MetaDatumType> fromJsonRepresentation(MetaDatum metaDatum) {
@@ -41,7 +42,7 @@ public enum MetaDatumType {
     }
 
     for (MetaDatumType metaDatumType : MetaDatumType.values()) {
-      if (name.equals(metaDatumType.jsonKey)) {
+      if (metaDatumType.jsonKeys.contains(name)) {
         return Optional.of(metaDatumType);
       }
     }
@@ -50,6 +51,6 @@ public enum MetaDatumType {
 
   @Override
   public String toString() {
-    return jsonKey;
+    return jsonKeys.toString();
   }
 }

@@ -21,10 +21,11 @@ message Hymn {
   map<string, string> music = 14;
   map<string, string> svg_sheet = 15;
   map<string, string> pdf_sheet = 16;
-  repeated SongLink languages = 17;
-  repeated SongLink relevants = 18;
+  repeated SongReference languages = 21;
+  repeated SongReference relevants = 22;
   optional string inline_chords = 19;
   repeated string provenance = 20;
+  reserved 17, 18;
 }
 
 message SongReference {

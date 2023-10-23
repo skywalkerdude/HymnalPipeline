@@ -11,7 +11,6 @@ import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
 import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
-import com.hymnsmobile.pipeline.models.SongLink;
 import com.hymnsmobile.pipeline.models.SongReference;
 import com.hymnsmobile.pipeline.models.Verse;
 import com.hymnsmobile.pipeline.utils.TextUtil;
@@ -99,7 +98,7 @@ public class H4aMerger {
             .map(parent -> converter.toSongReference(parent.getId()))
             .ifPresent(parent ->
                 getHymnFrom(parent, builders).orElseThrow()
-                    .addLanguages(converter.toLanguageLink(h4aReference))
+                    .addLanguages(h4aReference)
                     .addProvenance("h4a"));
         builders.add(converter.toHymn(h4aHymn).toBuilder());
         break;
@@ -147,7 +146,6 @@ public class H4aMerger {
         relatedReferences.stream()
             .map(relatedReference -> getHymnFrom(relatedReference, builders).orElseThrow())
             .flatMap(relatedBuilder -> relatedBuilder.getLanguagesList().stream())
-            .map(SongLink::getReference)
             .filter(relatedReference -> HymnType.fromString(relatedReference.getHymnType()) == HymnType.GERMAN)
             .map(germanReference -> getHymnFrom(germanReference, builders).orElseThrow())
             .distinct()
@@ -174,12 +172,8 @@ public class H4aMerger {
 
     // Go through all the related and add Liederbuch as a related song
     relatedReferences.forEach(
-        relatedReference ->
-            getHymnFrom(relatedReference, builders).orElseThrow()
-                .addLanguages(
-                    SongLink.newBuilder()
-                        .setReference(germanSongReference)
-                        .setName("Liederbuch")));
+        relatedReference -> getHymnFrom(relatedReference, builders).orElseThrow()
+            .addLanguages(germanSongReference));
   }
 
   /**

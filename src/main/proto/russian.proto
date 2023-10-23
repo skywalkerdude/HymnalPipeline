@@ -17,7 +17,7 @@ message RussianHymn {
   string category = 4;
   string sub_category = 5;
   string meter = 6;
-  com.hymnsmobile.pipeline.models.SongLink parent = 7;
+  com.hymnsmobile.pipeline.models.SongReference parent = 7;
 }
 
 message Lyrics {

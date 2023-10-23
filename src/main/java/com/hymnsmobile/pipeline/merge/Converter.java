@@ -28,7 +28,6 @@ import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.Line;
 import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
-import com.hymnsmobile.pipeline.models.SongLink;
 import com.hymnsmobile.pipeline.models.SongReference;
 import com.hymnsmobile.pipeline.models.Verse;
 import com.hymnsmobile.pipeline.russian.RussianHymn;
@@ -38,7 +37,6 @@ import com.hymnsmobile.pipeline.utils.TextUtil;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 @MergeScope
@@ -158,66 +156,6 @@ public class Converter {
   }
 
   /**
-   * Converts an {@link SongReference} to a language {@link SongLink} by inferring the language text
-   * from the hymn type.
-   */
-  public SongLink toLanguageLink(SongReference reference) {
-    final String name;
-    switch (HymnType.fromString(reference.getHymnType())) {
-      case TAGALOG:
-        name = "Tagalog";
-        break;
-      case CEBUANO:
-        name = "Cebuano";
-        break;
-      case GERMAN:
-        name = "German";
-        break;
-      case CHINESE:
-        // fall through
-      case CHINESE_SUPPLEMENTAL:
-        name = "詩歌(繁)";
-        break;
-      case CHINESE_SIMPLIFIED:
-        // fall through
-      case CHINESE_SUPPLEMENTAL_SIMPLIFIED:
-        name = "诗歌(简)";
-        break;
-      case KOREAN:
-        name = "Korean";
-        break;
-      case INDONESIAN:
-        name = "Indonesian";
-        break;
-      case JAPANESE:
-        name = "Japanese";
-        break;
-      case SPANISH:
-        name = "Spanish";
-        break;
-      case FRENCH:
-        name = "French";
-        break;
-      case FARSI:
-        name = "Farsi";
-        break;
-      case CLASSIC_HYMN:
-        // fall through
-      case NEW_SONG:
-        // fall through
-      case HOWARD_HIGASHI:
-        // fall through
-      case CHILDREN_SONG:
-      case BE_FILLED:
-        name = "English";
-        break;
-      default:
-        throw new IllegalArgumentException("Unexpected type encountered: " + reference);
-    }
-    return SongLink.newBuilder().setName(name).setReference(reference).build();
-  }
-
-  /**
    * Converts a {@link HymnalNetJson} to a {@link Hymn}.
    */
   public Hymn toHymn(HymnalNetJson hymn) {
@@ -262,14 +200,10 @@ public class Converter {
             return;
           }
           if (metaDatumType.get() == MetaDatumType.LANGUAGES) {
-            builder.addLanguages(SongLink.newBuilder()
-                .setName(datum.getValue())
-                .setReference(toSongReference(relatedKey.get())).build());
+            builder.addLanguages(toSongReference(relatedKey.get()));
           }
           if (metaDatumType.get() == MetaDatumType.RELEVANT) {
-            builder.addRelevants(SongLink.newBuilder()
-                .setName(datum.getValue())
-                .setReference(toSongReference(relatedKey.get())).build());
+            builder.addRelevants(toSongReference(relatedKey.get()));
           }
         });
       } else if (metaDatumType.get() == MetaDatumType.MUSIC
@@ -390,18 +324,16 @@ public class Converter {
     }
 
     hymn.getRelatedList().stream()
-        .map(key -> toLanguageLink(toSongReference(key)))
+        .map(this::toSongReference)
         .forEach(builder::addLanguages);
 
     // Add the parent hymn if it's not already included in the related list.
     if (hymn.hasParentHymn()) {
       SongReference parentReference = toSongReference(hymn.getParentHymn());
-      if (!builder.getLanguagesList().stream().map(SongLink::getReference)
-          .collect(Collectors.toSet()).contains(parentReference)) {
-        builder.addLanguages(toLanguageLink(parentReference));
+      if (!builder.getLanguagesList().contains(parentReference)) {
+        builder.addLanguages(parentReference);
       }
     }
-
     return builder.build();
   }
 

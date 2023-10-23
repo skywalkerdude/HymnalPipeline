@@ -15,11 +15,9 @@ import com.hymnsmobile.pipeline.merge.dagger.Merge;
 import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
 import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
-import com.hymnsmobile.pipeline.models.SongLink;
 import com.hymnsmobile.pipeline.models.SongReference;
 import java.util.Collections;
 import java.util.Set;
-import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 /**
@@ -35,10 +33,8 @@ public class RelevantsAuditor {
     this.errors = errors;
   }
 
-  public void audit(Set<Set<SongLink>> relevantsSets) {
-    relevantsSets.forEach(
-        relevantsSet -> auditRelevantsSet(
-            relevantsSet.stream().map(SongLink::getReference).collect(Collectors.toSet())));
+  public void audit(Set<Set<SongReference>> relevantsSets) {
+    relevantsSets.forEach(this::auditRelevantsSet);
   }
 
   private void auditRelevantsSet(Set<SongReference> setToAudit) {

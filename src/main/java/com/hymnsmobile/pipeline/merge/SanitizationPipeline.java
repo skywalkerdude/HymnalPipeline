@@ -6,14 +6,11 @@ import com.google.common.collect.ImmutableList;
 import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.hymnsmobile.pipeline.merge.dagger.Merge;
 import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
-import com.hymnsmobile.pipeline.merge.patchers.HymnalNetPatcher;
 import com.hymnsmobile.pipeline.merge.patchers.Patcher;
 import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.PipelineError;
-import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import com.hymnsmobile.pipeline.models.SongLink;
 import com.hymnsmobile.pipeline.models.SongReference;
-import com.hymnsmobile.pipeline.utils.TextUtil;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -75,7 +72,7 @@ public class SanitizationPipeline {
 
   private void fixLanguages(ImmutableList<Hymn.Builder> builders) {
     FieldDescriptor languageFieldDescriptor = Hymn.getDescriptor().findFieldByName("languages");
-    Set<Set<SongLink>> languageSets =
+    Set<Set<SongReference>> languageSets =
         generateSongLinkSets(builders, languageFieldDescriptor);
     languageAuditor.audit(languageSets);
     writeSongLinks(builders, languageFieldDescriptor, languageSets);
@@ -83,7 +80,7 @@ public class SanitizationPipeline {
 
   private void fixRelevants(ImmutableList<Hymn.Builder> builders) {
     FieldDescriptor relevantFieldDescriptor = Hymn.getDescriptor().findFieldByName("relevants");
-    Set<Set<SongLink>> relevantsSets =
+    Set<Set<SongReference>> relevantsSets =
         generateSongLinkSets(builders, relevantFieldDescriptor);
     relevantsAuditor.audit(relevantsSets);
     writeSongLinks(builders, relevantFieldDescriptor, relevantsSets);
@@ -93,54 +90,25 @@ public class SanitizationPipeline {
    * Generates aggregated sets of {@link SongLink}s that represent all links of a single song,
    * described by the {@link FieldDescriptor}.
    */
-  private Set<Set<SongLink>> generateSongLinkSets(
+  private Set<Set<SongReference>> generateSongLinkSets(
       ImmutableList<Hymn.Builder> builders, FieldDescriptor descriptor) {
-    Set<Set<SongLink>> songLinkSets = new HashSet<>();
+    Set<Set<SongReference>> songLinkSets = new HashSet<>();
     builders.forEach(builder -> {
       Hymn hymn = builder.build();
       // noinspection unchecked
-      List<SongLink> links = (List<SongLink>) hymn.getField(descriptor);
+      List<SongReference> links = (List<SongReference>) hymn.getField(descriptor);
 
       if (links.isEmpty()) {
         return;
       }
 
-      final Set<SongLink> songLinkSet = new LinkedHashSet<>();
-      // Start the populating with a nameless SongLink containing the current hymn's SongReference.
-      // We should get the name of the reference for free as we process the rest of the songs, but
-      // if that doesn't happen, then we add it manually later.
+      final Set<SongReference> songLinkSet = new LinkedHashSet<>();
       assert hymn.getReferencesCount() > 0;
-      populateSongLinkSet(
-          builders, descriptor,
-          SongLink.newBuilder().setReference(hymn.getReferences(0)).build(), songLinkSet);
-
-      // If the nameless song we added is still nameless, that means there was something wrong with
-      // the mapping. We will try to infer it, but if that is not possible, then we add an error
-      // and return.
-      List<SongLink> nameLessSongs = songLinkSet.stream()
-          .filter(songLink -> TextUtil.isEmpty(songLink.getName())).collect(Collectors.toList());
-      if (nameLessSongs.size() > 1) {
-        throw new IllegalStateException(
-            String.format("Multiple nameless songs in %s", nameLessSongs));
-      }
-      // If there exists a nameless song, try to rectify it by inferring the name
-      if (nameLessSongs.size() == 1) {
-        SongLink namelessSong = nameLessSongs.get(0);
-        songLinkSet.remove(nameLessSongs.get(0));
-
-        Optional<String> inferredName = inferName(namelessSong.getReference());
-        inferredName.ifPresentOrElse(
-            name -> songLinkSet.add(namelessSong.toBuilder().setName(name).build()),
-            () -> errors.add(
-                PipelineError.newBuilder()
-                    .setSeverity(Severity.ERROR)
-                    .setMessage(String.format("Dangling reference: %s in %s", builder, songLinkSet))
-                    .build()));
-      }
+      populateSongLinkSet(builders, descriptor, hymn.getReferences(0), songLinkSet);
 
       // Once we have the song link set for this hymn populated correctly, we attempt to merge it
       // with an existing set, if it exists, that already contains the current songs.
-      List<Set<SongLink>> setToMergeWith = songLinkSets.stream().filter(
+      List<Set<SongReference>> setToMergeWith = songLinkSets.stream().filter(
               songLinks -> songLinkSet.stream().anyMatch(songLinks::contains))
           .collect(Collectors.toList());
       if (setToMergeWith.size() > 1) {
@@ -156,31 +124,17 @@ public class SanitizationPipeline {
     return songLinkSets;
   }
 
-  private void populateSongLinkSet(
-      ImmutableList<Hymn.Builder> builders,
-      FieldDescriptor descriptor,
-      SongLink songLink,
-      Set<SongLink> songLinkSet) {
-
-    // Contains the nameless version
-    SongLink namelessLink = songLink.toBuilder().clearName().build();
-    if (songLinkSet.contains(namelessLink)) {
-      // Replace nameless version with named version
-      songLinkSet.remove(namelessLink);
-      songLinkSet.add(songLink);
-    } else if (songLinkSet.stream()
-        .anyMatch(existing -> existing.getReference().equals(songLink.getReference()))) {
-      // Reference already exists in the link (even if it's under a different name)
+  private void populateSongLinkSet(ImmutableList<Hymn.Builder> builders,
+      FieldDescriptor descriptor, SongReference songLink, Set<SongReference> songLinks) {
+    if (songLinks.contains(songLink)) {
       return;
     }
-
-    songLinkSet.add(songLink);
-
+    songLinks.add(songLink);
     // noinspection unchecked
-    ((List<SongLink>) getReferencedHymnBuilder(builders, songLink.getReference())
+    ((List<SongReference>) getReferencedHymnBuilder(builders, songLink)
         .getField(descriptor))
         .forEach(linkedSong ->
-            populateSongLinkSet(builders, descriptor, linkedSong, songLinkSet));
+            populateSongLinkSet(builders, descriptor, linkedSong, songLinks));
   }
 
   private Hymn.Builder getReferencedHymnBuilder(
@@ -194,53 +148,16 @@ public class SanitizationPipeline {
   }
 
   /**
-   * We hope that most songs are some kind of circular reference (i.e. h/1 -> cb/1 -> h/1). This
-   * way, we get the name of the reference for free. There are some cases where a song references a
-   * group of songs, but there is no reference to it. In those cases, we can fall back to inferring
-   * the name from the type of the hymn. However, this is very much a last resort as it's still
-   * preferable to explicitly fix the song in {@link HymnalNetPatcher} as this approach may swallow
-   * up some errors.
-   */
-  private Optional<String> inferName(SongReference songReference) {
-    if (HymnType.fromString(songReference.getHymnType()) == HymnType.GERMAN) {
-      // Large portion of songs on Hymnal.net have only a one-way reference to the German song,
-      // meaning that the German song references other languages, but they don't reference it
-      // back. In this case, we fall back to inferring the name.
-      return Optional.of("German");
-    } else if (HymnType.fromString(songReference.getHymnType()) == HymnType.JAPANESE) {
-      // H4a added Japanese songs, but in general, existing songs yet map to it, so we need to infer
-      // the name.
-      return Optional.of("Japanese");
-    } else if (HymnType.fromString(songReference.getHymnType()) == HymnType.KOREAN) {
-      // H4a added Korean songs, but in general, existing songs yet map to it, so we need to infer
-      // the name.
-      return Optional.of("Korean");
-    } else if (HymnType.fromString(songReference.getHymnType()) == HymnType.FARSI) {
-      // H4a added Farsi songs, but in general, existing songs yet map to it, so we need to infer
-      // the name.
-      return Optional.of("Farsi");
-    } else if (HymnType.fromString(songReference.getHymnType()) == HymnType.INDONESIAN) {
-      // H4a added Indonesian songs, but in general, existing songs yet map to it, so we need to
-      // infer the name.
-      return Optional.of("Indonesian");
-    }
-    return Optional.empty();
-  }
-
-  /**
    * Write the newly aggregated {@link SongLink} sets onto each hymn.
    */
   private void writeSongLinks(
       ImmutableList<Hymn.Builder> builders,
-      FieldDescriptor descriptor, Set<Set<SongLink>> songLinkSets) {
+      FieldDescriptor descriptor, Set<Set<SongReference>> songLinkSets) {
     builders.forEach(builder -> {
       ImmutableList<SongReference> references = ImmutableList.copyOf(builder.getReferencesList());
-      ImmutableList<Set<SongLink>> setContainingHymn =
+      ImmutableList<Set<SongReference>> setContainingHymn =
           songLinkSets.stream()
-              .filter(songLinks ->
-                  songLinks.stream()
-                      .map(SongLink::getReference)
-                      .anyMatch(references::contains))
+              .filter(songLinks -> songLinks.stream().anyMatch(references::contains))
               .collect(toImmutableList());
 
       if (setContainingHymn.isEmpty()) {
@@ -250,9 +167,9 @@ public class SanitizationPipeline {
       assert setContainingHymn.size() == 1;
 
       // Make a copy of the list, so we aren't destructively altering it within a loop
-      List<SongLink> newLinks = new ArrayList<>(setContainingHymn.get(0));
+      List<SongReference> newLinks = new ArrayList<>(setContainingHymn.get(0));
       // Remove self from set
-      if (!newLinks.removeIf(songLink -> references.contains(songLink.getReference()))) {
+      if (!newLinks.removeIf(references::contains)) {
         throw new IllegalStateException(references + " not found");
       }
       builder.clearField(descriptor).setField(descriptor, newLinks);

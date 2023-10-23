@@ -1,7 +1,5 @@
 package com.hymnsmobile.pipeline.hymnalnet;
 
-import static com.hymnsmobile.pipeline.hymnalnet.BlockList.BLOCK_LIST;
-
 import com.google.common.collect.ImmutableList;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
@@ -70,14 +68,6 @@ public class Fetcher {
       return;
     }
 
-    // TODO we aren't using this for now, but it still contains a list of currently missing songs...
-    //  Might be useful for bug filing or just for keeping around, seeing if it reconciles with H4a
-    //  or songbase.
-    // if (BLOCK_LIST.contains(key)) {
-    //   LOGGER.fine(String.format("%s contained in block list. Skipping...", key));
-    //   return;
-    // }
-
     Optional<HymnalNetJson> hymn = getHymnalNet(key, isRoot);
     if (hymn.isEmpty()) {
       LOGGER.warning(String.format("Unable to fetch %s", key));
@@ -87,8 +77,8 @@ public class Fetcher {
 
     // Also fetch all related songs
     List<HymnalNetKey> relatedSongs = ImmutableList.<HymnalNetKey>builder()
-        .addAll(converter.getRelated(MetaDatumType.LANGUAGES.jsonKey, hymn.get(), errors))
-        .addAll(converter.getRelated(MetaDatumType.RELEVANT.jsonKey, hymn.get(), errors))
+        .addAll(converter.getRelated(MetaDatumType.LANGUAGES, hymn.get(), errors))
+        .addAll(converter.getRelated(MetaDatumType.RELEVANT, hymn.get(), errors))
         .build();
     LOGGER.fine(String.format("Found %d related songs: %s", relatedSongs.size(), relatedSongs));
     for (HymnalNetKey relatedSong : relatedSongs) {
