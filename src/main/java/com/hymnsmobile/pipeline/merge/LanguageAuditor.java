@@ -16,13 +16,11 @@ import com.google.common.collect.ImmutableSet;
 import com.hymnsmobile.pipeline.merge.dagger.Merge;
 import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
 import com.hymnsmobile.pipeline.models.PipelineError;
+import com.hymnsmobile.pipeline.models.PipelineError.ErrorType;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
-import com.hymnsmobile.pipeline.models.SongLink;
 import com.hymnsmobile.pipeline.models.SongReference;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 /**
@@ -44,16 +42,12 @@ public class LanguageAuditor {
 
   private void auditLanguageSet(Set<SongReference> setToAudit) {
     if (setToAudit.size() == 1) {
-      errors.add(
-          PipelineError
-              .newBuilder()
-              .setSeverity(Severity.ERROR).
-              setMessage(String.format("Dangling language: %s", setToAudit))
-              .build());
+      errors.add(PipelineError.newBuilder()
+          .setSeverity(Severity.ERROR)
+          .setErrorType(ErrorType.AUDITOR_DANGLING_LANGUAGE_SET)
+          .addMessages(setToAudit.toString())
+          .build());
       return;
-      // TODO uncomment next section and delete previous section
-      // throw new IllegalStateException(
-      //     "Dangling language set. Should have been taken care of by patcher");
     }
 
     // Extract the hymn types for audit.
@@ -91,12 +85,12 @@ public class LanguageAuditor {
       }
 
       if (Collections.frequency(hymnTypes, hymnType) > timesAllowed) {
-        errors.add(
-            PipelineError
-                .newBuilder()
-                .setSeverity(Severity.ERROR).
-                setMessage(String.format("%s has too many instances of %s", setToAudit, hymnType))
-                .build());
+        errors.add(PipelineError.newBuilder()
+            .setSeverity(Severity.ERROR)
+            .setErrorType(ErrorType.AUDITOR_TOO_MANY_INSTANCES)
+            .addMessages(setToAudit.toString())
+            .addMessages(hymnType.toString())
+            .build());
       }
     }
 
@@ -107,12 +101,11 @@ public class LanguageAuditor {
         || hymnTypes.contains(CHINESE) && hymnTypes.contains(CHINESE_SUPPLEMENTAL)
         || hymnTypes.contains(CHINESE_SIMPLIFIED) && hymnTypes.contains(
         CHINESE_SUPPLEMENTAL_SIMPLIFIED)) {
-      errors.add(
-          PipelineError
-              .newBuilder()
-              .setSeverity(Severity.ERROR).
-              setMessage(String.format("Incompatible languages types: %s", setToAudit))
-              .build());
+      errors.add(PipelineError.newBuilder()
+          .setSeverity(Severity.ERROR)
+          .setErrorType(ErrorType.AUDITOR_INCOMPATIBLE_LANGUAGES)
+          .addMessages(setToAudit.toString())
+          .build());
     }
   }
 }

@@ -5,13 +5,11 @@ import com.hymnsmobile.pipeline.FileReadWriter;
 import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.PipelineErrors;
-import com.hymnsmobile.pipeline.models.SongReference;
 import dagger.Lazy;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Map.Entry;
 import java.util.logging.Logger;
 import javax.inject.Inject;
 
@@ -47,6 +45,7 @@ public class StoragePipeline {
 
   private void writeErrors(ImmutableList<PipelineError> errors) throws IOException {
     fileReadWriter.writeString(outputDirectory.get().getPath() + "/errors.txt",
-        PipelineErrors.newBuilder().addAllErrors(errors).build().toString());
+        PipelineErrors.newBuilder().setCount(errors.size()).addAllErrors(errors).build()
+            .toString());
   }
 }

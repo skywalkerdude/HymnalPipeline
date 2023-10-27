@@ -15,6 +15,7 @@ import com.hymnsmobile.pipeline.merge.patchers.H4aPatcher;
 import com.hymnsmobile.pipeline.merge.patchers.HymnalNetPatcher;
 import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.PipelineError;
+import com.hymnsmobile.pipeline.models.PipelineError.ErrorType;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import com.hymnsmobile.pipeline.models.SongReference;
 import com.hymnsmobile.pipeline.russian.RussianHymn;
@@ -109,11 +110,11 @@ public class MergePipeline {
     liederbuchHymns.forEach(liederbuchHymn -> {
       SongReference liederbuchReference = converter.toSongReference(liederbuchHymn.getKey());
       if (!existingReferences.contains(liederbuchReference)) {
-        errors.add(
-            PipelineError.newBuilder()
-                .setSeverity(Severity.WARNING)
-                .setMessage("Liederbuch songs should be covered by other sources already.")
-                .build());
+        errors.add(PipelineError.newBuilder()
+            .setSeverity(Severity.WARNING)
+            .setErrorType(ErrorType.LIEDERBUCH_ALREADY_COVERED)
+            .addMessages(liederbuchReference.toString())
+            .build());
       }
     });
     LOGGER.info("Sanitizing Liederbuch");

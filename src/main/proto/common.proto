@@ -49,7 +49,8 @@ message Line {
 }
 
 message PipelineErrors {
-  repeated PipelineError errors = 1;
+  int32 count = 1;
+  repeated PipelineError errors = 2;
 }
 
 // An error encountered during processing of the pipeline.
@@ -62,6 +63,30 @@ message PipelineError {
     // Blocks the entire pipeline from completion.
     FATAL = 2;
   }
-  string message = 1;
-  Severity severity = 2;
+  enum ErrorType {
+    FETCH_ERROR = 0;
+    PARSE_ERROR = 1;
+    // Hymn type was unrecognized.
+    UNRECOGNIZED_HYMN_TYPE = 2;
+    // Recognized hymn type but appeared in an unexpected place.
+    UNEXPECTED_HYMN_TYPE = 3;
+    // Liederbuch songs should be covered by other sources already.
+    LIEDERBUCH_ALREADY_COVERED = 4;
+    // Encountered more meta data than expected.
+    EXTRA_META_DATA = 5;
+
+    PATCHER_ADD_ERROR = 101;
+    PATCHER_REMOVAL_ERROR = 102;
+    PATCHER_OBSOLETE_BLOCK_LIST_ITEM = 103;
+
+    AUDITOR_DANGLING_LANGUAGE_SET = 201;
+    AUDITOR_TOO_MANY_INSTANCES = 202;
+    AUDITOR_INCOMPATIBLE_LANGUAGES = 203;
+
+    AUDITOR_DANGLING_RELEVANT_SET = 204;
+    AUDITOR_INCOMPATIBLE_RELEVANTS = 205;
+  }
+  Severity severity = 1;
+  ErrorType error_type = 2;
+  repeated string messages = 3;
 }

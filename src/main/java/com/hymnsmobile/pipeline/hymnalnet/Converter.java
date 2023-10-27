@@ -6,7 +6,10 @@ import com.google.common.collect.ImmutableList;
 import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNetPipelineScope;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetJson;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetKey;
+import com.hymnsmobile.pipeline.hymnalnet.models.MetaDatum;
 import com.hymnsmobile.pipeline.models.PipelineError;
+import com.hymnsmobile.pipeline.models.PipelineError.ErrorType;
+import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -22,21 +25,10 @@ public class Converter {
 
   private static final Pattern PATH_PATTERN = Pattern.compile(
       "(\\w+)/([c|s]?\\d+[a-z]*)(\\?gb=1)?");
-  private static final Pattern HINARIO_PATH_PATTERN = Pattern.compile("hymn=(\\d+)");
+  private static final Pattern HINARIO_PATH_PATTERN = Pattern.compile("hymn=(\\d+[a-z]*)");
 
   @Inject
   public Converter() {
-  }
-
-  public ImmutableList<HymnalNetKey> getRelated(MetaDatumType metaDatumType, HymnalNetJson hymn,
-      Set<PipelineError> errors) {
-    return hymn.getMetaDataList().stream()
-        .filter(metaDatum -> metaDatumType.jsonKeys.contains(metaDatum.getName()))
-        .flatMap(metaDatum -> metaDatum.getDataList().stream()
-            .map(datum -> extractFromPath(datum.getPath(), hymn.getKey(), errors))
-            .filter(Optional::isPresent)
-            .map(Optional::get))
-        .collect(toImmutableList());
   }
 
   public static Optional<HymnalNetKey> extractFromPath(String path, HymnalNetKey parentHymn,
@@ -47,16 +39,16 @@ public class Converter {
 
     if (hymnType.isEmpty() || hymnNumber.isEmpty()) {
       errors.add(PipelineError.newBuilder()
-          .setMessage(
-              String.format("Unable to extract type and/or number from %s, a related song of %s",
-                  path, parentHymn)).build());
+          .setErrorType(ErrorType.PARSE_ERROR)
+          .addMessages(String.format("%s, a related song of %s", path, parentHymn))
+          .build());
       return Optional.empty();
     }
 
     if (HymnType.fromString(hymnType.get()).isEmpty()) {
       errors.add(PipelineError.newBuilder()
-          .setMessage(String.format("Unable to parse hymn type from %s, a related song of %s", path,
-              parentHymn))
+          .setErrorType(ErrorType.UNRECOGNIZED_HYMN_TYPE)
+          .addMessages(String.format("%s, a related song of %s", path, parentHymn))
           .build());
       return Optional.empty();
     }

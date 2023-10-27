@@ -4,6 +4,7 @@ import com.hymnsmobile.pipeline.models.PipelineError;
 import dagger.Module;
 import dagger.Provides;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Module
@@ -13,6 +14,6 @@ interface MergeModule {
   @Provides
   @MergeScope
   static Set<PipelineError> errors() {
-    return new HashSet<>();
+    return new LinkedHashSet<>();
   }
 }

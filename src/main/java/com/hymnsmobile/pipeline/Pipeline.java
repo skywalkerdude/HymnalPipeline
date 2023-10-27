@@ -61,24 +61,24 @@ public class Pipeline {
   }
 
   public void run()
-      throws IOException, InterruptedException, URISyntaxException, SQLException, BadHanyuPinyinOutputFormatCombination {
+      throws IOException, InterruptedException, SQLException, BadHanyuPinyinOutputFormatCombination {
     hymnalNetPipeline.run();
-    // h4aPipeline.run();
-    // liederbuchPipeline.run();
-    // songbasePipeline.run();
-    // russianPipeline.run();
+    h4aPipeline.run();
+    liederbuchPipeline.run();
+    songbasePipeline.run();
+    russianPipeline.run();
 
     ImmutableList<Hymn> mergedHymns =
         mergePipeline.convertHymnalNet(hymnalNetPipeline.getHymnalNetJsons());
-    // mergedHymns = mergePipeline.mergeH4a(h4aPipeline.getH4aHymns(), mergedHymns);
-    // mergedHymns = mergePipeline.mergeLiederbuch(liederbuchPipeline.getLiederbuchSong(), mergedHymns);
-    // mergedHymns = mergePipeline.mergeRussian(russianPipeline.getRussianHymns(), mergedHymns);
-    // mergedHymns = mergePipeline.mergeSongbase(songbasePipeline.getSongbaseHymns(), mergedHymns);
+    mergedHymns = mergePipeline.mergeH4a(h4aPipeline.getH4aHymns(), mergedHymns);
+    mergedHymns = mergePipeline.mergeLiederbuch(liederbuchPipeline.getLiederbuchSong(), mergedHymns);
+    mergedHymns = mergePipeline.mergeRussian(russianPipeline.getRussianHymns(), mergedHymns);
+    mergedHymns = mergePipeline.mergeSongbase(songbasePipeline.getSongbaseHymns(), mergedHymns);
 
     ImmutableList<PipelineError> allErrors = mergePipeline.mergeErrors(
         hymnalNetPipeline.getErrors(), h4aPipeline.getErrors(), mergePipeline.getErrors(),
         songbasePipeline.getErrors());
-    // storagePipeline.run(mergedHymns, allErrors);
+    storagePipeline.run(mergedHymns, allErrors);
     LOGGER.info("Pipeline completed successfully");
     System.exit(0);
   }

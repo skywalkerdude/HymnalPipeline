@@ -4,16 +4,22 @@ import static com.google.common.collect.ImmutableList.toImmutableList;
 
 import com.google.common.collect.ImmutableList;
 import com.google.protobuf.Descriptors.FieldDescriptor;
+import com.hymnsmobile.pipeline.merge.HymnType;
 import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
 import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.PipelineError;
+import com.hymnsmobile.pipeline.models.PipelineError.ErrorType;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import com.hymnsmobile.pipeline.models.SongLink;
 import com.hymnsmobile.pipeline.models.SongReference;
+import com.hymnsmobile.pipeline.models.SongReferenceOrBuilder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Performs one-off patches to the set of hymns from Hymns For Android that are unfixable with a
@@ -56,48 +62,98 @@ public abstract class Patcher {
     }
   }
 
-  protected void removeLanguages(SongReference.Builder songReference,
-      SongReference.Builder... languages) {
-    Hymn.Builder builder = getHymn(songReference);
+  private SongReference createFromStringAbbreviation(String abbr) {
+    return SongReference.newBuilder().setHymnType(abbr.split("/")[0])
+        .setHymnNumber(abbr.split("/")[1]).build();
+  }
 
-    // Need to make a copy because builder.getLanguagesList() returns an unmodifiable list.
-    List<SongReference> existingLanguages = new ArrayList<>(builder.getLanguagesList());
-    for (SongReference.Builder language : languages) {
-      if (!existingLanguages.contains(language.build())) {
-        continue;
+  protected void removeLanguages(String from, String... languages) {
+    removeLanguages(createFromStringAbbreviation(from),
+        Arrays.stream(languages).map(this::createFromStringAbbreviation)
+            .toArray(SongReference[]::new));
+  }
+
+  protected void removeLanguages(SongReference.Builder from, SongReference.Builder... languages) {
+    removeLanguages(from.build(), Arrays.stream(languages).map(SongReference.Builder::build)
+        .toArray(SongReference[]::new));
+  }
+
+  protected void removeLanguages(SongReference from, SongReference... languages) {
+    Hymn.Builder builder = getHymn(from);
+
+    ImmutableList<SongReference> languagesToRemove = Arrays.stream(languages)
+        .flatMap((Function<SongReference, Stream<SongReference>>) songReference -> {
+          // If the song is a Chinese song, also add the simplified version
+          HymnType hymnType = HymnType.fromString(songReference.getHymnType());
+          if (hymnType == HymnType.CHINESE) {
+            return ImmutableList.of(songReference, SongReference.newBuilder().setHymnType("chx")
+                .setHymnNumber(songReference.getHymnNumber()).build()).stream();
+          } else if (hymnType == HymnType.CHINESE_SUPPLEMENTAL) {
+            return ImmutableList.of(songReference, SongReference.newBuilder().setHymnType("tsx")
+                .setHymnNumber(songReference.getHymnNumber()).build()).stream();
+          } else {
+            return ImmutableList.of(songReference).stream();
+          }
+        }).collect(toImmutableList());
+
+    ImmutableList<SongReference> existingLanguages =
+        ImmutableList.copyOf(builder.getLanguagesList());
+
+    for (SongReference language : languagesToRemove) {
+      if (existingLanguages.contains(language)) {
+        builder.removeLanguages(builder.getLanguagesList().indexOf(language));
+      } else {
+        errors.add(
+            PipelineError.newBuilder()
+                .setSeverity(Severity.WARNING)
+                .setErrorType(ErrorType.PATCHER_REMOVAL_ERROR)
+                .addMessages(String.format("%s not a language of %s", language, from))
+                .build());
       }
-      int index = existingLanguages.indexOf(language.build());
-      builder.removeLanguages(index);
-      // Need to perform this removal as well so the next iteration of the loop also has the correct
-      // indices.
-      existingLanguages.remove(index);
     }
+  }
+
+  protected void addLanguages(String from, String... languages) {
+    addLanguages(createFromStringAbbreviation(from),
+        Arrays.stream(languages).map(this::createFromStringAbbreviation)
+            .toArray(SongReference[]::new));
+  }
+
+  protected void addLanguages(SongReference songReference, SongReference... languages) {
+    addSongLink(songReference, Hymn.getDescriptor().findFieldByName("languages"), languages);
   }
 
   protected void addLanguages(SongReference.Builder songReference,
       SongReference.Builder... languages) {
-    addSongLink(Hymn.getDescriptor().findFieldByName("languages"), songReference, languages);
+    addSongLink(songReference, Hymn.getDescriptor().findFieldByName("languages"), languages);
   }
 
   protected void addRelevants(SongReference.Builder songReference,
       SongReference.Builder... relevants) {
-    addSongLink(Hymn.getDescriptor().findFieldByName("relevants"), songReference, relevants);
+    addSongLink(songReference, Hymn.getDescriptor().findFieldByName("relevants"), relevants);
   }
 
-  protected void addSongLink(FieldDescriptor field, SongReference.Builder songReference,
+  protected void addSongLink(SongReference.Builder from, FieldDescriptor field,
       SongReference.Builder... songLinks) {
-    Hymn.Builder builder = getHymn(songReference);
+    addSongLink(from.build(), field, Arrays.stream(songLinks).map(SongReference.Builder::build)
+        .toArray(SongReference[]::new));
+  }
+
+  protected void addSongLink(SongReference from, FieldDescriptor field,
+      SongReference... songLinks) {
+    Hymn.Builder builder = getHymn(from);
     // noinspection unchecked
     List<SongReference> links = (List<SongReference>) builder.getField(field);
-    for (SongReference.Builder songLink : songLinks) {
-      if (links.contains(songLink.build())) {
-        errors.add(PipelineError.newBuilder().setSeverity(Severity.WARNING)
-            .setMessage(
-                String.format("%s already includes %s as a %s", songReference, songLink, field))
+    for (SongReference songLink : songLinks) {
+      if (links.contains(songLink)) {
+        errors.add(PipelineError.newBuilder()
+            .setSeverity(Severity.WARNING)
+            .setErrorType(ErrorType.PATCHER_ADD_ERROR)
+            .addMessages(String.format("%s already includes %s as a %s", from, songLink, field))
             .build());
         continue;
       }
-      builder.addRepeatedField(field, songLink.build());
+      builder.addRepeatedField(field, songLink);
     }
   }
 

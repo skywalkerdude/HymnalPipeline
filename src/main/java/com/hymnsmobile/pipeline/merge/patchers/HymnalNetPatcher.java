@@ -1,7 +1,6 @@
 package com.hymnsmobile.pipeline.merge.patchers;
 
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
-import static com.hymnsmobile.pipeline.merge.HymnType.CEBUANO;
 import static com.hymnsmobile.pipeline.merge.HymnType.CHILDREN_SONG;
 import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE;
 import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE_SIMPLIFIED;
@@ -9,13 +8,9 @@ import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE_SUPPLEMENTAL;
 import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED;
 import static com.hymnsmobile.pipeline.merge.HymnType.CLASSIC_HYMN;
 import static com.hymnsmobile.pipeline.merge.HymnType.DUTCH;
-import static com.hymnsmobile.pipeline.merge.HymnType.FRENCH;
-import static com.hymnsmobile.pipeline.merge.HymnType.GERMAN;
 import static com.hymnsmobile.pipeline.merge.HymnType.HOWARD_HIGASHI;
 import static com.hymnsmobile.pipeline.merge.HymnType.NEW_SONG;
 import static com.hymnsmobile.pipeline.merge.HymnType.PORTUGUESE;
-import static com.hymnsmobile.pipeline.merge.HymnType.SPANISH;
-import static com.hymnsmobile.pipeline.merge.HymnType.TAGALOG;
 
 import com.google.common.collect.ImmutableSet;
 import com.hymnsmobile.pipeline.merge.HymnType;
@@ -23,6 +18,7 @@ import com.hymnsmobile.pipeline.merge.dagger.Merge;
 import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
 import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.PipelineError;
+import com.hymnsmobile.pipeline.models.PipelineError.ErrorType;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import com.hymnsmobile.pipeline.models.SongReference;
 import java.util.ArrayList;
@@ -43,17 +39,6 @@ public class HymnalNetPatcher extends Patcher {
    */
   private static final ImmutableSet<SongReference> BLOCK_LIST = ImmutableSet.of(
       // Non-existent songs
-      SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("582")
-          .build(),
-      SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("881")
-          .build(),
-      SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("978")
-          .build(),
-      SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("981")
-          .build(),
-      SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("987")
-          .build(),
-      SongReference.newBuilder().setHymnType(DUTCH.abbreviatedValue).setHymnNumber("4").build(),
       SongReference.newBuilder().setHymnType(DUTCH.abbreviatedValue).setHymnNumber("31").build(),
       SongReference.newBuilder().setHymnType(DUTCH.abbreviatedValue).setHymnNumber("37").build(),
       SongReference.newBuilder().setHymnType(DUTCH.abbreviatedValue).setHymnNumber("95").build(),
@@ -70,6 +55,7 @@ public class HymnalNetPatcher extends Patcher {
 
   @Override
   protected void performPatch() {
+    addChineseSimplifiedToAllPortugueseSongs();
     purgeBlockList();
 
     // Some songs are alternate/new tunes but aren't in the NEW TUNE category. Instead, a "b" is
@@ -82,22 +68,22 @@ public class HymnalNetPatcher extends Patcher {
                 .anyMatch(reference -> reference.getHymnNumber().matches("\\d+b")))
         .forEach(Hymn.Builder::clearLanguages);
 
-    fix_danglingReferences();
+    // fix_danglingReferences();
     // Fix Languages
     //   fix_h1351();
-    // fix_ch1090();
-    // fix_h445_h1359();
-    // fix_hf15();
-    //   fix_h79_h8079();
-    //   fix_h267_h1360();
-    //   fix_ts253();
+    fix_ch1090();
+    fix_h445_h1359();
+    fix_hf15();
+    fix_h79_h8079();
+    fix_h267_h1360();
+    fix_ts253();
     //   fix_ts142();
     //   fix_h720_h8526();
-    //   fix_h379();
-    //   fix_ch643();
-    //   fix_h528();
-    //   fix_h480();
-    //   fix_ns154();
+    fix_h379();
+    fix_ch643();
+    fix_pt528();
+    fix_h480();
+    // fix_ns154();
     //   fix_ts438();
     //   fix_nt723();
     //   fix_nt1307();
@@ -106,8 +92,8 @@ public class HymnalNetPatcher extends Patcher {
     //   fix_ch9166();
     //   fix_ns54de();
     //   fix_hd31();
-    //   fix_ch632();
-    //   fix_ts248();
+    fix_ch632();
+    fix_ts248();
     //
     //   // Fix SONG_META_DATA_RELEVANT
     //   fix_nt_477b();
@@ -119,21 +105,69 @@ public class HymnalNetPatcher extends Patcher {
     //   fix_ns59_ns110_ns111();
     //   fix_ns2();
     //   fix_ns4();
-    fix_ns10_ns142();
-    fix_h1033();
+    // fix_ns10_ns142();
+    // fix_h1033();
     //   fix_h1162_h1163();
     //   fix_ns73();
     //   fix_ns53();
-    fix_ns1();
+    // fix_ns1();
     //   fix_ns8();
     //   fix_ns12();
     //   fix_ns22();
     //   fix_c31();
     //   fix_c113();
-    fix_h396_ns313();
+    // fix_h396_ns313();
     //   fix_h383();
     //   fix_c162();
     //   fix_h163();
+  }
+
+  /**
+   * Portuguese songs currently only map to Chinese songs (if they exist) and don't map to chinese
+   * simplified songs. This adds the chinese simplified versions whenever regular Chinese songs
+   * appear.
+   * <p/>
+   * This is necessary because, when we patch songs, we assume that if there is a Chinese song, the
+   * simplified version is there as well, so it breaks the patcher if only one of them exists.
+   */
+  private void addChineseSimplifiedToAllPortugueseSongs() {
+    this.builders.forEach(builder -> {
+      // If the song is not a portuguese, return early.
+      if (builder.getReferencesList().stream().noneMatch(
+          songReference -> HymnType.fromString(songReference.getHymnType()) == PORTUGUESE)) {
+        return;
+      }
+
+      // If the portuguese song already contains simplified Chinese, then there this patcher may
+      // be obsolete, so log an error.
+      if (builder.getReferencesList().stream().anyMatch(songReference -> {
+        HymnType hymnType = HymnType.fromString(songReference.getHymnType());
+        return hymnType == CHINESE_SIMPLIFIED || hymnType == CHINESE_SUPPLEMENTAL_SIMPLIFIED;
+      })) {
+        this.errors.add(
+            PipelineError.newBuilder()
+                .setSeverity(Severity.WARNING)
+                .setErrorType(ErrorType.PATCHER_ADD_ERROR)
+                .addMessages("Portuguese song already contains simplified Chinese songs:")
+                .addMessages(builder.build().toString())
+                .build());
+        return;
+      }
+
+      // Find the Chinese song and also add in the simplified version.
+      builder.getLanguagesList().forEach(songReference -> {
+        if (HymnType.fromString(songReference.getHymnType()) == CHINESE) {
+          builder.addLanguages(
+              SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED.abbreviatedValue)
+                  .setHymnNumber(songReference.getHymnNumber()).build());
+        } else if (HymnType.fromString(songReference.getHymnType()) == CHINESE_SUPPLEMENTAL) {
+          builder.addLanguages(
+              SongReference.newBuilder()
+                  .setHymnType(CHINESE_SUPPLEMENTAL_SIMPLIFIED.abbreviatedValue)
+                  .setHymnNumber(songReference.getHymnNumber()).build());
+        }
+      });
+    });
   }
 
   /**
@@ -166,10 +200,10 @@ public class HymnalNetPatcher extends Patcher {
           seen.add(language);
         }
       });
-      new ArrayList<>(builder.getReferencesList()).forEach(reference -> {
-        if (BLOCK_LIST.contains(reference)) {
-          builder.removeReferences(builder.getReferencesList().indexOf(reference));
-          seen.add(reference);
+      new ArrayList<>(builder.getRelevantsList()).forEach(relevant -> {
+        if (BLOCK_LIST.contains(relevant)) {
+          builder.removeReferences(builder.getReferencesList().indexOf(relevant));
+          seen.add(relevant);
         }
       });
     });
@@ -179,8 +213,12 @@ public class HymnalNetPatcher extends Patcher {
     Set<SongReference> unseen = BLOCK_LIST.stream()
         .filter(songReference -> !seen.contains(songReference)).collect(toImmutableSet());
     if (!unseen.isEmpty()) {
-      errors.add(PipelineError.newBuilder().setSeverity(Severity.WARNING)
-          .setMessage(String.format("Obosolete entries in block list: %s", unseen)).build());
+      errors.add(
+          PipelineError.newBuilder()
+              .setSeverity(Severity.WARNING)
+              .setErrorType(ErrorType.PATCHER_OBSOLETE_BLOCK_LIST_ITEM)
+              .addMessages(unseen.toString())
+              .build());
     }
   }
 
@@ -197,21 +235,20 @@ public class HymnalNetPatcher extends Patcher {
   // }
 
   /**
-   * ch/1090 and chx/1090 should map to the english, and tagalog 1090, not 1089
+   * ch/1090 and chx/1090 should map to the english and tagalog 1090, not 1089
    */
   void fix_ch1090() {
-    getHymn(SongReference.newBuilder().setHymnType(CHINESE.abbreviatedValue).setHymnNumber("1090"))
-        .clearLanguages()
-        .addLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1090"));
-    getHymn(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED.abbreviatedValue).setHymnNumber("1090"))
-        .clearLanguages()
-        .addLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1090"));
+    removeLanguages("ch/1090", "h/1089", "ht/1089", "cb/1089", "pt/1089");
+    removeLanguages("chx/1090", "h/1089", "ht/1089", "cb/1089", "pt/1089");
+
+    addLanguages("ch/1090", "h/1090");
+    addLanguages("chx/1090", "h/1090");
   }
 
   /**
    *  h/445 and h/1359 are related. However, the language mappings for each is all messed up.
    *  Here is the current mapping:
-   *    h/445->cb/445,ch/339,ht/1359,hs/192,pt/445;
+   *    h/445->cb/445,ch/339,ht/1359,hs/192,pt/445,hf/79;
    *    cb/445->h/445,ch/339,ht/1359,hf/79,hs/192,pt/445;
    *    ht/445->cb/445,ch/339,h/445,hf/79,hs/192,pt/445;
    *    de/445->cb/445,ch/339,h/445,hf/79,ht/1359,hs/192,pt/445;
@@ -239,19 +276,35 @@ public class HymnalNetPatcher extends Patcher {
    *    hs/192->h/1359,ch/339,ht/1359;
    */
   void fix_h445_h1359() {
-    resetLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("445"),
-        SongReference.newBuilder().setHymnType(CEBUANO.abbreviatedValue).setHymnNumber("445"),
-        SongReference.newBuilder().setHymnType(TAGALOG.abbreviatedValue).setHymnNumber("445"),
-        SongReference.newBuilder().setHymnType(FRENCH.abbreviatedValue).setHymnNumber("79"),
-        SongReference.newBuilder().setHymnType(GERMAN.abbreviatedValue).setHymnNumber("445"),
-        SongReference.newBuilder().setHymnType(SPANISH.abbreviatedValue).setHymnNumber("190"),
-        SongReference.newBuilder().setHymnType(PORTUGUESE.abbreviatedValue).setHymnNumber("445"));
+    // Remove all current mappings
+    removeLanguages("h/445", "cb/445", "ch/339", "ht/1359", "S/192", "pt/445", "hf/79");
+    removeLanguages("cb/445", "h/445", "ch/339", "ht/1359", "hf/79", "S/192", "pt/445");
+    removeLanguages("ht/445", "cb/445", "ch/339", "h/445", "hf/79", "S/192", "pt/445");
+    removeLanguages("de/445", "cb/445", "ch/339", "h/445", "hf/79", "ht/1359", "S/192", "pt/445");
+    removeLanguages("hf/79", "h/445", "cb/445", "ch/339", "de/445", "ht/1359", "S/192", "pt/445");
+    removeLanguages("S/192", "cb/445", "ch/339", "h/1359", "de/445", "ht/1359");
+    removeLanguages("pt/445", "h/445", "S/192", "ch/339");
 
-    resetLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1359"),
-        SongReference.newBuilder().setHymnType(CHINESE.abbreviatedValue).setHymnNumber("339"),
-        SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED.abbreviatedValue).setHymnNumber("339"),
-        SongReference.newBuilder().setHymnType(TAGALOG.abbreviatedValue).setHymnNumber("1359"),
-        SongReference.newBuilder().setHymnType(SPANISH.abbreviatedValue).setHymnNumber("192"));
+    removeLanguages("h/1359", "cb/445", "ch/339", "ht/1359", "S/192");
+    removeLanguages("ch/339", "h/1359", "cb/445", "ht/1359", "S/192");
+    removeLanguages("chx/339", "h/1359", "cb/445", "ht/1359", "S/192");
+    removeLanguages("ht/1359", "h/1359", "cb/445", "ch/339", "S/192");
+    removeLanguages("S/190", "h/445", "cb/445", "ch/339", "ht/1359", "hf/79", "pt/445");
+
+    // Add all correct mappings
+    addLanguages("h/445", "cb/445", "ht/445", "hf/79", "de/445", "S/190", "pt/445");
+    addLanguages("cb/445", "h/445", "ht/445", "hf/79", "de/445", "S/190", "pt/445");
+    addLanguages("ht/445", "h/445", "cb/445", "hf/79", "de/445", "S/190", "pt/445");
+    addLanguages("hf/79", "h/445", "cb/445", "ht/445", "de/445", "S/190", "pt/445");
+    addLanguages("de/445", "h/445", "cb/445", "ht/445", "hf/79", "S/190", "pt/445");
+    addLanguages("S/190", "h/445", "cb/445", "ht/445", "hf/79", "de/445", "pt/445");
+    addLanguages("pt/445", "h/445", "cb/445", "ht/445", "hf/79", "de/445", "S/190");
+
+    addLanguages("h/1359", "ch/339", "ht/1359", "S/192");
+    addLanguages("ch/339", "h/1359", "ht/1359", "S/192");
+    addLanguages("chx/339", "h/1359", "ht/1359", "S/192");
+    addLanguages("ht/1359", "h/1359", "ch/339", "S/192");
+    addLanguages("S/192", "h/1359", "ch/339", "ht/1359");
   }
 
   /**
@@ -262,7 +315,6 @@ public class HymnalNetPatcher extends Patcher {
    */
   void fix_hf15() {
     getHymn(SongReference.newBuilder().setHymnType(HymnType.FRENCH.abbreviatedValue).setHymnNumber("15"))
-        .clearLanguages()
         .clearAuthor()
         .clearComposer()
         .clearKey()
@@ -270,106 +322,130 @@ public class HymnalNetPatcher extends Patcher {
         .clearMeter()
         .clearHymnCode()
         .clearScriptures()
-        .addLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1084"))
         .addKey("F Major").addTime("3/4").addMeter("8.8.8.8")
         .addHymnCode("51712165172321").addScriptures("Song of Songs");
+
+    removeLanguages("hf/15", "cb/473", "ch/355", "hd/473", "h/473", "de/473", "S/196", "ht/473",
+        "pt/473");
+    addLanguages("hf/15", "h/1084");
   }
 
-  // /**
-  //  * h/8079 and h/79 are related. However, the language mappings for each is all messed up.
-  //  * </p>
-  //  *  Here is the current mapping:
-  //  *    h/79->cb/79,ch/68,ht/79,hs/44;
-  //  *    cb/79->h/79,ch/68,ht/79,hs/44;
-  //  *    hs/44->h/79,ch/68,ht/79,cb/79;
-  //  * </p>
-  //  *    h/8079->cb/79,ch/68,ht/79,hs/44;
-  //  *    ht/79->h/79,ch/68,cb/79,hs/44;
-  //  *    ch/68->h/8079,cb/79,ht/79,hs/44;
-  //  * </p>
-  //  *  Here is the correct mapping:
-  //  *    h/79->cb/79,hs/44;
-  //  *    cb/79->h/79,hs/44;
-  //  *    hs/44->h/79,cb/79;
-  //  * </p>
-  //  *    h/8079->ch/68,ht/79;
-  //  *    ch/68->h/8079,ht/79;
-  //  *    ht/79->h/8079,ch/68;
-  //  */
-  // void fix_h79_h8079() {
-  //   resetLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("79"),
-  //       SongLink.newBuilder().setName("Cebuano").setReference(SongReference.newBuilder().setHymnType(
-  //           CEBUANO.abbreviatedValue).setHymnNumber("79")),
-  //       SongLink.newBuilder().setName("Spanish").setReference(SongReference.newBuilder().setHymnType(
-  //           SPANISH.abbreviatedValue).setHymnNumber("44")));
-  //
-  //   resetLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("8079"),
-  //       SongLink.newBuilder().setName("詩歌(繁)").setReference(SongReference.newBuilder().setHymnType(HymnType.CHINESE.abbreviatedValue).setHymnNumber("68")),
-  //       SongLink.newBuilder().setName("诗歌(简)").setReference(SongReference.newBuilder().setHymnType(HymnType.CHINESE_SIMPLIFIED.abbreviatedValue).setHymnNumber("68")),
-  //       SongLink.newBuilder().setName("Tagalog").setReference(SongReference.newBuilder().setHymnType(HymnType.TAGALOG.abbreviatedValue).setHymnNumber("79")));
-  // }
-  //
-  // /**
-  //  * h/267 and h/1360 are related. However, the language mappings for each is all messed up.
-  //  * </p>
-  //  *  Here is the current mapping:
-  //  *    h/267->cb/267,ch/217,hf/46,ht/267,hs/127;
-  //  *    cb/267->h/267,ch/217,hf/46,ht/267,hs/127;
-  //  *    hf/46->cb/267,ch/217,h/267,de/267,ht/267,hs/127;
-  //  *    ch/217->h/1360,cb/267,ht/1360,hs/127;
-  //  *    ht/267->h/267,cb/267,ch/217hf/46,hs/127;
-  //  *    hs/127->cb/267,ch/217,h/267,hf/46,de/267,ht/267;
-  //  *    de/267->cb/267,ch/217,h/267,hf/46,hs/127,ht/267
-  //  * </p>
-  //  *    h/1360->cb/267,ch/217,hs/127,ht/1360;
-  //  *    ht/1360->cb/267,ch/217,h/1360,hs/127;
-  //  * </p>
-  //  *  Here is the correct mapping:
-  //  *    h/267->cb/267,ht/267,de/267,hs/127;
-  //  *    cb/267->h/267,ht/267,de/267,hs/127;
-  //  *    de/267->cb/267,h/267,ht/267,hs/127;
-  //  *    ht/267->h/267,cb/267,de/267,hs/127;
-  //  *    hs/127->h/267,cb/267,ht/267,de/267;
-  //  * </p>
-  //  *    h/1360->ch/217,ht/1360,hf/46;
-  //  *    ch/217->h/1360,ht/1360,hf/46;
-  //  *    ht/1360->ch/217,h/1360,hf/46;
-  //  *    hf/46->ch/217,h/1360,ht/1360;
-  //  */
-  // void fix_h267_h1360() {
-  //   resetLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("267"),
-  //       SongLink.newBuilder().setName("Cebuano").setReference(SongReference.newBuilder().setHymnType(
-  //           CEBUANO.abbreviatedValue).setHymnNumber("267")),
-  //       SongLink.newBuilder().setName("Tagalog").setReference(SongReference.newBuilder().setHymnType(HymnType.TAGALOG.abbreviatedValue).setHymnNumber("267")),
-  //       SongLink.newBuilder().setName("Spanish").setReference(SongReference.newBuilder().setHymnType(
-  //           SPANISH.abbreviatedValue).setHymnNumber("127")),
-  //       SongLink.newBuilder().setName("German").setReference(SongReference.newBuilder().setHymnType(HymnType.GERMAN.abbreviatedValue).setHymnNumber("267")));
-  //
-  //   resetLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1360"),
-  //       SongLink.newBuilder().setName("詩歌(繁)").setReference(SongReference.newBuilder().setHymnType(HymnType.CHINESE.abbreviatedValue).setHymnNumber("217")),
-  //       SongLink.newBuilder().setName("诗歌(简)").setReference(SongReference.newBuilder().setHymnType(HymnType.CHINESE_SIMPLIFIED.abbreviatedValue).setHymnNumber("217")),
-  //       SongLink.newBuilder().setName("Tagalog").setReference(SongReference.newBuilder().setHymnType(HymnType.TAGALOG.abbreviatedValue).setHymnNumber("1360")),
-  //       SongLink.newBuilder().setName("French").setReference(SongReference.newBuilder().setHymnType(HymnType.FRENCH.abbreviatedValue).setHymnNumber("46")));
-  // }
-  //
-  // /**
-  //  * ts/253 and ts/253?gb=1 -> mapped to h/754 for some reason, but it actually is the chinese
-  //  * version of h/1164. So it should map to h/1164 and its related songs
-  //  */
-  // void fix_ts253() {
-  //   getHymn(SongReference.newBuilder().setHymnType(HymnType.CHINESE_SUPPLEMENTAL.abbreviatedValue).setHymnNumber("253"))
-  //       .clearLanguages()
-  //       .addLanguages(SongLink.newBuilder().setName("English")
-  //           .setReference(
-  //               SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1164")));
-  //   getHymn(SongReference.newBuilder().setHymnType(HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED.abbreviatedValue)
-  //       .setHymnNumber("253"))
-  //       .clearLanguages()
-  //       .addLanguages(SongLink.newBuilder().setName("English")
-  //           .setReference(
-  //               SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1164")));
-  // }
-  //
+  /**
+   * h/8079 and h/79 are related. However, the language mappings for each is all messed up.
+   * </p>
+   *  Here is the current mapping:
+   *    h/79->cb/79,ch/68,ht/79,hs/44,pt/79;
+   *    cb/79->h/79,ch/68,ht/79,hs/44,pt/79;
+   *    hs/44->h/79,ch/68,ht/79,cb/79,pt/79;
+   *    pt/79->h/79,ch/68,hs/44;
+   * </p>
+   *    h/8079->cb/79,ch/68,ht/79,hs/44;
+   *    ht/79->h/79,ch/68,cb/79,hs/44,pt/79;
+   *    ch/68->h/8079,cb/79,ht/79,hs/44;
+   * </p>
+   *  Here is the correct mapping:
+   *    h/79->cb/79,hs/44,pt/79;
+   *    cb/79->h/79,hs/44,pt/79;
+   *    hs/44->h/79,cb/79,pt/79;
+   *    pt/79->h/79,cb/79,hs/44;
+   * </p>
+   *    h/8079->ch/68,ht/79;
+   *    ch/68->h/8079,ht/79;
+   *    ht/79->h/8079,ch/68;
+   */
+  void fix_h79_h8079() {
+    // Remove all current mappings
+    removeLanguages("h/79", "cb/79", "ch/68", "ht/79", "S/44", "pt/79");
+    removeLanguages("cb/79", "h/79", "ch/68", "ht/79", "S/44", "pt/79");
+    removeLanguages("S/44", "h/79", "ch/68", "ht/79", "cb/79", "pt/79");
+    removeLanguages("pt/79", "h/79", "ch/68", "S/44");
+
+    removeLanguages("h/8079", "cb/79", "ch/68", "ht/79", "S/44");
+    removeLanguages("ht/79", "h/79", "ch/68", "cb/79", "S/44", "pt/79");
+    removeLanguages("ch/68", "h/8079", "cb/79", "ht/79", "S/44");
+    removeLanguages("chx/68", "h/8079", "cb/79", "ht/79", "S/44");
+
+    // Add all correct mappings
+    addLanguages("h/79", "cb/79", "S/44");
+    addLanguages("cb/79", "h/79", "S/44");
+    addLanguages("S/44", "h/79", "cb/79");
+    addLanguages("pt/79", "h/79", "cb/79", "S/44");
+
+    addLanguages("h/8079", "ch/68", "ht/79");
+    addLanguages("ch/68", "h/8079", "ht/79");
+    addLanguages("chx/68", "h/8079", "ht/79");
+    addLanguages("ht/79", "h/8079", "ch/68");
+  }
+
+  /**
+   * h/267 and h/1360 are related. However, the language mappings for each is all messed up.
+   * </p>
+   *  Here is the current mapping:
+   *    h/267->cb/267,ch/217,hf/46,ht/267,hs/127,pt/267;
+   *    cb/267->h/267,ch/217,hf/46,ht/267,hs/127,pt/267;
+   *    hf/46->cb/267,ch/217,h/267,de/267,ht/267,hs/127,pt/267;
+   *    ch/217->h/1360,cb/267,ht/1360,hs/127,pt/267;
+   *    ht/267->h/267,cb/267,ch/217,hf/46,hs/127,pt/267;
+   *    hs/127->cb/267,ch/217,h/267,hf/46,de/267,ht/267,pt/267;
+   *    de/267->cb/267,ch/217,h/267,hf/46,hs/127,ht/267,pt/267;
+   *    pt/267->h/267,ch/217,hs/127;
+   * </p>
+   *    h/1360->cb/267,ch/217,hs/127,ht/1360;
+   *    ht/1360->cb/267,ch/217,h/1360,hs/127;
+   * </p>
+   *  Here is the correct mapping:
+   *    h/267->cb/267,ht/267,de/267,hs/127;
+   *    cb/267->h/267,ht/267,de/267,hs/127;
+   *    de/267->cb/267,h/267,ht/267,hs/127;
+   *    ht/267->h/267,cb/267,de/267,hs/127;
+   *    hs/127->h/267,cb/267,ht/267,de/267;
+   *    pt/267->h/267,hs/127;
+   * </p>
+   *    h/1360->ch/217,ht/1360,hf/46;
+   *    ch/217->h/1360,ht/1360,hf/46;
+   *    ht/1360->ch/217,h/1360,hf/46;
+   *    hf/46->ch/217,h/1360,ht/1360;
+   */
+  void fix_h267_h1360() {
+    // Remove all current mappings
+    removeLanguages("h/267", "cb/267", "ch/217", "hf/46", "ht/267", "S/127", "pt/267");
+    removeLanguages("cb/267", "h/267", "ch/217", "hf/46", "ht/267", "S/127", "pt/267");
+    removeLanguages("hf/46", "cb/267", "ch/217", "h/267", "de/267", "ht/267", "S/127", "pt/267");
+    removeLanguages("ch/217", "h/1360", "cb/267", "ht/1360", "S/127");
+    removeLanguages("chx/217", "h/1360", "cb/267", "ht/1360", "S/127");
+    removeLanguages("ht/267", "h/267", "cb/267", "ch/217", "hf/46", "S/127", "pt/267");
+    removeLanguages("S/127", "cb/267", "ch/217", "h/267", "hf/46", "de/267", "ht/267", "pt/267");
+    removeLanguages("de/267", "cb/267", "ch/217", "h/267", "hf/46", "S/127", "ht/267", "pt/267");
+    removeLanguages("pt/267", "h/267", "ch/217", "S/127");
+
+    removeLanguages("h/1360", "cb/267", "ch/217", "S/127", "ht/1360");
+    removeLanguages("ht/1360", "cb/267", "ch/217", "h/1360", "S/127");
+
+    // Add all correct mappings
+    addLanguages("h/267", "cb/267", "ht/267", "de/267", "S/127");
+    addLanguages("cb/267", "h/267", "ht/267", "de/267", "S/127");
+    addLanguages("de/267", "cb/267", "h/267", "ht/267", "S/127");
+    addLanguages("ht/267", "h/267", "cb/267", "de/267", "S/127");
+    addLanguages("S/127", "h/267", "cb/267", "ht/267", "de/267");
+    addLanguages("pt/267", "h/267", "S/127");
+
+    addLanguages("h/1360", "ch/217", "ht/1360", "hf/46");
+    addLanguages("ch/217", "h/1360", "ht/1360", "hf/46");
+    addLanguages("ht/1360", "ch/217", "h/1360", "hf/46");
+    addLanguages("hf/46", "ch/217", "h/1360", "ht/1360");
+  }
+
+  /**
+   * ts/253 and ts/253?gb=1 -> mapped to h/754 for some reason, but it actually is the chinese
+   * version of h/1164. So it should map to h/1164 and its related songs
+   */
+  void fix_ts253() {
+    removeLanguages("ts/253", "h/754", "pt/754");
+    removeLanguages("tsx/253", "h/754", "pt/754");
+    addLanguages("ts/253", "h/1164");
+    addLanguages("tsx/253", "h/1164");
+  }
+
   // /**
   //  *  ts/142 and ts/142?gb=1 -> mapped to h/1193 for some reason, but it actually is the chinese
   //  *  version of h/1198. So it should map to h/1198 and its related songs
@@ -385,7 +461,7 @@ public class HymnalNetPatcher extends Patcher {
   //       .addLanguages(SongLink.newBuilder().setName("English")
   //           .setReference(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1198")));
   // }
-  //
+
   // /**
   //  *  h/8526 is an alternate tune of h/720. In Hymnal.net, ch/526 and ch/526?gb=1 play the same tune
   //  *  as h/8526, while cb/720, ht/720, and de/720 play the same tune as h/720.
@@ -422,46 +498,45 @@ public class HymnalNetPatcher extends Patcher {
   //           .setReference(
   //               SongReference.newBuilder().setHymnType(HymnType.CHINESE_SIMPLIFIED.abbreviatedValue).setHymnNumber("526")));
   // }
-  //
-  // /**
-  //  * h/379 should be by itself. The Chinese song it's linked to (ch/385) is actually translated by h/8385.
-  //  */
-  // void fix_h379() {
-  //   getHymn(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("379").build()).clearLanguages();
-  // }
-  //
-  // /**
-  //  * h/1017, ch/693, and ch/643 are all kind of related. h/1017 is the full English song, ch/693 is
-  //  * the full Chinese song, while ch/643 is just the verse repeated a few times. I'm making a
-  //  * judgement call here to say that just having the chorus does NOT constitute a translation of the
-  //  * song, and therefore, I am going to set ch/643 and ch/643?gb=1 to just have each other as
-  //  * languages.
-  //  */
-  // void fix_ch643() {
-  //   getHymn(SongReference.newBuilder().setHymnType(HymnType.CHINESE.abbreviatedValue).setHymnNumber("643")).clearLanguages()
-  //       .addLanguages(SongLink.newBuilder().setName("诗歌(简)").setReference(
-  //           SongReference.newBuilder().setHymnType(HymnType.CHINESE_SIMPLIFIED.abbreviatedValue).setHymnNumber("643")
-  //               .build()));
-  //   getHymn(SongReference.newBuilder().setHymnType(HymnType.CHINESE_SIMPLIFIED.abbreviatedValue)
-  //       .setHymnNumber("643")).clearLanguages().addLanguages(SongLink.newBuilder().setName("诗歌(简)")
-  //       .setReference(
-  //           SongReference.newBuilder().setHymnType(HymnType.CHINESE.abbreviatedValue).setHymnNumber("643").build()));
-  // }
-  //
-  // /**
-  //  * h/528 should be by itself. The Chinese song it's linked to (ch/444) is actually translated by h/8444.
-  //  */
-  // void fix_h528() {
-  //   getHymn(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("528").build()).clearLanguages();
-  // }
-  //
-  // /**
-  //  * h/480 should be by itself. The Chinese song it's linked to (ch/357) is actually translated by h/8357.
-  //  */
-  // void fix_h480() {
-  //   getHymn(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("480").build()).clearLanguages();
-  // }
-  //
+
+  /**
+   * h/379 and pt/379 an incorrect Chinese song mappings. The Chinese song they're linked
+   * to (ch/385) is actually translated by h/8385.
+   */
+  void fix_h379() {
+    removeLanguages("h/379", "ch/385");
+    removeLanguages("pt/379", "ch/385");
+  }
+
+  /**
+   * h/1017, ch/693, and ch/643 are all kind of related. h/1017 is the full English song, ch/693 is
+   * the full Chinese song, while ch/643 is just the verse repeated a few times. I'm making a
+   * judgement call here to say that just having the chorus does NOT constitute a translation of the
+   * song, and therefore, I am going to set ch/643 and ch/643?gb=1 to just have each other as
+   * languages.
+   */
+  void fix_ch643() {
+    removeLanguages("ch/643", "cb/1017", "hd/1017", "h/1017", "hf/199", "S/474", "ht/1017", "pt/1017");
+    removeLanguages("chx/643", "cb/1017", "hd/1017", "h/1017", "hf/199", "S/474", "ht/1017", "pt/1017");
+  }
+
+  /**
+   * pt/528 has an incorrect Chinese song mapping. The Chinese song it's linked to (ch/444) is
+   * actually translated by h/8444.
+   */
+  void fix_pt528() {
+    removeLanguages("pt/528", "ch/444");
+  }
+
+  /**
+   * h/480 and pt/480 an incorrect Chinese song mappings. The Chinese song they're linked
+   * to (ch/357) is actually translated by h/8357.
+   */
+  void fix_h480() {
+    removeLanguages("h/480", "ch/357");
+    removeLanguages("pt/480", "ch/357");
+  }
+
   // /**
   //  * Both ns/154 and h/8330 are translations of ch/330. However, there is only a mapping of ch/330
   //  * to h/8330. So we need to add that mapping to both ns/154 and ch/330.
@@ -475,7 +550,7 @@ public class HymnalNetPatcher extends Patcher {
   //   addLanguages(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED.abbreviatedValue).setHymnNumber("330"),
   //       SongLink.newBuilder().setName("English").setReference(SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("154")));
   // }
-  //
+
   // /**
   //  * Both ns/19 and ns/474 are translations of ts/428. However, ts/428 only references ns/19. So we
   //  * need to add ns/474 as well.
@@ -574,39 +649,29 @@ public class HymnalNetPatcher extends Patcher {
   //       SongLink.newBuilder().setName("诗歌(简)")
   //           .setReference(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED.abbreviatedValue).setHymnNumber("29")));
   // }
-  //
-  // /**
-  //  * ch/632 is the Chinese song of h/870, but it references h/870b instead, which is a new tune.
-  //  */
-  // void fix_ch632() {
-  //   getHymn(SongReference.newBuilder().setHymnType(CHINESE.abbreviatedValue).setHymnNumber("632")).clearLanguages()
-  //       .addLanguages(
-  //           SongLink.newBuilder().setName("English")
-  //               .setReference(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("870")));
-  //   getHymn(
-  //       SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED.abbreviatedValue).setHymnNumber("632")).clearLanguages()
-  //       .addLanguages(
-  //           SongLink.newBuilder().setName("English")
-  //               .setReference(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("870")));
-  // }
-  //
-  // /**
-  //  * ts/248 is the Chinese song of h/300, but it references h/300b instead, which is a new tune.
-  //  */
-  // void fix_ts248() {
-  //   getHymn(
-  //       SongReference.newBuilder().setHymnType(CHINESE_SUPPLEMENTAL.abbreviatedValue).setHymnNumber("248")).clearLanguages()
-  //       .addLanguages(
-  //           SongLink.newBuilder().setName("English")
-  //               .setReference(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("300")));
-  //   getHymn(
-  //       SongReference.newBuilder().setHymnType(CHINESE_SUPPLEMENTAL_SIMPLIFIED.abbreviatedValue)
-  //           .setHymnNumber("248")).clearLanguages()
-  //       .addLanguages(
-  //           SongLink.newBuilder().setName("English")
-  //               .setReference(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("300")));
-  // }
-  //
+
+  /**
+   * ch/632 is the Chinese song of h/870, but it references h/870b instead, which is a new tune.
+   */
+  void fix_ch632() {
+    removeLanguages("ch/632", "h/870b", "pt/870b");
+    removeLanguages("chx/632", "h/870b", "pt/870b");
+
+    addLanguages("ch/632", "h/870", "pt/870");
+    addLanguages("chx/632", "h/870", "pt/870");
+  }
+
+  /**
+   * ts/248 is the Chinese song of h/300, but it references h/300b instead, which is a new tune.
+   */
+  void fix_ts248() {
+    removeLanguages("ts/248", "h/300b", "pt/300b");
+    removeLanguages("tsx/248", "h/300b", "pt/300b");
+
+    addLanguages("ts/248", "h/300", "pt/300");
+    addLanguages("tsx/248", "h/300", "pt/300");
+  }
+
   // /**
   //  * nt/477b should link to nt/477 as a relevant song, but instead contains a self-link.
   //  */

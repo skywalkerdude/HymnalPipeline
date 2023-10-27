@@ -10,6 +10,7 @@ import com.hymnsmobile.pipeline.merge.dagger.Merge;
 import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
 import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.PipelineError;
+import com.hymnsmobile.pipeline.models.PipelineError.ErrorType;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import com.hymnsmobile.pipeline.models.SongReference;
 import com.hymnsmobile.pipeline.models.Verse;
@@ -83,9 +84,11 @@ public class H4aMerger {
       case FRENCH:
       case SPANISH:
         this.errors.add(
-            PipelineError.newBuilder().setSeverity(Severity.WARNING).setMessage(String.format(
-                    "%s have already been added by hymnal.net. Warrants investigation",
-                    h4aReference))
+            PipelineError.newBuilder()
+                .setSeverity(Severity.ERROR)
+                .setErrorType(ErrorType.UNEXPECTED_HYMN_TYPE)
+                .addMessages("Should have all been added by hymnal.net already")
+                .addMessages(h4aReference.toString())
                 .build());
       case TAGALOG:
         // Even though hymnal.net has Tagalog songs, it isn't contiguous and there are a bunch of

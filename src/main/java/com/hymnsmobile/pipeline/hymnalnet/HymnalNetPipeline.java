@@ -51,11 +51,11 @@ public class HymnalNetPipeline {
     return ImmutableList.copyOf(errors);
   }
 
-  public void run() throws IOException, InterruptedException, URISyntaxException {
+  public void run() throws IOException {
     LOGGER.fine("Hymnal.net pipeline starting");
     readFile();
-    // fetcher.fetchHymns();
-    // writeAllHymns();
+    fetcher.fetchHymns();
+    writeAllHymns();
     LOGGER.fine("Hymnal.net pipeline finished");
   }
 
@@ -81,7 +81,9 @@ public class HymnalNetPipeline {
     LOGGER.fine(String.format("Writing hymns to %s", fileName));
     fileReadWriter.writeProto(fileName,
         com.hymnsmobile.pipeline.hymnalnet.models.HymnalNet.newBuilder()
-            .addAllHymnanlNetJson(hymnalNetJsons).addAllErrors(errors).build());
+            .addAllHymnanlNetJson(hymnalNetJsons)
+            .addAllErrors(errors)
+            .build());
   }
 
   public static void main(String[] args)

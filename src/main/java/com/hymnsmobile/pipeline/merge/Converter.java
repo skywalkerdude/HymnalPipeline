@@ -27,6 +27,7 @@ import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
 import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.Line;
 import com.hymnsmobile.pipeline.models.PipelineError;
+import com.hymnsmobile.pipeline.models.PipelineError.ErrorType;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import com.hymnsmobile.pipeline.models.SongReference;
 import com.hymnsmobile.pipeline.models.Verse;
@@ -180,8 +181,10 @@ public class Converter {
 
       Optional<MetaDatumType> metaDatumType = MetaDatumType.fromJsonRepresentation(metaDatum);
       if (metaDatumType.isEmpty()) {
-        errors.add(PipelineError.newBuilder().setSeverity(Severity.WARNING)
-            .setMessage(String.format("MetaDatum name not found for %s: %s", key, metaDatum))
+        errors.add(PipelineError.newBuilder()
+            .setSeverity(Severity.WARNING)
+            .setErrorType(ErrorType.PARSE_ERROR)
+            .addMessages(String.format("MetaDatum name not found for %s: %s", key, metaDatum))
             .build());
         return;
       }
@@ -194,7 +197,10 @@ public class Converter {
           Optional<HymnalNetKey> relatedKey = com.hymnsmobile.pipeline.hymnalnet.Converter.extractFromPath(
               datum.getPath(), hymn.getKey(), errors);
           if (relatedKey.isEmpty()) {
-            errors.add(PipelineError.newBuilder().setSeverity(Severity.WARNING).setMessage(
+            errors.add(PipelineError.newBuilder()
+                .setSeverity(Severity.WARNING)
+                .setErrorType(ErrorType.PARSE_ERROR)
+                .addMessages(
                     String.format("%s had an unrecognized related song: %s", key, datum.getPath()))
                 .build());
             return;

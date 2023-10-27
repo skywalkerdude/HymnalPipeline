@@ -14,6 +14,7 @@ import com.google.common.collect.ImmutableSet;
 import com.hymnsmobile.pipeline.merge.dagger.Merge;
 import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
 import com.hymnsmobile.pipeline.models.PipelineError;
+import com.hymnsmobile.pipeline.models.PipelineError.ErrorType;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import com.hymnsmobile.pipeline.models.SongReference;
 import java.util.Collections;
@@ -39,12 +40,11 @@ public class RelevantsAuditor {
 
   private void auditRelevantsSet(Set<SongReference> setToAudit) {
     if (setToAudit.size() == 1) {
-      errors.add(
-          PipelineError
-              .newBuilder()
-              .setSeverity(Severity.ERROR)
-              .setMessage(String.format("Dangling relevant set: %s", setToAudit))
-              .build());
+      errors.add(PipelineError.newBuilder()
+          .setSeverity(Severity.ERROR)
+          .setErrorType(ErrorType.AUDITOR_DANGLING_RELEVANT_SET)
+          .addMessages(setToAudit.toString())
+          .build());
     }
 
     // Extract the hymn types for audit.
@@ -83,12 +83,12 @@ public class RelevantsAuditor {
       }
 
       if (Collections.frequency(hymnTypes, hymnType) > timesAllowed) {
-        errors.add(
-            PipelineError
-                .newBuilder()
-                .setSeverity(Severity.ERROR).
-                setMessage(String.format("%s has too many instances of %s", setToAudit, hymnType))
-                .build());
+        errors.add(PipelineError.newBuilder()
+            .setSeverity(Severity.ERROR)
+            .setErrorType(ErrorType.AUDITOR_TOO_MANY_INSTANCES)
+            .addMessages(setToAudit.toString())
+            .addMessages(hymnType.toString())
+            .build());
       }
     }
 
@@ -97,12 +97,11 @@ public class RelevantsAuditor {
         || (hymnTypes.contains(CLASSIC_HYMN) && hymnTypes.contains(HymnType.CHILDREN_SONG))
         || hymnTypes.contains(HymnType.CHILDREN_SONG) && hymnTypes.contains(NEW_SONG)
         || hymnTypes.contains(CHINESE) && hymnTypes.contains(HymnType.CHINESE_SUPPLEMENTAL)) {
-      errors.add(
-          PipelineError
-              .newBuilder()
-              .setSeverity(Severity.ERROR).
-              setMessage(String.format("Incompatible relevant types: %s", setToAudit))
-              .build());
+      errors.add(PipelineError.newBuilder()
+          .setSeverity(Severity.ERROR)
+          .setErrorType(ErrorType.AUDITOR_INCOMPATIBLE_RELEVANTS)
+          .addMessages(setToAudit.toString())
+          .build());
     }
   }
 }
