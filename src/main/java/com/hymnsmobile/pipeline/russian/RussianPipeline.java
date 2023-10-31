@@ -36,7 +36,7 @@ import javax.inject.Inject;
 public class RussianPipeline {
 
   private static final Logger LOGGER = Logger.getGlobal();
-  private static final String FILE_PATH = "storage/russian/russian_protos.txt";
+  private static final String FILE_PATH = "storage/russian/russian_protos.textproto";
 
   private final Set<RussianHymn> hymns;
 

@@ -37,7 +37,7 @@ public class H4aPatcher extends Patcher {
   @Override
   protected void performPatch() {
     // fix_h79_h8079();
-    // fix_i330();
+    // fix_I330();
     // fix_i773();
     // fix_bf69();
     // fix_i269_h367();
@@ -47,7 +47,7 @@ public class H4aPatcher extends Patcher {
     // fix_i643_j643();
     // fix_i1401();
     // fix_h31();
-    // fix_k1014_h1248();
+    // fix_K1014_h1248();
     // fix_i1832();
     // fix_i43();
     // fix_i1531();
@@ -88,21 +88,15 @@ public class H4aPatcher extends Patcher {
   //       SongLink.newBuilder().setName("Tagalog").setReference(SongReference.newBuilder().setHymnType(TAGALOG.abbreviatedValue).setHymnNumber("79")),
   //       SongLink.newBuilder().setName("Indonedian").setReference(SongReference.newBuilder().setHymnType(INDONESIAN.abbreviatedValue).setHymnNumber("68")));
   // }
-  //
-  // /**
-  //  * The parent of i/330 in H4a database is bf/157, when it should be ch/330, since it is the
-  //  * Indonesian translation of ch/330.
-  //  */
-  // private void fix_i330() {
-  //   removeLanguages(SongReference.newBuilder().setHymnType(INDONESIAN.abbreviatedValue).setHymnNumber("330"),
-  //       SongReference.newBuilder().setHymnType(BE_FILLED.abbreviatedValue).setHymnNumber("157"));
-  //   addLanguages(SongReference.newBuilder().setHymnType(INDONESIAN.abbreviatedValue).setHymnNumber("330"),
-  //       SongLink.newBuilder().setName("詩歌(繁)")
-  //           .setReference(SongReference.newBuilder().setHymnType(CHINESE.abbreviatedValue).setHymnNumber("330")),
-  //       SongLink.newBuilder().setName("诗歌(简)")
-  //           .setReference(SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED.abbreviatedValue).setHymnNumber("330")));
-  // }
-  //
+
+  /**
+   * The parent of I/330 in H4a database is bf/157, when it should be ch/330, since it is the
+   * Indonesian translation of ch/330.
+   */
+  private void fix_I330() {
+    removeLanguages("I/330", "bf/157");
+  }
+
   // /**
   //  * The parent of i/773 in H4a database is bf/69, when it should be ch/773, since it is the
   //  * Indonesian translation of ch/773.
@@ -186,22 +180,25 @@ public class H4aPatcher extends Patcher {
   //   removeLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("666"),
   //       SongReference.newBuilder().setHymnType(INDONESIAN.abbreviatedValue).setHymnNumber("485"));
   // }
-  //
-  // /**
-  //  * h/1358 is a 1-verse song called "Rise! Preach the Gospel now!". h/921 is a 4-verse song called
-  //  * "Rescue the perishing".
-  //  *
-  //  * These are two different songs with the same tune. Therefore, they should be separate in terms
-  //  * of language translations. However, they are confounded by i/664, which references both h/921
-  //  * and ch/664. We need to remove h/921.
-  //  */
-  // private void fix_i664() {
-  //   removeLanguages(SongReference.newBuilder().setHymnType(INDONESIAN.abbreviatedValue).setHymnNumber("664"),
-  //       SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("921"));
-  //   removeLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("921"),
-  //       SongReference.newBuilder().setHymnType(INDONESIAN.abbreviatedValue).setHymnNumber("664"));
-  // }
-  //
+
+  /**
+   * h/1358 is a 1-verse song called "Rise! Preach the Gospel now!". h/921 is a 4-verse song called
+   * "Rescue the perishing".
+   * </p>
+   * These are two different songs with the same tune. Therefore, they should be separate in terms
+   * of language translations. However, they are confounded by i/664, which references both h/921
+   * and ch/664. We need to remove h/921.
+   */
+  private void fix_i664() {
+    removeLanguages("I/664", "h/921");
+    removeLanguages("h/921", "I/664", "ch/664");
+
+    // removeLanguages(SongReference.newBuilder().setHymnType(INDONESIAN.abbreviatedValue).setHymnNumber("664"),
+    //     SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("921"));
+    // removeLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("921"),
+    //     SongReference.newBuilder().setHymnType(INDONESIAN.abbreviatedValue).setHymnNumber("664"));
+  }
+
   // /**
   //  * Based on {@link HymnalNetPatcher#fix_ch643()}, ch/643 should have no references to non-Chinese
   //  * songs. However, H4a adds i/643, which is the Indonesian translation of ch/643. However, the
@@ -253,21 +250,16 @@ public class H4aPatcher extends Patcher {
   //       SongLink.newBuilder().setName("Tagalog")
   //           .setReference(SongReference.newBuilder().setHymnType(TAGALOG.abbreviatedValue).setHymnNumber("31")));
   // }
-  //
-  // /**
-  //  * k/1014 matches to h/1248, but it should match to h/1295 instead
-  //  */
-  // private void fix_k1014_h1248() {
-  //   removeLanguages(SongReference.newBuilder().setHymnType(KOREAN.abbreviatedValue).setHymnNumber("1014"),
-  //       SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1248"));
-  //   addLanguages(SongReference.newBuilder().setHymnType(KOREAN.abbreviatedValue).setHymnNumber("1014"),
-  //       SongLink.newBuilder().setName("English")
-  //           .setReference(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1295")));
-  //
-  //   removeLanguages(SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1248"),
-  //       SongReference.newBuilder().setHymnType(KOREAN.abbreviatedValue).setHymnNumber("1014"));
-  // }
-  //
+
+  /**
+   * K/1014 matches to h/1248, but it should match to h/1295 instead
+   */
+  private void fix_K1014_h1248() {
+    removeLanguages("K/1014", "h/1248");
+    removeLanguages("h/1248", "K/1014");
+    addLanguages("K/1014", "h/1295");
+  }
+
   // /**
   //  * i/1832 is mapped to ts/823, but it should be mapped to ts/832 instead. Most likely a typo.
   //  */

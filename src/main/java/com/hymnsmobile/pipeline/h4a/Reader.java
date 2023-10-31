@@ -30,7 +30,7 @@ public class Reader {
 
   private static final Logger LOGGER = Logger.getGlobal();
 
-  private static final String DATABASE_PATH = "jdbc:sqlite:storage/h4a/h4a-piano-v4_6.sqlite";
+  private static final String DATABASE_PATH = "jdbc:sqlite:storage/h4a/h4a-piano-v4_7.sqlite";
 
   /**
    * Use a custom escape sequence, since Gson will auto-escape strings and screw everything up.
