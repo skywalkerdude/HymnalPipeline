@@ -85,16 +85,29 @@ public abstract class Patcher {
   }
 
   protected void removeLanguages(SongReference from, SongReference... languages) {
+    // If the song is a Chinese song, also perform for the simplified version.
+    HymnType hymnType = HymnType.fromString(from.getHymnType());
+    if (hymnType == HymnType.CHINESE) {
+      removeLanguages(
+          SongReference.newBuilder().setHymnType(HymnType.CHINESE_SIMPLIFIED.abbreviatedValue)
+              .setHymnNumber(from.getHymnNumber()).build(), languages);
+    }
+    if (hymnType == HymnType.CHINESE_SUPPLEMENTAL) {
+      removeLanguages(
+          SongReference.newBuilder()
+              .setHymnType(HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED.abbreviatedValue)
+              .setHymnNumber(from.getHymnNumber()).build(), languages);
+    }
     Hymn.Builder builder = getHymn(from);
 
     ImmutableList<SongReference> languagesToRemove = Arrays.stream(languages)
         .flatMap((Function<SongReference, Stream<SongReference>>) songReference -> {
           // If the song is a Chinese song, also add the simplified version
-          HymnType hymnType = HymnType.fromString(songReference.getHymnType());
-          if (hymnType == HymnType.CHINESE) {
+          HymnType songReferenceType = HymnType.fromString(songReference.getHymnType());
+          if (songReferenceType == HymnType.CHINESE) {
             return ImmutableList.of(songReference, SongReference.newBuilder().setHymnType("chx")
                 .setHymnNumber(songReference.getHymnNumber()).build()).stream();
-          } else if (hymnType == HymnType.CHINESE_SUPPLEMENTAL) {
+          } else if (songReferenceType == HymnType.CHINESE_SUPPLEMENTAL) {
             return ImmutableList.of(songReference, SongReference.newBuilder().setHymnType("tsx")
                 .setHymnNumber(songReference.getHymnNumber()).build()).stream();
           } else {
@@ -156,6 +169,20 @@ public abstract class Patcher {
 
   protected void addSongLinks(SongReference to, FieldDescriptor field,
       SongReference... songLinks) {
+    // If the song is a Chinese song, also perform for the simplified version.
+    HymnType hymnType = HymnType.fromString(to.getHymnType());
+    if (hymnType == HymnType.CHINESE) {
+      addSongLinks(
+          SongReference.newBuilder().setHymnType(HymnType.CHINESE_SIMPLIFIED.abbreviatedValue)
+              .setHymnNumber(to.getHymnNumber()).build(), field, songLinks);
+    }
+    if (hymnType == HymnType.CHINESE_SUPPLEMENTAL) {
+      addSongLinks(
+          SongReference.newBuilder()
+              .setHymnType(HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED.abbreviatedValue)
+              .setHymnNumber(to.getHymnNumber()).build(), field, songLinks);
+    }
+
     Hymn.Builder builder = getHymn(to);
     // noinspection unchecked
     List<SongReference> links = (List<SongReference>) builder.getField(field);

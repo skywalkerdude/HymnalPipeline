@@ -237,10 +237,8 @@ public class HymnalNetPatcher extends Patcher {
    */
   void fix_ch1090() {
     removeLanguages("ch/1090", "h/1089", "ht/1089", "cb/1089", "pt/1089");
-    removeLanguages("chx/1090", "h/1089", "ht/1089", "cb/1089", "pt/1089");
 
     addLanguages("ch/1090", "h/1090");
-    addLanguages("chx/1090", "h/1090");
   }
 
   /**
@@ -285,7 +283,6 @@ public class HymnalNetPatcher extends Patcher {
 
     removeLanguages("h/1359", "cb/445", "ch/339", "ht/1359", "S/192");
     removeLanguages("ch/339", "h/1359", "cb/445", "ht/1359", "S/192");
-    removeLanguages("chx/339", "h/1359", "cb/445", "ht/1359", "S/192");
     removeLanguages("ht/1359", "h/1359", "cb/445", "ch/339", "S/192");
     removeLanguages("S/190", "h/445", "cb/445", "ch/339", "ht/1359", "hf/79", "pt/445");
 
@@ -300,7 +297,6 @@ public class HymnalNetPatcher extends Patcher {
 
     addLanguages("h/1359", "ch/339", "ht/1359", "S/192");
     addLanguages("ch/339", "h/1359", "ht/1359", "S/192");
-    addLanguages("chx/339", "h/1359", "ht/1359", "S/192");
     addLanguages("ht/1359", "h/1359", "ch/339", "S/192");
     addLanguages("S/192", "h/1359", "ch/339", "ht/1359");
   }
@@ -361,7 +357,6 @@ public class HymnalNetPatcher extends Patcher {
     removeLanguages("h/8079", "cb/79", "ch/68", "ht/79", "S/44");
     removeLanguages("ht/79", "h/79", "ch/68", "cb/79", "S/44", "pt/79");
     removeLanguages("ch/68", "h/8079", "cb/79", "ht/79", "S/44");
-    removeLanguages("chx/68", "h/8079", "cb/79", "ht/79", "S/44");
 
     // Add all correct mappings
     addLanguages("h/79", "cb/79", "S/44");
@@ -371,7 +366,6 @@ public class HymnalNetPatcher extends Patcher {
 
     addLanguages("h/8079", "ch/68", "ht/79");
     addLanguages("ch/68", "h/8079", "ht/79");
-    addLanguages("chx/68", "h/8079", "ht/79");
     addLanguages("ht/79", "h/8079", "ch/68");
   }
 
@@ -410,7 +404,6 @@ public class HymnalNetPatcher extends Patcher {
     removeLanguages("cb/267", "h/267", "ch/217", "hf/46", "ht/267", "S/127", "pt/267");
     removeLanguages("hf/46", "cb/267", "ch/217", "h/267", "de/267", "ht/267", "S/127", "pt/267");
     removeLanguages("ch/217", "h/1360", "cb/267", "ht/1360", "S/127");
-    removeLanguages("chx/217", "h/1360", "cb/267", "ht/1360", "S/127");
     removeLanguages("ht/267", "h/267", "cb/267", "ch/217", "hf/46", "S/127", "pt/267");
     removeLanguages("S/127", "cb/267", "ch/217", "h/267", "hf/46", "de/267", "ht/267", "pt/267");
     removeLanguages("de/267", "cb/267", "ch/217", "h/267", "hf/46", "S/127", "ht/267", "pt/267");
@@ -439,9 +432,7 @@ public class HymnalNetPatcher extends Patcher {
    */
   void fix_ts253() {
     removeLanguages("ts/253", "h/754", "pt/754");
-    removeLanguages("tsx/253", "h/754", "pt/754");
     addLanguages("ts/253", "h/1164");
-    addLanguages("tsx/253", "h/1164");
   }
 
   /**
@@ -462,7 +453,6 @@ public class HymnalNetPatcher extends Patcher {
    */
   void fix_ch643() {
     removeLanguages("ch/643", "cb/1017", "hd/1017", "h/1017", "hf/199", "S/474", "ht/1017", "pt/1017");
-    removeLanguages("chx/643", "cb/1017", "hd/1017", "h/1017", "hf/199", "S/474", "ht/1017", "pt/1017");
   }
 
   /**
@@ -489,7 +479,6 @@ public class HymnalNetPatcher extends Patcher {
   void fix_ns154() {
     addLanguages("ns/154", "ch/330");
     addLanguages("ch/330", "ns/154");
-    addLanguages("chx/330", "ns/154");
   }
 
   /**
@@ -498,7 +487,6 @@ public class HymnalNetPatcher extends Patcher {
    */
   void fix_ch9166() {
     removeLanguages("ch/9166", "h/157", "ht/157", "pt/157");
-    removeLanguages("chx/9166", "h/157", "ht/157", "pt/157");
   }
 
   /**
@@ -506,10 +494,8 @@ public class HymnalNetPatcher extends Patcher {
    */
   void fix_ch632() {
     removeLanguages("ch/632", "h/870b");
-    removeLanguages("chx/632", "h/870b");
 
     addLanguages("ch/632", "h/870");
-    addLanguages("chx/632", "h/870");
   }
 
   /**
@@ -517,10 +503,8 @@ public class HymnalNetPatcher extends Patcher {
    */
   void fix_ts248() {
     removeLanguages("ts/248", "h/300b");
-    removeLanguages("tsx/248", "h/300b");
 
     addLanguages("ts/248", "h/300");
-    addLanguages("tsx/248", "h/300");
   }
 
   /**
