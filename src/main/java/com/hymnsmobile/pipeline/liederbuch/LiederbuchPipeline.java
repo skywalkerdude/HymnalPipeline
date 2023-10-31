@@ -93,7 +93,9 @@ public class LiederbuchPipeline {
         }
 
         LiederbuchHymn.Builder liederbuchSong = LiederbuchHymn.newBuilder().setKey(key);
-        assert headerElement != null;
+        if (headerElement == null) {
+          throw new IllegalStateException("header element was null");
+        }
         // Remove the "#CS1" link that is part of the title, so we can get the actual title out.
         headerElement.select("a[href]").remove();
 
@@ -101,7 +103,12 @@ public class LiederbuchPipeline {
 
         // Info about the song, such as related songs and meter
         Element infoElement = headerElement.nextElementSibling();
-        assert infoElement != null && infoElement.hasClass("calibre 7");
+        if (infoElement == null) {
+          throw new IllegalStateException("info element was null");
+        }
+        if (!infoElement.hasClass("calibre 7")) {
+          throw new IllegalStateException("info element does not have class calibre 7");
+        }
         liederbuchSong.addAllRelated(infoElement.select("a[href]").stream()
             .peek(Node::remove)
             .map(Element::text)

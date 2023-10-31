@@ -114,7 +114,9 @@ public class SanitizationPipeline {
       }
 
       final Set<SongReference> songLinkSet = new LinkedHashSet<>();
-      assert hymn.getReferencesCount() > 0;
+      if (hymn.getReferencesCount() == 0) {
+        throw new IllegalStateException("hymn references were empty");
+      }
       populateSongLinkSet(builders, descriptor, hymn.getReferences(0), songLinkSet);
 
       // Once we have the song link set for this hymn populated correctly, we attempt to merge it
@@ -154,7 +156,9 @@ public class SanitizationPipeline {
     ImmutableList<Hymn.Builder> results = builders.stream()
         .filter(builder -> builder.getReferencesList().contains(songReference))
         .collect(toImmutableList());
-    assert results.size() == 1;
+    if (results.size() != 1) {
+      throw new IllegalStateException("results was not of size 1");
+    }
     return results.get(0);
   }
 
@@ -175,7 +179,9 @@ public class SanitizationPipeline {
         return;
       }
 
-      assert setContainingHymn.size() == 1;
+      if (setContainingHymn.size() != 1) {
+        throw new IllegalStateException("Set containing hymn was not size 1");
+      }
 
       // Make a copy of the list, so we aren't destructively altering it within a loop
       List<SongReference> newLinks = new ArrayList<>(setContainingHymn.get(0));

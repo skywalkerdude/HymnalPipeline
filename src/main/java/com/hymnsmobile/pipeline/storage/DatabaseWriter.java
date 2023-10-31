@@ -153,7 +153,9 @@ public class DatabaseWriter {
         throw new SQLException("Unable to obtain ID from recently inserted hymn.");
       }
       long id = generatedKeys.getLong(1);
-      assert (int) id == hymn.getId();
+      if ((int) id != hymn.getId()) {
+        throw new IllegalStateException("id not equal to hymn id");
+      }
       PreparedStatement songIdInsert = connection.prepareStatement(
           "INSERT INTO SONG_IDS (HYMN_TYPE, HYMN_NUMBER, SONG_ID) VALUES (?, ?, ?)");
       for (SongReference songReference : hymn.getReferencesList()) {

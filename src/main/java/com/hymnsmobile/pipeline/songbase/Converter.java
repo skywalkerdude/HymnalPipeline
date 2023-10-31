@@ -49,7 +49,9 @@ public class Converter {
                 String songIndex = bookSongMap.getValue();
                 seen.add(songId);
                 SongResponse song = songsById.get(songId);
-                assert song != null;
+                if (song == null) {
+                  throw new IllegalStateException("song was null");
+                }
                 return SongbaseHymn.newBuilder()
                     .addKey(
                         SongbaseKey.newBuilder().setHymnType(hymnType).setHymnNumber(songIndex))

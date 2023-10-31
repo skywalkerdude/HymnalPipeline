@@ -59,7 +59,9 @@ public class SongbaseMerger {
         return;
       }
 
-      assert matchingReference.size() == 1;
+      if (matchingReference.size() != 1) {
+        throw new IllegalStateException("Wrong number of matching references");
+      }
       // Add the new references
       songbaseBuilder.getReferencesList().stream()
           .filter(reference -> !matchingReference.get(0).getReferencesList().contains(reference))
