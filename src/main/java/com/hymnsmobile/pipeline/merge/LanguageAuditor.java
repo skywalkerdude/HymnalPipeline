@@ -27,17 +27,16 @@ import javax.inject.Inject;
  * QAs the songs to ensure that songs are correct and there's no glaring errors/mistakes.
  */
 @MergeScope
-public class LanguageAuditor {
-
-  private final Set<PipelineError> errors;
+public class LanguageAuditor extends Auditor {
 
   @Inject
   public LanguageAuditor(@Merge Set<PipelineError> errors) {
-    this.errors = errors;
+    super(errors, LANGUAGES_EXCEPTIONS);
   }
 
-  public void audit(Set<Set<SongReference>> languageSets) {
-    languageSets.forEach(this::auditLanguageSet);
+  @Override
+  protected void performAudit(Set<Set<SongReference>> songReferenceSets) {
+    songReferenceSets.forEach(this::auditLanguageSet);
   }
 
   private void auditLanguageSet(Set<SongReference> setToAudit) {
@@ -71,20 +70,13 @@ public class LanguageAuditor {
         }
       }
 
-      // If the current set includes an exception group, then remove that exception group from the list and audit
-      // again.
-      for (Set<SongReference> exception : LANGUAGES_EXCEPTIONS) {
-        if (setToAudit.containsAll(exception)) {
-          if (!setToAudit.removeAll(exception)) {
-            throw new IllegalArgumentException(
-                exception + " was unable to be removed from " + setToAudit);
-          }
+      if (Collections.frequency(hymnTypes, hymnType) > timesAllowed) {
+        // If exceptions were removed, then we audit the new set and return early (i.e. don't keep
+        // looking at hte rest of the hymn types because that list is no longer accurate)
+        if (removeExceptions(setToAudit)) {
           auditLanguageSet(setToAudit);
           return;
         }
-      }
-
-      if (Collections.frequency(hymnTypes, hymnType) > timesAllowed) {
         errors.add(PipelineError.newBuilder()
             .setSeverity(Severity.ERROR)
             .setErrorType(ErrorType.AUDITOR_TOO_MANY_INSTANCES)
@@ -95,12 +87,12 @@ public class LanguageAuditor {
     }
 
     // Verify that incompatible hymn types don't appear together the languages list.
-    if ((hymnTypes.contains(CLASSIC_HYMN) && hymnTypes.contains(NEW_SONG))
+    if (((hymnTypes.contains(CLASSIC_HYMN) && hymnTypes.contains(NEW_SONG))
         || (hymnTypes.contains(CLASSIC_HYMN) && hymnTypes.contains(CHILDREN_SONG))
         || hymnTypes.contains(CHILDREN_SONG) && hymnTypes.contains(NEW_SONG)
         || hymnTypes.contains(CHINESE) && hymnTypes.contains(CHINESE_SUPPLEMENTAL)
-        || hymnTypes.contains(CHINESE_SIMPLIFIED) && hymnTypes.contains(
-        CHINESE_SUPPLEMENTAL_SIMPLIFIED)) {
+        || hymnTypes.contains(CHINESE_SIMPLIFIED) && hymnTypes.contains(CHINESE_SUPPLEMENTAL_SIMPLIFIED))
+        && !removeExceptions(setToAudit)) {
       errors.add(PipelineError.newBuilder()
           .setSeverity(Severity.ERROR)
           .setErrorType(ErrorType.AUDITOR_INCOMPATIBLE_LANGUAGES)

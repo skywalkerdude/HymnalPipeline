@@ -9,6 +9,8 @@ import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
 import com.hymnsmobile.pipeline.merge.patchers.Patcher;
 import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.PipelineError;
+import com.hymnsmobile.pipeline.models.PipelineError.ErrorType;
+import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import com.hymnsmobile.pipeline.models.SongLink;
 import com.hymnsmobile.pipeline.models.SongReference;
 import java.util.ArrayList;
@@ -17,6 +19,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
@@ -100,6 +103,14 @@ public class SanitizationPipeline {
 
       if (links.isEmpty()) {
         return;
+      }
+
+      if (links.stream().anyMatch(link -> hymn.getReferencesList().contains(link))) {
+        errors.add(PipelineError.newBuilder()
+            .setSeverity(Severity.ERROR)
+            .setErrorType(ErrorType.AUDITOR_SELF_REFERENCE)
+            .addMessages(hymn.getReferencesList().toString())
+            .build());
       }
 
       final Set<SongReference> songLinkSet = new LinkedHashSet<>();

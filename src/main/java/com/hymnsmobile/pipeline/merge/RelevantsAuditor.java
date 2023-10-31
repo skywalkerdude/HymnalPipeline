@@ -25,17 +25,16 @@ import javax.inject.Inject;
  * QAs the songs to ensure that songs are correct and there's no glaring errors/mistakes.
  */
 @MergeScope
-public class RelevantsAuditor {
-
-  private final Set<PipelineError> errors;
+public class RelevantsAuditor extends Auditor {
 
   @Inject
   public RelevantsAuditor(@Merge Set<PipelineError> errors) {
-    this.errors = errors;
+    super(errors, RELEVANT_EXCEPTIONS);
   }
 
-  public void audit(Set<Set<SongReference>> relevantsSets) {
-    relevantsSets.forEach(this::auditRelevantsSet);
+  @Override
+  protected void performAudit(Set<Set<SongReference>> songReferenceSets) {
+    songReferenceSets.forEach(this::auditRelevantsSet);
   }
 
   private void auditRelevantsSet(Set<SongReference> setToAudit) {
@@ -70,19 +69,13 @@ public class RelevantsAuditor {
         }
       }
 
-      // If the current set includes an exception group, then remove that exception group from the list and audit
-      // again.
-      for (Set<SongReference> exception : RELEVANT_EXCEPTIONS) {
-        if (setToAudit.containsAll(exception)) {
-          if (!setToAudit.removeAll(exception)) {
-            throw new IllegalArgumentException(exception + " was unable to be removed from " + setToAudit);
-          }
+      if (Collections.frequency(hymnTypes, hymnType) > timesAllowed) {
+        // If exceptions were removed, then we audit the new set and return early (i.e. don't keep
+        // looking at hte rest of the hymn types because that list is no longer accurate)
+        if (removeExceptions(setToAudit)) {
           auditRelevantsSet(setToAudit);
           return;
         }
-      }
-
-      if (Collections.frequency(hymnTypes, hymnType) > timesAllowed) {
         errors.add(PipelineError.newBuilder()
             .setSeverity(Severity.ERROR)
             .setErrorType(ErrorType.AUDITOR_TOO_MANY_INSTANCES)
@@ -93,10 +86,11 @@ public class RelevantsAuditor {
     }
 
     // Verify that incompatible hymn types don't appear together the relevant list.
-    if ((hymnTypes.contains(CLASSIC_HYMN) && hymnTypes.contains(NEW_SONG))
+    if (((hymnTypes.contains(CLASSIC_HYMN) && hymnTypes.contains(NEW_SONG))
         || (hymnTypes.contains(CLASSIC_HYMN) && hymnTypes.contains(HymnType.CHILDREN_SONG))
         || hymnTypes.contains(HymnType.CHILDREN_SONG) && hymnTypes.contains(NEW_SONG)
-        || hymnTypes.contains(CHINESE) && hymnTypes.contains(HymnType.CHINESE_SUPPLEMENTAL)) {
+        || hymnTypes.contains(CHINESE) && hymnTypes.contains(HymnType.CHINESE_SUPPLEMENTAL))
+        && !removeExceptions(setToAudit)) {
       errors.add(PipelineError.newBuilder()
           .setSeverity(Severity.ERROR)
           .setErrorType(ErrorType.AUDITOR_INCOMPATIBLE_RELEVANTS)

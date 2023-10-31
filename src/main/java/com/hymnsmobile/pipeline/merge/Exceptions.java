@@ -57,7 +57,21 @@ public final class Exceptions {
       // from hymnal.net.
       ImmutableSet.of(
           SongReference.newBuilder().setHymnType(TAGALOG.abbreviatedValue).setHymnNumber("c333").build(),
-          SongReference.newBuilder().setHymnType(TAGALOG.abbreviatedValue).setHymnNumber("437").build())
+          SongReference.newBuilder().setHymnType(TAGALOG.abbreviatedValue).setHymnNumber("437").build()),
+
+      // h/8526 is an alternate tune of h/720.
+      //
+      // In Hymnal.net, ch/526 play the same tune as h/8526, while cb/720, ht/720, de/720, and
+      // pt/720 play the same tune as h/720. Technically, h/8526 and ch/526 should be in their own
+      // language group, while h/720, cb/720, de/720, and pt/720 should be in their own language
+      // group. However, this means that someone on h/720 won't be able to find the Chinese
+      // version of that song, which may seem like a mistake.
+      //
+      // Therefore, we are going to allow both classic hymns to be in the same language group as
+      // an exception to reduce confusion.
+      ImmutableSet.of(
+          SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("720").build(),
+          SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("8526").build())
   );
 
   static final ImmutableSet<ImmutableSet<SongReference>> RELEVANT_EXCEPTIONS = ImmutableSet.of(

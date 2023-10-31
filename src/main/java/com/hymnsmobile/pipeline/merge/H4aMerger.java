@@ -129,10 +129,6 @@ public class H4aMerger {
    */
   private void mergeGermanHymn(H4aHymn h4aGermanHymn, List<Hymn.Builder> builders) {
     SongReference germanSongReference = converter.toSongReference(h4aGermanHymn.getId());
-    if (HymnType.fromString(germanSongReference.getHymnType()) == HymnType.LIEDERBUCH &&
-        (germanSongReference.getHymnNumber().equals("10001") || germanSongReference.getHymnNumber().equals("10002"))) {
-      System.out.println("booyah2");
-    }
 
     // Try to find the associated German song that has already been processed
     ImmutableList<SongReference> relatedReferences =

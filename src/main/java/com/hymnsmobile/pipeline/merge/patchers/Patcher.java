@@ -10,10 +10,7 @@ import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.PipelineError.ErrorType;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
-import com.hymnsmobile.pipeline.models.SongLink;
 import com.hymnsmobile.pipeline.models.SongReference;
-import com.hymnsmobile.pipeline.models.SongReferenceOrBuilder;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -44,38 +41,47 @@ public abstract class Patcher {
     return builders.stream().map(Hymn.Builder::build).collect(toImmutableList());
   }
 
-  protected void removeRelevants(SongReference.Builder songReference,
-      SongReference.Builder... relevants) {
-    Hymn.Builder builder = getHymn(songReference);
-
-    // Need to make a copy because builder.getRelevantsList() returns an unmodifiable list.
-    List<SongReference> existingRelevants = new ArrayList<>(builder.getRelevantsList());
-    for (SongReference.Builder relevant : relevants) {
-      if (!existingRelevants.contains(relevant.build())) {
-        continue;
-      }
-      int index = existingRelevants.indexOf(relevant.build());
-      builder.removeRelevants(index);
-      // Need to perform this removal as well so the next iteration of the loop also has the correct
-      // indices.
-      existingRelevants.remove(index);
-    }
-  }
-
   private SongReference createFromStringAbbreviation(String abbr) {
     return SongReference.newBuilder().setHymnType(abbr.split("/")[0])
         .setHymnNumber(abbr.split("/")[1]).build();
+  }
+
+  protected void removeRelevants(String from, String... relevants) {
+    removeRelevants(createFromStringAbbreviation(from),
+        Arrays.stream(relevants).map(this::createFromStringAbbreviation)
+            .toArray(SongReference[]::new));
+  }
+
+  protected void removeRelevants(SongReference.Builder from,
+      SongReference.Builder... relevants) {
+    removeRelevants(from.build(),
+        Arrays.stream(relevants).map(SongReference.Builder::build).toArray(SongReference[]::new));
+  }
+
+  protected void removeRelevants(SongReference from, SongReference... relevants) {
+    Hymn.Builder builder = getHymn(from);
+
+    ImmutableList<SongReference> existingRelevants =
+        ImmutableList.copyOf(builder.getRelevantsList());
+
+    for (SongReference relevant : relevants) {
+      if (existingRelevants.contains(relevant)) {
+        builder.removeRelevants(builder.getRelevantsList().indexOf(relevant));
+      } else {
+        errors.add(
+            PipelineError.newBuilder()
+                .setSeverity(Severity.WARNING)
+                .setErrorType(ErrorType.PATCHER_REMOVAL_ERROR)
+                .addMessages(String.format("%s not a relevant of %s", relevant, from))
+                .build());
+      }
+    }
   }
 
   protected void removeLanguages(String from, String... languages) {
     removeLanguages(createFromStringAbbreviation(from),
         Arrays.stream(languages).map(this::createFromStringAbbreviation)
             .toArray(SongReference[]::new));
-  }
-
-  protected void removeLanguages(SongReference.Builder from, SongReference.Builder... languages) {
-    removeLanguages(from.build(), Arrays.stream(languages).map(SongReference.Builder::build)
-        .toArray(SongReference[]::new));
   }
 
   protected void removeLanguages(SongReference from, SongReference... languages) {
@@ -113,35 +119,44 @@ public abstract class Patcher {
     }
   }
 
-  protected void addLanguages(String from, String... languages) {
-    addLanguages(createFromStringAbbreviation(from),
+  protected void addLanguages(String to, String... languages) {
+    addLanguages(createFromStringAbbreviation(to),
         Arrays.stream(languages).map(this::createFromStringAbbreviation)
             .toArray(SongReference[]::new));
   }
 
-  protected void addLanguages(SongReference songReference, SongReference... languages) {
-    addSongLink(songReference, Hymn.getDescriptor().findFieldByName("languages"), languages);
+  protected void addLanguages(SongReference to, SongReference... languages) {
+    addSongLinks(to, Hymn.getDescriptor().findFieldByName("languages"), languages);
   }
 
-  protected void addLanguages(SongReference.Builder songReference,
+  protected void addLanguages(SongReference.Builder to,
       SongReference.Builder... languages) {
-    addSongLink(songReference, Hymn.getDescriptor().findFieldByName("languages"), languages);
+    addSongLinks(to, Hymn.getDescriptor().findFieldByName("languages"), languages);
   }
 
-  protected void addRelevants(SongReference.Builder songReference,
-      SongReference.Builder... relevants) {
-    addSongLink(songReference, Hymn.getDescriptor().findFieldByName("relevants"), relevants);
+  protected void addRelevants(String to, String... relevants) {
+    addRelevants(createFromStringAbbreviation(to),
+        Arrays.stream(relevants).map(this::createFromStringAbbreviation)
+            .toArray(SongReference[]::new));
   }
 
-  protected void addSongLink(SongReference.Builder from, FieldDescriptor field,
+  protected void addRelevants(SongReference.Builder to, SongReference.Builder... relevants) {
+    addSongLinks(to, Hymn.getDescriptor().findFieldByName("relevants"), relevants);
+  }
+
+  protected void addRelevants(SongReference to, SongReference... relevants) {
+    addSongLinks(to, Hymn.getDescriptor().findFieldByName("relevants"), relevants);
+  }
+
+  protected void addSongLinks(SongReference.Builder to, FieldDescriptor field,
       SongReference.Builder... songLinks) {
-    addSongLink(from.build(), field, Arrays.stream(songLinks).map(SongReference.Builder::build)
+    addSongLinks(to.build(), field, Arrays.stream(songLinks).map(SongReference.Builder::build)
         .toArray(SongReference[]::new));
   }
 
-  protected void addSongLink(SongReference from, FieldDescriptor field,
+  protected void addSongLinks(SongReference to, FieldDescriptor field,
       SongReference... songLinks) {
-    Hymn.Builder builder = getHymn(from);
+    Hymn.Builder builder = getHymn(to);
     // noinspection unchecked
     List<SongReference> links = (List<SongReference>) builder.getField(field);
     for (SongReference songLink : songLinks) {
@@ -149,36 +164,11 @@ public abstract class Patcher {
         errors.add(PipelineError.newBuilder()
             .setSeverity(Severity.WARNING)
             .setErrorType(ErrorType.PATCHER_ADD_ERROR)
-            .addMessages(String.format("%s already includes %s as a %s", from, songLink, field))
+            .addMessages(String.format("%s already includes %s as a %s", to, songLink, field))
             .build());
         continue;
       }
       builder.addRepeatedField(field, songLink);
-    }
-  }
-
-  protected void clearLanguages(SongReference.Builder songReference) {
-    clearSongLinks(Hymn.getDescriptor().findFieldByName("languages"), songReference);
-  }
-
-  protected void clearSongLinks(FieldDescriptor field, SongReference.Builder songReference) {
-    getHymn(songReference).clearField(field);
-  }
-
-  protected void resetLanguages(SongReference.Builder english, SongReference.Builder... languages) {
-    resetSongLinks(Hymn.getDescriptor().findFieldByName("languages"), english, languages);
-  }
-
-  protected void resetRelevants(SongReference.Builder originalTune, SongReference.Builder... relevants) {
-    resetSongLinks(Hymn.getDescriptor().findFieldByName("relevants"), originalTune, relevants);
-  }
-
-  protected void resetSongLinks(FieldDescriptor field, SongReference.Builder original,
-      SongReference.Builder... links) {
-    Hymn.Builder originalSong = getHymn(original).clearField(field);
-    for (SongReference.Builder link : links) {
-      originalSong.addRepeatedField(field, link.build());
-      getHymn(link).clearField(field).addRepeatedField(field, original.build());
     }
   }
 
@@ -198,18 +188,5 @@ public abstract class Patcher {
               hymn.stream().map(Hymn.Builder::getReferencesList).collect(toImmutableList())));
     }
     return hymn.stream().findAny().get();
-  }
-
-  protected void removeReference(SongReference.Builder songReference) {
-    removeReference(songReference.build());
-  }
-
-  protected void removeReference(SongReference songReference) {
-    Hymn.Builder builder = getHymn(songReference);
-    if (builder.getReferencesList().size() == 1) {
-      builders.remove(builder);
-    } else {
-      builder.removeReferences(builder.getReferencesList().indexOf(songReference));
-    }
   }
 }
