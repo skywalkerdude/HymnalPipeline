@@ -11,6 +11,8 @@ import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetJson;
 import com.hymnsmobile.pipeline.liederbuch.models.LiederbuchHymn;
 import com.hymnsmobile.pipeline.merge.dagger.Merge;
 import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
+import com.hymnsmobile.pipeline.merge.exceptions.H4aExceptions;
+import com.hymnsmobile.pipeline.merge.exceptions.HymnalNetExceptions;
 import com.hymnsmobile.pipeline.merge.patchers.H4aPatcher;
 import com.hymnsmobile.pipeline.merge.patchers.HymnalNetPatcher;
 import com.hymnsmobile.pipeline.models.Hymn;
@@ -36,8 +38,10 @@ public class MergePipeline {
   private static final Logger LOGGER = Logger.getGlobal();
 
   private final Converter converter;
+  private final H4aExceptions h4aExceptions;
   private final H4aMerger h4aMerger;
   private final H4aPatcher h4aPatcher;
+  private final HymnalNetExceptions hymnalNetExceptions;
   private final HymnalNetPatcher hymnalNetPatcher;
   private final SanitizationPipeline sanitizationPipeline;
   private final Set<PipelineError> errors;
@@ -46,16 +50,20 @@ public class MergePipeline {
   @Inject
   public MergePipeline(
       Converter converter,
+      H4aExceptions h4aExceptions,
       H4aMerger h4aMerger,
       H4aPatcher h4aPatcher,
+      HymnalNetExceptions hymnalNetExceptions,
       HymnalNetPatcher hymnalNetPatcher,
       SanitizationPipeline sanitizationPipeline,
       SongbaseMerger songbaseMerger,
       @Merge Set<PipelineError> errors) {
     this.converter = converter;
     this.errors = errors;
+    this.h4aExceptions = h4aExceptions;
     this.h4aMerger = h4aMerger;
     this.h4aPatcher = h4aPatcher;
+    this.hymnalNetExceptions = hymnalNetExceptions;
     this.hymnalNetPatcher = hymnalNetPatcher;
     this.sanitizationPipeline = sanitizationPipeline;
     this.songbaseMerger = songbaseMerger;
@@ -68,7 +76,15 @@ public class MergePipeline {
     LOGGER.info("Converting Hymnal.net");
     ImmutableList<Hymn> hymns = hymnalNetHymns.stream().map(converter::toHymn).collect(toImmutableList());
     LOGGER.info("Sanitizing Hymnal.net");
-    return sanitizationPipeline.sanitize(hymns, hymnalNetPatcher);
+    return sanitizationPipeline.sanitize(hymns, hymnalNetPatcher, hymnalNetExceptions);
+  }
+
+  public ImmutableList<Hymn> mergeH4a(
+      ImmutableList<H4aHymn> h4aHymns, ImmutableList<Hymn> mergedHymns) {
+    LOGGER.info("Merging Hymns for Android");
+    ImmutableList<Hymn> merged = h4aMerger.merge(h4aHymns, mergedHymns);
+    LOGGER.info("Sanitizing Hymns for Android");
+    return sanitizationPipeline.sanitize(merged, h4aPatcher, h4aExceptions);
   }
 
   public ImmutableList<Hymn> mergeRussian(ImmutableList<RussianHymn> russianHymns, ImmutableList<Hymn> mergedHymns) {
@@ -88,14 +104,6 @@ public class MergePipeline {
     LOGGER.info("Sanitizing Russian");
     return sanitizationPipeline.sanitize(
         builders.stream().map(Hymn.Builder::build).collect(toImmutableList()));
-  }
-
-  public ImmutableList<Hymn> mergeH4a(
-      ImmutableList<H4aHymn> h4aHymns, ImmutableList<Hymn> mergedHymns) {
-    LOGGER.info("Merging Hymns for Android");
-    ImmutableList<Hymn> merged = h4aMerger.merge(h4aHymns, mergedHymns);
-    LOGGER.info("Sanitizing Hymns for Android");
-    return sanitizationPipeline.sanitize(merged, h4aPatcher);
   }
 
   public ImmutableList<Hymn> mergeLiederbuch(

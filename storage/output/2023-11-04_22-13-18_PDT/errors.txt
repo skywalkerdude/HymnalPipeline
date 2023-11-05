@@ -1,0 +1,33 @@
+count: 8
+errors {
+  severity: ERROR
+  messages: "Failed to fetch: hymn_type: \"ns\"\nhymn_number: \"881\"\n"
+}
+errors {
+  error_type: UNRECOGNIZED_HYMN_TYPE
+  messages: "/en/hymn/he/1339, a related song of hymn_type: \"hd\"\nhymn_number: \"1339\"\n"
+}
+errors {
+  severity: ERROR
+  messages: "Failed to fetch: hymn_type: \"ns\"\nhymn_number: \"582\"\n"
+}
+errors {
+  error_type: UNRECOGNIZED_HYMN_TYPE
+  messages: "/en/hymn/he/1339, a related song of hymn_type: \"hs\"\nhymn_number: \"497\"\n"
+}
+errors {
+  severity: ERROR
+  messages: "Failed to fetch: hymn_type: \"ns\"\nhymn_number: \"990\"\n"
+}
+errors {
+  severity: ERROR
+  messages: "Failed to fetch: hymn_type: \"ns\"\nhymn_number: \"978\"\n"
+}
+errors {
+  severity: ERROR
+  messages: "Failed to fetch: hymn_type: \"ns\"\nhymn_number: \"981\"\n"
+}
+errors {
+  severity: ERROR
+  messages: "Failed to fetch: hymn_type: \"ns\"\nhymn_number: \"987\"\n"
+}

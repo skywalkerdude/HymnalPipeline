@@ -1,6 +1,7 @@
 package com.hymnsmobile.pipeline.merge;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
+import static com.hymnsmobile.pipeline.merge.HardcodedDuplicates.H4A_DUPLICATES;
 import static com.hymnsmobile.pipeline.merge.Utilities.getHymnFrom;
 
 import com.google.common.collect.ImmutableList;
@@ -57,6 +58,12 @@ public class H4aMerger {
       ImmutableList<H4aHymn> h4aHymns,
       List<Hymn.Builder> builders) {
     SongReference h4aReference = converter.toSongReference(h4aHymn.getId());
+    if (H4A_DUPLICATES.containsKey(h4aReference)) {
+      getHymnFrom(H4A_DUPLICATES.get(h4aReference), builders).orElseThrow()
+          .addReferences(h4aReference)
+          .addProvenance("h4a");
+      return;
+    }
 
     if (HymnType.fromString(h4aReference.getHymnType()) == HymnType.LIEDERBUCH) {
       mergeGermanHymn(h4aHymn, builders);

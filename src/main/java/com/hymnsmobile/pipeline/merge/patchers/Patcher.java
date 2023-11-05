@@ -41,14 +41,14 @@ public abstract class Patcher {
     return builders.stream().map(Hymn.Builder::build).collect(toImmutableList());
   }
 
-  private SongReference createFromStringAbbreviation(String abbr) {
+  public static SongReference createFromStringAbbreviation(String abbr) {
     return SongReference.newBuilder().setHymnType(abbr.split("/")[0])
         .setHymnNumber(abbr.split("/")[1]).build();
   }
 
   protected void removeRelevants(String from, String... relevants) {
     removeRelevants(createFromStringAbbreviation(from),
-        Arrays.stream(relevants).map(this::createFromStringAbbreviation)
+        Arrays.stream(relevants).map(Patcher::createFromStringAbbreviation)
             .toArray(SongReference[]::new));
   }
 
@@ -79,29 +79,25 @@ public abstract class Patcher {
   }
 
   protected void removeLanguages(String from, String... languages) {
-    removeLanguages(createFromStringAbbreviation(from),
-        Arrays.stream(languages).map(this::createFromStringAbbreviation)
+    removeLanguages(from, true, languages);
+  }
+
+  protected void removeLanguages(String from, boolean includeSimplified, String... languages) {
+    removeLanguages(createFromStringAbbreviation(from), includeSimplified,
+        Arrays.stream(languages).map(Patcher::createFromStringAbbreviation)
             .toArray(SongReference[]::new));
   }
 
-  protected void removeLanguages(SongReference from, SongReference... languages) {
-    // If the song is a Chinese song, also perform for the simplified version.
-    HymnType hymnType = HymnType.fromString(from.getHymnType());
-    if (hymnType == HymnType.CHINESE) {
-      removeLanguages(
-          SongReference.newBuilder().setHymnType(HymnType.CHINESE_SIMPLIFIED.abbreviatedValue)
-              .setHymnNumber(from.getHymnNumber()).build(), languages);
-    }
-    if (hymnType == HymnType.CHINESE_SUPPLEMENTAL) {
-      removeLanguages(
-          SongReference.newBuilder()
-              .setHymnType(HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED.abbreviatedValue)
-              .setHymnNumber(from.getHymnNumber()).build(), languages);
-    }
+  protected void removeLanguages(SongReference from, boolean includeSimplified,
+      SongReference... languages) {
     Hymn.Builder builder = getHymn(from);
 
     ImmutableList<SongReference> languagesToRemove = Arrays.stream(languages)
         .flatMap((Function<SongReference, Stream<SongReference>>) songReference -> {
+          if (!includeSimplified) {
+            return ImmutableList.of(songReference).stream();
+          }
+
           // If the song is a Chinese song, also add the simplified version
           HymnType songReferenceType = HymnType.fromString(songReference.getHymnType());
           if (songReferenceType == HymnType.CHINESE) {
@@ -134,7 +130,7 @@ public abstract class Patcher {
 
   protected void addLanguages(String to, String... languages) {
     addLanguages(createFromStringAbbreviation(to),
-        Arrays.stream(languages).map(this::createFromStringAbbreviation)
+        Arrays.stream(languages).map(Patcher::createFromStringAbbreviation)
             .toArray(SongReference[]::new));
   }
 
@@ -149,7 +145,7 @@ public abstract class Patcher {
 
   protected void addRelevants(String to, String... relevants) {
     addRelevants(createFromStringAbbreviation(to),
-        Arrays.stream(relevants).map(this::createFromStringAbbreviation)
+        Arrays.stream(relevants).map(Patcher::createFromStringAbbreviation)
             .toArray(SongReference[]::new));
   }
 

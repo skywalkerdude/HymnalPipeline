@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.hymnsmobile.pipeline.merge.dagger.Merge;
 import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
+import com.hymnsmobile.pipeline.merge.exceptions.Exceptions;
 import com.hymnsmobile.pipeline.merge.patchers.Patcher;
 import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.PipelineError;
@@ -19,7 +20,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Consumer;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
@@ -48,14 +48,20 @@ public class SanitizationPipeline {
   }
 
   public ImmutableList<Hymn> sanitize(ImmutableList<Hymn> allHymns) {
-    return sanitize(allHymns, Optional.empty());
+    return sanitize(allHymns, Optional.empty(), Optional.empty());
   }
 
   public ImmutableList<Hymn> sanitize(ImmutableList<Hymn> allHymns, Patcher patcher) {
-    return sanitize(allHymns, Optional.of(patcher));
+    return sanitize(allHymns, Optional.of(patcher), Optional.empty());
   }
 
-  private ImmutableList<Hymn> sanitize(ImmutableList<Hymn> allHymns, Optional<Patcher> patcher) {
+  public ImmutableList<Hymn> sanitize(ImmutableList<Hymn> allHymns, Patcher patcher,
+      Exceptions exceptions) {
+    return sanitize(allHymns, Optional.of(patcher), Optional.of(exceptions));
+  }
+
+  private ImmutableList<Hymn> sanitize(ImmutableList<Hymn> allHymns, Optional<Patcher> patcher,
+      Optional<Exceptions> exceptions) {
     if (patcher.isPresent()) {
       allHymns = patcher.get().patch(allHymns);
     }
@@ -63,8 +69,8 @@ public class SanitizationPipeline {
     ImmutableList<Hymn.Builder> builders =
         allHymns.stream().map(Hymn::toBuilder).collect(toImmutableList());
 
-    fixLanguages(builders);
-    fixRelevants(builders);
+    fixLanguages(builders, exceptions);
+    fixRelevants(builders, exceptions);
 
     return builders.stream().map(Hymn.Builder::build).collect(toImmutableList());
   }
@@ -73,19 +79,19 @@ public class SanitizationPipeline {
     return ImmutableList.copyOf(errors);
   }
 
-  private void fixLanguages(ImmutableList<Hymn.Builder> builders) {
+  private void fixLanguages(ImmutableList<Hymn.Builder> builders, Optional<Exceptions> exceptions) {
     FieldDescriptor languageFieldDescriptor = Hymn.getDescriptor().findFieldByName("languages");
     Set<Set<SongReference>> languageSets =
         generateSongLinkSets(builders, languageFieldDescriptor);
-    languageAuditor.audit(languageSets);
+    languageAuditor.audit(languageSets, exceptions.map(Exceptions::languageExceptions));
     writeSongLinks(builders, languageFieldDescriptor, languageSets);
   }
 
-  private void fixRelevants(ImmutableList<Hymn.Builder> builders) {
+  private void fixRelevants(ImmutableList<Hymn.Builder> builders, Optional<Exceptions> exceptions) {
     FieldDescriptor relevantFieldDescriptor = Hymn.getDescriptor().findFieldByName("relevants");
     Set<Set<SongReference>> relevantsSets =
         generateSongLinkSets(builders, relevantFieldDescriptor);
-    relevantsAuditor.audit(relevantsSets);
+    relevantsAuditor.audit(relevantsSets, exceptions.map(Exceptions::relevantExceptions));
     writeSongLinks(builders, relevantFieldDescriptor, relevantsSets);
   }
 

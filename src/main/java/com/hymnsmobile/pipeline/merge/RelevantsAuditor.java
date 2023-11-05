@@ -1,7 +1,6 @@
 package com.hymnsmobile.pipeline.merge;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
-import static com.hymnsmobile.pipeline.merge.Exceptions.RELEVANT_EXCEPTIONS;
 import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE;
 import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE_SIMPLIFIED;
 import static com.hymnsmobile.pipeline.merge.HymnType.CLASSIC_HYMN;
@@ -29,7 +28,7 @@ public class RelevantsAuditor extends Auditor {
 
   @Inject
   public RelevantsAuditor(@Merge Set<PipelineError> errors) {
-    super(errors, RELEVANT_EXCEPTIONS);
+    super(errors);
   }
 
   @Override

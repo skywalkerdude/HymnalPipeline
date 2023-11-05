@@ -1,7 +1,7 @@
 package com.hymnsmobile.pipeline.merge;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
-import static com.hymnsmobile.pipeline.merge.Exceptions.LANGUAGES_EXCEPTIONS;
+import static com.hymnsmobile.pipeline.merge.HymnType.BE_FILLED;
 import static com.hymnsmobile.pipeline.merge.HymnType.CHILDREN_SONG;
 import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE;
 import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE_SIMPLIFIED;
@@ -31,7 +31,7 @@ public class LanguageAuditor extends Auditor {
 
   @Inject
   public LanguageAuditor(@Merge Set<PipelineError> errors) {
-    super(errors, LANGUAGES_EXCEPTIONS);
+    super(errors);
   }
 
   @Override
@@ -72,7 +72,7 @@ public class LanguageAuditor extends Auditor {
 
       if (Collections.frequency(hymnTypes, hymnType) > timesAllowed) {
         // If exceptions were removed, then we audit the new set and return early (i.e. don't keep
-        // looking at hte rest of the hymn types because that list is no longer accurate)
+        // looking at the rest of the hymn types because that list is no longer accurate)
         if (removeExceptions(setToAudit)) {
           auditLanguageSet(setToAudit);
           return;
@@ -90,6 +90,10 @@ public class LanguageAuditor extends Auditor {
     if (((hymnTypes.contains(CLASSIC_HYMN) && hymnTypes.contains(NEW_SONG))
         || (hymnTypes.contains(CLASSIC_HYMN) && hymnTypes.contains(CHILDREN_SONG))
         || hymnTypes.contains(CHILDREN_SONG) && hymnTypes.contains(NEW_SONG)
+        || (hymnTypes.contains(CLASSIC_HYMN) && hymnTypes.contains(BE_FILLED))
+        || (hymnTypes.contains(NEW_SONG) && hymnTypes.contains(BE_FILLED))
+        || (hymnTypes.contains(CHILDREN_SONG) && hymnTypes.contains(BE_FILLED))
+        || (hymnTypes.contains(HOWARD_HIGASHI) && hymnTypes.contains(BE_FILLED))
         || hymnTypes.contains(CHINESE) && hymnTypes.contains(CHINESE_SUPPLEMENTAL)
         || hymnTypes.contains(CHINESE_SIMPLIFIED) && hymnTypes.contains(CHINESE_SUPPLEMENTAL_SIMPLIFIED))
         && !removeExceptions(setToAudit)) {
