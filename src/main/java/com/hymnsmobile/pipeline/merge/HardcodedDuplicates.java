@@ -14,7 +14,8 @@ public class HardcodedDuplicates {
 
   public static ImmutableMap<SongReference, SongReference> H4A_DUPLICATES = ImmutableMap.of(
           "bf/157", "h/8330",
-          "bf/69", "h/8773"
+          "bf/69", "h/8773",
+          "I/2025", "ns/6i"
       ).entrySet().stream()
       .collect(toImmutableMap(
           entry -> Patcher.createFromStringAbbreviation(entry.getKey()),

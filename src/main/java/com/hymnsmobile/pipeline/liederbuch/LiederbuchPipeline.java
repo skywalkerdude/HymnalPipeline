@@ -2,8 +2,10 @@ package com.hymnsmobile.pipeline.liederbuch;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
 import static com.hymnsmobile.pipeline.liederbuch.BlockList.BLOCK_LIST;
+import static com.hymnsmobile.pipeline.liederbuch.LiederbuchLauncher.EPUB_PATH;
 
 import com.google.common.collect.ImmutableList;
+import com.hymnsmobile.pipeline.dagger.DaggerPipelineComponent;
 import com.hymnsmobile.pipeline.liederbuch.dagger.Liederbuch;
 import com.hymnsmobile.pipeline.liederbuch.models.LiederbuchHymn;
 import com.hymnsmobile.pipeline.liederbuch.models.LiederbuchKey;
@@ -16,12 +18,9 @@ import java.util.Comparator;
 import java.util.Set;
 import java.util.logging.Logger;
 import javax.inject.Inject;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.domain.Resource;
 import nl.siegmann.epublib.epub.EpubReader;
-import nl.siegmann.epublib.viewer.Viewer;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -31,8 +30,6 @@ import org.jsoup.nodes.TextNode;
 public class LiederbuchPipeline {
 
   private static final Logger LOGGER = Logger.getGlobal();
-  private static final String EPUB_PATH = "storage/liederbuch/liederbuch_v0.1.1.epub";
-
   private final Converter converter;
   private final Set<LiederbuchHymn> songs;
   private final Set<PipelineError> errors;
@@ -106,7 +103,7 @@ public class LiederbuchPipeline {
         if (infoElement == null) {
           throw new IllegalStateException("info element was null");
         }
-        if (!infoElement.hasClass("calibre 7")) {
+        if (!infoElement.hasClass("calibre7") && !infoElement.hasClass("calibre9")) {
           throw new IllegalStateException("info element does not have class calibre 7");
         }
         liederbuchSong.addAllRelated(infoElement.select("a[href]").stream()
@@ -118,8 +115,11 @@ public class LiederbuchPipeline {
 
         Element nextElement = infoElement.nextElementSibling();
         // if nextElement is null, then that indicates the end of the file
-        // if the nextElement's class is calibre5, indicates that it's onto the next song
-        while (nextElement != null && !nextElement.hasClass("calibre5")) {
+        while (nextElement != null &&
+            // if the nextElement's class is calibre5 or calibre8, indicates that it's onto the
+            // next song
+            !nextElement.hasClass("calibre5") &&
+            !nextElement.hasClass("calibre8")) {
           Verse.Builder verse = Verse.newBuilder();
           nextElement.textNodes().stream()
               .map(TextNode::text)
@@ -137,13 +137,7 @@ public class LiederbuchPipeline {
     LOGGER.info("Liederbuch pipeline finished");
   }
 
-  public static void main(String[] args)
-      throws IOException, UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-    try (FileInputStream file = new FileInputStream(EPUB_PATH)) {
-      // Schedule a job for the event dispatch thread:
-      // creating and showing this application's GUI.
-      javax.swing.SwingUtilities.invokeLater(() -> new Viewer(file));
-    }
+  public static void main(String[] args) throws IOException {
+    DaggerPipelineComponent.create().liederbuchPipelineComponent().build().pipeline().run();
   }
 }

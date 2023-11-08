@@ -35,11 +35,11 @@ public class StoragePipeline {
 
     writeErrors(errors);
 
-    // Connection connection = databaseWriter.createDatabase();
-    // for (Hymn hymn : hymns) {
-    //   databaseWriter.writeHymn(connection, hymn);
-    // }
-    // databaseWriter.closeDatabase(connection);
+    Connection connection = databaseWriter.createDatabase();
+    for (Hymn hymn : hymns) {
+      databaseWriter.writeHymn(connection, hymn);
+    }
+    databaseWriter.closeDatabase(connection);
     LOGGER.info("Storage pipeline starting");
   }
 

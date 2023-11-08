@@ -115,6 +115,8 @@ public class MergePipeline {
             .flatMap(mergedHymn -> mergedHymn.getReferencesList().stream())
             .collect(toImmutableSet());
 
+    // We ingest the songs from Liederbuch, but they should already be covered by other sources. If,
+    // for some reason they aren't covered, we should log it and investigate further.
     liederbuchHymns.forEach(liederbuchHymn -> {
       SongReference liederbuchReference = converter.toSongReference(liederbuchHymn.getKey());
       if (!existingReferences.contains(liederbuchReference)) {
@@ -134,7 +136,7 @@ public class MergePipeline {
     LOGGER.info("Merging Songbase");
     ImmutableList<Hymn> merged = songbaseMerger.merge(songbaseHymns, mergedHymns);
     LOGGER.info("Sanitizing Songbase");
-    return sanitizationPipeline.sanitize(merged, h4aPatcher);
+    return sanitizationPipeline.sanitize(merged);
   }
 
   @SafeVarargs

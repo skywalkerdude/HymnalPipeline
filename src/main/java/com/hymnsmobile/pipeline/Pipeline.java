@@ -64,16 +64,16 @@ public class Pipeline {
       throws IOException, InterruptedException, SQLException, BadHanyuPinyinOutputFormatCombination {
     hymnalNetPipeline.run();
     h4aPipeline.run();
-    // liederbuchPipeline.run();
-    // songbasePipeline.run();
-    // russianPipeline.run();
+    liederbuchPipeline.run();
+    russianPipeline.run();
+    songbasePipeline.run();
 
     ImmutableList<Hymn> mergedHymns =
         mergePipeline.convertHymnalNet(hymnalNetPipeline.getHymnalNetJsons());
     mergedHymns = mergePipeline.mergeH4a(h4aPipeline.getH4aHymns(), mergedHymns);
-    // mergedHymns = mergePipeline.mergeLiederbuch(liederbuchPipeline.getLiederbuchSong(), mergedHymns);
-    // mergedHymns = mergePipeline.mergeRussian(russianPipeline.getRussianHymns(), mergedHymns);
-    // mergedHymns = mergePipeline.mergeSongbase(songbasePipeline.getSongbaseHymns(), mergedHymns);
+    mergedHymns = mergePipeline.mergeLiederbuch(liederbuchPipeline.getLiederbuchSong(), mergedHymns);
+    mergedHymns = mergePipeline.mergeRussian(russianPipeline.getRussianHymns(), mergedHymns);
+    mergedHymns = mergePipeline.mergeSongbase(songbasePipeline.getSongbaseHymns(), mergedHymns);
 
     ImmutableList<PipelineError> allErrors = mergePipeline.mergeErrors(
         hymnalNetPipeline.getErrors(), h4aPipeline.getErrors(), mergePipeline.getErrors(),
