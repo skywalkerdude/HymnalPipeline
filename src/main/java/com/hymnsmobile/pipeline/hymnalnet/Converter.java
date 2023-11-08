@@ -1,35 +1,19 @@
 package com.hymnsmobile.pipeline.hymnalnet;
 
-import static com.google.common.collect.ImmutableList.toImmutableList;
-
-import com.google.common.collect.ImmutableList;
-import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNetPipelineScope;
-import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetJson;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetKey;
-import com.hymnsmobile.pipeline.hymnalnet.models.MetaDatum;
 import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.PipelineError.ErrorType;
-import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import java.util.Optional;
 import java.util.Set;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.inject.Inject;
 
 
-@HymnalNetPipelineScope
 public class Converter {
-
-  private static final Logger LOGGER = Logger.getGlobal();
 
   private static final Pattern PATH_PATTERN = Pattern.compile(
       "(\\w+)/([c|s]?\\d+[a-z]*)(\\?gb=1)?");
   private static final Pattern HINARIO_PATH_PATTERN = Pattern.compile("hymn=(\\d+[a-z]*)");
-
-  @Inject
-  public Converter() {
-  }
 
   public static Optional<HymnalNetKey> extractFromPath(String path, HymnalNetKey parentHymn,
       Set<PipelineError> errors) {
@@ -97,5 +81,6 @@ public class Converter {
     return Optional.ofNullable(matcher.group(3));
   }
 
-
+  private Converter() {
+  }
 }

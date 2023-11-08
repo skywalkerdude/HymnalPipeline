@@ -52,33 +52,35 @@ public class HymnalNetPipeline {
   }
 
   public void run() throws IOException {
-    LOGGER.fine("Hymnal.net pipeline starting");
+    LOGGER.info("Hymnal.net pipeline starting");
     readFile();
-    // fetcher.fetchHymns();
-    // writeAllHymns();
-    LOGGER.fine("Hymnal.net pipeline finished");
+    fetcher.fetchHymns();
+    writeAllHymns();
+    LOGGER.info("Hymnal.net pipeline finished");
   }
 
   private void readFile() throws IOException {
     Optional<File> mostRecentFile = fileReadWriter.readLargestFile("storage/hymnalnet",
-        Optional.of("\\d\\d\\d\\d-\\d\\d-\\d\\d_\\d\\d-\\d\\d-\\d\\d_PDT.txt"));
+        Optional.of("\\d\\d\\d\\d-\\d\\d-\\d\\d_\\d\\d-\\d\\d-\\d\\d_[A-Z]{3}.txt"));
     // No file to read
     if (mostRecentFile.isEmpty()) {
       return;
     }
 
-    LOGGER.fine(String.format("Reading file %s", mostRecentFile.get()));
+    LOGGER.info(String.format("Reading file %s", mostRecentFile.get()));
     com.hymnsmobile.pipeline.hymnalnet.models.HymnalNet hymnalNet =
         com.hymnsmobile.pipeline.hymnalnet.models.HymnalNet.parseFrom(
             new FileInputStream(mostRecentFile.get()));
     this.hymnalNetJsons.addAll(hymnalNet.getHymnanlNetJsonList());
     this.errors.addAll(hymnalNet.getErrorsList());
+    LOGGER.info(String.format("Reading file with %d songs and %d errors",
+        hymnalNet.getHymnanlNetJsonCount(), hymnalNet.getErrorsCount()));
   }
 
   private void writeAllHymns() throws IOException {
     String fileName = String.format("storage/hymnalnet/%s.txt",
         currentTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss_z")));
-    LOGGER.fine(String.format("Writing hymns to %s", fileName));
+    LOGGER.info(String.format("Writing hymns to %s", fileName));
     fileReadWriter.writeProto(fileName,
         com.hymnsmobile.pipeline.hymnalnet.models.HymnalNet.newBuilder()
             .addAllHymnanlNetJson(hymnalNetJsons)

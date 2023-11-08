@@ -4,11 +4,9 @@ import static com.google.common.collect.ImmutableList.toImmutableList;
 import static com.hymnsmobile.pipeline.hymnalnet.Converter.extractFromPath;
 
 import com.google.common.collect.ImmutableList;
-import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
 import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNet;
 import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNetPipelineScope;
-import com.hymnsmobile.pipeline.hymnalnet.models.Datum;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetJson;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetKey;
 import com.hymnsmobile.pipeline.hymnalnet.models.MetaDatum;
@@ -22,12 +20,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.logging.Logger;
 import javax.inject.Inject;
 
@@ -57,19 +51,17 @@ public class Fetcher {
   private static final String CHECK_EXISTS = "check_exists=true";
 
   private final HttpClient client;
-  private final Converter converter;
   private final ImmutableList<HymnalNetKey> songsToFetch;
 
   private final Set<HymnalNetJson> hymnalNetJsons;
   private final Set<PipelineError> errors;
 
   @Inject
-  public Fetcher(HttpClient client, Converter converter,
+  public Fetcher(HttpClient client,
       ImmutableList<HymnalNetKey> songsToFetch,
       Set<HymnalNetJson> hymnalNetJsons,
       @HymnalNet Set<PipelineError> errors) {
     this.client = client;
-    this.converter = converter;
     this.hymnalNetJsons = hymnalNetJsons;
     this.songsToFetch = songsToFetch;
     this.errors = errors;
@@ -79,6 +71,7 @@ public class Fetcher {
    * Fetch hymns afresh from Hymnal.net.
    */
   public void fetchHymns() {
+    LOGGER.info("Starting fetch...");
     for (HymnalNetKey key : songsToFetch) {
       HymnType hymnType = HymnType.fromString(key.getHymnType()).orElseThrow();
       if (fetchHymn(key) == FetchResult.ERROR && hymnType.maxNumber.isPresent()) {
@@ -95,6 +88,7 @@ public class Fetcher {
                 .build());
       }
     }
+    LOGGER.info("Fetch Complete");
   }
 
   private MetaDatum fetchAndReturnSuccesses(MetaDatum metaDatum, HymnalNetKey parent) {

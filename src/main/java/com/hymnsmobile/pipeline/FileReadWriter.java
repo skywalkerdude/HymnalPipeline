@@ -27,7 +27,7 @@ public class FileReadWriter {
 
   public Optional<File> readLargestFile(String path, Optional<String> fileMask) {
     File directory = new File(path);
-    LOGGER.info(String.format("Reading files from %s", directory.getName()));
+    LOGGER.fine(String.format("Reading files from %s", directory.getName()));
     File[] hymnalNetFiles = directory.listFiles();
     if (hymnalNetFiles == null) {
       throw new RuntimeException("file storage not found");
