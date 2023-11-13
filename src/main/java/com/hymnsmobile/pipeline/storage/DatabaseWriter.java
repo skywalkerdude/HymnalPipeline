@@ -58,7 +58,7 @@ public class DatabaseWriter {
       connection.createStatement().execute(
           "CREATE TABLE IF NOT EXISTS `SONG_DATA` ("
               + "`ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
-              + "`SONG_TITLE` TEXT NOT NULL, "
+              + "`SONG_TITLE` TEXT, "
               + "`SONG_LYRICS` TEXT, "
               + "`INLINE_CHORDS` TEXT, "
               + "`SONG_META_DATA_CATEGORY` TEXT, "
@@ -80,7 +80,7 @@ public class DatabaseWriter {
       // SEARCH_VIRTUAL_SONG_DATA table
       connection.createStatement().execute(
           "CREATE VIRTUAL TABLE IF NOT EXISTS `SEARCH_VIRTUAL_SONG_DATA` "
-              + "USING FTS4(`SONG_TITLE` TEXT NOT NULL, `SONG_LYRICS` TEXT NOT NULL, "
+              + "USING FTS4(`SONG_TITLE` TEXT, `SONG_LYRICS` TEXT NOT NULL, "
               + "tokenize=porter, content=`SONG_DATA`)");
 
       connection.createStatement().execute(
@@ -96,7 +96,7 @@ public class DatabaseWriter {
       connection.createStatement().execute(
           "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
       connection.createStatement().execute(
-          "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7d8082126277a124272c2466125120e4')");
+          "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a5ef7790f4ea35ca75baeef7eea7a216')");
 
       connection.createStatement().execute(
           "CREATE TABLE IF NOT EXISTS misc_meta_data (metadata_key TEXT, metadata_value TEXT)");
@@ -173,6 +173,9 @@ public class DatabaseWriter {
    * we strip it out whenever possible.
    */
   public static String stripHymnColon(String title) {
+    if (title == null || title.isEmpty()) {
+      return null;
+    }
     return title.replace("Hymn: ", "");
   }
 }

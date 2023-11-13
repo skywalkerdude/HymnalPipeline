@@ -29,7 +29,7 @@ public class H4aPatcher extends Patcher {
     fix_I1401_h1191();
     fix_K1014_h1248();
     fix_I1832_ts823();
-    fix_I42_ch42();
+    fix_I42_ch43();
     fix_I1531_h1348();
     fix_K460_h605();
     fix_J539_h734();
@@ -154,7 +154,7 @@ public class H4aPatcher extends Patcher {
    */
   private void fix_I1832_ts823() {
     removeLanguages("I/1832", false,"ts/823");
-    removeLanguages("ts/823", "I/1832");
+    removeLanguages("ts/823", false, "I/1832");
 
     addLanguages("I/1832", "ts/832");
   }
@@ -162,9 +162,9 @@ public class H4aPatcher extends Patcher {
   /**
    * I/42's parent should be ch/42, not ch/43. Mostly likely a typo in H4a.
    */
-  private void fix_I42_ch42() {
+  private void fix_I42_ch43() {
     removeLanguages("I/42", false, "ch/43");
-    removeLanguages("ch/43", "I/42");
+    removeLanguages("ch/43", false, "I/42");
 
     addLanguages("I/42", "ch/42");
   }

@@ -90,8 +90,21 @@ public abstract class Patcher {
 
   protected void removeLanguages(SongReference from, boolean includeSimplified,
       SongReference... languages) {
-    Hymn.Builder builder = getHymn(from);
+    // If the song is a Chinese song, also perform for the simplified version.
+    HymnType hymnType = HymnType.fromString(from.getHymnType());
+    if (hymnType == HymnType.CHINESE && includeSimplified) {
+      removeLanguages(
+          SongReference.newBuilder().setHymnType(HymnType.CHINESE_SIMPLIFIED.abbreviatedValue)
+              .setHymnNumber(from.getHymnNumber()).build(), includeSimplified, languages);
+    }
+    if (hymnType == HymnType.CHINESE_SUPPLEMENTAL && includeSimplified) {
+      removeLanguages(
+          SongReference.newBuilder()
+              .setHymnType(HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED.abbreviatedValue)
+              .setHymnNumber(from.getHymnNumber()).build(), includeSimplified, languages);
+    }
 
+    Hymn.Builder builder = getHymn(from);
     ImmutableList<SongReference> languagesToRemove = Arrays.stream(languages)
         .flatMap((Function<SongReference, Stream<SongReference>>) songReference -> {
           if (!includeSimplified) {
