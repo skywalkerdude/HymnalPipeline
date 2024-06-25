@@ -24,44 +24,42 @@ public class FileReadWriter {
   public FileReadWriter() {
   }
 
-  public <M extends Message> Optional<M> readLatestOutput(String path, Optional<String> fileMask, Parser<M> parser) {
-    Optional<File> largestFilePath = readLargestFilePath(path, fileMask);
-    return largestFilePath.flatMap(directory -> {
-      LOGGER.fine(String.format("Reading from %s", directory.getName()));
-      File[] files = directory.listFiles();
-      if (files == null) {
-        throw new RuntimeException("file storage not found");
-      }
-      try {
-        M parsed = parser.parseFrom(new FileInputStream(directory + "/output.binaryproto"));
-        if (parsed == null) {
-          LOGGER.severe("Latest output contained a malformed message.");
-          return Optional.empty();
-        }
-        return Optional.of(parsed);
-      } catch (InvalidProtocolBufferException | FileNotFoundException e) {
-        LOGGER.severe(e.getMessage());
-        return Optional.empty();
-      }
-    });
-  }
-
   public Optional<File> readLargestFilePath(String path, Optional<String> fileMask) {
     File directory = new File(path);
     LOGGER.fine(String.format("Reading files from %s", directory.getName()));
     File[] hymnalNetFiles = directory.listFiles();
     if (hymnalNetFiles == null) {
-      throw new RuntimeException("file storage not found");
+      throw new IllegalArgumentException(String.format("invalid file path: %s", path));
     }
     return ImmutableList.copyOf(hymnalNetFiles).stream()
         .filter(file -> fileMask.map(mask -> file.getName().matches(mask)).orElse(true))
         .max(Comparator.comparing(File::getName));
   }
 
+  public <M extends Message> Optional<M> readLatestOutput(String path, Optional<String> fileMask, Parser<M> parser) {
+    Optional<File> largestFilePath = readLargestFilePath(path, fileMask);
+    if (largestFilePath.isEmpty()) {
+      throw new IllegalArgumentException(String.format("path: %s w/ file mask: %s was empty", path, fileMask));
+    }
+    return largestFilePath.flatMap(directory -> {
+      LOGGER.fine(String.format("Reading from %s", directory.getName()));
+      File[] files = directory.listFiles();
+      if (files == null) {
+        throw new IllegalArgumentException(String.format("Not a directory: %s", directory));
+      }
+      String latestOutputFile = directory + "/output.binaryproto";
+      try {
+        M parsed = parser.parseFrom(new FileInputStream(latestOutputFile));
+        return Optional.of(parsed);
+      } catch (InvalidProtocolBufferException | FileNotFoundException e) {
+        throw new IllegalArgumentException(String.format("Exception occurred while parsing: %s", latestOutputFile), e);
+      }
+    });
+  }
+
   public <M extends Message> void writeProto(String directoryPath, M message) throws IOException {
     if (!new File(directoryPath).mkdirs()) {
-      LOGGER.severe(String.format("Unable to create %s", directoryPath));
-      return;
+      throw new IllegalArgumentException(String.format("Unable to create %s", directoryPath));
     }
     try (FileOutputStream output = new FileOutputStream(directoryPath + "/output.binaryproto")) {
       message.writeTo(output);
