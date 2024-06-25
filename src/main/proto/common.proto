@@ -74,6 +74,8 @@ message PipelineError {
     LIEDERBUCH_ALREADY_COVERED = 4;
     // Encountered more meta data than expected.
     EXTRA_META_DATA = 5;
+    // Exception thrown during fetch.
+    FETCH_EXCEPTION = 6;
 
     PATCHER_ADD_ERROR = 101;
     PATCHER_REMOVAL_ERROR = 102;

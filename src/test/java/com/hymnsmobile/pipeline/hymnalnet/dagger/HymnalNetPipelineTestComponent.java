@@ -11,7 +11,6 @@ public interface HymnalNetPipelineTestComponent {
 
   @Subcomponent.Builder
   interface Builder {
-
     HymnalNetPipelineTestComponent build();
   }
 }

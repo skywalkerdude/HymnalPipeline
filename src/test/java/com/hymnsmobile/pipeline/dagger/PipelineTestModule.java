@@ -1,11 +1,5 @@
 package com.hymnsmobile.pipeline.dagger;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
-
 import com.google.common.collect.ImmutableList;
 import com.hymnsmobile.pipeline.FileReadWriter;
 import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNetPipelineTestComponent;
@@ -13,26 +7,28 @@ import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.testutil.MockHttpResponse;
 import dagger.Module;
 import dagger.Provides;
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+
+import java.io.*;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @Module(subcomponents = HymnalNetPipelineTestComponent.class)
 public interface PipelineTestModule {
 
   FileReadWriter MOCK_FILE_WRITER = mock(FileReadWriter.class);
-  // FileReadWriter MOCK_FILE_WRITER = spy(new FileReadWriter());
 
   private static String readInputStreamAsString(File file) throws IOException {
     BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
@@ -88,5 +84,17 @@ public interface PipelineTestModule {
   @Provides
   static Set<PipelineError> errors() {
     return new LinkedHashSet<>();
+  }
+
+  @PipelineScope
+  @Provides
+  static File outputDirectory(ZonedDateTime currentTime) {
+    String outputDirectoryPath = String.format("storage/output/%s",
+        currentTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss_z")));
+    File outputDirectory = new File(outputDirectoryPath);
+    if (!outputDirectory.mkdir()) {
+      throw new IllegalStateException("Unable to create directory to write errors");
+    }
+    return outputDirectory;
   }
 }

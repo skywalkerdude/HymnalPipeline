@@ -1,13 +1,13 @@
 package com.hymnsmobile.pipeline.testutil;
 
-import static com.google.common.collect.ImmutableList.toImmutableList;
-
 import com.google.common.collect.ImmutableList;
 import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNetPipelineTestModule;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetKey;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+
+import static com.google.common.collect.ImmutableList.toImmutableList;
 
 /**
  * Extension to determine which hymns to fetch.
@@ -20,14 +20,12 @@ public class FetchHymnsExtension implements BeforeEachCallback, AfterEachCallbac
     if (keysToFetch == null) {
       return;
     }
-
     HymnalNetPipelineTestModule.SONGS_TO_FETCH.addAll(
         ImmutableList.copyOf(keysToFetch).stream().map(keyToFetch -> {
           String[] parts = keyToFetch.split("/");
           if (parts.length < 2 || parts.length > 3) {
             throw new RuntimeException(String.format("%s is an invalid key to fetch", keyToFetch));
           }
-
           HymnalNetKey.Builder key = HymnalNetKey.newBuilder().setHymnType(parts[0])
               .setHymnNumber(parts[1]);
           if (parts.length == 3) {

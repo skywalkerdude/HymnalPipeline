@@ -1,61 +1,0 @@
-
-�
-
-c60'Hymn: I’ve got the joy, joy, joy, joy�
-verse!I’ve got the joy, joy, joy, joyDown in my heart,Down in my heart,Down in my heart,!I’ve got the joy, joy, joy, joyDown in my heart,Down in my heart to stay.�
-verseAnd I’m so happy,So very happy;)I’ve got the love of Jesus in my heart.And I’m so happy,So very happy,)I’ve got the love of Jesus in my heart."d
-CategoryX
-Assurance and Joy of Salvation6/en/search/all/category/Assurance+and+Joy+of+Salvation"`
-SubcategoryQ
-GeneralF/en/search/all/category/Assurance+and+Joy+of+Salvation%E2%80%94General"`
-LyricsV
- George Willis Cooke (1848-1923)2/en/search/all/author/George+Willis+Cooke?t=c&n=60"a
-MusicX
- George Willis Cooke (1848-1923)4/en/search/all/composer/George+Willis+Cooke?t=c&n=60",
-Key%
-A Major/en/search/all/key/A+Major"(
-Time 
-4/4/en/search/all/time/4%2F4"?
-	Hymn Code2
-56717653321#/en/search/all/hymncode/56717653321"�
-See Also#
-Blessed assurance/en/hymn/h/3088
-&Sov’reign grace o’er sin abounding/en/hymn/h/3142
- My hope is built on nothing less/en/hymn/h/2987
-$Though the world may promise me more/en/hymn/ns/292"�
-
-Lead SheetC
-Piano:https://www.hymnal.net/Hymns/Children/pdfs/child0060_p.pdfD
-Guitar:https://www.hymnal.net/Hymns/Children/pdfs/child0060_g.pdfC
-Text;https://www.hymnal.net/Hymns/Children/pdfs/child0060_gt.pdf"�
-Music:
-mp33https://www.hymnal.net/Hymns/Children/mp3/c0060.mp3<
-MIDI4https://www.hymnal.net/Hymns/Children/midi/c0060.midS
-Tune (MIDI)Dhttps://www.hymnal.net/Hymns/Children/midi/tunes/child0060_tune.midi"�
-svgB
-Piano9https://www.hymnal.net/Hymns/Children/svg/child0060_p.svgC
-Guitar9https://www.hymnal.net/Hymns/Children/svg/child0060_g.svg�
-60'Hymn: I’ve got the joy, joy, joy, joy�
-verse#
-!I’ve got the joy, joy, joy, joy
-Down in my heart,
-Down in my heart,
-Down in my heart,#
-!I’ve got the joy, joy, joy, joy
-Down in my heart,
-Down in my heart to stay.�
-verse
-And I’m so happy,
-So very happy;+
-)I’ve got the love of Jesus in my heart.
-And I’m so happy,
-So very happy,+
-)I’ve got the love of Jesus in my heart."Assurance and Joy of Salvation*General2 George Willis Cooke (1848-1923): George Willis Cooke (1848-1923)BA MajorJ4/4b56717653321j:
-mp33https://www.hymnal.net/Hymns/Children/mp3/c0060.mp3j<
-MIDI4https://www.hymnal.net/Hymns/Children/midi/c0060.midjS
-Tune (MIDI)Dhttps://www.hymnal.net/Hymns/Children/midi/tunes/child0060_tune.midirB
-Piano9https://www.hymnal.net/Hymns/Children/svg/child0060_p.svgrC
-Guitar9https://www.hymnal.net/Hymns/Children/svg/child0060_g.svgzC
-Piano:https://www.hymnal.net/Hymns/Children/pdfs/child0060_p.pdfzD
-Guitar:https://www.hymnal.net/Hymns/Children/pdfs/child0060_g.pdfzC
-Text;https://www.hymnal.net/Hymns/Children/pdfs/child0060_gt.pdf

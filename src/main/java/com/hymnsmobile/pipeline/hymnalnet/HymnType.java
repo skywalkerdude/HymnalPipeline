@@ -13,6 +13,9 @@ public enum HymnType {
   HOWARD_HIGASHI("lb", Optional.of(87)),
   DUTCH("hd", Optional.empty()),
   GERMAN("de", Optional.empty()),
+  // We don't need to worry about simplified Chinese in here because in Hymnal.net, wherever there is a "ch/X" song,
+  // there is also a "ch/X?gb=1" song. Since Hymnal.net maintains this requirement for us, we don't need to maintain
+  // it here. If that changes on Hymnal.net's side, then we will need to update the pipeline to account for that.
   CHINESE("ch", Optional.empty()),
   CHINESE_SUPPLEMENTAL("ts", Optional.empty()),
   CEBUANO("cb", Optional.empty()),

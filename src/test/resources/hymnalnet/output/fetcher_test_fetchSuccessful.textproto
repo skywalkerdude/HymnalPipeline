@@ -1,0 +1,316 @@
+# proto-file: proto/hymnal_net.proto
+# proto-message: HymnalNet
+
+hymnanlNetJson {
+  key {
+    hymn_type: "h"
+    hymn_number: "1"
+  }
+  title: "Hymn: Glory be to God the Father"
+  lyrics {
+    verse_type: "verse"
+    verse_content: "Glory be to God the Father,"
+    verse_content: "\302\240\302\240And to Christ the Son,"
+    verse_content: "Glory to the Holy Spirit\342\200\224"
+    verse_content: "\302\240\302\240\302\240\302\240Ever One."
+  }
+  lyrics {
+    verse_type: "verse"
+    verse_content: "As we view the vast creation,"
+    verse_content: "\302\240\302\240Planned with wondrous skill,"
+    verse_content: "So our hearts would move to worship,"
+    verse_content: "\302\240\302\240\302\240\302\240And be still."
+  }
+  lyrics {
+    verse_type: "verse"
+    verse_content: "But, our God, how great Thy yearning"
+    verse_content: "\302\240\302\240To have sons who love"
+    verse_content: "In the Son e\342\200\231en now to praise Thee,"
+    verse_content: "\302\240\302\240\302\240\302\240Love to prove!"
+  }
+  lyrics {
+    verse_type: "verse"
+    verse_content: "\342\200\231Twas Thy thought in revelation,"
+    verse_content: "\302\240\302\240To present to men"
+    verse_content: "Secrets of Thine own affections,"
+    verse_content: "\302\240\302\240\302\240\302\240Theirs to win."
+  }
+  lyrics {
+    verse_type: "verse"
+    verse_content: "So in Christ, through His redemption"
+    verse_content: "\302\240\302\240(Vanquished evil powers!)"
+    verse_content: "Thou hast brought, in new creation,"
+    verse_content: "\302\240\302\240\302\240\302\240Worshippers!"
+  }
+  lyrics {
+    verse_type: "verse"
+    verse_content: "Glory be to God the Father,"
+    verse_content: "\302\240\302\240And to Christ the Son,"
+    verse_content: "Glory to the Holy Spirit\342\200\224"
+    verse_content: "\302\240\302\240\302\240\302\240Ever One."
+  }
+  meta_data {
+    name: "Category"
+    data {
+      value: "Blessing of the Trinity"
+      path: "/en/search/all/category/Blessing+of+the+Trinity"
+    }
+  }
+  meta_data {
+    name: "Subcategory"
+    data {
+      value: "His Plan"
+      path: "/en/search/all/category/Blessing+of+the+Trinity%E2%80%94His+Plan"
+    }
+  }
+  meta_data {
+    name: "Lyrics"
+    data {
+      value: "J. F. Garland"
+      path: "/en/search/all/author/J.+F.+Garland?t=h&n=1"
+    }
+  }
+  meta_data {
+    name: "Music"
+    data {
+      value: "Ira David Sankey\302\240(1840-1908)"
+      path: "/en/search/all/composer/Ira+David+Sankey?t=h&n=1"
+    }
+  }
+  meta_data {
+    name: "Key"
+    data {
+      value: "Ab Major"
+      path: "/en/search/all/key/Ab+Major"
+    }
+  }
+  meta_data {
+    name: "Time"
+    data {
+      value: "4/4"
+      path: "/en/search/all/time/4%2F4"
+    }
+  }
+  meta_data {
+    name: "Meter"
+    data {
+      value: "8.5.8.3."
+      path: "/en/search/all/meter/8.5.8.3."
+    }
+  }
+  meta_data {
+    name: "Hymn Code"
+    data {
+      value: "5553216153222"
+      path: "/en/search/all/hymncode/5553216153222"
+    }
+  }
+  meta_data {
+    name: "Languages"
+    data {
+      value: "Tagalog"
+      path: "/en/hymn/ht/1"
+    }
+  }
+  meta_data {
+    name: "See Also"
+    data {
+      value: "God, our Father, we adore Thee"
+      path: "/en/hymn/h/5"
+    }
+    data {
+      value: "What a Mystery, Mystery of Mysteries"
+      path: "/en/hymn/ns/834"
+    }
+    data {
+      value: "Merciful and righteous, wise beyond the wise"
+      path: "/en/hymn/ns/936"
+    }
+    data {
+      value: "Come, Thou Almighty King"
+      path: "/en/hymn/h/3"
+    }
+  }
+  meta_data {
+    name: "Lead Sheet"
+    data {
+      value: "Piano"
+      path: "https://www.hymnal.net/Hymns/Hymnal/pdfs/e0001_p.pdf"
+    }
+    data {
+      value: "Guitar"
+      path: "https://www.hymnal.net/Hymns/Hymnal/pdfs/e0001_g.pdf"
+    }
+    data {
+      value: "Text"
+      path: "https://www.hymnal.net/Hymns/Hymnal/pdfs/e0001_gt.pdf"
+    }
+  }
+  meta_data {
+    name: "Music"
+    data {
+      value: "mp3 (whole song)"
+      path: "https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_full.mp3"
+    }
+    data {
+      value: "MIDI (whole song)"
+      path: "https://www.hymnal.net/Hymns/Hymnal/midi/e0001_full.mid"
+    }
+    data {
+      value: "Singing"
+      path: "https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_sing.mp3"
+    }
+    data {
+      value: "mp3"
+      path: "https://www.hymnal.net/Hymns/Hymnal/mp3/e0001_i.mp3"
+    }
+    data {
+      value: "MIDI"
+      path: "https://www.hymnal.net/Hymns/Hymnal/midi/e0001_i.mid"
+    }
+    data {
+      value: "Tune (MIDI)"
+      path: "https://www.hymnal.net/Hymns/Hymnal/midi/tunes/e0001_tune.midi"
+    }
+  }
+  meta_data {
+    name: "svg"
+    data {
+      value: "Piano"
+      path: "https://www.hymnal.net/Hymns/Hymnal/svg/e0001_p.svg"
+    }
+    data {
+      value: "Guitar"
+      path: "https://www.hymnal.net/Hymns/Hymnal/svg/e0001_g.svg"
+    }
+  }
+}
+hymnanlNetJson {
+  key {
+    hymn_type: "ht"
+    hymn_number: "1"
+  }
+  title: "Hymn: L\342\200\231walhati sa Diyos Ama at sa Anak Kristo"
+  lyrics {
+    verse_type: "verse"
+    verse_content: "L\342\200\231walhati sa Diyos Ama at sa Anak Kristo,"
+    verse_content: "L\342\200\231walhati sa Espiritu\342\200\224laging Isa."
+  }
+  lyrics {
+    verse_type: "verse"
+    verse_content: "Sa pagmamasid ng malawak na nilikha,"
+    verse_content: "Puso nati\342\200\231y tatahimik at sasamba."
+  }
+  lyrics {
+    verse_type: "verse"
+    verse_content: "O Diyos, nais Mo ang magkaroon sa Anak"
+    verse_content: "Mga anak nagpupuri\342\200\231t nagmamahal."
+  }
+  lyrics {
+    verse_type: "verse"
+    verse_content: "Ang pagsinta Mo\342\200\231y pinahayag sa nilalang"
+    verse_content: "Upang ang pagsinta nila ay makamtan"
+  }
+  lyrics {
+    verse_type: "verse"
+    verse_content: "Sa pagtubos ni Kristo, masama\342\200\231y napuksa;"
+    verse_content: "Mananamba\342\200\231y nakamtan sa bagong likha."
+  }
+  lyrics {
+    verse_type: "verse"
+    verse_content: "L\342\200\231walhati sa Diyos Ama at sa Anak Kristo,"
+    verse_content: "L\342\200\231walhati sa Espiritu\342\200\224laging Isa."
+  }
+  meta_data {
+    name: "Category"
+    data {
+      value: "PAGPAPARANGAL SA TRINIDAD"
+      path: "/en/search/all/category/PAGPAPARANGAL+SA+TRINIDAD"
+    }
+  }
+  meta_data {
+    name: "Subcategory"
+    data {
+      value: "KANYANG PLANO"
+      path: "/en/search/all/category/PAGPAPARANGAL+SA+TRINIDAD%E2%80%94KANYANG+PLANO"
+    }
+  }
+  meta_data {
+    name: "Lyrics"
+    data {
+      value: "Translated from J. F. Garland"
+      path: "/en/search/all/author/J.+F.+Garland?t=ht&n=1"
+    }
+  }
+  meta_data {
+    name: "Music"
+    data {
+      value: "Ira David Sankey\302\240(1840-1908)"
+      path: "/en/search/all/composer/Ira+David+Sankey?t=ht&n=1"
+    }
+  }
+  meta_data {
+    name: "Key"
+    data {
+      value: "Ab Major"
+      path: "/en/search/all/key/Ab+Major"
+    }
+  }
+  meta_data {
+    name: "Time"
+    data {
+      value: "4/4"
+      path: "/en/search/all/time/4%2F4"
+    }
+  }
+  meta_data {
+    name: "Meter"
+    data {
+      value: "8.5.8.3."
+      path: "/en/search/all/meter/8.5.8.3."
+    }
+  }
+  meta_data {
+    name: "Hymn Code"
+    data {
+      value: "5553216153222"
+      path: "/en/search/all/hymncode/5553216153222"
+    }
+  }
+  meta_data {
+    name: "Languages"
+    data {
+      value: "English"
+      path: "/en/hymn/h/1"
+    }
+  }
+  meta_data {
+    name: "See Also"
+    data {
+      value: "Banal, Banal, Banal, Makapangyarihan"
+      path: "/en/hymn/ht/6"
+    }
+    data {
+      value: "Luwalhati sa Diyos Ama"
+      path: "/en/hymn/ht/9"
+    }
+    data {
+      value: "Sinasamba Ka, O Ama"
+      path: "/en/hymn/ht/5"
+    }
+    data {
+      value: "Ama, sinta Mo\342\200\231y kay lalim"
+      path: "/en/hymn/ht/4"
+    }
+  }
+}
+errors {
+  severity: ERROR
+  error_type: FETCH_EXCEPTION
+  messages: "Exception thrown during fetch: hymn_type: \"cb\"\nhymn_number: \"1\"\n, a related song of hymn_type: \"ht\"\nhymn_number: \"1\"\n"
+}
+errors {
+  severity: ERROR
+  error_type: FETCH_EXCEPTION
+  messages: "Exception thrown during fetch: hymn_type: \"cb\"\nhymn_number: \"1\"\n, a related song of hymn_type: \"h\"\nhymn_number: \"1\"\n"
+}

@@ -1,8 +1,5 @@
 package com.hymnsmobile.pipeline.hymnalnet;
 
-import static com.google.common.collect.ImmutableList.toImmutableList;
-import static com.hymnsmobile.pipeline.hymnalnet.Converter.extractFromPath;
-
 import com.google.common.collect.ImmutableList;
 import com.google.protobuf.util.JsonFormat;
 import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNet;
@@ -13,6 +10,8 @@ import com.hymnsmobile.pipeline.hymnalnet.models.MetaDatum;
 import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.PipelineError.ErrorType;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
+
+import javax.inject.Inject;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -23,7 +22,9 @@ import java.net.http.HttpResponse.BodyHandlers;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
-import javax.inject.Inject;
+
+import static com.google.common.collect.ImmutableList.toImmutableList;
+import static com.hymnsmobile.pipeline.hymnalnet.Converter.extractFromPath;
 
 @HymnalNetPipelineScope
 public class Fetcher {
@@ -38,9 +39,13 @@ public class Fetcher {
      */
     ALREADY_FETCHED,
     /**
-     * Error occurred during fetch.
+     * Fetch returned non-200 response.
      */
-    ERROR;
+    NON_200_RESPONSE,
+    /**
+     * Exception thrown during fetch.
+     */
+    FETCH_EXCEPTION
   }
 
   private static final Logger LOGGER = Logger.getGlobal();
@@ -74,7 +79,18 @@ public class Fetcher {
     LOGGER.info("Starting fetch...");
     for (HymnalNetKey key : songsToFetch) {
       HymnType hymnType = HymnType.fromString(key.getHymnType()).orElseThrow();
-      if (fetchHymn(key) == FetchResult.ERROR && hymnType.maxNumber.isPresent()) {
+      Fetcher.FetchResult fetchResult = fetchHymn(key);
+      if (fetchResult == FetchResult.FETCH_EXCEPTION) {
+        this.errors.add(
+            PipelineError.newBuilder()
+                .setSeverity(Severity.ERROR)
+                .setErrorType(ErrorType.FETCH_EXCEPTION)
+                .addMessages(String.format("Exception thrown during fetch: %s", key))
+                .build());
+        return;
+      }
+
+      if (fetchResult == FetchResult.NON_200_RESPONSE && hymnType.maxNumber.isPresent()) {
         // If there is a max number, that means the song *should* be continuous meaning a missing
         // song should theoretically be an error.
         //
@@ -91,24 +107,6 @@ public class Fetcher {
     LOGGER.info("Fetch Complete");
   }
 
-  private MetaDatum fetchAndReturnSuccesses(MetaDatum metaDatum, HymnalNetKey parent) {
-    return metaDatum.toBuilder().clearData()
-        .addAllData(
-            metaDatum.getDataList().stream().filter(datum ->
-                    extractFromPath(datum.getPath(), parent, errors)
-                        .filter(relatedSong -> {
-                          if (fetchHymn(relatedSong) == FetchResult.ERROR) {
-                            LOGGER.warning(
-                                String.format("Failed to fetch: %s, a related song of %s", relatedSong,
-                                    parent));
-                            return false;
-                          }
-                          return true;
-                        }).isPresent())
-                .collect(toImmutableList()))
-        .build();
-  }
-
   private FetchResult fetchHymn(HymnalNetKey key) {
     LOGGER.fine(String.format("Fetching %s", key));
     if (hymnalNetJsons.stream().anyMatch(hymn -> hymn.getKey().equals(key))) {
@@ -116,11 +114,17 @@ public class Fetcher {
       return FetchResult.ALREADY_FETCHED;
     }
 
-    Optional<HymnalNetJson> hymn = getHymnalNet(key);
+    final Optional<HymnalNetJson> hymn;
+    try {
+      hymn = getHymnalNet(key);
+    } catch (IOException | URISyntaxException | InterruptedException e) {
+      return FetchResult.FETCH_EXCEPTION;
+    }
     if (hymn.isEmpty()) {
       LOGGER.warning(String.format("Unable to fetch %s", key));
-      return FetchResult.ERROR;
+      return FetchResult.NON_200_RESPONSE;
     }
+
     // Need to add the hymn here first as a terminal case
     this.hymnalNetJsons.add(hymn.get());
 
@@ -156,22 +160,19 @@ public class Fetcher {
    *
    * @param key key to fetch
    */
-  private Optional<HymnalNetJson> getHymnalNet(HymnalNetKey key) {
-    try {
-      HttpResponse<String> response =
-          client.send(HttpRequest.newBuilder().uri(buildUri(key)).build(), BodyHandlers.ofString());
+  private Optional<HymnalNetJson> getHymnalNet(HymnalNetKey key)
+      throws IOException, URISyntaxException, InterruptedException {
+    HttpResponse<String> response =
+        client.send(HttpRequest.newBuilder().uri(buildUri(key)).build(), BodyHandlers.ofString());
 
-      if (response.statusCode() != 200) {
-        return Optional.empty();
-      }
-
-      HymnalNetJson.Builder builder = HymnalNetJson.newBuilder().setKey(key);
-      JsonFormat.parser().merge(response.body(), builder);
-      LOGGER.fine(String.format("%s successfully fetched", key));
-      return Optional.of(builder.build());
-    } catch (IOException | InterruptedException | URISyntaxException e) {
+    if (response.statusCode() != 200) {
       return Optional.empty();
     }
+
+    HymnalNetJson.Builder builder = HymnalNetJson.newBuilder().setKey(key);
+    JsonFormat.parser().merge(response.body(), builder);
+    LOGGER.fine(String.format("%s successfully fetched", key));
+    return Optional.of(builder.build());
   }
 
   /**
@@ -183,5 +184,35 @@ public class Fetcher {
     return new URI(SCHEME, AUTHORITY, String.format(PATH, key.getHymnType(), key.getHymnNumber()),
         key.hasQueryParams() ? key.getQueryParams().substring(1) + "&" + CHECK_EXISTS
             : CHECK_EXISTS, null);
+  }
+
+  private MetaDatum fetchAndReturnSuccesses(MetaDatum metaDatum, HymnalNetKey parent) {
+    return metaDatum.toBuilder().clearData()
+        .addAllData(
+            metaDatum.getDataList().stream().filter(datum ->
+                    extractFromPath(datum.getPath(), parent, errors)
+                        .filter(relatedSong -> {
+                          FetchResult fetchResult = fetchHymn(relatedSong);
+                          if (fetchResult == FetchResult.FETCH_EXCEPTION) {
+                            this.errors.add(
+                                PipelineError.newBuilder()
+                                    .setSeverity(Severity.ERROR)
+                                    .setErrorType(ErrorType.FETCH_EXCEPTION)
+                                    .addMessages(
+                                        String.format("Exception thrown during fetch: %s, a related song of %s",
+                                            relatedSong, parent))
+                                    .build());
+                            return false;
+                          }
+                          if (fetchResult == FetchResult.NON_200_RESPONSE) {
+                            LOGGER.warning(
+                                String.format("Failed to fetch: %s, a related song of %s", relatedSong,
+                                    parent));
+                            return false;
+                          }
+                          return true;
+                        }).isPresent())
+                .collect(toImmutableList()))
+        .build();
   }
 }

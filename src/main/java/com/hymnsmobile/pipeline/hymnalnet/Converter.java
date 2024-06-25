@@ -3,6 +3,7 @@ package com.hymnsmobile.pipeline.hymnalnet;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetKey;
 import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.PipelineError.ErrorType;
+
 import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -48,7 +49,6 @@ public class Converter {
     if (path.contains("hinario")) {
       return Optional.of(HymnType.HINOS.abbreviation);
     }
-
     Matcher matcher = PATH_PATTERN.matcher(path);
     if (!matcher.find()) {
       return Optional.empty();
@@ -77,7 +77,6 @@ public class Converter {
     if (!matcher.find()) {
       return Optional.empty();
     }
-
     return Optional.ofNullable(matcher.group(3));
   }
 

@@ -1,8 +1,5 @@
 package com.hymnsmobile.pipeline.songbase;
 
-import static com.google.common.collect.ImmutableList.toImmutableList;
-import static com.hymnsmobile.pipeline.storage.DatabaseWriter.DATABASE_VERSION;
-
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.LinkedListMultimap;
@@ -11,6 +8,9 @@ import com.hymnsmobile.pipeline.FileReadWriter;
 import com.hymnsmobile.pipeline.dagger.DaggerPipelineComponent;
 import com.hymnsmobile.pipeline.models.SongReference;
 import dagger.Lazy;
+import org.apache.commons.lang3.tuple.Pair;
+
+import javax.inject.Inject;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,8 +21,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Optional;
-import javax.inject.Inject;
-import org.apache.commons.lang3.tuple.Pair;
+
+import static com.google.common.collect.ImmutableList.toImmutableList;
+import static com.hymnsmobile.pipeline.storage.DatabaseWriter.DATABASE_VERSION;
 
 public class SongbaseDiffer {
 
@@ -127,7 +128,7 @@ public class SongbaseDiffer {
 
   private Multimap<String, SongReference> parseHymns() throws ClassNotFoundException, SQLException {
     Class.forName("org.sqlite.JDBC");
-    Optional<File> mostRecentFile = fileReadWriter.readLargestFile("storage/output",
+    Optional<File> mostRecentFile = fileReadWriter.readLargestFilePath("storage/output",
         Optional.of("\\d\\d\\d\\d-\\d\\d-\\d\\d_\\d\\d-\\d\\d-\\d\\d_PDT"));
     // No file to read
     if (mostRecentFile.isEmpty()) {

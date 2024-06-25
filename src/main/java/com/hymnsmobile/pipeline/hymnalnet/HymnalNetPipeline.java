@@ -7,16 +7,14 @@ import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNet;
 import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNetPipelineScope;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetJson;
 import com.hymnsmobile.pipeline.models.PipelineError;
-import java.io.File;
-import java.io.FileInputStream;
+
+import javax.inject.Inject;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
-import javax.inject.Inject;
 
 @HymnalNetPipelineScope
 public class HymnalNetPipeline {
@@ -55,41 +53,36 @@ public class HymnalNetPipeline {
     LOGGER.info("Hymnal.net pipeline starting");
     readFile();
     fetcher.fetchHymns();
-    writeAllHymns();
+    writeHymns();
     LOGGER.info("Hymnal.net pipeline finished");
   }
 
-  private void readFile() throws IOException {
-    Optional<File> mostRecentFile = fileReadWriter.readLargestFile("storage/hymnalnet",
-        Optional.of("\\d\\d\\d\\d-\\d\\d-\\d\\d_\\d\\d-\\d\\d-\\d\\d_[A-Z]{3}.txt"));
-    // No file to read
-    if (mostRecentFile.isEmpty()) {
-      return;
-    }
-
-    LOGGER.info(String.format("Reading file %s", mostRecentFile.get()));
-    com.hymnsmobile.pipeline.hymnalnet.models.HymnalNet hymnalNet =
-        com.hymnsmobile.pipeline.hymnalnet.models.HymnalNet.parseFrom(
-            new FileInputStream(mostRecentFile.get()));
-    this.hymnalNetJsons.addAll(hymnalNet.getHymnanlNetJsonList());
-    this.errors.addAll(hymnalNet.getErrorsList());
-    LOGGER.info(String.format("Reading file with %d songs and %d errors",
-        hymnalNet.getHymnanlNetJsonCount(), hymnalNet.getErrorsCount()));
+  private void readFile() {
+    Optional<com.hymnsmobile.pipeline.hymnalnet.models.HymnalNet> mostRecentOutput =
+        fileReadWriter.readLatestOutput(
+            "storage/hymnalnet",
+            Optional.of("\\d\\d\\d\\d-\\d\\d-\\d\\d_\\d\\d-\\d\\d-\\d\\d_[A-Z]{3}"),
+            com.hymnsmobile.pipeline.hymnalnet.models.HymnalNet.parser());
+    mostRecentOutput.ifPresent(hymnalNet -> {
+      this.hymnalNetJsons.addAll(hymnalNet.getHymnanlNetJsonList());
+      this.errors.addAll(hymnalNet.getErrorsList());
+      LOGGER.info(String.format("Reading file with %d songs and %d errors",
+          hymnalNet.getHymnanlNetJsonCount(), hymnalNet.getErrorsCount()));
+    });
   }
 
-  private void writeAllHymns() throws IOException {
-    String fileName = String.format("storage/hymnalnet/%s.txt",
+  private void writeHymns() throws IOException {
+    String directoryPath = String.format("storage/hymnalnet/%s",
         currentTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss_z")));
-    LOGGER.info(String.format("Writing hymns to %s", fileName));
-    fileReadWriter.writeProto(fileName,
+    LOGGER.info(String.format("Writing hymns to %s", directoryPath));
+    fileReadWriter.writeProto(directoryPath,
         com.hymnsmobile.pipeline.hymnalnet.models.HymnalNet.newBuilder()
             .addAllHymnanlNetJson(hymnalNetJsons)
             .addAllErrors(errors)
             .build());
   }
 
-  public static void main(String[] args)
-      throws IOException, URISyntaxException, InterruptedException {
+  public static void main(String[] args) throws IOException {
     DaggerPipelineComponent.create().hymnalNetComponent().build().pipeline().run();
   }
 }
