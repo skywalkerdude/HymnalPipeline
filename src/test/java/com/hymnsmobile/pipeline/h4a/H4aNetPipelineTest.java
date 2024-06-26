@@ -19,19 +19,19 @@ import static com.google.common.truth.Truth.assertThat;
 
 class H4aNetPipelineTest {
 
-  private H4aPipeline h4aPipeline;
+  private H4aPipeline pipeline;
 
   @BeforeEach
   public void setUp() {
     Logger.getGlobal().setFilter(record -> record.getLevel().intValue() >= Level.SEVERE.intValue());
-    h4aPipeline = DaggerPipelineTestComponent.create().h4aComponent().build().pipeline();
+    pipeline = DaggerPipelineTestComponent.create().h4aComponent().build().pipeline();
   }
 
   @Test
   public void runEndToEnd() throws BadHanyuPinyinOutputFormatCombination, SQLException, IOException {
-    h4aPipeline.run();
+    pipeline.run();
 
-    ImmutableList<H4aHymn> h4aHymns = h4aPipeline.getH4aHymns();
+    ImmutableList<H4aHymn> h4aHymns = pipeline.getH4aHymns();
     assertThat(h4aHymns.size()).isEqualTo(12488);
 
     H4aHymn expected =
@@ -44,6 +44,6 @@ class H4aNetPipelineTest {
                         h4aHymn.getId().equals(H4aKey.newBuilder().setType("E").setNumber("1336").build()))
                 .findFirst().orElseThrow())
         .isEqualTo(expected);
-    ProtoTruth.assertThat(h4aPipeline.getErrors()).isEmpty();
+    ProtoTruth.assertThat(pipeline.getErrors()).isEmpty();
   }
 }

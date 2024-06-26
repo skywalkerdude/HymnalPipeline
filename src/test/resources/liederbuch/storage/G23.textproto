@@ -1,0 +1,75 @@
+# proto-file: proto/liederbuch.proto
+# proto-message: LiederbuchHymn
+
+key {
+  type: "G"
+  number: "23"
+}
+title: "DIE ANBETUNG DES VATERS - SEIN VORSATZ"
+meter: "8.8.8.8."
+related {
+  type: "C"
+  number: "30"
+}
+related {
+  type: "E"
+  number: "32"
+}
+related {
+  type: "F"
+  number: "32"
+}
+verses {
+  verse_content: "Wir beten Dich, o Vater, an,"
+  verse_content: "Wie herrlich ist\'s, dass Du uns liebst!"
+  verse_content: "Was z\303\244hlt f\303\274r Dich der Mensch, o Herr,"
+  verse_content: "Dass Du ihm Deine Gnade gibst?"
+}
+verses {
+  verse_content: "Dein Herzenswunsch ist wunderbar,"
+  verse_content: "Der Mensch soll Deinem Bild gleich sein;"
+  verse_content: "Mit Deinem Leben und Natur"
+  verse_content: "F\303\274llst ihn und nimmst ihn v\303\266llig ein."
+}
+verses {
+  verse_content: "Den Mensch schufst Du in Deinem Bild,"
+  verse_content: "Und ihn zur Herrschaft eingesetzt;"
+  verse_content: "Als Leben kamst Du hin zu ihm,"
+  verse_content: "Dass er durch Dich lebt bis zuletzt."
+}
+verses {
+  verse_content: "In ihn hinein zu kommen Du"
+  verse_content: "Begehrst, mit ihm vermengst Du Dich;"
+  verse_content: "Du wandelst um und baust ihn auf,"
+  verse_content: "Zu Deiner Wohnung ewiglich."
+}
+verses {
+  verse_content: "Der Mensch fiel, doch Du hieltest fest"
+  verse_content: "An Deinem Vorsatz, gingst voran;"
+  verse_content: "Erl\303\266sung brachte ihn zur\303\274ck,"
+  verse_content: "Welch gro\303\237e Weisheit zeigt Dein Plan."
+}
+verses {
+  verse_content: "In Christus sichtbar wurdest Du,"
+  verse_content: "Er auferstand, uns machte frei;"
+  verse_content: "Als Geist kamst Du in uns hinein"
+  verse_content: "Und Gnade gabst Du uns dabei."
+}
+verses {
+  verse_content: "Mein Geist ist Deine Wohnung, Herr,"
+  verse_content: "Dein Thron der Gnade fest dort steht;"
+  verse_content: "Wir wollen hier, in unsrem Geist,"
+  verse_content: "Den Weihrauch opfern durch Gebet."
+}
+verses {
+  verse_content: "Solch Gnade gleicht dem reinen Strom,"
+  verse_content: "Vom Thron der Gnade flie\303\237t sie aus;"
+  verse_content: "Sie wandelt um und baut uns auf"
+  verse_content: "Zu Deiner Wohnung, Deinem Haus."
+}
+verses {
+  verse_content: "Von Deiner Gnade trinken wir,"
+  verse_content: "Wir sch\303\244tzen diese Gabe sehr;"
+  verse_content: "Welch gro\303\237e Liebe Du erweist!"
+  verse_content: "Wir beten Dich im Geist an, Herr."
+}
