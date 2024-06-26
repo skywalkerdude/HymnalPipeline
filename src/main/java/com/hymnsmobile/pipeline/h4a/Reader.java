@@ -85,6 +85,7 @@ public class Reader {
       scriptRunner.setAutoCommit(true);
       scriptRunner.setSendFullScript(false);
       scriptRunner.setStopOnError(true);
+      scriptRunner.setLogWriter(null);
       scriptRunner.runScript(new java.io.FileReader(SQL_SCRIPT_PATH));
     } catch (FileNotFoundException e) {
       throw new RuntimeException(String.format("Unable to connect to SQL script: %s", SQL_SCRIPT_PATH), e);

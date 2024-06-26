@@ -1,3 +1,6 @@
+# proto-file: proto/hymnal_net.proto
+# proto-message: HymnalNet
+
 hymnanlNetJson {
   key {
     hymn_type: "c"

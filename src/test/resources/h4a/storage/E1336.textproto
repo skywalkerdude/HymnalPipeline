@@ -1,0 +1,46 @@
+# proto-file: proto/h4a.proto
+# proto-message: H4aHymn
+
+id {
+  type: "E"
+  number: "1336"
+}
+first_stanza_line: "What shall I give unto the Lord"
+key: "D Major"
+main_category: "Scriptures for Singing"
+meter: "Peculiar Meter."
+time: "4/4"
+hymn_code: "3334454321"
+piano_svg: "http://www.hymnal.net/Hymns/Hymnal/svg/e1336_p.svg"
+guitar_svg: "http://www.hymnal.net/Hymns/Hymnal/svg/e1336_g.svg"
+related {
+  type: "BF"
+  number: "9"
+}
+related {
+  type: "F"
+  number: "1336"
+}
+related {
+  type: "G"
+  number: "457"
+}
+verses {
+  verse_type: "verse"
+  lines {
+    line_content: "What shall I give unto the Lord"
+  }
+  lines {
+    line_content: "For all, for all, for all He\'s done for me?"
+  }
+  lines {
+    line_content: "I\'ll take the cup of salvation,"
+  }
+  lines {
+    line_content: "And call, and call, and call upon the name of the Lord."
+  }
+}
+youtube {
+  comment: "1st tune"
+  video_id: "OLibOAEdddA"
+}
