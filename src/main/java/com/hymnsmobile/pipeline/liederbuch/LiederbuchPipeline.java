@@ -74,7 +74,7 @@ public class LiederbuchPipeline {
           .collect(toImmutableList());
 
       for (String songId : allSongs) {
-        LiederbuchKey key = converter.toKey(songId).orElseThrow();
+        LiederbuchKey key = converter.toKey(songId);
         if (BLOCK_LIST.contains(key)) {
           LOGGER.fine(String.format("%s contained in block list. Skipping...", key));
           continue;
@@ -109,7 +109,7 @@ public class LiederbuchPipeline {
         liederbuchSong.addAllRelated(infoElement.select("a[href]").stream()
             .peek(Node::remove)
             .map(Element::text)
-            .map(s -> converter.toKey(s).orElseThrow())
+            .map(converter::toKey)
             .collect(toImmutableList()));
         liederbuchSong.setMeter(infoElement.text().replace(",", "").trim());
 

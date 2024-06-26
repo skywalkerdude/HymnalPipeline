@@ -2,11 +2,11 @@ package com.hymnsmobile.pipeline.liederbuch;
 
 import com.hymnsmobile.pipeline.liederbuch.dagger.LiederbuchScope;
 import com.hymnsmobile.pipeline.liederbuch.models.LiederbuchKey;
-import java.util.Optional;
+
+import javax.inject.Inject;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.inject.Inject;
 
 @LiederbuchScope
 public class Converter {
@@ -19,35 +19,23 @@ public class Converter {
   public Converter() {
   }
 
-  public Optional<LiederbuchKey> toKey(String id) {
-    Optional<String> type = extractTypeFromId(id);
-    Optional<String> number = extractNumberFromId(id);
-
-    if (type.isEmpty() || number.isEmpty()) {
-      LOGGER.severe(String.format("%s was unable to be parsed into a Liederbuch key", id));
-      return Optional.empty();
-    }
-
-    LiederbuchKey.Builder builder = LiederbuchKey.newBuilder().setType(type.get())
-        .setNumber(number.get());
-    return Optional.of(builder.build());
+  public LiederbuchKey toKey(String id) {
+    return LiederbuchKey.newBuilder().setType(extractType(id).abbreviation).setNumber(extractNumber(id)).build();
   }
 
-  private static Optional<String> extractTypeFromId(String path) {
-    Matcher matcher = ID_PATTERN.matcher(path);
+  private static HymnType extractType(String id) {
+    Matcher matcher = ID_PATTERN.matcher(id);
     if (!matcher.find()) {
-      return Optional.empty();
+      throw new IllegalArgumentException("Unable to extract type from " + id);
     }
-
-    return Optional.of(matcher.group(1));
+    return HymnType.fromString(matcher.group(1)).orElseThrow();
   }
 
-  private static Optional<String> extractNumberFromId(String path) {
-    Matcher matcher = ID_PATTERN.matcher(path);
+  private static String extractNumber(String id) {
+    Matcher matcher = ID_PATTERN.matcher(id);
     if (!matcher.find()) {
-      return Optional.empty();
+      throw new IllegalArgumentException("Unable to extract number from " + id);
     }
-
-    return Optional.of(matcher.group(2));
+    return matcher.group(2);
   }
 }
