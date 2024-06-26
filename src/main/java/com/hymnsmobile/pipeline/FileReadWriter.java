@@ -39,7 +39,7 @@ public class FileReadWriter {
   public <M extends Message> Optional<M> readLatestOutput(String path, Optional<String> fileMask, Parser<M> parser) {
     Optional<File> largestFilePath = readLargestFilePath(path, fileMask);
     if (largestFilePath.isEmpty()) {
-      throw new IllegalArgumentException(String.format("path: %s w/ file mask: %s was empty", path, fileMask));
+      return Optional.empty();
     }
     return largestFilePath.flatMap(directory -> {
       LOGGER.fine(String.format("Reading from %s", directory.getName()));

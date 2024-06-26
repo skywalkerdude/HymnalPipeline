@@ -61,13 +61,8 @@ class FileReadWriterTest {
   }
 
   @Test
-  public void readLatestOutput__noFilesFound__throwsException() {
-    assertThatThrownBy(() ->
-        target.readLatestOutput(RESOURCE_DIR_PATH,
-            Optional.of("no_match"),
-            Line.parser()))
-        .isInstanceOf(IllegalArgumentException.class)
-        .hasMessageContaining("path: src/test/resources/common w/ file mask: Optional[no_match] was empty");
+  public void readLatestOutput__noFilesFound__returnsEmpty() {
+    assertThat(target.readLatestOutput(RESOURCE_DIR_PATH, Optional.of("no_match"), Line.parser())).isEmpty();
   }
 
   @Test
