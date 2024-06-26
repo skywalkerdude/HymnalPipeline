@@ -14,11 +14,8 @@ public class Converter {
 
   private static final Pattern ID_PATTERN = Pattern.compile("([A-Z]+)([a-z]?\\d+\\D*)");
 
-  private final Set<PipelineError> errors;
-
   @Inject
-  public Converter(@H4a Set<PipelineError> errors) {
-    this.errors = errors;
+  public Converter() {
   }
 
   public H4aKey toKey(String id) {

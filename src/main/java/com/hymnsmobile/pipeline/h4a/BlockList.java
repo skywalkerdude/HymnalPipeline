@@ -16,7 +16,7 @@ public final class BlockList {
       .add(H4aKey.newBuilder().setType("G").setNumber("10001").build())
 
       // G10002 is a different translation of "What miracle! What mystery!" (NS151), but the
-      // translation we want is already covered by G420, so we can ski this song.
+      // translation we want is already covered by G420, so we can skip this song.
       .add(H4aKey.newBuilder().setType("G").setNumber("10002").build())
 
       // Songs that show up in "related" column but don't actually exist in the h4a db. These should
@@ -60,7 +60,7 @@ public final class BlockList {
     HymnType type = HymnType.fromString(key.getType()).orElseThrow();
     String number = key.getNumber();
 
-    if (type == HymnType.UNKNOWN) {
+    if (type == HymnType.UNKNOWN_R || type == HymnType.UNKNOWN_LB) {
       return true;
     }
 

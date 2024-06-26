@@ -11,7 +11,6 @@ public interface H4aPipelineComponent {
 
   @Subcomponent.Builder
   interface Builder {
-
     H4aPipelineComponent build();
   }
 }

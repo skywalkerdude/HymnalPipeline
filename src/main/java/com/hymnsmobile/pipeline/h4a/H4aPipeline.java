@@ -1,15 +1,17 @@
 package com.hymnsmobile.pipeline.h4a;
 
 import com.google.common.collect.ImmutableList;
+import com.hymnsmobile.pipeline.dagger.DaggerPipelineComponent;
 import com.hymnsmobile.pipeline.h4a.dagger.H4a;
 import com.hymnsmobile.pipeline.h4a.dagger.H4aPipelineScope;
 import com.hymnsmobile.pipeline.h4a.models.H4aHymn;
 import com.hymnsmobile.pipeline.models.PipelineError;
+import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
+
+import javax.inject.Inject;
 import java.sql.SQLException;
 import java.util.Set;
 import java.util.logging.Logger;
-import javax.inject.Inject;
-import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
 @H4aPipelineScope
 public class H4aPipeline {
@@ -42,5 +44,9 @@ public class H4aPipeline {
     LOGGER.info("H4a pipeline starting");
     reader.readDb();
     LOGGER.info("H4a pipeline finished");
+  }
+
+  public static void main(String[] args) throws BadHanyuPinyinOutputFormatCombination, SQLException {
+    DaggerPipelineComponent.create().h4aComponent().build().pipeline().run();
   }
 }

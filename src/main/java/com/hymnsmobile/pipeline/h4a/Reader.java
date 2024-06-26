@@ -1,6 +1,6 @@
-package com.hymnsmobile.pipeline.h4a;
 
-import static com.hymnsmobile.pipeline.h4a.BlockList.shouldBlock;
+
+package com.hymnsmobile.pipeline.h4a;
 
 import com.hymnsmobile.pipeline.h4a.dagger.H4a;
 import com.hymnsmobile.pipeline.h4a.dagger.H4aPipelineScope;
@@ -11,26 +11,36 @@ import com.hymnsmobile.pipeline.models.Line;
 import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.Verse;
 import com.hymnsmobile.pipeline.utils.TextUtil;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Set;
-import java.util.logging.Logger;
-import javax.inject.Inject;
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
+import org.apache.ibatis.jdbc.ScriptRunner;
+
+import javax.inject.Inject;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Set;
+import java.util.logging.Logger;
+
+import static com.hymnsmobile.pipeline.h4a.BlockList.shouldBlock;
 
 @H4aPipelineScope
 public class Reader {
 
+  // https://github.com/lemuelinchrist/hymnsforandroid/releases/tag/v4.13
+  private static final String H4A_VERSION = "4_13";
+
   private static final Logger LOGGER = Logger.getGlobal();
 
-  private static final String DATABASE_PATH = "jdbc:sqlite:storage/h4a/h4a-piano-v4_7.sqlite";
+  private static final String SQL_SCRIPT_PATH = String.format("storage/h4a/hymns-%s.sql", H4A_VERSION);
+  private static final String SQLITE_PATH = String.format("storage/h4a/h4a-%s.sqlite", H4A_VERSION);
 
   /**
    * Use a custom escape sequence, since Gson will auto-escape strings and screw everything up.
@@ -39,25 +49,49 @@ public class Reader {
    */
   private static final String CUSTOM_ESCAPE = "$CUSESP$";
 
-  private final Connection connection;
   private final Converter converter;
   private final Set<PipelineError> errors;
   private final Set<H4aHymn> h4aHymns;
 
   @Inject
   public Reader(Converter converter, @H4a Set<PipelineError> errors, Set<H4aHymn> h4aHymns) {
-    try {
-      Class.forName("org.sqlite.JDBC");
-      this.connection = DriverManager.getConnection(DATABASE_PATH);
-    } catch (ClassNotFoundException | SQLException e) {
-      throw new RuntimeException("Unable to connect to h4a database", e);
-    }
     this.converter = converter;
     this.errors = errors;
     this.h4aHymns = h4aHymns;
   }
 
   public void readDb() throws SQLException, BadHanyuPinyinOutputFormatCombination {
+    try (Connection connection = setUpSqlite()) {
+      readSqlScript(connection);
+      loadHymns(connection);
+    } finally {
+      //noinspection ResultOfMethodCallIgnored
+      new File(SQLITE_PATH).delete();
+    }
+  }
+
+  private Connection setUpSqlite() {
+    try {
+      Class.forName("org.sqlite.JDBC");
+      return DriverManager.getConnection(String.format("jdbc:sqlite:%s", SQLITE_PATH));
+    } catch (ClassNotFoundException | SQLException e) {
+      throw new RuntimeException("Unable to connect to h4a database", e);
+    }
+  }
+
+  private void readSqlScript(Connection connection) {
+    try {
+      ScriptRunner scriptRunner = new ScriptRunner(connection);
+      scriptRunner.setAutoCommit(true);
+      scriptRunner.setSendFullScript(false);
+      scriptRunner.setStopOnError(true);
+      scriptRunner.runScript(new java.io.FileReader(SQL_SCRIPT_PATH));
+    } catch (FileNotFoundException e) {
+      throw new RuntimeException(String.format("Unable to connect to SQL script: %s", SQL_SCRIPT_PATH), e);
+    }
+  }
+
+  private void loadHymns(Connection connection) throws SQLException, BadHanyuPinyinOutputFormatCombination {
     ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM hymns");
     if (resultSet == null) {
       throw new IllegalArgumentException("h4a query returned null");

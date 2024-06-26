@@ -26,9 +26,13 @@ public enum HymnType {
   JAPANESE("J"),
   FARSI("F"),
   INDONESIAN("I"),
+  SLOVAK("SK"),
   // Not sure what ths "R" category is. It exists in the "related" column, but no songs have it as
   // part of its id.
-  UNKNOWN("R");
+  UNKNOWN_R("R"),
+  // Not sure what ths "LB" category is. It exists in the "related" column, but no songs have it as
+  // part of its id.
+  UNKNOWN_LB("LB");
 
   public final String abbreviation;
 
