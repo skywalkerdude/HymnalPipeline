@@ -1,0 +1,21 @@
+{
+  "songs": [
+    {
+      "id": 1,
+      "title": "Father Abraham",
+      "lang": "english",
+      "lyrics": "Father [D]Abraham\nHas many [A7]sons\n....",
+      "language_links": []
+    }
+  ],
+  "books": [],
+  "destroyed": {
+    "songs": [],
+    "books": []
+  },
+  "songCount": 1,
+  "data_updated_between": [
+    "1970-01-01T00:00:00.000Z",
+    "2024-06-27T02:38:30.444Z"
+  ]
+}

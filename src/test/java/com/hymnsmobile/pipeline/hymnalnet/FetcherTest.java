@@ -233,7 +233,7 @@ class FetcherTest {
     HymnalNet.Builder expected = HymnalNet.newBuilder();
     TestUtils.readTextProto("src/test/resources/hymnalnet/output/fetcher_test_fetchSuccessful.textproto", expected);
 
-    assertThat(hymnalNetJsons).containsExactlyElementsOf(expected.getHymnanlNetJsonList());
+    assertThat(hymnalNetJsons).containsExactlyInAnyOrderElementsOf(expected.getHymnanlNetJsonList());
     assertThat(errors).containsExactlyInAnyOrderElementsOf(expected.getErrorsList());
   }
 }

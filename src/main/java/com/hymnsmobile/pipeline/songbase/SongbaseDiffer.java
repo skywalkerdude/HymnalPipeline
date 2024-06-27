@@ -43,12 +43,13 @@ public class SongbaseDiffer {
    * Goes through the songbase db and generates a diff report between that and the current Hymns
    * database.
    * </p>
-   * This is needed due to a combination of factors: 1) Songbase, at some point, re-indexed all
-   * their songs, so all the songs between songbasedb-v3 and the current Hymns database are
-   * different. This messed up a lot of our favorites, recents, and tags, since they are keyed by
-   * hymn type and hymn number. The way to solve this was to perform an exact match on the title and
-   * try to infer the new hymn number. However... 2) There was a bug in iOS where tag titles weren't
-   * being written, meaning we no longer have a title on which to perform the exact match.
+   * This is needed due to a combination of factors:
+   *   1) Songbase, at some point, re-indexed all their songs, so all the songs between songbasedb-v3 and the current
+   *      Hymns database are different. This messed up a lot of our favorites, recents, and tags, since they are keyed
+   *      by hymn type and hymn number. The way to solve this was to perform an exact match on the title and try to
+   *      infer the new hymn number. However...
+   *   2) There was a bug in iOS where tag titles weren't being written, meaning we no longer have a title on which to
+   *      perform the exact match.
    * </p>
    * Here, we are going through the entire songbase db and performing an exact match for every title
    * to see which songs out to be mapped to which song. Then, we will take the diff output and apply

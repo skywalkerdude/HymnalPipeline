@@ -6,5 +6,5 @@ import dagger.Component;
 @PipelineScope
 @Component(modules = {PipelineTestModule.class})
 public interface PipelineTestComponent extends PipelineComponent {
-  HymnalNetPipelineTestComponent.Builder hymnalNetTestComponent();;
+  HymnalNetPipelineTestComponent.Builder hymnalNetTestComponent();
 }

@@ -31,7 +31,7 @@ class RussianPipelineTest {
     assertThat(russianHymns.size()).isEqualTo(793);
 
    RussianHymn expected =
-        TestUtils.readTextProto("src/test/resources/russian/storage/R1.textproto", RussianHymn.newBuilder());
+        TestUtils.readTextProto("src/test/resources/russian/output/R1.textproto", RussianHymn.newBuilder());
 
     ProtoTruth.assertThat(
             russianHymns.stream()

@@ -18,13 +18,18 @@ message SongbaseResponse {
 //    "id": 965,
 //    "title": "Glory, glory, glory, praise and adoration",
 //    "lang": "english",
-//    "lyrics": "1\n[G]Glory, glory, glo[D7]ry, [G]praise and adorati[D7]on!\n[C]Hear the anthems swelling [C]out thro' all [D]ete[A]rn[D7]ity!\n[G]Father, Son, and [D7]Spirit-[G]God in revelation-\n[G]Prostrate each [C]soul before the [G]De[D]it[G]y! \n\n2\nFather, source of glory, naming every fam'ly;\nAnd the Son upholding all by His almighty power; \nHoly Spirit, filling the vast scene of glory-\nO glorious Fulness, let our hearts adore!\n\n3\nGod supreme, we worship now in holy splendour, \nHead of the vast scene of bliss, before Thy face we fall!\nMajesty and greatness, glory, praise and power\nTo Thee belong, eternal Source of all!\n"
-//  },
+//    "lyrics": "1\n[G]Glory, glory, glo[D7]ry, [G]praise and adorati[D7]on!\n[C]Hear the anthems swelling [C]out thro' all [D]ete[A]rn[D7]ity!\n[G]Father, Son, and [D7]Spirit-[G]God in revelation-\n[G]Prostrate each [C]soul before the [G]De[D]it[G]y! \n\n2\nFather, source of glory, naming every fam'ly;\nAnd the Son upholding all by His almighty power; \nHoly Spirit, filling the vast scene of glory-\nO glorious Fulness, let our hearts adore!\n\n3\nGod supreme, we worship now in holy splendour, \nHead of the vast scene of bliss, before Thy face we fall!\nMajesty and greatness, glory, praise and power\nTo Thee belong, eternal Source of all!\n",
+//    "language_links": [
+//      4487,
+//      2283
+//    ]
+//  }
 message SongResponse {
   int32 id = 1;
   string title = 2;
   string lang = 3;
   string lyrics = 4;
+  repeated int32 language_links = 5;
 }
 
 //  {
@@ -64,6 +69,7 @@ message SongbaseHymn {
   string title = 2;
   string language = 3;
   string lyrics = 4;
+  repeated SongbaseKey related = 5;
 }
 
 message Songbase {

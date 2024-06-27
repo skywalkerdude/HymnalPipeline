@@ -33,7 +33,7 @@ class LiederbuchPipelineTest {
     assertThat(liederbuchSongs.size()).isEqualTo(4307);
 
     LiederbuchHymn expected =
-        TestUtils.readTextProto("src/test/resources/liederbuch/storage/G23.textproto", LiederbuchHymn.newBuilder());
+        TestUtils.readTextProto("src/test/resources/liederbuch/output/G23.textproto", LiederbuchHymn.newBuilder());
 
     ProtoTruth.assertThat(
             liederbuchSongs.stream()

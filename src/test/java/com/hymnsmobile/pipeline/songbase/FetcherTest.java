@@ -25,12 +25,9 @@ class FetcherTest {
 
   private static final String SUCCESSFUL_RESPONSE_STRING = "Successful response string";
 
-  @Mock
-  private HttpClient client;
-  @Mock
-  private HttpResponse<String> errorResponse;
-  @Mock
-  private HttpResponse<String> successfulResponse;
+  @Mock private HttpClient client;
+  @Mock private HttpResponse<String> errorResponse;
+  @Mock private HttpResponse<String> successfulResponse;
 
   private Fetcher target;
 

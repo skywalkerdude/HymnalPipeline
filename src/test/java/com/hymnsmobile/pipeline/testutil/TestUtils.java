@@ -12,7 +12,7 @@ public class TestUtils {
 
   public static <M extends Message> M readTextProto(String filePath, M.Builder builder) throws IOException {
     TextFormat.getParser().merge(readText(filePath), builder);
-    //noinspection unchecked
+    // noinspection unchecked
     return (M) builder.build();
   }
 

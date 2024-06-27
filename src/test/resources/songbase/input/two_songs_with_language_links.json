@@ -1,0 +1,40 @@
+{
+  "songs": [
+    {
+      "id": 1,
+      "title": "Father Abraham",
+      "lang": "english",
+      "lyrics": "Father [D]Abraham\nHas many [A7]sons\n....",
+      "language_links": [2]
+    },
+    {
+      "id": 2,
+      "title": "Son Isaac",
+      "lang": "english",
+      "lyrics": "Son [D]Isaac\nHad just one [A7]dad\n....",
+      "language_links": []
+    }
+  ],
+  "books": [
+    {
+      "id": 1,
+      "name": "Blue Songbook",
+      "slug": "blue_songbook",
+      "songs": {
+        "1": "1"
+      },
+      "languages": [
+        "english"
+      ]
+    }
+  ],
+  "destroyed": {
+    "songs": [],
+    "books": []
+  },
+  "songCount": 2,
+  "data_updated_between": [
+    "1970-01-01T00:00:00.000Z",
+    "2024-06-27T02:38:30.444Z"
+  ]
+}

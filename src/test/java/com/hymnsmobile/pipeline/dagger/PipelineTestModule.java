@@ -49,15 +49,14 @@ public interface PipelineTestModule {
       when(httpClient.send(any(HttpRequest.class), eq(BodyHandlers.ofString()))).thenAnswer(
           invocation -> {
             HttpRequest request = invocation.getArgument(0);
+            File responseDirectory = getResponseDirectory(request.uri().getAuthority());
             String filename = request.uri().getPath().replace("/", "_");
-
-            File responseDirectory = new File("src/test/resources/hymnalnet/input");
-            File[] hymnalNetResponses = responseDirectory.listFiles();
-            if (hymnalNetResponses == null) {
-              throw new RuntimeException("file storage not found");
+            File[] responses = responseDirectory.listFiles();
+            if (responses == null) {
+              throw new RuntimeException("mocked responses not found");
             }
 
-            Optional<File> response = ImmutableList.copyOf(hymnalNetResponses).stream()
+            Optional<File> response = ImmutableList.copyOf(responses).stream()
                 .filter(file -> file.getName().equals(filename)).findFirst();
             if (response.isEmpty()) {
               return new MockHttpResponse(404, "Not found");
@@ -68,6 +67,19 @@ public interface PipelineTestModule {
       throw new RuntimeException(e);
     }
     return httpClient;
+  }
+
+  private static File getResponseDirectory(String authority) {
+    String responseDirectoryFormat = "src/test/resources/%s/input";
+    final File responseDirectory;
+    if (authority.equals("hymnalnetapi.herokuapp.com")) {
+      responseDirectory = new File(String.format(responseDirectoryFormat, "hymnalnet"));
+    } else if (authority.equals("songbase.life")) {
+      responseDirectory = new File(String.format(responseDirectoryFormat, "songbase"));
+    } else {
+      throw new RuntimeException("Unrecognized request authority -- did not mock");
+    }
+    return responseDirectory;
   }
 
   @Provides
