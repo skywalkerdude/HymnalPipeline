@@ -1,5 +1,6 @@
 package com.hymnsmobile.pipeline.songbase;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.hymnsmobile.pipeline.songbase.dagger.SongbasePipelineScope;
 import java.io.IOException;
 import java.net.URI;
@@ -12,7 +13,7 @@ import javax.inject.Inject;
 @SongbasePipelineScope
 public class Fetcher {
 
-  private static final String SONGBASE_DB_DUMP_URL = "https://songbase.life/api/v2/app_data";
+  @VisibleForTesting static final String SONGBASE_DB_DUMP_URL = "https://songbase.life/api/v2/app_data";
 
   private final HttpClient client;
 

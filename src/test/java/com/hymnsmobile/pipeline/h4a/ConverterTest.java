@@ -33,7 +33,7 @@ class ConverterTest {
     assertThatThrownBy(() ->
         target.toKey("33"))
         .isInstanceOf(IllegalArgumentException.class)
-        .hasMessageContaining("Unable to extract type from 33");
+        .hasMessage("Unable to extract type from 33");
   }
 
   @Test
@@ -41,6 +41,6 @@ class ConverterTest {
     assertThatThrownBy(() ->
         target.toKey("UNKNOWN3"))
         .isInstanceOf(NoSuchElementException.class)
-        .hasMessageContaining("No value present");
+        .hasMessage("No value present");
   }
 }

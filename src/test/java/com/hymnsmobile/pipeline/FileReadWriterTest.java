@@ -33,7 +33,7 @@ class FileReadWriterTest {
   public void readLargestFilePath__noFilesFound__throwsException() {
     assertThatThrownBy(() -> target.readLargestFilePath("invalid/path", Optional.empty()))
         .isInstanceOf(IllegalArgumentException.class)
-        .hasMessageContaining("invalid file path: invalid/path");
+        .hasMessage("invalid file path: invalid/path");
   }
 
   @Test
@@ -73,7 +73,7 @@ class FileReadWriterTest {
             Optional.of("file_empty"),
             Line.parser()))
         .isInstanceOf(IllegalArgumentException.class)
-        .hasMessageContaining("Not a directory: src/test/resources/common/file_empty");
+        .hasMessage("Not a directory: src/test/resources/common/file_empty");
   }
 
   @Test
@@ -85,7 +85,7 @@ class FileReadWriterTest {
             Line.parser()))
         .isInstanceOf(IllegalArgumentException.class)
         .hasCauseExactlyInstanceOf(FileNotFoundException.class)
-        .hasMessageContaining("Exception occurred while parsing: src/test/resources/common/dir_empty/output.binaryproto");
+        .hasMessage("Exception occurred while parsing: src/test/resources/common/dir_empty/output.binaryproto");
   }
 
   @Test
@@ -97,7 +97,7 @@ class FileReadWriterTest {
             Line.parser()))
         .isInstanceOf(IllegalArgumentException.class)
         .hasCauseExactlyInstanceOf(InvalidProtocolBufferException.class)
-        .hasMessageContaining("Exception occurred while parsing: src/test/resources/common/dir_malformed/output.binaryproto");
+        .hasMessage("Exception occurred while parsing: src/test/resources/common/dir_malformed/output.binaryproto");
   }
 
   @Test
