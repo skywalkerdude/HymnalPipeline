@@ -1,0 +1,17 @@
+# proto-file: proto/hymnal_net.proto
+# proto-message: HymnalNetJson
+
+key {
+  hymn_type: "ch"
+  hymn_number: "1"
+}
+title: "Hymn: 但願榮耀歸於聖父"
+lyrics {
+  verse_type: "verse"
+  verse_content: "但願榮耀歸於聖父，"
+  verse_content:  "並聖子基督，",
+  verse_content: "且願榮耀歸於聖靈",
+  verse_content: "到永古。"
+  transliteration: "dàn yuàn róng yào gūi yú shèng fù ，"
+  transliteration: "bìng shèng zǐ jī dū ，"
+}

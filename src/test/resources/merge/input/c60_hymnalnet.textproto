@@ -1,0 +1,222 @@
+# proto-file: proto/hymnal_net.proto
+# proto-message: HymnalNetJson
+
+key {
+  hymn_type: "c"
+  hymn_number: "60"
+}
+title: "Hymn: I’ve got the joy, joy, joy, joy"
+lyrics {
+  verse_type: "verse"
+  verse_content: "I’ve got the joy, joy, joy, joy"
+  verse_content: "Down in my heart,"
+  verse_content: "Down in my heart,"
+  verse_content: "Down in my heart,"
+  verse_content: "I’ve got the joy, joy, joy, joy"
+  verse_content: "Down in my heart,"
+  verse_content: "Down in my heart to stay."
+}
+lyrics {
+  verse_type: "verse"
+  verse_content: "And I’m so happy,"
+  verse_content: "So very happy;"
+  verse_content: "I’ve got the love of Jesus in my heart."
+  verse_content: "And I’m so happy,"
+  verse_content: "So very happy,"
+  verse_content: "I’ve got the love of Jesus in my heart."
+}
+meta_data {
+  name: "Category"
+  data {
+    value: "Assurance and Joy of Salvation"
+    path: "/en/search/all/category/Assurance+and+Joy+of+Salvation"
+  }
+}
+meta_data {
+  name: "Subcategory"
+  data {
+    value: "General"
+    path: "/en/search/all/category/Assurance+and+Joy+of+Salvation%E2%80%94General"
+  }
+}
+meta_data {
+  name: "Lyrics"
+  data {
+    value: "George Willis Cooke (1848-1923)"
+    path: "/en/search/all/author/George+Willis+Cooke?t=c&n=60"
+  }
+}
+meta_data {
+  name: "Music"
+  data {
+    value: "George Willis Cooke (1848-1923)"
+    path: "/en/search/all/composer/George+Willis+Cooke?t=c&n=60"
+  }
+}
+meta_data {
+  name: "Key"
+  data {
+    value: "A Major"
+    path: "/en/search/all/key/A+Major"
+  }
+}
+meta_data {
+  name: "Time"
+  data {
+    value: "4/4"
+    path: "/en/search/all/time/4%2F4"
+  }
+}
+meta_data {
+  name: "Meter"
+  data {
+    value: "8.8.8.8."
+    path: "https://www.hymnal.net/en/search/all/meter/8.8.8.8."
+  }
+}
+meta_data {
+  name: "Hymn Code"
+  data {
+    value: "56717653321"
+    path: "/en/search/all/hymncode/56717653321"
+  }
+}
+meta_data {
+  name: "See Also"
+  data {
+    value: "Sing praise to Christ Who lives in us"
+    path: "/en/hymn/h/1130"
+  }
+  data {
+    value: "Loved with everlasting love (Alternate)"
+    path: "/en/hymn/nt/284b"
+  }
+  data {
+    value: "How firm a foundation (Alternate Tune)"
+    path: "/en/hymn/h/339b"
+  }
+  data {
+    value: "Jesus has loved me, wonderful Savior"
+    path: "/en/hymn/h/336"
+  }
+  data {
+    value: "What joy fills my heart"
+    path: "/en/hymn/h/1357"
+  }
+}
+meta_data {
+  name: "Link"
+  data {
+    value: "Sing praise to Christ Who lives in us"
+    path: "/en/hymn/h/1130"
+  }
+  data {
+    value: "Loved with everlasting love (Alternate)"
+    path: "/en/hymn/nt/284b"
+  }
+  data {
+    value: "How firm a foundation (Alternate Tune)"
+    path: "/en/hymn/h/339b"
+  }
+  data {
+    value: "Jesus has loved me, wonderful Savior"
+    path: "/en/hymn/h/336"
+  }
+  data {
+    value: "What joy fills my heart"
+    path: "/en/hymn/h/1357"
+  }
+}
+meta_data {
+  name: "Lead Sheet"
+  data {
+    value: "Piano"
+    path: "https://www.hymnal.net/Hymns/Children/pdfs/child0060_p.pdf"
+  }
+  data {
+    value: "Guitar"
+    path: "https://www.hymnal.net/Hymns/Children/pdfs/child0060_g.pdf"
+  }
+  data {
+    value: "Text"
+    path: "https://www.hymnal.net/Hymns/Children/pdfs/child0060_gt.pdf"
+  }
+}
+meta_data {
+  name: "Music"
+  data {
+    value: "mp3"
+    path: "https://www.hymnal.net/Hymns/Children/mp3/c0060.mp3"
+  }
+  data {
+    value: "MIDI"
+    path: "https://www.hymnal.net/Hymns/Children/midi/c0060.mid"
+  }
+  data {
+    value: "Tune (MIDI)"
+    path: "https://www.hymnal.net/Hymns/Children/midi/tunes/child0060_tune.midi"
+  }
+}
+meta_data {
+  name: "svg"
+  data {
+    value: "Piano"
+    path: "https://www.hymnal.net/Hymns/Children/svg/child0060_p.svg"
+  }
+  data {
+    value: "Guitar"
+    path: "https://www.hymnal.net/Hymns/Children/svg/child0060_g.svg"
+  }
+}
+meta_data {
+  name: "Languages"
+  data {
+    value: "诗歌(简)"
+    path: "/en/hymn/ts/216?gb=1"
+  }
+  data {
+    value: "詩歌(繁)"
+    path: "/en/hymn/ts/216?"
+  }
+  data {
+    value: "Spanish"
+    path: "/en/hymn/hs/231"
+  }
+  data {
+    value: "Portuguese"
+    path: "https://www.hinario.org/detail.php?hymn=1151"
+  }
+  data {
+    value: "French"
+    path: "/en/hymn/12"
+  }
+  data {
+    value: "French"
+    path: "/en/hymn/hf/"
+  }
+  data {
+    value: "French"
+    path: "/en/hymn/unrecognized/12"
+  }
+}
+meta_data {
+  name: "Relevant"
+  data {
+    value: "Alternate Tune"
+    path: "https://www.hymnal.net/en/hymn/h/10b"
+  }
+}
+meta_data {
+  name: "Scriptures"
+  data {
+    value: "Revelation 22"
+    path: "http://text.recoveryversion.bible/66_Revelation_22.htm#Rev22-1"
+  }
+}
+meta_data {
+  name: "unrecognized meta datum"
+  data {
+    value: "value"
+    path: "https://www.hymnal.net/path"
+  }
+}

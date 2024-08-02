@@ -1,0 +1,46 @@
+# proto-file: proto/h4a.proto
+# proto-message: H4aHymn
+
+id {
+  type: "E"
+  number: "1"
+}
+author: "J. F. Garland"
+composer: "Ira David Sankey (1840-1908)"
+first_stanza_line: "Glory be to God the Father"
+key: "Ab Major"
+main_category: "Blessing of the Trinity"
+meter: "8.5.8.3."
+sub_category: "His Plan"
+time: "4/4"
+hymn_code: "5553216153222"
+parent_hymn {
+  type: "E"
+  number: "2"
+}
+piano_svg: "https://www.hymnal.net/Hymns/Hymnal/svg/e0001_p.svg"
+guitar_svg: "https://www.hymnal.net/Hymns/Hymnal/svg/e0001_g.svg"
+scriptures: "Revelation 22"
+related {
+  type: "CH"
+  number: "1"
+}
+verses {
+  verse_type: "verse"
+  lines {
+    line_content: "Glory be to God the Father,",
+  }
+  lines {
+    line_content: "  And to Christ the Son,",
+  }
+  lines {
+    line_content: "Glory to the Holy Spirit—",
+  }
+  lines {
+    line_content: "    Ever One."
+  }
+}
+youtube {
+  comment: ""
+  video_id: "112253"
+}

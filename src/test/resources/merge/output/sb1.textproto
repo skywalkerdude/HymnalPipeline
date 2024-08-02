@@ -1,0 +1,53 @@
+# proto-file: proto/common.proto
+# proto-message: Hymn
+
+id: 1
+references {
+  hymn_type: "sb"
+  hymn_number: "1"
+}
+references {
+  hymn_type: "sbx"
+  hymn_number: "3"
+}
+title: "Father Abraham"
+lyrics {
+  verse_type: "do_not_display"
+  lines {
+    line_content: "Father Abraham"
+  }
+  lines {
+    line_content: "Has many sons"
+  }
+  lines {
+    line_content: "Many sons has father Abraham"
+  }
+  lines {
+    line_content: "I am one of them and so are you"
+  }
+  lines {
+    line_content: "So let\'s go marching on"
+  }
+  lines {
+    line_content: "Left foot\342\200\246 (Repeat)"
+  }
+  lines {
+    line_content: "Right foot"
+  }
+  lines {
+    line_content: "Left arm"
+  }
+  lines {
+    line_content: "Right arm"
+  }
+  lines {
+    line_content: "Nod your head"
+  }
+  lines {
+    line_content: "Turn around"
+  }
+  lines {
+    line_content: "Sit Down!"
+  }
+}
+inline_chords: "Father [D]Abraham\nHas many [A7]sons\nMany sons has father [D]Abraham\nI am one of them and so are [G]you\nSo [D]let\'s go [A7]marching [D]on\n\n  Left foot\342\200\246 (Repeat)\n  []Right foot\n  []Left arm\n  []Right arm\n  []Nod your head\n  []Turn around\n  []Sit Down!"

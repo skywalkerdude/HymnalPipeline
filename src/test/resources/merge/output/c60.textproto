@@ -1,0 +1,116 @@
+# proto-file: proto/common.proto
+# proto-message: Hymn
+
+id: 1
+references {
+  hymn_type: "c"
+  hymn_number: "60"
+}
+title: "Hymn: I’ve got the joy, joy, joy, joy"
+lyrics {
+  verse_type: "verse"
+  lines {
+    line_content: "I’ve got the joy, joy, joy, joy"
+  }
+  lines {
+    line_content: "Down in my heart,"
+  }
+  lines {
+    line_content: "Down in my heart,"
+  }
+  lines {
+    line_content: "Down in my heart,"
+  }
+  lines {
+    line_content: "I’ve got the joy, joy, joy, joy"
+  }
+  lines {
+    line_content: "Down in my heart,"
+  }
+  lines {
+    line_content: "Down in my heart to stay."
+  }
+}
+lyrics {
+  verse_type: "verse"
+  lines {
+    line_content: "And I’m so happy,"
+  }
+  lines {
+    line_content: "So very happy;"
+  }
+  lines {
+    line_content: "I’ve got the love of Jesus in my heart."
+  }
+  lines {
+    line_content: "And I’m so happy,"
+  }
+  lines {
+    line_content: "So very happy,"
+  }
+  lines {
+    line_content: "I’ve got the love of Jesus in my heart."
+  }
+}
+category: "Assurance and Joy of Salvation"
+sub_category: "General"
+author: "George Willis Cooke (1848-1923)"
+composer: "George Willis Cooke (1848-1923)"
+key: "A Major"
+time: "4/4"
+meter: "8.8.8.8."
+hymn_code: "56717653321"
+scriptures: "Revelation 22"
+music {
+  key: "MIDI"
+  value: "https://www.hymnal.net/Hymns/Children/midi/c0060.mid"
+}
+music {
+  key: "Tune (MIDI)"
+  value: "https://www.hymnal.net/Hymns/Children/midi/tunes/child0060_tune.midi"
+}
+music {
+  key: "mp3"
+  value: "https://www.hymnal.net/Hymns/Children/mp3/c0060.mp3"
+}
+svg_sheet {
+  key: "Guitar"
+  value: "https://www.hymnal.net/Hymns/Children/svg/child0060_g.svg"
+}
+svg_sheet {
+  key: "Piano"
+  value: "https://www.hymnal.net/Hymns/Children/svg/child0060_p.svg"
+}
+pdf_sheet {
+  key: "Guitar"
+  value: "https://www.hymnal.net/Hymns/Children/pdfs/child0060_g.pdf"
+}
+pdf_sheet {
+  key: "Piano"
+  value: "https://www.hymnal.net/Hymns/Children/pdfs/child0060_p.pdf"
+}
+pdf_sheet {
+  key: "Text"
+  value: "https://www.hymnal.net/Hymns/Children/pdfs/child0060_gt.pdf"
+}
+provenance: "hymnal.net"
+languages {
+  hymn_type: "tsx"
+  hymn_number: "216"
+}
+languages {
+  hymn_type: "ts"
+  hymn_number: "216"
+}
+languages {
+  hymn_type: "S"
+  hymn_number: "231"
+}
+languages {
+  hymn_type: "pt"
+  hymn_number: "1151"
+}
+relevants {
+  hymn_type: "h"
+  hymn_number: "10b"
+}

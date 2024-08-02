@@ -1,0 +1,32 @@
+# proto-file: proto/common.proto
+# proto-message: Hymn
+
+id: 1
+references {
+  hymn_type: "R"
+  hymn_number: "2"
+}
+title: "Glory be to God the Father"
+lyrics {
+  verse_type: "verse"
+  lines {
+    line_content: "Glory, glory, glory, praise and adoration!"
+  }
+  lines {
+    line_content: "Hear the anthems swelling out thro’ all eternity!"
+  }
+  lines {
+    line_content: "Father, Son, and Spirit—God in revelation—",
+  }
+  lines {
+    line_content: "  Prostrate each soul before the Deity!"
+  }
+}
+category: "Blessing of the Trinity"
+sub_category: "His Plan"
+meter: "8.5.8.3."
+provenance: "russian"
+languages {
+  hymn_type: "h"
+  hymn_number: "1"
+}

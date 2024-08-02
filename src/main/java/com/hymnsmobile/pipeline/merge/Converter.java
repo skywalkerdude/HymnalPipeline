@@ -12,6 +12,7 @@ import static com.hymnsmobile.pipeline.merge.HymnType.RUSSIAN;
 import static com.hymnsmobile.pipeline.merge.HymnType.SONGBASE_OTHER;
 import static com.hymnsmobile.pipeline.merge.HymnType.SPANISH;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.protobuf.Descriptors.Descriptor;
 import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.google.protobuf.MapEntry;
@@ -43,7 +44,7 @@ import javax.inject.Inject;
 @MergeScope
 public class Converter {
 
-  private static int nextHymnId = 1;
+  @VisibleForTesting static int nextHymnId = 1;
 
   private static final Logger LOGGER = Logger.getGlobal();
 
@@ -104,6 +105,17 @@ public class Converter {
     return reference.setHymnType(HymnType.valueOf(type.name()).abbreviatedValue).setHymnNumber(number).build();
   }
 
+  private boolean isHowardHigashi(com.hymnsmobile.pipeline.h4a.HymnType type, String number) {
+    if (type == com.hymnsmobile.pipeline.h4a.HymnType.NEW_SONG && TextUtil.isNumeric(number)) {
+      return Integer.parseInt(number) >= 1001 && Integer.parseInt(number) <= 1087;
+    }
+    return false;
+  }
+
+  private boolean isGermanHymn(com.hymnsmobile.pipeline.h4a.HymnType type) {
+    return type == com.hymnsmobile.pipeline.h4a.HymnType.GERMAN;
+  }
+
   public SongReference toSongReference(LiederbuchKey key) {
     SongReference.Builder reference = SongReference.newBuilder().setHymnNumber(key.getNumber());
 
@@ -127,32 +139,15 @@ public class Converter {
     com.hymnsmobile.pipeline.songbase.HymnType type =
         com.hymnsmobile.pipeline.songbase.HymnType.fromString(key.getHymnType()).orElseThrow();
 
-    final HymnType hymnType;
-    switch (type) {
-      case HYMNAL:
-        hymnType = CLASSIC_HYMN;
-        break;
-      case BLUE_SONGBOOK:
-        hymnType = BLUE_SONGBOOK;
-        break;
-      case HIMNOS:
-        hymnType = SPANISH;
-        break;
-      case LIEDERBUCH:
-        hymnType = LIEDERBUCH;
-        break;
-      case CANTIQUES:
-        hymnType = FRENCH;
-        break;
-      case SONGBASE_OTHER:
-        hymnType = SONGBASE_OTHER;
-        break;
-      case HINOS:
-        hymnType = HINOS;
-        break;
-      default:
-        throw new IllegalStateException("Unexpected hymn type: " + type);
-    }
+    final HymnType hymnType = switch (type) {
+      case HYMNAL -> CLASSIC_HYMN;
+      case BLUE_SONGBOOK -> BLUE_SONGBOOK;
+      case HIMNOS -> SPANISH;
+      case LIEDERBUCH -> LIEDERBUCH;
+      case CANTIQUES -> FRENCH;
+      case SONGBASE_OTHER -> SONGBASE_OTHER;
+      case HINOS -> HINOS;
+    };
     return reference.setHymnType(hymnType.abbreviatedValue).build();
   }
 
@@ -197,12 +192,7 @@ public class Converter {
           Optional<HymnalNetKey> relatedKey = com.hymnsmobile.pipeline.hymnalnet.Converter.extractFromPath(
               datum.getPath(), hymn.getKey(), errors);
           if (relatedKey.isEmpty()) {
-            errors.add(PipelineError.newBuilder()
-                .setSeverity(Severity.WARNING)
-                .setErrorType(ErrorType.PARSE_ERROR)
-                .addMessages(
-                    String.format("%s had an unrecognized related song: %s", key, datum.getPath()))
-                .build());
+            // Errors added by the extractFromPath function if the related key was unparsable or unrecognized.
             return;
           }
           if (metaDatumType.get() == MetaDatumType.LANGUAGES) {
@@ -262,25 +252,6 @@ public class Converter {
               verse.getTransliterationCount(), verse.getVerseContentCount()));
     }
     return true;
-  }
-
-  /**
-   * Converts a {@link HymnalNetJson} to a {@link Hymn}.
-   */
-  public Hymn toHymn(RussianHymn hymn) {
-    Hymn.Builder builder = Hymn.newBuilder()
-        .setId(nextHymnId++)
-        .addAllLyrics(hymn.getLyricsList())
-        .addReferences(SongReference.newBuilder()
-            .setHymnType(RUSSIAN.abbreviatedValue)
-            .setHymnNumber(String.valueOf(hymn.getNumber())))
-        .setTitle(hymn.getTitle())
-        .addCategory(hymn.getCategory())
-        .addSubCategory(hymn.getSubCategory())
-        .addMeter(hymn.getMeter())
-        .addLanguages(hymn.getParent())
-        .addProvenance("russian");
-    return builder.build();
   }
 
   public Hymn toHymn(H4aHymn hymn) {
@@ -343,15 +314,23 @@ public class Converter {
     return builder.build();
   }
 
-  private boolean isHowardHigashi(com.hymnsmobile.pipeline.h4a.HymnType type, String number) {
-    if (type == com.hymnsmobile.pipeline.h4a.HymnType.NEW_SONG && TextUtil.isNumeric(number)) {
-      return Integer.parseInt(number) >= 1001 && Integer.parseInt(number) <= 1087;
-    }
-    return false;
-  }
-
-  private boolean isGermanHymn(com.hymnsmobile.pipeline.h4a.HymnType type) {
-    return type == com.hymnsmobile.pipeline.h4a.HymnType.GERMAN;
+  /**
+   * Converts a {@link HymnalNetJson} to a {@link Hymn}.
+   */
+  public Hymn toHymn(RussianHymn hymn) {
+    Hymn.Builder builder = Hymn.newBuilder()
+                               .setId(nextHymnId++)
+                               .addAllLyrics(hymn.getLyricsList())
+                               .addReferences(SongReference.newBuilder()
+                                                           .setHymnType(RUSSIAN.abbreviatedValue)
+                                                           .setHymnNumber(String.valueOf(hymn.getNumber())))
+                               .setTitle(hymn.getTitle())
+                               .addCategory(hymn.getCategory())
+                               .addSubCategory(hymn.getSubCategory())
+                               .addMeter(hymn.getMeter())
+                               .addLanguages(hymn.getParent())
+                               .addProvenance("russian");
+    return builder.build();
   }
 
   public Hymn toHymn(SongbaseHymn hymn) {
