@@ -1,7 +1,5 @@
 package com.hymnsmobile.pipeline.merge;
 
-import static com.google.common.collect.ImmutableList.toImmutableList;
-
 import com.google.common.collect.ImmutableList;
 import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.hymnsmobile.pipeline.merge.dagger.Merge;
@@ -14,15 +12,12 @@ import com.hymnsmobile.pipeline.models.PipelineError.ErrorType;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import com.hymnsmobile.pipeline.models.SongLink;
 import com.hymnsmobile.pipeline.models.SongReference;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
+
 import javax.inject.Inject;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static com.google.common.collect.ImmutableList.toImmutableList;
 
 /**
  * Pipeline that looks for duplicate hymns and merges them into a single hymn with multiple
@@ -30,8 +25,6 @@ import javax.inject.Inject;
  */
 @MergeScope
 public class SanitizationPipeline {
-
-  private static final Logger LOGGER = Logger.getGlobal();
 
   private final LanguageAuditor languageAuditor;
   private final RelevantsAuditor relevantsAuditor;
@@ -49,10 +42,6 @@ public class SanitizationPipeline {
 
   public ImmutableList<Hymn> sanitize(ImmutableList<Hymn> allHymns) {
     return sanitize(allHymns, Optional.empty(), Optional.empty());
-  }
-
-  public ImmutableList<Hymn> sanitize(ImmutableList<Hymn> allHymns, Patcher patcher) {
-    return sanitize(allHymns, Optional.of(patcher), Optional.empty());
   }
 
   public ImmutableList<Hymn> sanitize(ImmutableList<Hymn> allHymns, Patcher patcher,

@@ -17,6 +17,7 @@ import com.hymnsmobile.pipeline.models.PipelineError.ErrorType;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import com.hymnsmobile.pipeline.models.SongReference;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import javax.inject.Inject;
 
@@ -33,7 +34,7 @@ public class RelevantsAuditor extends Auditor {
 
   @Override
   protected void performAudit(Set<Set<SongReference>> songReferenceSets) {
-    songReferenceSets.forEach(this::auditRelevantsSet);
+    songReferenceSets.forEach(songReferences -> auditRelevantsSet(new LinkedHashSet<>(songReferences)));
   }
 
   private void auditRelevantsSet(Set<SongReference> setToAudit) {

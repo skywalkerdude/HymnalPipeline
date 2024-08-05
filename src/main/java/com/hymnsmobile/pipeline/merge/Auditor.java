@@ -43,8 +43,8 @@ public abstract class Auditor {
     if (!currentAuditExceptions.isEmpty()) {
       this.errors.add(PipelineError.newBuilder()
           .setSeverity(Severity.WARNING)
-          .setErrorType(ErrorType.AUDITOR_OBSOLETE_RELEVANTS_EXCEPTIONS)
-          .addMessages(exceptions.toString())
+          .setErrorType(ErrorType.AUDITOR_OBSOLETE_EXCEPTION)
+          .addMessages(currentAuditExceptions.toString())
           .build());
     }
     currentAuditExceptions = null;

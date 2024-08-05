@@ -20,7 +20,10 @@ import com.hymnsmobile.pipeline.models.PipelineError.ErrorType;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import com.hymnsmobile.pipeline.models.SongReference;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.function.Consumer;
 import javax.inject.Inject;
 
 /**
@@ -36,7 +39,7 @@ public class LanguageAuditor extends Auditor {
 
   @Override
   protected void performAudit(Set<Set<SongReference>> songReferenceSets) {
-    songReferenceSets.forEach(this::auditLanguageSet);
+    songReferenceSets.forEach(songReferences -> auditLanguageSet(new LinkedHashSet<>(songReferences)));
   }
 
   private void auditLanguageSet(Set<SongReference> setToAudit) {
