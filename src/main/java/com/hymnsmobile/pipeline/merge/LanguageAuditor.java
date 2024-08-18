@@ -39,7 +39,7 @@ public class LanguageAuditor extends Auditor {
 
   @Override
   protected void performAudit(Set<Set<SongReference>> songReferenceSets) {
-    songReferenceSets.forEach(songReferences -> auditLanguageSet(new LinkedHashSet<>(songReferences)));
+    songReferenceSets.forEach(this::auditLanguageSet);
   }
 
   private void auditLanguageSet(Set<SongReference> setToAudit) {

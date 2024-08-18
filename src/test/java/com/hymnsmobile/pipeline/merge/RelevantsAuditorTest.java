@@ -110,7 +110,7 @@ class RelevantsAuditorTest {
   }
 
   @Test
-  public void audit__incompatibleTypes_hasException__originalReferencesPreserved() {
+  public void audit__incompatibleTypes_hasException__originalReferencesRemoved() {
     SongReference songReference1 =
         SongReference.newBuilder().setHymnType(HymnType.CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1").build();
     SongReference songReference2 =
@@ -120,7 +120,7 @@ class RelevantsAuditorTest {
     target.audit(
         songReferenceSets,
         Optional.of(ImmutableSet.of(ImmutableSet.of(songReference1, songReference2))));
-    Truth.assertThat(songReferenceSets).containsExactly(new HashSet<>(ImmutableSet.of(songReference1, songReference2)));
+    Truth.assertThat(songReferenceSets).containsExactly(new HashSet<>(ImmutableSet.of()));
   }
 
   @Test

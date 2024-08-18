@@ -34,7 +34,7 @@ public class RelevantsAuditor extends Auditor {
 
   @Override
   protected void performAudit(Set<Set<SongReference>> songReferenceSets) {
-    songReferenceSets.forEach(songReferences -> auditRelevantsSet(new LinkedHashSet<>(songReferences)));
+    songReferenceSets.forEach(this::auditRelevantsSet);
   }
 
   private void auditRelevantsSet(Set<SongReference> setToAudit) {
