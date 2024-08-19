@@ -15,7 +15,6 @@ import com.hymnsmobile.pipeline.models.SongReference;
 
 import javax.inject.Inject;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
 
@@ -103,7 +102,7 @@ public class SanitizationPipeline {
       if (links.stream().anyMatch(link -> hymn.getReferencesList().contains(link))) {
         errors.add(PipelineError.newBuilder()
             .setSeverity(Severity.ERROR)
-            .setErrorType(ErrorType.AUDITOR_SELF_REFERENCE)
+            .setErrorType(ErrorType.SANITIZER_SELF_REFERENCE)
             .addMessages(hymn.getReferencesList().toString())
             .build());
       }
@@ -118,7 +117,7 @@ public class SanitizationPipeline {
       // with an existing set, if it exists, that already contains the current songs.
       List<Set<SongReference>> setToMergeWith = songLinkSets.stream().filter(
               songLinks -> songLinkSet.stream().anyMatch(songLinks::contains))
-          .collect(Collectors.toList());
+          .toList();
       if (setToMergeWith.size() > 1) {
         throw new IllegalStateException(
             "Set too big. This shouldn't happen, as it indicates a code error.");
