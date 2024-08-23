@@ -2,10 +2,7 @@ package com.hymnsmobile.pipeline.hymnalnet;
 
 import com.google.common.collect.ImmutableList;
 import com.hymnsmobile.pipeline.dagger.DaggerPipelineTestComponent;
-import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNetPipelineTestModule;
 import com.hymnsmobile.pipeline.hymnalnet.models.*;
-import com.hymnsmobile.pipeline.models.PipelineError;
-import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import com.hymnsmobile.pipeline.testutil.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -257,69 +254,6 @@ class HymnalNetPipelineTest {
   }
 
   /**
-   * Song has a fully formed language and relevant graph, with 2 caveats:
-   * <p>
-   * 1) h/339b is a relevant song of h/339 and has a language pointer to ch/260. No other song in
-   * the graph has a language pointer back to it, making it a dangling reference.
-   * 2) de/1 points to h/339, but no other song in the graph has a language pointer back to it,
-   * making it a dangling reference. However, since it is a German song, there is a special case
-   * where we infer the name from the type, making it not a dangling reference.
-   */
-  // @Test TODO move to sanitization
-  @FetchHymns(keysToFetch = {"h/339", "de/1"})
-  public void songWithLanguagesAndTunes() throws IOException {
-    hymnalNetPipeline.run();
-
-    assertThat(hymnalNetPipeline.getHymnalNetJsons().stream()
-        .map(hymnalNetJson -> hymnalNetJson.getKey().toString())
-        .collect(toImmutableList())).containsExactly(
-        "hymn_type: \"cb\"\nhymn_number: \"339\"\n",
-        "hymn_type: \"h\"\nhymn_number: \"339b\"\n",
-        "hymn_type: \"ch\"\nhymn_number: \"260\"\n",
-        "hymn_type: \"h\"\nhymn_number: \"339\"\n",
-        "hymn_type: \"ht\"\nhymn_number: \"339\"\n",
-        "hymn_type: \"ch\"\nhymn_number: \"260\"\nquery_params: \"?gb=1\"\n",
-        "hymn_type: \"nt\"\nhymn_number: \"339\"\n",
-        "hymn_type: \"de\"\nhymn_number: \"1\"\n");
-    assertThat(hymnalNetPipeline.getErrors()).isEmpty();
-
-//    TODO test in sanitization pipeline
-//    assertThat(hymnalNetPipeline.getErrors().get(0).getSeverity()).isEqualTo(Severity.ERROR);
-//    assertThat(hymnalNetPipeline.getErrors())
-//        .containsExactly(PipelineError.newBuilder()
-//            .addMessages(
-//                "Dangling reference: type: CLASSIC_HYMN\n"
-//                    + "number: \"339b\"\n"
-//                    + " in [name: \"\\350\\257\\227\\346\\255\\214(\\347\\256\\200)\"\n"
-//                    + "reference {\n"
-//                    + "  type: CHINESE_SIMPLIFIED\n"
-//                    + "  number: \"260\"\n"
-//                    + "}\n"
-//                    + ", name: \"Cebuano\"\n"
-//                    + "reference {\n"
-//                    + "  type: CEBUANO\n"
-//                    + "  number: \"339\"\n"
-//                    + "}\n"
-//                    + ", name: \"\\350\\251\\251\\346\\255\\214(\\347\\271\\201)\"\n"
-//                    + "reference {\n"
-//                    + "  type: CHINESE\n"
-//                    + "  number: \"260\"\n"
-//                    + "}\n"
-//                    + ", name: \"English\"\n"
-//                    + "reference {\n"
-//                    + "  type: CLASSIC_HYMN\n"
-//                    + "  number: \"339\"\n"
-//                    + "}\n"
-//                    + ", name: \"Tagalog\"\n"
-//                    + "reference {\n"
-//                    + "  type: TAGALOG\n"
-//                    + "  number: \"339\"\n"
-//                    + "}\n"
-//                    + "]")
-//            .setSeverity(Severity.ERROR).build());
-  }
-
-  /**
    * Test Chinese songs of the form "ns/510c"
    */
   @Test
@@ -334,67 +268,6 @@ class HymnalNetPipelineTest {
             "hymn_type: \"ns\"\nhymn_number: \"510c\"\n",
             "hymn_type: \"ns\"\nhymn_number: \"510c\"\nquery_params: \"?gb=1\"\n",
             "hymn_type: \"ns\"\nhymn_number: \"510\"\n");
-    assertThat(hymnalNetPipeline.getErrors()).isEmpty();
-  }
-
-  /**
-   * ns/10 references ns/10a, which references it back. Typically, this should show an error saying
-   * there are too many references, but we exempt songs like "ns/10a" (with a letter suffixed), so
-   * this should not throw any errors.
-   */
-  // @Test TODO move to sanitization
-  @FetchHymns(keysToFetch = {"ns/10", "ns/10a"})
-  public void songHasLetterSuffixedReference_doNotAddError() throws IOException {
-    hymnalNetPipeline.run();
-
-    assertThat(hymnalNetPipeline.getErrors()).isEmpty();
-  }
-
-  /**
-   * h/20 references h/11, which references it back. This should add an error because now the
-   * language set has 2 Classical hymns, which is not allowed.
-   */
-  // @Test TODO move to sanitization
-  @FetchHymns(keysToFetch = {"h/20", "h/21"})
-  public void songHasTooManyReferences_addError() throws IOException {
-    hymnalNetPipeline.run();
-
-    assertThat(hymnalNetPipeline.getErrors()).containsExactly(
-        PipelineError.newBuilder().setSeverity(Severity.ERROR)
-            .addMessages("[type: CLASSIC_HYMN\n"
-                + "number: \"20\"\n"
-                + ", type: CLASSIC_HYMN\n"
-                + "number: \"21\"\n"
-                + "] has too many instances of CLASSIC_HYMN").build());
-  }
-
-  /**
-   * h/30 references ns/30, which references it back. This should add an error because now the
-   * language set has a classical hymn and a new song, which are not compatible.
-   */
-  // @Test TODO move to sanitization
-  @FetchHymns(keysToFetch = {"h/30", "ns/31"})
-  public void songHasIncompatibleTypes_addError() throws IOException {
-    hymnalNetPipeline.run();
-
-    assertThat(hymnalNetPipeline.getErrors()).containsExactly(
-        PipelineError.newBuilder().setSeverity(Severity.ERROR)
-            .addMessages("Incompatible languages types: [type: CLASSIC_HYMN\n"
-                + "number: \"30\"\n"
-                + ", type: NEW_SONG\n"
-                + "number: \"30\"\n"
-                + "]").build());
-  }
-
-  /**
-   * h/40 references h/41, which references it back. This should add an error because now the
-   * language set has 2 Classical hymns, but it is patched by the fake {@link Patcher} in
-   * {@link HymnalNetPipelineTestModule}, so no error should be added.
-   */
-  // @Test TODO move to sanitization
-  @FetchHymns(keysToFetch = {"h/40", "h/41"})
-  public void songHasTooManyReferencesButIsPatched_doNotAddError() throws IOException {
-    hymnalNetPipeline.run();
     assertThat(hymnalNetPipeline.getErrors()).isEmpty();
   }
 

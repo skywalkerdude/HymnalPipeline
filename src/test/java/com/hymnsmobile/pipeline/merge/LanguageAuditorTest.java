@@ -174,6 +174,16 @@ class LanguageAuditorTest {
   }
 
   @Test
+  public void audit__incompatibleTypes_hasLetterSuffix__noErrorsAdded() {
+    SongReference songReference1 =
+        SongReference.newBuilder().setHymnType(HymnType.NEW_SONG.abbreviatedValue).setHymnNumber("1").build();
+    SongReference songReference2 =
+        SongReference.newBuilder().setHymnType(HymnType.NEW_SONG.abbreviatedValue).setHymnNumber("1a").build();
+    target.audit(ImmutableSet.of(ImmutableSet.of(songReference1, songReference2)), Optional.empty());
+    assertThat(errors).isEmpty();
+  }
+
+  @Test
   public void audit__incompatibleTypes_hasException__noErrorsAdded() {
     SongReference songReference1 =
         SongReference.newBuilder().setHymnType(HymnType.CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1").build();
@@ -220,7 +230,7 @@ class LanguageAuditorTest {
         PipelineError.newBuilder()
                      .setSeverity(PipelineError.Severity.ERROR)
                      .setErrorType(PipelineError.ErrorType.AUDITOR_INCOMPATIBLE_LANGUAGES)
-                     .addMessages(String.format("[%s, %s]", songReference4, songReference3))
+                     .addMessages(String.format("[%s, %s]", songReference3, songReference4))
                      .build());
   }
 }
