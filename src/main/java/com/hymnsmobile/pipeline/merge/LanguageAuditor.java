@@ -1,16 +1,5 @@
 package com.hymnsmobile.pipeline.merge;
 
-import static com.google.common.collect.ImmutableList.toImmutableList;
-import static com.hymnsmobile.pipeline.merge.HymnType.BE_FILLED;
-import static com.hymnsmobile.pipeline.merge.HymnType.CHILDREN_SONG;
-import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE;
-import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE_SIMPLIFIED;
-import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE_SUPPLEMENTAL;
-import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED;
-import static com.hymnsmobile.pipeline.merge.HymnType.CLASSIC_HYMN;
-import static com.hymnsmobile.pipeline.merge.HymnType.HOWARD_HIGASHI;
-import static com.hymnsmobile.pipeline.merge.HymnType.NEW_SONG;
-
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.hymnsmobile.pipeline.merge.dagger.Merge;
@@ -19,12 +8,14 @@ import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.PipelineError.ErrorType;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import com.hymnsmobile.pipeline.models.SongReference;
+
+import javax.inject.Inject;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.function.Consumer;
-import javax.inject.Inject;
+
+import static com.google.common.collect.ImmutableList.toImmutableList;
+import static com.hymnsmobile.pipeline.merge.HymnType.*;
 
 /**
  * QAs the songs to ensure that songs are correct and there's no glaring errors/mistakes.
@@ -39,11 +30,11 @@ public class LanguageAuditor extends Auditor {
 
   @Override
   protected void performAudit(Set<Set<SongReference>> songReferenceSets) {
-    songReferenceSets.forEach(this::auditLanguageSet);
+    songReferenceSets.forEach(songReferences -> auditLanguageSet(new LinkedHashSet<>(songReferences), false));
   }
 
-  private void auditLanguageSet(Set<SongReference> setToAudit) {
-    if (setToAudit.size() == 1) {
+  private void auditLanguageSet(Set<SongReference> setToAudit, boolean ignoreDanglingReference) {
+    if (setToAudit.size() == 1 && !ignoreDanglingReference) {
       errors.add(PipelineError.newBuilder()
           .setSeverity(Severity.ERROR)
           .setErrorType(ErrorType.AUDITOR_DANGLING_LANGUAGE_SET)
@@ -77,7 +68,9 @@ public class LanguageAuditor extends Auditor {
         // If exceptions were removed, then we audit the new set and return early (i.e. don't keep
         // looking at the rest of the hymn types because that list is no longer accurate)
         if (removeExceptions(setToAudit)) {
-          auditLanguageSet(setToAudit);
+          // May cause a dangling reference set if we remove everything except for one song, so we need to special case
+          // to ignore that error, if it happens.
+          auditLanguageSet(setToAudit, true);
           return;
         }
         errors.add(PipelineError.newBuilder()

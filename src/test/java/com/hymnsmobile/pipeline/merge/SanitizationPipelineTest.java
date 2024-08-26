@@ -1,6 +1,7 @@
 package com.hymnsmobile.pipeline.merge;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.hymnsmobile.pipeline.merge.exceptions.Exceptions;
 import com.hymnsmobile.pipeline.merge.patchers.Patcher;
 import com.hymnsmobile.pipeline.models.Hymn;
@@ -13,6 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static com.google.common.truth.extensions.proto.ProtoTruth.assertThat;
+import static com.hymnsmobile.pipeline.merge.HymnType.CLASSIC_HYMN;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
@@ -20,8 +22,6 @@ import static org.mockito.Mockito.mock;
 
 class SanitizationPipelineTest {
 
-  private LanguageAuditor languageAuditor;
-  private RelevantsAuditor relevantsAuditor;
   private Set<PipelineError> errors;
 
   private SanitizationPipeline target;
@@ -29,9 +29,7 @@ class SanitizationPipelineTest {
   @BeforeEach
   public void setUp() {
     this.errors = new HashSet<>();
-    this.languageAuditor = new LanguageAuditor(errors);
-    this.relevantsAuditor = new RelevantsAuditor(errors);
-    this.target = new SanitizationPipeline(languageAuditor, relevantsAuditor, errors);
+    this.target = new SanitizationPipeline(new LanguageAuditor(errors), new RelevantsAuditor(errors), errors);
   }
 
   @Test
@@ -167,6 +165,29 @@ class SanitizationPipelineTest {
   }
 
   @Test
+  public void sanitize__danglingReference__fixesDanglingReference() {
+    Hymn h1 = Hymn.newBuilder()
+                  .addReferences(SongReference.newBuilder().setHymnType("h").setHymnNumber("1"))
+                  .build();
+    Hymn nt1 = Hymn.newBuilder()
+                   .addReferences(SongReference.newBuilder().setHymnType("nt").setHymnNumber("1"))
+                   .addRelevants(SongReference.newBuilder().setHymnType("h").setHymnNumber("1"))
+                   .build();
+
+    Hymn h1Expected = Hymn.newBuilder()
+                          .addReferences(SongReference.newBuilder().setHymnType("h").setHymnNumber("1"))
+                          .addRelevants(SongReference.newBuilder().setHymnType("nt").setHymnNumber("1"))
+                          .build();
+    Hymn nt1Expected = Hymn.newBuilder()
+                           .addReferences(SongReference.newBuilder().setHymnType("nt").setHymnNumber("1"))
+                           .addRelevants(SongReference.newBuilder().setHymnType("h").setHymnNumber("1"))
+                           .build();
+    ImmutableList<Hymn> result = target.sanitize(ImmutableList.of(h1, nt1));
+    assertThat(result).containsExactly(h1Expected, nt1Expected);
+    assertThat(errors).isEmpty();
+  }
+
+  @Test
   public void sanitize__languageReferences_relevantReferences_patcher__usesPatchedResults() {
     Hymn h1 = Hymn.newBuilder()
                   .addReferences(SongReference.newBuilder().setHymnType("h").setHymnNumber("1"))
@@ -204,8 +225,8 @@ class SanitizationPipelineTest {
                   .addLanguages(SongReference.newBuilder().setHymnType("h").setHymnNumber("1"))
                   .build();
     Hymn h1Expected = Hymn.newBuilder()
-                  .addReferences(SongReference.newBuilder().setHymnType("h").setHymnNumber("1"))
-                  .build();
+                          .addReferences(SongReference.newBuilder().setHymnType("h").setHymnNumber("1"))
+                          .build();
     ImmutableList<Hymn> result = target.sanitize(ImmutableList.of(h1));
     assertThat(result).containsExactly(h1Expected);
     assertThat(errors).containsExactly(
@@ -219,5 +240,173 @@ class SanitizationPipelineTest {
                      .setErrorType(PipelineError.ErrorType.AUDITOR_DANGLING_LANGUAGE_SET)
                      .addMessages(h1.getReferencesList().toString())
                      .build());
+  }
+
+  @Test
+  public void sanitize__auditError_addsPipelineError() {
+    Hymn h1 = Hymn.newBuilder()
+                  .addReferences(SongReference.newBuilder().setHymnType("h").setHymnNumber("1"))
+                  .addLanguages(SongReference.newBuilder().setHymnType("h").setHymnNumber("2"))
+                  .build();
+    Hymn h2 = Hymn.newBuilder()
+                  .addReferences(SongReference.newBuilder().setHymnType("h").setHymnNumber("2"))
+                  .addLanguages(SongReference.newBuilder().setHymnType("h").setHymnNumber("1"))
+                  .build();
+    ImmutableList<Hymn> result = target.sanitize(ImmutableList.of(h1, h2));
+    assertThat(result).containsExactly(h1, h2);
+    assertThat(errors).ignoringRepeatedFieldOrder().containsExactly(
+        PipelineError.newBuilder()
+                     .setSeverity(PipelineError.Severity.ERROR)
+                     .setErrorType(PipelineError.ErrorType.AUDITOR_TOO_MANY_INSTANCES)
+                     .addMessages("CLASSIC_HYMN")
+                     .addMessages("[hymn_type: \"h\"\nhymn_number: \"1\"\n, hymn_type: \"h\"\nhymn_number: \"2\"\n]")
+                     .build());
+  }
+
+  @Test
+  public void sanitize__auditError_exception__noErrorAdded() {
+    Hymn h1 = Hymn.newBuilder()
+                  .addReferences(SongReference.newBuilder().setHymnType("h").setHymnNumber("1"))
+                  .addLanguages(SongReference.newBuilder().setHymnType("h").setHymnNumber("2"))
+                  .build();
+    Hymn h2 = Hymn.newBuilder()
+                  .addReferences(SongReference.newBuilder().setHymnType("h").setHymnNumber("2"))
+                  .addLanguages(SongReference.newBuilder().setHymnType("h").setHymnNumber("1"))
+                  .build();
+    ImmutableList<Hymn> result =
+        target.sanitize(ImmutableList.of(h1, h2),
+                        new Patcher(errors) {
+                          @Override
+                          protected void performPatch() {
+                            // do nothing
+                          }
+                        },
+                        new Exceptions() {
+                          @Override
+                          public ImmutableSet<ImmutableSet<SongReference>> languageExceptions() {
+                            return ImmutableSet.of(
+                                ImmutableSet.of(
+                                    SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue)
+                                                 .setHymnNumber("1").build(),
+                                    SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue)
+                                                 .setHymnNumber("2").build())
+                            );
+                          }
+
+                          @Override
+                          public ImmutableSet<ImmutableSet<SongReference>> relevantExceptions() {
+                            return ImmutableSet.of();
+                          }
+                        });
+    assertThat(result).containsExactly(h1, h2);
+    assertThat(errors).isEmpty();
+  }
+
+  @Test
+  public void sanitize__language_auditError_exception_multiSet__noErrorAdded() {
+    Hymn h1 = Hymn.newBuilder()
+                  .addReferences(SongReference.newBuilder().setHymnType("h").setHymnNumber("1"))
+                  .addLanguages(SongReference.newBuilder().setHymnType("h").setHymnNumber("2"))
+                  .addLanguages(SongReference.newBuilder().setHymnType("ch").setHymnNumber("1"))
+                  .build();
+    Hymn h2 = Hymn.newBuilder()
+                  .addReferences(SongReference.newBuilder().setHymnType("h").setHymnNumber("2"))
+                  .addLanguages(SongReference.newBuilder().setHymnType("h").setHymnNumber("1"))
+                  .build();
+    Hymn ch1 = Hymn.newBuilder()
+                   .addReferences(SongReference.newBuilder().setHymnType("ch").setHymnNumber("1"))
+                   .addLanguages(SongReference.newBuilder().setHymnType("h").setHymnNumber("1"))
+                   .build();
+    Hymn h2Expected = Hymn.newBuilder()
+                          .addReferences(SongReference.newBuilder().setHymnType("h").setHymnNumber("2"))
+                          .addLanguages(SongReference.newBuilder().setHymnType("h").setHymnNumber("1"))
+                          .addLanguages(SongReference.newBuilder().setHymnType("ch").setHymnNumber("1"))
+                          .build();
+    Hymn ch1Expected = Hymn.newBuilder()
+                           .addReferences(SongReference.newBuilder().setHymnType("ch").setHymnNumber("1"))
+                           .addLanguages(SongReference.newBuilder().setHymnType("h").setHymnNumber("1"))
+                           .addLanguages(SongReference.newBuilder().setHymnType("h").setHymnNumber("2"))
+                           .build();
+    ImmutableList<Hymn> result =
+        target.sanitize(ImmutableList.of(h1, h2, ch1),
+                        new Patcher(errors) {
+                          @Override
+                          protected void performPatch() {
+                            // do nothing
+                          }
+                        },
+                        new Exceptions() {
+                          @Override
+                          public ImmutableSet<ImmutableSet<SongReference>> languageExceptions() {
+                            return ImmutableSet.of(
+                                ImmutableSet.of(
+                                    SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue)
+                                                 .setHymnNumber("1").build(),
+                                    SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue)
+                                                 .setHymnNumber("2").build())
+                            );
+                          }
+
+                          @Override
+                          public ImmutableSet<ImmutableSet<SongReference>> relevantExceptions() {
+                            return ImmutableSet.of();
+                          }
+                        });
+    assertThat(result).containsExactly(h1, h2Expected, ch1Expected);
+    assertThat(errors).isEmpty();
+  }
+
+  @Test
+  public void sanitize__relevant_auditError_exception_multiSet__noErrorAdded() {
+    Hymn h1 = Hymn.newBuilder()
+                  .addReferences(SongReference.newBuilder().setHymnType("h").setHymnNumber("1"))
+                  .addRelevants(SongReference.newBuilder().setHymnType("h").setHymnNumber("2"))
+                  .addRelevants(SongReference.newBuilder().setHymnType("ch").setHymnNumber("1"))
+                  .build();
+    Hymn h2 = Hymn.newBuilder()
+                  .addReferences(SongReference.newBuilder().setHymnType("h").setHymnNumber("2"))
+                  .addRelevants(SongReference.newBuilder().setHymnType("h").setHymnNumber("1"))
+                  .build();
+    Hymn ch1 = Hymn.newBuilder()
+                   .addReferences(SongReference.newBuilder().setHymnType("ch").setHymnNumber("1"))
+                   .addRelevants(SongReference.newBuilder().setHymnType("h").setHymnNumber("1"))
+                   .build();
+    Hymn h2Expected = Hymn.newBuilder()
+                          .addReferences(SongReference.newBuilder().setHymnType("h").setHymnNumber("2"))
+                          .addRelevants(SongReference.newBuilder().setHymnType("h").setHymnNumber("1"))
+                          .addRelevants(SongReference.newBuilder().setHymnType("ch").setHymnNumber("1"))
+                          .build();
+    Hymn ch1Expected = Hymn.newBuilder()
+                           .addReferences(SongReference.newBuilder().setHymnType("ch").setHymnNumber("1"))
+                           .addRelevants(SongReference.newBuilder().setHymnType("h").setHymnNumber("1"))
+                           .addRelevants(SongReference.newBuilder().setHymnType("h").setHymnNumber("2"))
+                           .build();
+    ImmutableList<Hymn> result =
+        target.sanitize(ImmutableList.of(h1, h2, ch1),
+                        new Patcher(errors) {
+                          @Override
+                          protected void performPatch() {
+                            // do nothing
+                          }
+                        },
+                        new Exceptions() {
+                          @Override
+                          public ImmutableSet<ImmutableSet<SongReference>> languageExceptions() {
+                            return ImmutableSet.of();
+                          }
+
+                          @Override
+                          public ImmutableSet<ImmutableSet<SongReference>> relevantExceptions() {
+                            return ImmutableSet.of(
+                                ImmutableSet.of(
+                                    SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue)
+                                                 .setHymnNumber("1").build(),
+                                    SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue)
+                                                 .setHymnNumber("2").build())
+                            );
+                          }
+                        });
+    assertThat(result).containsExactly(h1, h2Expected, ch1Expected);
+    assertThat(errors).isEmpty();
   }
 }

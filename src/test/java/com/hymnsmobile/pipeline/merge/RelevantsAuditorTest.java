@@ -110,17 +110,17 @@ class RelevantsAuditorTest {
   }
 
   @Test
-  public void audit__incompatibleTypes_hasException__originalReferencesRemoved() {
+  public void audit__incompatibleTypes_hasException__originalReferencesPreserved() {
     SongReference songReference1 =
         SongReference.newBuilder().setHymnType(HymnType.CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1").build();
     SongReference songReference2 =
         SongReference.newBuilder().setHymnType(HymnType.NEW_SONG.abbreviatedValue).setHymnNumber("2").build();
     Set<Set<SongReference>> songReferenceSets =
-        ImmutableSet.of(new HashSet<>(ImmutableSet.of(songReference1, songReference2)));
+        ImmutableSet.of(new LinkedHashSet<>(ImmutableSet.of(songReference1, songReference2)));
     target.audit(
         songReferenceSets,
         Optional.of(ImmutableSet.of(ImmutableSet.of(songReference1, songReference2))));
-    Truth.assertThat(songReferenceSets).containsExactly(new HashSet<>(ImmutableSet.of()));
+    Truth.assertThat(songReferenceSets).containsExactly(new LinkedHashSet<>(ImmutableSet.of(songReference1, songReference2)));
   }
 
   @Test
