@@ -1,17 +1,5 @@
 package com.hymnsmobile.pipeline.merge.patchers;
 
-import static com.google.common.collect.ImmutableSet.toImmutableSet;
-import static com.hymnsmobile.pipeline.merge.HymnType.CHILDREN_SONG;
-import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE;
-import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE_SIMPLIFIED;
-import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE_SUPPLEMENTAL;
-import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED;
-import static com.hymnsmobile.pipeline.merge.HymnType.CLASSIC_HYMN;
-import static com.hymnsmobile.pipeline.merge.HymnType.DUTCH;
-import static com.hymnsmobile.pipeline.merge.HymnType.HOWARD_HIGASHI;
-import static com.hymnsmobile.pipeline.merge.HymnType.NEW_SONG;
-import static com.hymnsmobile.pipeline.merge.HymnType.PORTUGUESE;
-
 import com.google.common.collect.ImmutableSet;
 import com.hymnsmobile.pipeline.merge.HymnType;
 import com.hymnsmobile.pipeline.merge.dagger.Merge;
@@ -21,10 +9,14 @@ import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.PipelineError.ErrorType;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import com.hymnsmobile.pipeline.models.SongReference;
+
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import javax.inject.Inject;
+
+import static com.google.common.collect.ImmutableSet.toImmutableSet;
+import static com.hymnsmobile.pipeline.merge.HymnType.*;
 
 /**
  * Performs one-off patches to the set of hymns from Hymnal.net that are unfixable with a general
@@ -63,16 +55,17 @@ public class HymnalNetPatcher extends Patcher {
     fix_h1351();
     fix_ch1090();
     fix_h445_h1359();
-    fix_hf15();
     fix_h79_h8079();
     fix_h267_h1360();
-    fix_ts253();
     fix_h379();
     fix_ch643();
     fix_pt528();
     fix_h480();
     fix_ns154();
     fix_ch9166();
+    fix_ht62();
+    fix_ht1182();
+    fix_hf881();
     fix_ch632();
     fix_ts248();
     fix_pt1001();
@@ -84,7 +77,6 @@ public class HymnalNetPatcher extends Patcher {
     fix_pt601();
     fix_pt1232();
     fix_pt1258();
-    fix_pt538();
     fix_pt1222();
     fix_pt1243();
     fix_pt921();
@@ -98,6 +90,9 @@ public class HymnalNetPatcher extends Patcher {
     fix_ns180de();
     fix_ns617t();
     fix_ns151de();
+    fix_ns151ht();
+    fix_h984_h8204_cb984_pt984_ht984_ch204();
+    fix_h254_h8211_ht254_pt254_ch211();
 
     // Fix SONG_META_DATA_RELEVANT
     fix_nt377();
@@ -302,29 +297,6 @@ public class HymnalNetPatcher extends Patcher {
   }
 
   /**
-   * hf/15 is mapped to h/473 for some reason, but it actually is the French version of h/1084. So
-   * we need to update the languages json and copy over Author(null), Composer(null), Key(F Major),
-   * Time(3/4), Meter(8.8.8.8), Hymn Code(51712165172321), Scriptures (Song of Songs) from h/1084.
-   * Category and subcategory seem to be correct, though.
-   */
-  void fix_hf15() {
-    getHymn(SongReference.newBuilder().setHymnType(HymnType.FRENCH.abbreviatedValue).setHymnNumber("15"))
-        .clearAuthor()
-        .clearComposer()
-        .clearKey()
-        .clearTime()
-        .clearMeter()
-        .clearHymnCode()
-        .clearScriptures()
-        .addKey("F Major").addTime("3/4").addMeter("8.8.8.8")
-        .addHymnCode("51712165172321").addScriptures("Song of Songs");
-
-    removeLanguages("hf/15", "cb/473", "ch/355", "hd/473", "h/473", "de/473", "S/196", "ht/473",
-        "pt/473");
-    addLanguages("hf/15", "h/1084");
-  }
-
-  /**
    * h/8079 and h/79 are related. However, the language mappings for each is all messed up.
    * </p>
    *  Here is the current mapping:
@@ -427,15 +399,6 @@ public class HymnalNetPatcher extends Patcher {
   }
 
   /**
-   * ts/253 and ts/253?gb=1 -> mapped to h/754 for some reason, but it actually is the chinese
-   * version of h/1164. So it should map to h/1164 and its related songs
-   */
-  void fix_ts253() {
-    removeLanguages("ts/253", "h/754", "pt/754");
-    addLanguages("ts/253", "h/1164");
-  }
-
-  /**
    * h/379 and pt/379 an incorrect Chinese song mappings. The Chinese song they're linked
    * to (ch/385) is actually translated by h/8385.
    */
@@ -487,6 +450,33 @@ public class HymnalNetPatcher extends Patcher {
    */
   void fix_ch9166() {
     removeLanguages("ch/9166", "h/157", "ht/157", "pt/157");
+  }
+
+  /**
+   * ht/62 incorrectly maps to h/31, hd/31, pt/31, and ch/29 when it should map to h/62 and its
+   * related songs. h/62 and its related songs all already have the correct mappings.
+   */
+  void fix_ht62() {
+    removeLanguages("ht/62", "h/31", "pt/31", "ch/29");
+    addLanguages("ht/62", "h/62");
+  }
+
+  /**
+   * ht/1182 incorrectly maps to h/248, cb/248, pt/248, S/115, and ch/202 when it should map to h/1182 and its
+   * related songs. h/1182 and its related songs all already have the correct mappings.
+   */
+  void fix_ht1182() {
+    removeLanguages("ht/1182", "h/248", "cb/248", "pt/248", "S/115", "ch/202");
+    addLanguages("ht/1182", "h/1182");
+  }
+
+  /**
+   * hf/881 incorrectly maps to ns/180, hd/6011, ns/180de, and ts/1004 when it should map to h/881 and its
+   * related songs. h/881 and its related songs all already have the correct mappings.
+   */
+  void fix_hf881() {
+    removeLanguages("hf/881", "ns/180", "hd/6011", "ns/180de", "ts/1004");
+    addLanguages("hf/881", "h/881");
   }
 
   /**
@@ -577,14 +567,6 @@ public class HymnalNetPatcher extends Patcher {
   void fix_pt1258() {
     removeLanguages("pt/1258", "ts/511");
     addLanguages("pt/1258", "ts/536");
-  }
-
-  /**
-   * pt/538 references hs/341 when it should be referencing hs/241.
-   */
-  void fix_pt538() {
-    removeLanguages("pt/538", "S/341");
-    addLanguages("pt/538", "S/241");
   }
 
   /**
@@ -689,6 +671,64 @@ public class HymnalNetPatcher extends Patcher {
    */
   void fix_ns151de() {
     removeLanguages("ns/151de", "ns/151de");
+  }
+
+  /**
+   * ns/151ht has an unnecessary self-reference.
+   */
+  void fix_ns151ht() {
+    removeLanguages("ns/151ht", "ns/151ht");
+  }
+
+  /**
+   * h/984 and h/8204 are both the same song (with the same tune), but h/8204 has 5 verses while h/984 only has 4.
+   * However, h/984 is the official LSM-sanctioned version. In terms of languages though, we separate the translations
+   * with 5 verses and assign them to h/8204 and the translations with 4 verses we assign to h/984.
+   * <p/>
+   *  Here is the correct mapping:
+   *    h/984->cb/984,pt/984,de/984;
+   *    cb/984->h/984,pt/984,de/984;
+   *    pt/984->cb/984,h/984,de/984;
+   *    de/984->cb/984,h/984,pt/984;
+   * </p>
+   *    h/8204->ht/984,ch/204;
+   *    ht/984->h/8204,ch/204;
+   *    ch/204->ht/984,h/8204;
+   */
+  void fix_h984_h8204_cb984_pt984_ht984_ch204() {
+    removeLanguages("h/984", "ht/984", "ch/204");
+    removeLanguages("cb/984", "ht/984", "ch/204");
+    removeLanguages("pt/984", "ch/204");
+    removeLanguages("de/984", "ht/984", "ch/204");
+
+    removeLanguages("h/8204", "cb/984");
+    removeLanguages("ht/984", "h/984", "cb/984", "pt/984");
+    addLanguages("ht/984", "h/8204");
+    removeLanguages("ch/204", "h/984", "cb/984", "pt/984");
+    addLanguages("ch/204", "h/8204");
+  }
+
+  /**
+   * h/254 and h/8211 are very similar songs but not exactly the same. It looks like h/254 was the original song but
+   * h/8211 is a closer translation of the (probably original) ch/211. So we perform a remap, according to how closely
+   * the lyrics match to each english song.
+   * <p/>
+   *  Here is the correct mapping:
+   *    h/254->ht/254,pt/254;
+   *    ht/254->h/254,pt/254;
+   *    pt/254->h/254,ht/254;
+   * </p>
+   *    h/8211->ch/211;
+   *    ch/211->h/8211;
+   */
+  void fix_h254_h8211_ht254_pt254_ch211() {
+    removeLanguages("h/254", "ch/211");
+    removeLanguages("ht/254", "ch/211");
+    removeLanguages("pt/254", "ch/211");
+
+    removeLanguages("h/8211", "ht/254");
+    removeLanguages("ch/211", "h/254", "ht/254", "pt/254");
+    addLanguages("ch/211", "h/8211");
   }
 
   /*--------------------------RELEVANTS--------------------------*/
@@ -908,70 +948,5 @@ public class HymnalNetPatcher extends Patcher {
    */
   void fix_h163() {
     removeRelevants("h/163", "h/163");
-  }
-
-  /**
-   * Fix references where something points to a hymn, but it doesn't point back (i.e. dangling).
-   * </p>
-   * This is difficult to automate because we don't often know what the language of the dangling
-   * reference is. For instance, ns/568 references ns/568c and ns/568?gb=1. However, those songs
-   * don't reference it back. It is difficult in code to know that ns/568c is the Chinese version of
-   * ns/568, so we won't know how to set the "value" field in the Datum. Thankfully, there are only
-   * ~20 of these, so we can fix them manually.
-   */
-  // TODO make sure that these are correctly populated before deleting
-  void fix_danglingReferences() {
-    // ns/568 references ch/ns568c and chx/ns568. However, those songs don't reference it back. Fix the mapping so they reference each other.
-    addLanguages(
-        SongReference.newBuilder().setHymnType(CHINESE.abbreviatedValue).setHymnNumber("ns568c"),
-        SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("568"));
-    addLanguages(
-        SongReference.newBuilder().setHymnType(CHINESE_SIMPLIFIED.abbreviatedValue)
-            .setHymnNumber("ns568c"),
-        SongReference.newBuilder().setHymnType(HymnType.NEW_SONG.abbreviatedValue)
-            .setHymnNumber("568"));
-
-    // ns/195 references ts/228 and ts/228?gb=1 but those songs don't reference it back. Fix the
-    // mapping so they reference each other.
-    addLanguages(SongReference.newBuilder().setHymnType(CHINESE_SUPPLEMENTAL.abbreviatedValue)
-            .setHymnNumber("228"),
-        SongReference.newBuilder().setHymnType(HymnType.NEW_SONG.abbreviatedValue)
-            .setHymnNumber("195"));
-    addLanguages(
-        SongReference.newBuilder().setHymnType(CHINESE_SUPPLEMENTAL_SIMPLIFIED.abbreviatedValue)
-            .setHymnNumber("228"),
-        SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("195"));
-
-    // hd/4 references ns/257 but ns/257 doesn't reference it back. Fix the mapping so it does.
-    addLanguages(
-        SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("257"),
-        SongReference.newBuilder().setHymnType(DUTCH.abbreviatedValue).setHymnNumber("4"));
-
-    // ns/7 references h/18 because it is an adaptation of it. However, h/18 doesn't reference it
-    // back. Fix h/18 to reference it back.
-    addRelevants(
-        SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("18"),
-        SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("7"));
-
-    // ns/20 references lb/12 because it is an adaptation of it. However, lb/12 doesn't reference it back.
-    addRelevants(
-        SongReference.newBuilder().setHymnType(HOWARD_HIGASHI.abbreviatedValue).setHymnNumber("12"),
-        SongReference.newBuilder().setHymnType(NEW_SONG.abbreviatedValue).setHymnNumber("20"));
-
-    // c/21 references h/70 because it is a shortened version of it. Since they are essentially the same song, we
-    // should change the name to "Related" instead of the song title, because otherwise it'll just be the same as
-    // the current song title.
-    removeRelevants(
-        SongReference.newBuilder().setHymnType(CHILDREN_SONG.abbreviatedValue).setHymnNumber("21"),
-        SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("70"));
-    removeRelevants(SongReference.newBuilder().setHymnType(HymnType.CLASSIC_HYMN.abbreviatedValue)
-            .setHymnNumber("70"),
-        SongReference.newBuilder().setHymnType(CHILDREN_SONG.abbreviatedValue).setHymnNumber("21"));
-    addRelevants(
-        SongReference.newBuilder().setHymnType(CHILDREN_SONG.abbreviatedValue).setHymnNumber("21"),
-        SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("70"));
-    addRelevants(SongReference.newBuilder().setHymnType(HymnType.CLASSIC_HYMN.abbreviatedValue)
-            .setHymnNumber("70"),
-        SongReference.newBuilder().setHymnType(CHILDREN_SONG.abbreviatedValue).setHymnNumber("21"));
   }
 }

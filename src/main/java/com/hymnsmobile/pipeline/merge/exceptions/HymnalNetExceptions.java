@@ -196,6 +196,20 @@ public class HymnalNetExceptions extends Exceptions {
             SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue)
                 .setHymnNumber("8330").build()),
 
+        // Both h/254 and h/8211 are valid translations of the Chinese song ch/211.
+        ImmutableSet.of(
+            SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("254")
+                         .build(),
+            SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue)
+                         .setHymnNumber("8211").build()),
+
+        // Both h/984 and h/8204 are valid translations of the Chinese song ch/204.
+        ImmutableSet.of(
+            SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue).setHymnNumber("984")
+                         .build(),
+            SongReference.newBuilder().setHymnType(CLASSIC_HYMN.abbreviatedValue)
+                         .setHymnNumber("8204").build()),
+
         // ns/547 and ns/945 don't have the same tune, but are very similar and based on the same
         // scripture passage.
         ImmutableSet.of(

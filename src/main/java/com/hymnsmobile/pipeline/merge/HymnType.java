@@ -1,7 +1,5 @@
 package com.hymnsmobile.pipeline.merge;
 
-import java.util.Optional;
-
 /**
  * Represents the type of hymn
  */
@@ -30,6 +28,7 @@ public enum HymnType {
   BE_FILLED("bf"),
   LIEDERBUCH("lde"),
   HINOS("pt"),
+  HEBREW("he"),
   BLUE_SONGBOOK("sb"),
   // Uncategorized songbase songs.
   SONGBASE_OTHER("sbx");
