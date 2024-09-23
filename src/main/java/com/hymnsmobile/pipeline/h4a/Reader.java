@@ -26,16 +26,18 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import static com.hymnsmobile.pipeline.h4a.BlockList.shouldBlock;
+import static com.hymnsmobile.pipeline.models.PipelineError.ErrorType.PATCHER_OBSOLETE_BLOCK_LIST_ITEM;
 
 @H4aPipelineScope
 public class Reader {
 
-  // https://github.com/lemuelinchrist/hymnsforandroid/releases/tag/v4.13
-  private static final String H4A_VERSION = "4_13";
+  // https://github.com/lemuelinchrist/hymnsforandroid/releases/tag/v4.14
+  private static final String H4A_VERSION = "4_14";
 
   private static final Logger LOGGER = Logger.getGlobal();
 
@@ -49,12 +51,14 @@ public class Reader {
    */
   private static final String CUSTOM_ESCAPE = "$CUSESP$";
 
+  private final BlockList blockList;
   private final Converter converter;
   private final Set<PipelineError> errors;
   private final Set<H4aHymn> h4aHymns;
 
   @Inject
-  public Reader(Converter converter, @H4a Set<PipelineError> errors, Set<H4aHymn> h4aHymns) {
+  public Reader(BlockList blockList, Converter converter, @H4a Set<PipelineError> errors, Set<H4aHymn> h4aHymns) {
+    this.blockList = blockList;
     this.converter = converter;
     this.errors = errors;
     this.h4aHymns = h4aHymns;
@@ -98,17 +102,24 @@ public class Reader {
       throw new IllegalArgumentException("h4a query returned null");
     }
 
+    Set<String> nonExistentRelatedSongs = new HashSet<>();
+
     while (resultSet.next()) {
       H4aHymn.Builder hymn = H4aHymn.newBuilder();
 
       String id = resultSet.getString(1);
-      H4aKey key = converter.toKey(id);
-      hymn.setId(key);
-
-      if (shouldBlock(key)) {
-        LOGGER.fine(String.format("%s contained in block list. Skipping...", key));
+      if (blockList.blockStatus(id) != BlockList.BlockStatus.OK) {
+        LOGGER.fine(String.format("%s contained in block list. Skipping...", id));
         continue;
       }
+
+      Optional<H4aKey> keyOptional = converter.toKey(id);
+      if (keyOptional.isEmpty()) {
+        continue;
+      }
+      H4aKey key = keyOptional.get();
+
+      hymn.setId(key);
 
       String author = resultSet.getString(2);
       if (!TextUtil.isEmpty(author) && author.equals("*")) {
@@ -150,7 +161,7 @@ public class Reader {
 
       String parentHymn = resultSet.getString(14);
       if (!TextUtil.isEmpty(parentHymn)) {
-        hymn.setParentHymn(converter.toKey(parentHymn));
+        converter.toKey(parentHymn).ifPresent(hymn::setParentHymn);
       }
 
       String sheetMusicLink = resultSet.getString(15);
@@ -178,15 +189,29 @@ public class Reader {
           if (TextUtil.isEmpty(relatedSong)) {
             continue;
           }
-          H4aKey relatedSongKey = converter.toKey(relatedSong);
-          if (shouldBlock(relatedSongKey)) {
+
+          BlockList.BlockStatus blockStatus = blockList.blockStatus(relatedSong);
+          switch (blockStatus) {
+            case OK:
+              break;
+            case NON_EXISTENT:
+              nonExistentRelatedSongs.add(related);
+              // fallthrough
+            default:
+              LOGGER.fine(String.format("%s contained in block list. Skipping...", id));
+              continue;
+          }
+
+          Optional<H4aKey> relatedSongKeyOpt = converter.toKey(relatedSong);
+          if (relatedSongKeyOpt.isEmpty()) { // Pipeline error logged already by converter.
             continue;
           }
+          H4aKey relatedSongKey = relatedSongKeyOpt.get();
 
           HymnType relatedSongType = HymnType.fromString(relatedSongKey.getType()).orElseThrow();
           if (relatedSongType == HymnType.SPANISH_MISTYPED) {
             relatedSongKey = H4aKey.newBuilder().setType(HymnType.SPANISH.abbreviation)
-                .setNumber(relatedSongKey.getNumber()).build();
+                                   .setNumber(relatedSongKey.getNumber()).build();
           }
           hymn.addRelated(relatedSongKey);
         }
@@ -204,12 +229,36 @@ public class Reader {
       }
 
       ResultSet tunes = connection.createStatement()
-          .executeQuery(String.format("SELECT * FROM tune WHERE _id='%s'", id));
+                                  .executeQuery(String.format("SELECT * FROM tune WHERE _id='%s'", id));
       if (tunes != null && tunes.next()) {
         hymn.addYoutube(
             Youtube.newBuilder().setComment(tunes.getString(2)).setVideoId(tunes.getString(3)));
       }
       h4aHymns.add(hymn.build());
+    }
+
+    // Find obsolete blocklist items.
+    PipelineError.Builder error =
+        PipelineError.newBuilder()
+                     .setSeverity(PipelineError.Severity.WARNING)
+                     .setErrorType(PATCHER_OBSOLETE_BLOCK_LIST_ITEM);
+
+    // Make sure the non-existent related songs are still non-existent.
+    nonExistentRelatedSongs.forEach(nonExistingRelatedSong -> {
+      converter.toKey(nonExistingRelatedSong).ifPresent(relatedSong -> {
+        if (h4aHymns.stream().anyMatch(h4aHymn -> h4aHymn.getId().equals(relatedSong))) {
+          error.addMessages(relatedSong.toString());
+        }
+      });
+    });
+
+    // Make sure every blocklisted item has been encountered.
+    if (!blockList.items().isEmpty()) {
+      blockList.items().forEach(error::addMessages);
+    }
+
+    if (error.getMessagesCount() > 0) {
+      errors.add(error.build());
     }
   }
 

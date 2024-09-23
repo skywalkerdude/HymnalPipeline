@@ -4,38 +4,59 @@ import com.hymnsmobile.pipeline.h4a.dagger.H4a;
 import com.hymnsmobile.pipeline.h4a.dagger.H4aPipelineScope;
 import com.hymnsmobile.pipeline.h4a.models.H4aKey;
 import com.hymnsmobile.pipeline.models.PipelineError;
+import com.hymnsmobile.pipeline.utils.TextUtil;
+
+import javax.inject.Inject;
+import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.inject.Inject;
 
 @H4aPipelineScope
 public class Converter {
 
   private static final Pattern ID_PATTERN = Pattern.compile("([A-Z]+)([a-z]?\\d+\\D*)");
 
+  private final Set<PipelineError> errors;
+
   @Inject
-  public Converter() {
+  public Converter(@H4a Set<PipelineError> errors) {
+    this.errors = errors;
   }
 
-  public H4aKey toKey(String id) {
-    return H4aKey.newBuilder().setType(extractType(id).abbreviation).setNumber(extractNumber(id))
-        .build();
-  }
-
-  private HymnType extractType(String id) {
+  public Optional<H4aKey> toKey(String id) {
     Matcher matcher = ID_PATTERN.matcher(id);
     if (!matcher.find()) {
-      throw new IllegalArgumentException("Unable to extract type from " + id);
+      errors.add(PipelineError.newBuilder()
+                              .setSeverity(PipelineError.Severity.ERROR)
+                              .setErrorType(PipelineError.ErrorType.UNPARSEABLE_HYMN_KEY)
+                              .addMessages(id)
+                              .build());
+      return Optional.empty();
     }
-    return HymnType.fromString(matcher.group(1)).orElseThrow();
-  }
 
-  private String extractNumber(String id) {
-    Matcher matcher = ID_PATTERN.matcher(id);
-    if (!matcher.find()) {
-      throw new IllegalArgumentException("Unable to extract number from " + id);
+    Optional<HymnType> hymnType = HymnType.fromString(matcher.group(1));
+    if (hymnType.isEmpty()) {
+      errors.add(PipelineError.newBuilder()
+                              .setSeverity(PipelineError.Severity.ERROR)
+                              .setErrorType(PipelineError.ErrorType.UNRECOGNIZED_HYMN_TYPE)
+                              .addMessages(id)
+                              .build());
+      return Optional.empty();
     }
-    return matcher.group(2);
+
+    String hymnNumber = matcher.group(2);
+    if (TextUtil.isEmpty(hymnNumber)) {
+      errors.add(PipelineError.newBuilder()
+                              .setSeverity(PipelineError.Severity.ERROR)
+                              .setErrorType(PipelineError.ErrorType.UNPARSEABLE_HYMN_NUMBER)
+                              .addMessages(id)
+                              .build());
+      return Optional.empty();
+    }
+    return Optional.of(H4aKey.newBuilder()
+                             .setType(hymnType.get().abbreviation)
+                             .setNumber(hymnNumber)
+                             .build());
   }
 }

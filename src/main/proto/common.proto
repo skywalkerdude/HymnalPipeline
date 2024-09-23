@@ -63,6 +63,8 @@ message PipelineError {
     // Blocks the entire pipeline from completion.
     FATAL = 2;
   }
+  Severity severity = 1;
+
   enum ErrorType {
     FETCH_ERROR = 0;
     PARSE_ERROR = 1;
@@ -76,6 +78,10 @@ message PipelineError {
     EXTRA_META_DATA = 5;
     // Exception thrown during fetch.
     FETCH_EXCEPTION = 6;
+    // Hymn key unable to be parsed.
+    UNPARSEABLE_HYMN_KEY = 7;
+    // Hymn number unable to be parsed.
+    UNPARSEABLE_HYMN_NUMBER = 8;
 
     PATCHER_ADD_ERROR = 101;
     PATCHER_REMOVAL_ERROR = 102;
@@ -90,7 +96,7 @@ message PipelineError {
 
     SANITIZER_SELF_REFERENCE = 301;
   }
-  Severity severity = 1;
   ErrorType error_type = 2;
+
   repeated string messages = 3;
 }

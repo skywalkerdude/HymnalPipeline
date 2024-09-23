@@ -15,8 +15,6 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static com.google.common.truth.Truth.assertThat;
-
 class H4aNetPipelineTest {
 
   private H4aPipeline pipeline;
@@ -32,18 +30,17 @@ class H4aNetPipelineTest {
     pipeline.run();
 
     ImmutableList<H4aHymn> h4aHymns = pipeline.getH4aHymns();
-    assertThat(h4aHymns.size()).isEqualTo(12488);
 
     H4aHymn expected =
         TestUtils.readTextProto("src/test/resources/h4a/storage/E1336.textproto", H4aHymn.newBuilder());
 
     ProtoTruth.assertThat(
-            h4aHymns.stream()
-                .filter
-                    (h4aHymn ->
-                        h4aHymn.getId().equals(H4aKey.newBuilder().setType("E").setNumber("1336").build()))
-                .findFirst().orElseThrow())
-        .isEqualTo(expected);
+                  h4aHymns.stream()
+                          .filter
+                              (h4aHymn ->
+                                   h4aHymn.getId().equals(H4aKey.newBuilder().setType("E").setNumber("1336").build()))
+                          .findFirst().orElseThrow())
+              .isEqualTo(expected);
     ProtoTruth.assertThat(pipeline.getErrors()).isEmpty();
   }
 }

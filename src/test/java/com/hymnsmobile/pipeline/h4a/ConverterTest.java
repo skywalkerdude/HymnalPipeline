@@ -1,46 +1,55 @@
 package com.hymnsmobile.pipeline.h4a;
 
 import com.hymnsmobile.pipeline.h4a.models.H4aKey;
+import com.hymnsmobile.pipeline.models.PipelineError;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.NoSuchElementException;
+import java.util.HashSet;
+import java.util.Set;
 
-import static com.google.common.truth.extensions.proto.ProtoTruth.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ConverterTest {
+
+  private Set<PipelineError> pipelineErrors;
 
   private Converter target;
 
   @BeforeEach
   void setUp() {
-    this.target = new Converter();
+    this.pipelineErrors = new HashSet<>();
+    this.target = new Converter(pipelineErrors);
   }
 
   @Test
   void toKey__simpleId__extractsCorrectKey() {
-    assertThat(target.toKey("SK55")).isEqualTo(H4aKey.newBuilder().setType("SK").setNumber("55").build());
+    assertThat(target.toKey("SK55")).hasValue(H4aKey.newBuilder().setType("SK").setNumber("55").build());
+    assertThat(pipelineErrors).isEmpty();
   }
 
   @Test
   void toKey__complexId__extractsCorrectKey() {
-    assertThat(target.toKey("Ce506c")).isEqualTo(H4aKey.newBuilder().setType("C").setNumber("e506c").build());
+    assertThat(target.toKey("Ce506c")).hasValue(H4aKey.newBuilder().setType("C").setNumber("e506c").build());
   }
 
   @Test
-  public void fetchHymns__missingHymnType__throwsException() {
-    assertThatThrownBy(() ->
-        target.toKey("33"))
-        .isInstanceOf(IllegalArgumentException.class)
-        .hasMessage("Unable to extract type from 33");
+  public void fetchHymns__missingHymnType__addsErrorToErrorsList() {
+    assertThat(target.toKey("33")).isEmpty();
+    assertThat(pipelineErrors).containsExactly(
+        PipelineError.newBuilder()
+                     .setSeverity(PipelineError.Severity.ERROR)
+                     .setErrorType(PipelineError.ErrorType.UNPARSEABLE_HYMN_KEY)
+                     .build());
   }
 
   @Test
-  public void fetchHymns__unrecognizedHymnType__throwsException() {
-    assertThatThrownBy(() ->
-        target.toKey("UNKNOWN3"))
-        .isInstanceOf(NoSuchElementException.class)
-        .hasMessage("No value present");
+  public void fetchHymns__unrecognizedHymnType__addsErrorToErrorsList() {
+    assertThat(target.toKey("UNKNOWN3")).isEmpty();
+    assertThat(pipelineErrors).containsExactly(
+        PipelineError.newBuilder()
+            .setSeverity(PipelineError.Severity.ERROR)
+            .setErrorType(PipelineError.ErrorType.UNRECOGNIZED_HYMN_TYPE)
+            .build());
   }
 }
