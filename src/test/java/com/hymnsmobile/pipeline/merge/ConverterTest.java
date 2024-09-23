@@ -214,23 +214,27 @@ class ConverterTest {
             Hymn.newBuilder());
     assertThat(actual).isEqualTo(expected);
     assertThat(errors).containsExactly(
-        PipelineError
-            .newBuilder()
+        PipelineError.newBuilder()
+            .setSource(PipelineError.Source.HYMNAL_NET)
+            .setSeverity(PipelineError.Severity.ERROR)
             .setErrorType(PipelineError.ErrorType.PARSE_ERROR)
             .addMessages("MetaDatum name not found for hymn_type: \"c\"\nhymn_number: \"60\"\n: name: \"unrecognized meta datum\"\ndata {\n  value: \"value\"\n  path: \"https://www.hymnal.net/path\"\n}\n")
             .build(),
-        PipelineError
-            .newBuilder()
+        PipelineError.newBuilder()
+            .setSource(PipelineError.Source.HYMNAL_NET)
+            .setSeverity(PipelineError.Severity.ERROR)
             .setErrorType(PipelineError.ErrorType.PARSE_ERROR)
             .addMessages("/en/hymn/hf/, a related song of hymn_type: \"c\"\nhymn_number: \"60\"\n")
             .build(),
-        PipelineError
-            .newBuilder()
+        PipelineError.newBuilder()
+            .setSource(PipelineError.Source.HYMNAL_NET)
+            .setSeverity(PipelineError.Severity.ERROR)
             .setErrorType(PipelineError.ErrorType.UNRECOGNIZED_HYMN_TYPE)
             .addMessages("/en/hymn/12, a related song of hymn_type: \"c\"\nhymn_number: \"60\"\n")
             .build(),
-        PipelineError
-            .newBuilder()
+        PipelineError.newBuilder()
+            .setSource(PipelineError.Source.HYMNAL_NET)
+            .setSeverity(PipelineError.Severity.ERROR)
             .setErrorType(PipelineError.ErrorType.UNRECOGNIZED_HYMN_TYPE)
             .addMessages("/en/hymn/unrecognized/12, a related song of hymn_type: \"c\"\nhymn_number: \"60\"\n")
             .build());

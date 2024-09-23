@@ -36,6 +36,7 @@ public class RelevantsAuditor extends Auditor {
   private void auditRelevantsSet(Set<SongReference> setToAudit, boolean ignoreDanglingReference) {
     if (setToAudit.size() == 1 && !ignoreDanglingReference) {
       errors.add(PipelineError.newBuilder()
+          .setSource(PipelineError.Source.MERGE)
           .setSeverity(Severity.ERROR)
           .setErrorType(ErrorType.AUDITOR_DANGLING_RELEVANT_SET)
           .addMessages(setToAudit.toString())
@@ -75,6 +76,7 @@ public class RelevantsAuditor extends Auditor {
           return;
         }
         errors.add(PipelineError.newBuilder()
+            .setSource(PipelineError.Source.MERGE)
             .setSeverity(Severity.ERROR)
             .setErrorType(ErrorType.AUDITOR_TOO_MANY_INSTANCES)
             .addMessages(setToAudit.toString())
@@ -90,6 +92,7 @@ public class RelevantsAuditor extends Auditor {
         || hymnTypes.contains(CHINESE) && hymnTypes.contains(HymnType.CHINESE_SUPPLEMENTAL))
         && !removeExceptions(setToAudit)) {
       errors.add(PipelineError.newBuilder()
+          .setSource(PipelineError.Source.MERGE)
           .setSeverity(Severity.ERROR)
           .setErrorType(ErrorType.AUDITOR_INCOMPATIBLE_RELEVANTS)
           .addMessages(setToAudit.toString())

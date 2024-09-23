@@ -70,6 +70,7 @@ public abstract class Patcher {
       } else {
         errors.add(
             PipelineError.newBuilder()
+                .setSource(PipelineError.Source.MERGE)
                 .setSeverity(Severity.WARNING)
                 .setErrorType(ErrorType.PATCHER_REMOVAL_ERROR)
                 .addMessages(String.format("%s not a relevant of %s", relevant, from))
@@ -133,6 +134,7 @@ public abstract class Patcher {
       } else {
         errors.add(
             PipelineError.newBuilder()
+                .setSource(PipelineError.Source.MERGE)
                 .setSeverity(Severity.WARNING)
                 .setErrorType(ErrorType.PATCHER_REMOVAL_ERROR)
                 .addMessages(String.format("%s not a language of %s", language, from))
@@ -198,6 +200,7 @@ public abstract class Patcher {
     for (SongReference songLink : songLinks) {
       if (links.contains(songLink)) {
         errors.add(PipelineError.newBuilder()
+            .setSource(PipelineError.Source.MERGE)
             .setSeverity(Severity.WARNING)
             .setErrorType(ErrorType.PATCHER_ADD_ERROR)
             .addMessages(String.format("%s already includes %s as a %s", to, songLink, field))

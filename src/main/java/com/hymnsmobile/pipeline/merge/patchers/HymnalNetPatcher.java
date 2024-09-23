@@ -143,6 +143,7 @@ public class HymnalNetPatcher extends Patcher {
       })) {
         this.errors.add(
             PipelineError.newBuilder()
+                .setSource(PipelineError.Source.HYMNAL_NET)
                 .setSeverity(Severity.WARNING)
                 .setErrorType(ErrorType.PATCHER_ADD_ERROR)
                 .addMessages("Portuguese song already contains simplified Chinese songs:")
@@ -212,6 +213,7 @@ public class HymnalNetPatcher extends Patcher {
     if (!unseen.isEmpty()) {
       errors.add(
           PipelineError.newBuilder()
+              .setSource(PipelineError.Source.HYMNAL_NET)
               .setSeverity(Severity.WARNING)
               .setErrorType(ErrorType.PATCHER_OBSOLETE_BLOCK_LIST_ITEM)
               .addMessages(unseen.toString())

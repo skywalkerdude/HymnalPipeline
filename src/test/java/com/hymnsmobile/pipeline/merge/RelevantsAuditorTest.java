@@ -38,9 +38,11 @@ class RelevantsAuditorTest {
     target.audit(ImmutableSet.of(), Optional.of(ImmutableSet.of(ImmutableSet.of(songReference))));
     assertThat(errors).containsExactly(
         PipelineError.newBuilder()
-                     .setErrorType(PipelineError.ErrorType.AUDITOR_OBSOLETE_EXCEPTION)
-                     .addMessages(String.format("[[%s]]", songReference))
-                     .build());
+            .setSource(PipelineError.Source.MERGE)
+            .setSeverity(PipelineError.Severity.WARNING)
+            .setErrorType(PipelineError.ErrorType.AUDITOR_OBSOLETE_EXCEPTION)
+            .addMessages(String.format("[[%s]]", songReference))
+            .build());
   }
 
   @Test
@@ -50,10 +52,11 @@ class RelevantsAuditorTest {
     target.audit(ImmutableSet.of(ImmutableSet.of(songReference)), Optional.empty());
     assertThat(errors).containsExactly(
         PipelineError.newBuilder()
-                     .setSeverity(PipelineError.Severity.ERROR)
-                     .setErrorType(PipelineError.ErrorType.AUDITOR_DANGLING_RELEVANT_SET)
-                     .addMessages(String.format("[%s]", songReference))
-                     .build());
+            .setSource(PipelineError.Source.MERGE)
+            .setSeverity(PipelineError.Severity.ERROR)
+            .setErrorType(PipelineError.ErrorType.AUDITOR_DANGLING_RELEVANT_SET)
+            .addMessages(String.format("[%s]", songReference))
+            .build());
   }
 
   @Test
@@ -65,11 +68,12 @@ class RelevantsAuditorTest {
     target.audit(ImmutableSet.of(ImmutableSet.of(songReference1, songReference2)), Optional.empty());
     assertThat(errors).containsExactly(
         PipelineError.newBuilder()
-                     .setSeverity(PipelineError.Severity.ERROR)
-                     .setErrorType(PipelineError.ErrorType.AUDITOR_TOO_MANY_INSTANCES)
-                     .addMessages(String.format("[%s, %s]", songReference1, songReference2))
-                     .addMessages(HymnType.CLASSIC_HYMN.toString())
-                     .build());
+            .setSource(PipelineError.Source.MERGE)
+            .setSeverity(PipelineError.Severity.ERROR)
+            .setErrorType(PipelineError.ErrorType.AUDITOR_TOO_MANY_INSTANCES)
+            .addMessages(String.format("[%s, %s]", songReference1, songReference2))
+            .addMessages(HymnType.CLASSIC_HYMN.toString())
+            .build());
   }
 
   @Test
@@ -91,10 +95,11 @@ class RelevantsAuditorTest {
     target.audit(ImmutableSet.of(ImmutableSet.of(songReference1, songReference2)), Optional.empty());
     assertThat(errors).containsExactly(
         PipelineError.newBuilder()
-                     .setSeverity(PipelineError.Severity.ERROR)
-                     .setErrorType(PipelineError.ErrorType.AUDITOR_INCOMPATIBLE_RELEVANTS)
-                     .addMessages(String.format("[%s, %s]", songReference1, songReference2))
-                     .build());
+            .setSource(PipelineError.Source.MERGE)
+            .setSeverity(PipelineError.Severity.ERROR)
+            .setErrorType(PipelineError.ErrorType.AUDITOR_INCOMPATIBLE_RELEVANTS)
+            .addMessages(String.format("[%s, %s]", songReference1, songReference2))
+            .build());
   }
 
   @Test
@@ -138,9 +143,10 @@ class RelevantsAuditorTest {
         Optional.of(ImmutableSet.of(ImmutableSet.of(songReference1, songReference2))));
     assertThat(errors).containsExactly(
         PipelineError.newBuilder()
-                     .setSeverity(PipelineError.Severity.ERROR)
-                     .setErrorType(PipelineError.ErrorType.AUDITOR_INCOMPATIBLE_RELEVANTS)
-                     .addMessages(String.format("[%s, %s]", songReference3, songReference4))
-                     .build());
+            .setSource(PipelineError.Source.MERGE)
+            .setSeverity(PipelineError.Severity.ERROR)
+            .setErrorType(PipelineError.ErrorType.AUDITOR_INCOMPATIBLE_RELEVANTS)
+            .addMessages(String.format("[%s, %s]", songReference3, songReference4))
+            .build());
   }
 }

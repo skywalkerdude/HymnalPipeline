@@ -231,15 +231,17 @@ class SanitizationPipelineTest {
     assertThat(result).containsExactly(h1Expected);
     assertThat(errors).containsExactly(
         PipelineError.newBuilder()
-                     .setSeverity(PipelineError.Severity.ERROR)
-                     .setErrorType(PipelineError.ErrorType.SANITIZER_SELF_REFERENCE)
-                     .addMessages(h1.getReferencesList().toString())
-                     .build(),
+            .setSource(PipelineError.Source.MERGE)
+            .setSeverity(PipelineError.Severity.ERROR)
+            .setErrorType(PipelineError.ErrorType.SANITIZER_SELF_REFERENCE)
+            .addMessages(h1.getReferencesList().toString())
+            .build(),
         PipelineError.newBuilder()
-                     .setSeverity(PipelineError.Severity.ERROR)
-                     .setErrorType(PipelineError.ErrorType.AUDITOR_DANGLING_LANGUAGE_SET)
-                     .addMessages(h1.getReferencesList().toString())
-                     .build());
+            .setSource(PipelineError.Source.MERGE)
+            .setSeverity(PipelineError.Severity.ERROR)
+            .setErrorType(PipelineError.ErrorType.AUDITOR_DANGLING_LANGUAGE_SET)
+            .addMessages(h1.getReferencesList().toString())
+            .build());
   }
 
   @Test
@@ -256,11 +258,12 @@ class SanitizationPipelineTest {
     assertThat(result).containsExactly(h1, h2);
     assertThat(errors).ignoringRepeatedFieldOrder().containsExactly(
         PipelineError.newBuilder()
-                     .setSeverity(PipelineError.Severity.ERROR)
-                     .setErrorType(PipelineError.ErrorType.AUDITOR_TOO_MANY_INSTANCES)
-                     .addMessages("CLASSIC_HYMN")
-                     .addMessages("[hymn_type: \"h\"\nhymn_number: \"1\"\n, hymn_type: \"h\"\nhymn_number: \"2\"\n]")
-                     .build());
+            .setSource(PipelineError.Source.MERGE)
+            .setSeverity(PipelineError.Severity.ERROR)
+            .setErrorType(PipelineError.ErrorType.AUDITOR_TOO_MANY_INSTANCES)
+            .addMessages("CLASSIC_HYMN")
+            .addMessages("[hymn_type: \"h\"\nhymn_number: \"1\"\n, hymn_type: \"h\"\nhymn_number: \"2\"\n]")
+            .build());
   }
 
   @Test

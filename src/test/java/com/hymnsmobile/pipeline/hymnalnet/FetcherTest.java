@@ -89,6 +89,7 @@ class FetcherTest {
     assertThat(hymnalNetJsons).isEmpty();
     assertThat(errors).containsExactly(
         PipelineError.newBuilder()
+            .setSource(PipelineError.Source.HYMNAL_NET)
             .setSeverity(PipelineError.Severity.ERROR)
             .setErrorType(PipelineError.ErrorType.FETCH_ERROR)
             .addMessages("Failed to fetch: hymn_type: \"h\"\nhymn_number: \"1\"\n")
@@ -136,6 +137,7 @@ class FetcherTest {
     assertThat(hymnalNetJsons).isEmpty();
     assertThat(errors).containsExactly(
         PipelineError.newBuilder()
+            .setSource(PipelineError.Source.HYMNAL_NET)
             .setSeverity(PipelineError.Severity.ERROR)
             .setErrorType(PipelineError.ErrorType.FETCH_EXCEPTION)
             .addMessages("Exception thrown during fetch: hymn_type: \"h\"\nhymn_number: \"1\"\n")
@@ -163,6 +165,7 @@ class FetcherTest {
     assertThat(hymnalNetJsons).isEmpty();
     assertThat(errors).containsExactly(
         PipelineError.newBuilder()
+            .setSource(PipelineError.Source.HYMNAL_NET)
             .setSeverity(PipelineError.Severity.ERROR)
             .setErrorType(PipelineError.ErrorType.FETCH_EXCEPTION)
             .addMessages("Exception thrown during fetch: hymn_type: \"h\"\nhymn_number: \"1\"\n")
@@ -189,6 +192,7 @@ class FetcherTest {
     assertThat(hymnalNetJsons).isEmpty();
     assertThat(errors).containsExactly(
         PipelineError.newBuilder()
+            .setSource(PipelineError.Source.HYMNAL_NET)
             .setSeverity(PipelineError.Severity.ERROR)
             .setErrorType(PipelineError.ErrorType.FETCH_EXCEPTION)
             .addMessages("Exception thrown during fetch: hymn_type: \"h\"\nhymn_number: \"1\"\n")

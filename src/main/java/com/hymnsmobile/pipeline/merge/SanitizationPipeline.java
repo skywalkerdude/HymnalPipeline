@@ -101,6 +101,7 @@ public class SanitizationPipeline {
 
       if (links.stream().anyMatch(link -> hymn.getReferencesList().contains(link))) {
         errors.add(PipelineError.newBuilder()
+            .setSource(PipelineError.Source.MERGE)
             .setSeverity(Severity.ERROR)
             .setErrorType(ErrorType.SANITIZER_SELF_REFERENCE)
             .addMessages(hymn.getReferencesList().toString())

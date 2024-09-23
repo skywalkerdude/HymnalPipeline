@@ -177,7 +177,8 @@ public class Converter {
       Optional<MetaDatumType> metaDatumType = MetaDatumType.fromJsonRepresentation(metaDatum);
       if (metaDatumType.isEmpty()) {
         errors.add(PipelineError.newBuilder()
-            .setSeverity(Severity.WARNING)
+            .setSource(PipelineError.Source.HYMNAL_NET)
+            .setSeverity(Severity.ERROR)
             .setErrorType(ErrorType.PARSE_ERROR)
             .addMessages(String.format("MetaDatum name not found for %s: %s", key, metaDatum))
             .build());

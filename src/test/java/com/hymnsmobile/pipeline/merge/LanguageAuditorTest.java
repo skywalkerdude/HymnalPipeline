@@ -38,9 +38,11 @@ class LanguageAuditorTest {
     target.audit(ImmutableSet.of(), Optional.of(ImmutableSet.of(ImmutableSet.of(songReference))));
     assertThat(errors).containsExactly(
         PipelineError.newBuilder()
-                     .setErrorType(PipelineError.ErrorType.AUDITOR_OBSOLETE_EXCEPTION)
-                     .addMessages(String.format("[[%s]]", songReference))
-                     .build());
+            .setSource(PipelineError.Source.MERGE)
+            .setSeverity(PipelineError.Severity.WARNING)
+            .setErrorType(PipelineError.ErrorType.AUDITOR_OBSOLETE_EXCEPTION)
+            .addMessages(String.format("[[%s]]", songReference))
+            .build());
   }
 
   @Test
@@ -50,10 +52,11 @@ class LanguageAuditorTest {
     target.audit(ImmutableSet.of(ImmutableSet.of(songReference)), Optional.empty());
     assertThat(errors).containsExactly(
         PipelineError.newBuilder()
-                     .setSeverity(PipelineError.Severity.ERROR)
-                     .setErrorType(PipelineError.ErrorType.AUDITOR_DANGLING_LANGUAGE_SET)
-                     .addMessages(String.format("[%s]", songReference))
-                     .build());
+            .setSource(PipelineError.Source.MERGE)
+            .setSeverity(PipelineError.Severity.ERROR)
+            .setErrorType(PipelineError.ErrorType.AUDITOR_DANGLING_LANGUAGE_SET)
+            .addMessages(String.format("[%s]", songReference))
+            .build());
   }
 
   @Test
@@ -65,11 +68,12 @@ class LanguageAuditorTest {
     target.audit(ImmutableSet.of(ImmutableSet.of(songReference1, songReference2)), Optional.empty());
     assertThat(errors).containsExactly(
         PipelineError.newBuilder()
-                     .setSeverity(PipelineError.Severity.ERROR)
-                     .setErrorType(PipelineError.ErrorType.AUDITOR_TOO_MANY_INSTANCES)
-                     .addMessages(String.format("[%s, %s]", songReference1, songReference2))
-                     .addMessages(HymnType.CLASSIC_HYMN.toString())
-                     .build());
+            .setSource(PipelineError.Source.MERGE)
+            .setSeverity(PipelineError.Severity.ERROR)
+            .setErrorType(PipelineError.ErrorType.AUDITOR_TOO_MANY_INSTANCES)
+            .addMessages(String.format("[%s, %s]", songReference1, songReference2))
+            .addMessages(HymnType.CLASSIC_HYMN.toString())
+            .build());
   }
 
   @Test
@@ -91,11 +95,12 @@ class LanguageAuditorTest {
     target.audit(ImmutableSet.of(ImmutableSet.of(songReference1, songReference2)), Optional.empty());
     assertThat(errors).containsExactly(
         PipelineError.newBuilder()
-                     .setSeverity(PipelineError.Severity.ERROR)
-                     .setErrorType(PipelineError.ErrorType.AUDITOR_TOO_MANY_INSTANCES)
-                     .addMessages(String.format("[%s, %s]", songReference1, songReference2))
-                     .addMessages(HymnType.NEW_SONG.toString())
-                     .build());
+            .setSource(PipelineError.Source.MERGE)
+            .setSeverity(PipelineError.Severity.ERROR)
+            .setErrorType(PipelineError.ErrorType.AUDITOR_TOO_MANY_INSTANCES)
+            .addMessages(String.format("[%s, %s]", songReference1, songReference2))
+            .addMessages(HymnType.NEW_SONG.toString())
+            .build());
   }
 
   @Test
@@ -117,11 +122,12 @@ class LanguageAuditorTest {
     target.audit(ImmutableSet.of(ImmutableSet.of(songReference1, songReference2)), Optional.empty());
     assertThat(errors).containsExactly(
         PipelineError.newBuilder()
-                     .setSeverity(PipelineError.Severity.ERROR)
-                     .setErrorType(PipelineError.ErrorType.AUDITOR_TOO_MANY_INSTANCES)
-                     .addMessages(String.format("[%s, %s]", songReference1, songReference2))
-                     .addMessages(HymnType.HOWARD_HIGASHI.toString())
-                     .build());
+            .setSource(PipelineError.Source.MERGE)
+            .setSeverity(PipelineError.Severity.ERROR)
+            .setErrorType(PipelineError.ErrorType.AUDITOR_TOO_MANY_INSTANCES)
+            .addMessages(String.format("[%s, %s]", songReference1, songReference2))
+            .addMessages(HymnType.HOWARD_HIGASHI.toString())
+            .build());
   }
 
   @Test
@@ -151,11 +157,12 @@ class LanguageAuditorTest {
         Optional.of(ImmutableSet.of(ImmutableSet.of(songReference1, songReference2))));
     assertThat(errors).containsExactly(
         PipelineError.newBuilder()
-                     .setSeverity(PipelineError.Severity.ERROR)
-                     .setErrorType(PipelineError.ErrorType.AUDITOR_TOO_MANY_INSTANCES)
-                     .addMessages(String.format("[%s, %s]", songReference3, songReference4))
-                     .addMessages(HymnType.CLASSIC_HYMN.toString())
-                     .build());
+            .setSource(PipelineError.Source.MERGE)
+            .setSeverity(PipelineError.Severity.ERROR)
+            .setErrorType(PipelineError.ErrorType.AUDITOR_TOO_MANY_INSTANCES)
+            .addMessages(String.format("[%s, %s]", songReference3, songReference4))
+            .addMessages(HymnType.CLASSIC_HYMN.toString())
+            .build());
   }
 
   @Test
@@ -167,10 +174,12 @@ class LanguageAuditorTest {
     target.audit(ImmutableSet.of(ImmutableSet.of(songReference1, songReference2)), Optional.empty());
     assertThat(errors).containsExactly(
         PipelineError.newBuilder()
-                     .setSeverity(PipelineError.Severity.ERROR)
-                     .setErrorType(PipelineError.ErrorType.AUDITOR_INCOMPATIBLE_LANGUAGES)
-                     .addMessages(String.format("[%s, %s]", songReference1, songReference2))
-                     .build());
+            .setSource(PipelineError.Source.MERGE)
+            .setSeverity(PipelineError.Severity.ERROR)
+            .setErrorType(PipelineError.ErrorType.AUDITOR_INCOMPATIBLE_LANGUAGES)
+            .addMessages(songReference1.toString())
+            .addMessages(songReference2.toString())
+            .build());
   }
 
   @Test
@@ -226,11 +235,13 @@ class LanguageAuditorTest {
     target.audit(
         songReferenceSets,
         Optional.of(ImmutableSet.of(ImmutableSet.of(songReference1, songReference2))));
-    assertThat(errors).containsExactly(
+    assertThat(errors).ignoringRepeatedFieldOrder().containsExactly(
         PipelineError.newBuilder()
-                     .setSeverity(PipelineError.Severity.ERROR)
-                     .setErrorType(PipelineError.ErrorType.AUDITOR_INCOMPATIBLE_LANGUAGES)
-                     .addMessages(String.format("[%s, %s]", songReference3, songReference4))
-                     .build());
+            .setSource(PipelineError.Source.MERGE)
+            .setSeverity(PipelineError.Severity.ERROR)
+            .setErrorType(PipelineError.ErrorType.AUDITOR_INCOMPATIBLE_LANGUAGES)
+            .addMessages(songReference3.toString())
+            .addMessages(songReference4.toString())
+            .build());
   }
 }

@@ -38,9 +38,11 @@ class ConverterTest {
     assertThat(target.toKey("33")).isEmpty();
     assertThat(pipelineErrors).containsExactly(
         PipelineError.newBuilder()
-                     .setSeverity(PipelineError.Severity.ERROR)
-                     .setErrorType(PipelineError.ErrorType.UNPARSEABLE_HYMN_KEY)
-                     .build());
+            .setSource(PipelineError.Source.H4A)
+            .setSeverity(PipelineError.Severity.ERROR)
+            .setErrorType(PipelineError.ErrorType.UNPARSEABLE_HYMN_KEY)
+            .addMessages("33")
+            .build());
   }
 
   @Test
@@ -48,8 +50,10 @@ class ConverterTest {
     assertThat(target.toKey("UNKNOWN3")).isEmpty();
     assertThat(pipelineErrors).containsExactly(
         PipelineError.newBuilder()
+            .setSource(PipelineError.Source.H4A)
             .setSeverity(PipelineError.Severity.ERROR)
             .setErrorType(PipelineError.ErrorType.UNRECOGNIZED_HYMN_TYPE)
+            .addMessages("UNKNOWN3")
             .build());
   }
 }

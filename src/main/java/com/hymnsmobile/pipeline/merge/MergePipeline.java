@@ -121,6 +121,7 @@ public class MergePipeline {
       SongReference liederbuchReference = converter.toSongReference(liederbuchHymn.getKey());
       if (!existingReferences.contains(liederbuchReference)) {
         errors.add(PipelineError.newBuilder()
+            .setSource(PipelineError.Source.MERGE)
             .setSeverity(Severity.WARNING)
             .setErrorType(ErrorType.LIEDERBUCH_ALREADY_COVERED)
             .addMessages(liederbuchReference.toString())

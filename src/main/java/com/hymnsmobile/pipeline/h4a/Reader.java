@@ -240,6 +240,7 @@ public class Reader {
     // Find obsolete blocklist items.
     PipelineError.Builder error =
         PipelineError.newBuilder()
+                     .setSource(PipelineError.Source.H4A)
                      .setSeverity(PipelineError.Severity.WARNING)
                      .setErrorType(PATCHER_OBSOLETE_BLOCK_LIST_ITEM);
 

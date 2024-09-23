@@ -16,30 +16,36 @@ public class Converter {
       "(\\w+)/([c|s]?\\d+[a-z]*)(\\?gb=1)?");
   private static final Pattern HINARIO_PATH_PATTERN = Pattern.compile("hymn=(\\d+[a-z]*)");
 
-  public static Optional<HymnalNetKey> extractFromPath(String path, HymnalNetKey parentHymn,
-      Set<PipelineError> errors) {
+  public static Optional<HymnalNetKey> extractFromPath(
+      String path, HymnalNetKey parentHymn, Set<PipelineError> errors) {
     Optional<String> hymnType = extractTypeFromPath(path);
     Optional<String> hymnNumber = extractNumberFromPath(path);
     Optional<String> queryParam = extractQueryParamFromPath(path);
 
     if (hymnType.isEmpty() || hymnNumber.isEmpty()) {
-      errors.add(PipelineError.newBuilder()
-          .setErrorType(ErrorType.PARSE_ERROR)
-          .addMessages(String.format("%s, a related song of %s", path, parentHymn))
-          .build());
+      errors.add(
+          PipelineError.newBuilder()
+                       .setSource(PipelineError.Source.HYMNAL_NET)
+                       .setSeverity(PipelineError.Severity.ERROR)
+                       .setErrorType(ErrorType.PARSE_ERROR)
+                       .addMessages(String.format("%s, a related song of %s", path, parentHymn))
+                       .build());
       return Optional.empty();
     }
 
     if (HymnType.fromString(hymnType.get()).isEmpty()) {
-      errors.add(PipelineError.newBuilder()
-          .setErrorType(ErrorType.UNRECOGNIZED_HYMN_TYPE)
-          .addMessages(String.format("%s, a related song of %s", path, parentHymn))
-          .build());
+      errors.add(
+          PipelineError.newBuilder()
+                       .setSource(PipelineError.Source.HYMNAL_NET)
+                       .setSeverity(PipelineError.Severity.ERROR)
+                       .setErrorType(ErrorType.UNRECOGNIZED_HYMN_TYPE)
+                       .addMessages(String.format("%s, a related song of %s", path, parentHymn))
+                       .build());
       return Optional.empty();
     }
 
-    HymnalNetKey.Builder builder = HymnalNetKey.newBuilder().setHymnType(hymnType.get())
-        .setHymnNumber(hymnNumber.get());
+    HymnalNetKey.Builder builder =
+        HymnalNetKey.newBuilder().setHymnType(hymnType.get()).setHymnNumber(hymnNumber.get());
     queryParam.ifPresent(builder::setQueryParams);
 
     return Optional.of(builder.build());

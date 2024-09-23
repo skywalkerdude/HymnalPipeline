@@ -28,35 +28,39 @@ public class Converter {
     Matcher matcher = ID_PATTERN.matcher(id);
     if (!matcher.find()) {
       errors.add(PipelineError.newBuilder()
-                              .setSeverity(PipelineError.Severity.ERROR)
-                              .setErrorType(PipelineError.ErrorType.UNPARSEABLE_HYMN_KEY)
-                              .addMessages(id)
-                              .build());
+                     .setSource(PipelineError.Source.H4A)
+                     .setSeverity(PipelineError.Severity.ERROR)
+                     .setErrorType(PipelineError.ErrorType.UNPARSEABLE_HYMN_KEY)
+                     .addMessages(id)
+                     .build());
       return Optional.empty();
     }
 
     Optional<HymnType> hymnType = HymnType.fromString(matcher.group(1));
     if (hymnType.isEmpty()) {
       errors.add(PipelineError.newBuilder()
-                              .setSeverity(PipelineError.Severity.ERROR)
-                              .setErrorType(PipelineError.ErrorType.UNRECOGNIZED_HYMN_TYPE)
-                              .addMessages(id)
-                              .build());
+                     .setSource(PipelineError.Source.H4A)
+                     .setSeverity(PipelineError.Severity.ERROR)
+                     .setErrorType(PipelineError.ErrorType.UNRECOGNIZED_HYMN_TYPE)
+                     .addMessages(id)
+                     .build());
       return Optional.empty();
     }
 
     String hymnNumber = matcher.group(2);
     if (TextUtil.isEmpty(hymnNumber)) {
       errors.add(PipelineError.newBuilder()
-                              .setSeverity(PipelineError.Severity.ERROR)
-                              .setErrorType(PipelineError.ErrorType.UNPARSEABLE_HYMN_NUMBER)
-                              .addMessages(id)
-                              .build());
+                     .setSource(PipelineError.Source.H4A)
+                     .setSeverity(PipelineError.Severity.ERROR)
+                     .setErrorType(PipelineError.ErrorType.UNPARSEABLE_HYMN_NUMBER)
+                     .addMessages(id)
+                     .build());
       return Optional.empty();
     }
-    return Optional.of(H4aKey.newBuilder()
-                             .setType(hymnType.get().abbreviation)
-                             .setNumber(hymnNumber)
-                             .build());
+    return Optional.of(
+        H4aKey.newBuilder()
+              .setType(hymnType.get().abbreviation)
+              .setNumber(hymnNumber)
+              .build());
   }
 }

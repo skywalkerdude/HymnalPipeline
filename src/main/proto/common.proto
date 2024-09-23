@@ -56,32 +56,34 @@ message PipelineErrors {
 // An error encountered during processing of the pipeline.
 message PipelineError {
   enum Severity {
+    ERROR_SEVERITY_UNKNOWN = 0;
     // Should log error, but not the end of the world.
-    WARNING = 0;
+    WARNING = 1;
     // Blocks the hymn from ingestion but does not block the pipeline.
-    ERROR = 1;
+    ERROR = 2;
     // Blocks the entire pipeline from completion.
-    FATAL = 2;
+    FATAL = 3;
   }
   Severity severity = 1;
 
   enum ErrorType {
-    FETCH_ERROR = 0;
-    PARSE_ERROR = 1;
+    ERROR_TYPE_UNKNOWN = 0;
+    FETCH_ERROR = 1;
+    PARSE_ERROR = 2;
     // Hymn type was unrecognized.
-    UNRECOGNIZED_HYMN_TYPE = 2;
+    UNRECOGNIZED_HYMN_TYPE = 3;
     // Recognized hymn type but appeared in an unexpected place.
-    UNEXPECTED_HYMN_TYPE = 3;
+    UNEXPECTED_HYMN_TYPE = 4;
     // Liederbuch songs should be covered by other sources already.
-    LIEDERBUCH_ALREADY_COVERED = 4;
+    LIEDERBUCH_ALREADY_COVERED = 5;
     // Encountered more meta data than expected.
-    EXTRA_META_DATA = 5;
+    EXTRA_META_DATA = 6;
     // Exception thrown during fetch.
-    FETCH_EXCEPTION = 6;
+    FETCH_EXCEPTION = 7;
     // Hymn key unable to be parsed.
-    UNPARSEABLE_HYMN_KEY = 7;
+    UNPARSEABLE_HYMN_KEY = 8;
     // Hymn number unable to be parsed.
-    UNPARSEABLE_HYMN_NUMBER = 8;
+    UNPARSEABLE_HYMN_NUMBER = 9;
 
     PATCHER_ADD_ERROR = 101;
     PATCHER_REMOVAL_ERROR = 102;
@@ -98,5 +100,16 @@ message PipelineError {
   }
   ErrorType error_type = 2;
 
-  repeated string messages = 3;
+  enum Source {
+    ERROR_SOURCE_UNKNOWN = 0;
+    HYMNAL_NET = 1;
+    H4A = 2;
+    LIEDERBUCH = 3;
+    RUSSIAN = 4;
+    SONGBASE = 5;
+    MERGE = 6;
+  }
+  Source source = 3;
+
+  repeated string messages = 4;
 }

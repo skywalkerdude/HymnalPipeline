@@ -1,9 +1,5 @@
 package com.hymnsmobile.pipeline.merge;
 
-import static com.google.common.collect.ImmutableList.toImmutableList;
-import static com.hymnsmobile.pipeline.merge.HardcodedDuplicates.H4A_DUPLICATES;
-import static com.hymnsmobile.pipeline.merge.Utilities.getHymnFrom;
-
 import com.google.common.collect.ImmutableList;
 import com.hymnsmobile.pipeline.h4a.models.H4aHymn;
 import com.hymnsmobile.pipeline.h4a.models.H4aKey;
@@ -16,13 +12,14 @@ import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import com.hymnsmobile.pipeline.models.SongReference;
 import com.hymnsmobile.pipeline.models.Verse;
 import com.hymnsmobile.pipeline.utils.TextUtil;
-import java.util.Comparator;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
+
 import javax.inject.Inject;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static com.google.common.collect.ImmutableList.toImmutableList;
+import static com.hymnsmobile.pipeline.merge.HardcodedDuplicates.H4A_DUPLICATES;
+import static com.hymnsmobile.pipeline.merge.Utilities.getHymnFrom;
 
 /**
  * Class that merges H4a songs into the pipeline results.
@@ -92,6 +89,7 @@ public class H4aMerger {
       case SPANISH:
         this.errors.add(
             PipelineError.newBuilder()
+                .setSource(PipelineError.Source.H4A)
                 .setSeverity(Severity.ERROR)
                 .setErrorType(ErrorType.UNEXPECTED_HYMN_TYPE)
                 .addMessages("Should have all been added by hymnal.net already")

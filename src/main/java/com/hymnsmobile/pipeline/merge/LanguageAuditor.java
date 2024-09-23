@@ -36,6 +36,7 @@ public class LanguageAuditor extends Auditor {
   private void auditLanguageSet(Set<SongReference> setToAudit, boolean ignoreDanglingReference) {
     if (setToAudit.size() == 1 && !ignoreDanglingReference) {
       errors.add(PipelineError.newBuilder()
+          .setSource(PipelineError.Source.MERGE)
           .setSeverity(Severity.ERROR)
           .setErrorType(ErrorType.AUDITOR_DANGLING_LANGUAGE_SET)
           .addMessages(setToAudit.toString())
@@ -74,6 +75,7 @@ public class LanguageAuditor extends Auditor {
           return;
         }
         errors.add(PipelineError.newBuilder()
+            .setSource(PipelineError.Source.MERGE)
             .setSeverity(Severity.ERROR)
             .setErrorType(ErrorType.AUDITOR_TOO_MANY_INSTANCES)
             .addMessages(setToAudit.toString())
@@ -93,11 +95,13 @@ public class LanguageAuditor extends Auditor {
         || hymnTypes.contains(CHINESE) && hymnTypes.contains(CHINESE_SUPPLEMENTAL)
         || hymnTypes.contains(CHINESE_SIMPLIFIED) && hymnTypes.contains(CHINESE_SUPPLEMENTAL_SIMPLIFIED))
         && !removeExceptions(setToAudit)) {
-      errors.add(PipelineError.newBuilder()
-          .setSeverity(Severity.ERROR)
-          .setErrorType(ErrorType.AUDITOR_INCOMPATIBLE_LANGUAGES)
-          .addMessages(setToAudit.toString())
-          .build());
+      PipelineError.Builder error =
+          PipelineError.newBuilder()
+              .setSource(PipelineError.Source.MERGE)
+              .setSeverity(Severity.ERROR)
+              .setErrorType(ErrorType.AUDITOR_INCOMPATIBLE_LANGUAGES);
+      setToAudit.forEach(songReference -> error.addMessages(songReference.toString()));
+      errors.add(error.build());
     }
   }
 }

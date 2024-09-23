@@ -42,6 +42,7 @@ public abstract class Auditor {
     this.performAudit(songReferenceSets);
     if (!currentAuditExceptions.isEmpty()) {
       this.errors.add(PipelineError.newBuilder()
+          .setSource(PipelineError.Source.MERGE)
           .setSeverity(Severity.WARNING)
           .setErrorType(ErrorType.AUDITOR_OBSOLETE_EXCEPTION)
           .addMessages(currentAuditExceptions.toString())

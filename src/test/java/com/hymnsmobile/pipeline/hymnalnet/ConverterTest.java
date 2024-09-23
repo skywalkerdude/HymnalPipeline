@@ -59,6 +59,8 @@ class ConverterTest {
     assertThat(errors)
         .containsExactly(
             PipelineError.newBuilder()
+                .setSource(PipelineError.Source.HYMNAL_NET)
+                .setSeverity(PipelineError.Severity.ERROR)
                 .setErrorType(PipelineError.ErrorType.PARSE_ERROR)
                 .addMessages("/en/hymn//339, a related song of hymn_type: \"h\"\nhymn_number: \"12\"\n")
                 .build());
@@ -75,6 +77,8 @@ class ConverterTest {
     assertThat(errors)
         .containsExactly(
             PipelineError.newBuilder()
+                .setSource(PipelineError.Source.HYMNAL_NET)
+                .setSeverity(PipelineError.Severity.ERROR)
                 .setErrorType(PipelineError.ErrorType.PARSE_ERROR)
                 .addMessages("/en/hymn/h/, a related song of hymn_type: \"h\"\nhymn_number: \"12\"\n")
                 .build());
@@ -91,6 +95,8 @@ class ConverterTest {
     assertThat(errors)
         .containsExactly(
             PipelineError.newBuilder()
+                .setSource(PipelineError.Source.HYMNAL_NET)
+                .setSeverity(PipelineError.Severity.ERROR)
                 .setErrorType(PipelineError.ErrorType.UNRECOGNIZED_HYMN_TYPE)
                 .addMessages("/en/hymn/unrecognized/339, a related song of hymn_type: \"h\"\nhymn_number: \"12\"\n")
                 .build());
@@ -107,6 +113,8 @@ class ConverterTest {
     assertThat(errors)
         .containsExactly(
             PipelineError.newBuilder()
+                .setSource(PipelineError.Source.HYMNAL_NET)
+                .setSeverity(PipelineError.Severity.ERROR)
                 .setErrorType(PipelineError.ErrorType.PARSE_ERROR)
                 .addMessages("https://www.hinario.org/detail.php?hymn=, a related song of hymn_type: \"h\"\nhymn_number: \"12\"\n")
                 .build());

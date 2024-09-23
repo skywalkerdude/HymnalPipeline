@@ -83,6 +83,7 @@ public class Fetcher {
       if (fetchResult == FetchResult.FETCH_EXCEPTION) {
         this.errors.add(
             PipelineError.newBuilder()
+                .setSource(PipelineError.Source.HYMNAL_NET)
                 .setSeverity(Severity.ERROR)
                 .setErrorType(ErrorType.FETCH_EXCEPTION)
                 .addMessages(String.format("Exception thrown during fetch: %s", key))
@@ -98,6 +99,7 @@ public class Fetcher {
         // log it and monitor it.
         this.errors.add(
             PipelineError.newBuilder()
+                .setSource(PipelineError.Source.HYMNAL_NET)
                 .setSeverity(Severity.ERROR)
                 .setErrorType(ErrorType.FETCH_ERROR)
                 .addMessages(String.format("Failed to fetch: %s", key))
@@ -196,18 +198,19 @@ public class Fetcher {
                           if (fetchResult == FetchResult.FETCH_EXCEPTION) {
                             this.errors.add(
                                 PipelineError.newBuilder()
+                                    .setSource(PipelineError.Source.HYMNAL_NET)
                                     .setSeverity(Severity.ERROR)
                                     .setErrorType(ErrorType.FETCH_EXCEPTION)
                                     .addMessages(
                                         String.format("Exception thrown during fetch: %s, a related song of %s",
-                                            relatedSong, parent))
+                                                      relatedSong, parent))
                                     .build());
                             return false;
                           }
                           if (fetchResult == FetchResult.NON_200_RESPONSE) {
                             LOGGER.warning(
-                                String.format("Failed to fetch: %s, a related song of %s", relatedSong,
-                                    parent));
+                                String.format(
+                                    "Failed to fetch: %s, a related song of %s", relatedSong, parent));
                             return false;
                           }
                           return true;
