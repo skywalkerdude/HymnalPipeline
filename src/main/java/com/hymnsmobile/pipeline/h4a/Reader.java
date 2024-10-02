@@ -108,7 +108,7 @@ public class Reader {
       H4aHymn.Builder hymn = H4aHymn.newBuilder();
 
       String id = resultSet.getString(1);
-      if (blockList.blockStatus(id) != BlockList.BlockStatus.OK) {
+      if (blockList.blockStatus(id) == BlockList.BlockStatus.BLOCKED) {
         LOGGER.fine(String.format("%s contained in block list. Skipping...", id));
         continue;
       }
@@ -195,7 +195,7 @@ public class Reader {
             case OK:
               break;
             case NON_EXISTENT:
-              nonExistentRelatedSongs.add(related);
+              nonExistentRelatedSongs.add(relatedSong);
               // fallthrough
             default:
               LOGGER.fine(String.format("%s contained in block list. Skipping...", id));
@@ -245,13 +245,11 @@ public class Reader {
                      .setErrorType(PATCHER_OBSOLETE_BLOCK_LIST_ITEM);
 
     // Make sure the non-existent related songs are still non-existent.
-    nonExistentRelatedSongs.forEach(nonExistingRelatedSong -> {
-      converter.toKey(nonExistingRelatedSong).ifPresent(relatedSong -> {
-        if (h4aHymns.stream().anyMatch(h4aHymn -> h4aHymn.getId().equals(relatedSong))) {
-          error.addMessages(relatedSong.toString());
-        }
-      });
-    });
+    nonExistentRelatedSongs.forEach(nonExistingRelatedSong -> converter.toKey(nonExistingRelatedSong).ifPresent(relatedSong -> {
+      if (h4aHymns.stream().anyMatch(h4aHymn -> h4aHymn.getId().equals(relatedSong))) {
+        error.addMessages(relatedSong.toString());
+      }
+    }));
 
     // Make sure every blocklisted item has been encountered.
     if (!blockList.items().isEmpty()) {

@@ -62,7 +62,8 @@ public class H4aMerger {
       return;
     }
 
-    if (HymnType.fromString(h4aReference.getHymnType()) == HymnType.LIEDERBUCH) {
+    HymnType hymnType = HymnType.fromString(h4aReference.getHymnType());
+    if (hymnType == HymnType.LIEDERBUCH) {
       mergeGermanHymn(h4aHymn, builders);
       return;
     }
@@ -85,8 +86,6 @@ public class H4aMerger {
       case CHINESE_SUPPLEMENTAL:
       case CHINESE_SUPPLEMENTAL_SIMPLIFIED:
       case CEBUANO:
-      case FRENCH:
-      case SPANISH:
         this.errors.add(
             PipelineError.newBuilder()
                 .setSource(PipelineError.Source.H4A)
@@ -95,6 +94,19 @@ public class H4aMerger {
                 .addMessages("Should have all been added by hymnal.net already")
                 .addMessages(h4aReference.toString())
                 .build());
+        // fallthrough
+      case SPANISH:
+        if (Integer.parseInt(h4aReference.getHymnNumber()) <= 500) {
+          this.errors.add(
+              PipelineError.newBuilder()
+                           .setSource(PipelineError.Source.H4A)
+                           .setSeverity(Severity.ERROR)
+                           .setErrorType(ErrorType.UNEXPECTED_HYMN_TYPE)
+                           .addMessages("Should have all been added by hymnal.net already")
+                           .addMessages(h4aReference.toString())
+                           .build());
+        }
+        // fallthrough
       case TAGALOG:
         // Even though hymnal.net has Tagalog songs, it isn't contiguous and there are a bunch of
         // holes that are filled by H4a

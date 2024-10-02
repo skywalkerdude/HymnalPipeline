@@ -139,8 +139,7 @@ public class SanitizationPipeline {
     }
     songLinks.add(songLink);
     // noinspection unchecked
-    ((List<SongReference>) getReferencedHymnBuilder(builders, songLink)
-        .getField(descriptor))
+    ((List<SongReference>) getReferencedHymnBuilder(builders, songLink).getField(descriptor))
         .forEach(linkedSong ->
             populateSongLinkSet(builders, descriptor, linkedSong, songLinks));
   }

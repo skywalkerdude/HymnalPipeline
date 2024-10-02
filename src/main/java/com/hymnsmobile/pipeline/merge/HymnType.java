@@ -29,6 +29,7 @@ public enum HymnType {
   LIEDERBUCH("lde"),
   HINOS("pt"),
   HEBREW("he"),
+  SLOVAK("sk"),
   BLUE_SONGBOOK("sb"),
   // Uncategorized songbase songs.
   SONGBASE_OTHER("sbx");
