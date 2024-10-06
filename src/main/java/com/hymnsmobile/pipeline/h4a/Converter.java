@@ -57,10 +57,26 @@ public class Converter {
                      .build());
       return Optional.empty();
     }
-    return Optional.of(
-        H4aKey.newBuilder()
-              .setType(hymnType.get().abbreviation)
-              .setNumber(hymnNumber)
-              .build());
+    return hymnType.map(type -> {
+      String number = hymnNumber;
+      if (isHowardHigashi(type, number)) {
+        type = HymnType.HOWARD_HIGASHI;
+        number = Integer.toString(Integer.parseInt(number) - 1000);
+      }
+      return H4aKey.newBuilder()
+                   .setType(type.abbreviation)
+                   .setNumber(number)
+                   .build();
+    });
+  }
+
+  /**
+   * Howard Higashi songs in H4a are NS10XX
+   */
+  private boolean isHowardHigashi(HymnType type, String number) {
+    if (type == com.hymnsmobile.pipeline.h4a.HymnType.NEW_SONG && TextUtil.isNumeric(number)) {
+      return Integer.parseInt(number) >= 1001 && Integer.parseInt(number) <= 1087;
+    }
+    return false;
   }
 }

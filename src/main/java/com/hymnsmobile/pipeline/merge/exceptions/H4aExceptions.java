@@ -1,13 +1,11 @@
 package com.hymnsmobile.pipeline.merge.exceptions;
 
-import static com.hymnsmobile.pipeline.merge.HymnType.BE_FILLED;
-import static com.hymnsmobile.pipeline.merge.HymnType.CLASSIC_HYMN;
-import static com.hymnsmobile.pipeline.merge.HymnType.TAGALOG;
-
 import com.google.common.collect.ImmutableSet;
 import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
 import com.hymnsmobile.pipeline.models.SongReference;
 import javax.inject.Inject;
+
+import static com.hymnsmobile.pipeline.merge.HymnType.*;
 
 @MergeScope
 public class H4aExceptions extends Exceptions {

@@ -19,5 +19,4 @@ public class LiederbuchLauncher {
       javax.swing.SwingUtilities.invokeLater(() -> new Viewer(file));
     }
   }
-
 }

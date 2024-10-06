@@ -47,11 +47,17 @@ interface H4aPipelineModule {
       // translation we want is already covered by G420, so we can skip this song.
       add("G10002");
 
-      // Unparseable songs that show up in the "related" column. They technically are not "non-existent" because they
-      // are completely unparseable, so there's no way to check if they exist or not.
-      add("IloveYou");
-      add("OJesusLord");
-      add("I\'malwayscallingonYou.");
+      // Mistyped Spanish songs that don't exist.
+      add("ES140");
+      add("ES163");
+      add("ES164");
+      add("ES261");
+      add("ES221");
+      add("ES300");
+      add("ES421");
+      add("ES422");
+      add("ES437");
+      add("ES500");
     }};
   }
 
@@ -87,13 +93,10 @@ interface H4aPipelineModule {
       add("C840");
       add("CS352"); // exists multiple times
       add("CS352"); // exists multiple times
-      add("CS352"); // exists multiple times
-      add("CS158"); // exists multiple times
-      add("CS158"); // exists multiple times
+      add("CS158");
       add("CB1360");
       add("C506c");
-      add("CB381"); // exists multiple times
-      add("CB381"); // exists multiple times
+      add("CB381");
       add("C481c");
       add("CS9117");
       add("CS46");

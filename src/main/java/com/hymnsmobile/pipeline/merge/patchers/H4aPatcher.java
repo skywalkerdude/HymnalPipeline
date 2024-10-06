@@ -3,8 +3,9 @@ package com.hymnsmobile.pipeline.merge.patchers;
 import com.hymnsmobile.pipeline.merge.dagger.Merge;
 import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
 import com.hymnsmobile.pipeline.models.PipelineError;
-import java.util.Set;
+
 import javax.inject.Inject;
+import java.util.Set;
 
 /**
  * Performs one-off patches to the set of hymns from Hymns For Android that are unfixable with a
@@ -38,6 +39,8 @@ public class H4aPatcher extends Patcher {
     fix_I709_h1028();
     fix_K667_h894();
     fix_K372_h494();
+    fix_h254_K211_J211_I211();
+    fix_h984_K204_J204_I204();
   }
 
   /**
@@ -45,9 +48,9 @@ public class H4aPatcher extends Patcher {
    * and J/68, so we need to go through and fix those as well,
    * </p>
    * I/68, K/68, and J/68 are the Indonesian, Korean, and Japanese translations of ch/68
-   * respectively. ch/68, however, is not actually related (language-wise) to h/79, meaning that
-   * all the links to h/79 are wrong. Therefore, we need to remove the wrong links to h/79 and add
-   * the correct links to ch/68 where needed.
+   * respectively. ch/68, however, is not actually related (language-wise) to h/79 (see HymnalNetPatcher for more
+   * information), meaning that all the links to h/79 are wrong. Therefore, we need to remove the wrong links to h/79
+   * and add the correct links to ch/68 where needed.
    * </p>
    *  Here is the current mapping:
    *    h/79->cb/79,hs/44,pt/79,I/68,K/68,J68;
@@ -252,5 +255,71 @@ public class H4aPatcher extends Patcher {
     removeLanguages("h/494", "K/372");
 
     addLanguages("K/372", "ch/372");
+  }
+
+  /**
+   * This is mostly fixed by {@link HymnalNetPatcher#fix_h254_h8211_ht254_pt254_ch211}. However, H4a adds K/211, J/211,
+   * and I/211, so we need to go through and fix those as well,
+   * </p>
+   * K/211, J/211, and I/211 are the Korea, Japanese, and Indonesian translations of ch/211 respectively. ch/211,
+   * however, is not actually related (language-wise) to h/254 (see HymnalNetPatcher for more details), meaning that all
+   * the links to h/254 are wrong. Therefore, we need to remove the wrong links to h/254 and add the correct links to
+   * ch/211 where needed.
+   * </p>
+   *  Here is the correct mapping:
+   *    h/254->ht/254,pt/254;
+   *    ht/254->h/254,pt/254;
+   *    pt/254->h/254,ht/254;
+   * </p>
+   *    h/8211->ch/211,K/211,I/211,J/211;
+   *    ch/211->h/8211,K/211,I/211,J/211;
+   *    K/211->h/8211,ch/211,I/211,J/211;
+   *    I/211->h/8211,ch/211,K/211,J/211;
+   *    J/211->h/8211,ch/211,K/211,I/211;
+   */
+  private void fix_h254_K211_J211_I211() {
+    removeLanguages("h/254", "K/211", "I/211", "J/211");
+    removeLanguages("K/211", "h/254");
+    removeLanguages("J/211", "h/254");
+    removeLanguages("I/211", "h/254");
+
+    addLanguages("K/211", "ch/211");
+    addLanguages("J/211", "ch/211");
+    // I/211 already maps to ch/211.
+  }
+
+  /**
+   * This is mostly fixed by {@link HymnalNetPatcher#fix_h984_h8204_cb984_pt984_ht984_ch204}. However, H4a adds K/204,
+   * J/204, I/204, lde/421, and F/984, so we need to go through and fix those as well,
+   * </p>
+   * K/204, J/204, and I/204 are the Korean, Japanese, and Indonesian translations of ch/204 respectively while lde/421
+   * and F/984 are the German and Farsi translations of h/984 respectively.
+   * </p>
+   * Since ch/204 is not actually related (language-wise) to h/984 (see HymnalNetPatcher for more details), the links
+   * to h/984 are wrong. Therefore, we need to remove the wrong links to h/984 and add the correct links to ch/204 where
+   * needed.
+   * </p>
+   *  Here is the correct mapping:
+   *    h/984->cb/984,pt/984,de/984,F984,lde421;
+   *    cb/984->h/984,pt/984,de/984,F984,lde421;
+   *    pt/984->cb/984,h/984,de/984,F984,lde421;
+   *    de/984->cb/984,h/984,pt/984,F984,lde421;
+   *    lde421->cb/984,h/984,pt/984,de/984,F984;
+   * </p>
+   *    h/8204->ht/984,ch/204,K/204,I/204,J/204;
+   *    ht/984->h/8204,ch/204,K/204,I/204,J/204;
+   *    ch/204->ht/984,h/8204,K/204,I/204,J/204;
+   *    K/204->ht/984,h/8204,ch/204,I/204,J/204;
+   *    I/204->ht/984,h/8204,ch/204,K/204,J/204;
+   *    J/204->ht/984,h/8204,ch/204,K/204,I/204;
+   */
+
+  private void fix_h984_K204_J204_I204() {
+    removeLanguages("h/984", "K/204", "I/204", "J/204");
+    removeLanguages("K/204", "h/984");
+    removeLanguages("J/204", "h/984");
+    removeLanguages("I/204", "h/984");
+
+    // K/204, I/204, and J/204 already map to ch/204, so no additions are needed.
   }
 }

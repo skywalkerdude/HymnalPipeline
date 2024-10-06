@@ -206,14 +206,7 @@ public class Reader {
           if (relatedSongKeyOpt.isEmpty()) { // Pipeline error logged already by converter.
             continue;
           }
-          H4aKey relatedSongKey = relatedSongKeyOpt.get();
-
-          HymnType relatedSongType = HymnType.fromString(relatedSongKey.getType()).orElseThrow();
-          if (relatedSongType == HymnType.SPANISH_MISTYPED) {
-            relatedSongKey = H4aKey.newBuilder().setType(HymnType.SPANISH.abbreviation)
-                                   .setNumber(relatedSongKey.getNumber()).build();
-          }
-          hymn.addRelated(relatedSongKey);
+          hymn.addRelated(relatedSongKeyOpt.get());
         }
       }
 

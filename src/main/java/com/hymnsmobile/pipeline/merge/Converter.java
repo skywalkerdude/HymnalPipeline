@@ -94,22 +94,10 @@ public class Converter {
         key.getType()).orElseThrow();
     String number = key.getNumber();
 
-    // Howard Higashi songs in H4a are NS10XX
-    if (isHowardHigashi(type, number)) {
-      return reference.setHymnType(HOWARD_HIGASHI.abbreviatedValue)
-          .setHymnNumber(Integer.toString(Integer.parseInt(number) - 1000)).build();
-    }
     if (isGermanHymn(type)) {
       return reference.setHymnType(LIEDERBUCH.abbreviatedValue).setHymnNumber(number).build();
     }
     return reference.setHymnType(HymnType.valueOf(type.name()).abbreviatedValue).setHymnNumber(number).build();
-  }
-
-  private boolean isHowardHigashi(com.hymnsmobile.pipeline.h4a.HymnType type, String number) {
-    if (type == com.hymnsmobile.pipeline.h4a.HymnType.NEW_SONG && TextUtil.isNumeric(number)) {
-      return Integer.parseInt(number) >= 1001 && Integer.parseInt(number) <= 1087;
-    }
-    return false;
   }
 
   private boolean isGermanHymn(com.hymnsmobile.pipeline.h4a.HymnType type) {

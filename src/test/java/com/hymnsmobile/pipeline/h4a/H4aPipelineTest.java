@@ -24,8 +24,17 @@ class H4aPipelineTest {
   }
 
   @Test
-  public void obsoleteBlockListEntries__addPipelineErrors() throws BadHanyuPinyinOutputFormatCombination, SQLException, IOException {
+  public void blockListErrors__addPipelineErrors() throws BadHanyuPinyinOutputFormatCombination, SQLException {
     H4aPipelineTestModule.overrideMiscBlockList.add("E14214124");
+    H4aPipelineTestModule.overrideMiscBlockList.add("ES140");
+    H4aPipelineTestModule.overrideMiscBlockList.add("ES163");
+    H4aPipelineTestModule.overrideMiscBlockList.add("ES164");
+    H4aPipelineTestModule.overrideMiscBlockList.add("ES261");
+    H4aPipelineTestModule.overrideMiscBlockList.add("ES221");
+    H4aPipelineTestModule.overrideMiscBlockList.add("ES300");
+    H4aPipelineTestModule.overrideMiscBlockList.add("ES421");
+    H4aPipelineTestModule.overrideMiscBlockList.add("ES422");
+    H4aPipelineTestModule.overrideMiscBlockList.add("ES437");
 
     // Need to add "E2" twice so it triggers the NON_EXISTENT case in related songs.
     H4aPipelineTestModule.overrideNonExistentRelatedSongs.add("E2");
@@ -36,29 +45,17 @@ class H4aPipelineTest {
 
     ProtoTruth.assertThat(pipeline.getErrors()).containsExactly(
         PipelineError.newBuilder()
-            .setSeverity(PipelineError.Severity.ERROR)
-            .setErrorType(PipelineError.ErrorType.UNPARSEABLE_HYMN_KEY)
-            .setSource(PipelineError.Source.H4A)
-            .addMessages("I\'malwayscallingonYou.")
-            .build(),
-        PipelineError.newBuilder()
-            .setSeverity(PipelineError.Severity.ERROR)
-            .setErrorType(PipelineError.ErrorType.UNPARSEABLE_HYMN_KEY)
-            .setSource(PipelineError.Source.H4A)
-            .addMessages("OJesusLord")
-            .build(),
-        PipelineError.newBuilder()
-            .setSeverity(PipelineError.Severity.ERROR)
-            .setErrorType(PipelineError.ErrorType.UNPARSEABLE_HYMN_KEY)
-            .setSource(PipelineError.Source.H4A)
-            .addMessages("IloveYou")
-            .build(),
-        PipelineError.newBuilder()
             .setSeverity(PipelineError.Severity.WARNING)
             .setErrorType(PipelineError.ErrorType.PATCHER_OBSOLETE_BLOCK_LIST_ITEM)
             .setSource(PipelineError.Source.H4A)
             .addMessages("type: \"E\"\nnumber: \"2\"\n")
             .addMessages("E14214124")
+            .build(),
+        PipelineError.newBuilder()
+            .setSeverity(PipelineError.Severity.ERROR)
+            .setErrorType(PipelineError.ErrorType.UNRECOGNIZED_HYMN_TYPE)
+            .setSource(PipelineError.Source.H4A)
+            .addMessages("ES500")
             .build());
   }
 

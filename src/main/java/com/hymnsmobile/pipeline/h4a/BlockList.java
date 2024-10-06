@@ -65,6 +65,13 @@ public class BlockList {
     if (type == HymnType.TAGALOG && Integer.parseInt(number) > 1360) {
       return BlockStatus.BLOCKED;
     }
+
+    // Spanish songs > S500 are part of a draft of newly translated Spanish songs from NYCYPCD. They will be published
+    // at some point as a new hymnal, but as of now, they are not cleaned up enough to be able to use. Therefore, we
+    // just ignore them.
+    if (type == HymnType.SPANISH && Integer.parseInt(number) > 500) {
+      return BlockStatus.BLOCKED;
+    }
     return BlockStatus.OK;
   }
 

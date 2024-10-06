@@ -9,7 +9,7 @@ public enum HymnType {
   CLASSIC_HYMN("E"),
   NEW_SONG("NS"),
   CHILDREN_SONG("CH"),
-  HOWARD_HIGASHI("NS"),
+  HOWARD_HIGASHI("HH"),
   BE_FILLED("BF"),
   GERMAN("G"),
   CHINESE("C"),
@@ -20,8 +20,6 @@ public enum HymnType {
   TAGALOG("T"),
   FRENCH("FR"),
   SPANISH("S"),
-  // "ES" songs should actually match "S" songs
-  SPANISH_MISTYPED("ES"),
   KOREAN("K"),
   JAPANESE("J"),
   FARSI("F"),
