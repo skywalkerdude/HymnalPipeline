@@ -18,8 +18,7 @@ public class Fetcher {
   private final HttpClient client;
 
   @Inject
-  public Fetcher(
-      HttpClient client) {
+  public Fetcher(HttpClient client) {
     this.client = client;
   }
 

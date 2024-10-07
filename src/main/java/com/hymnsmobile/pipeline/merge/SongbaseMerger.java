@@ -1,23 +1,18 @@
 package com.hymnsmobile.pipeline.merge;
 
-import static com.google.common.collect.ImmutableList.toImmutableList;
-import static com.hymnsmobile.pipeline.merge.Utilities.getHymnFrom;
-
 import com.google.common.collect.ImmutableList;
-import com.hymnsmobile.pipeline.h4a.models.H4aHymn;
-import com.hymnsmobile.pipeline.merge.dagger.Merge;
 import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
 import com.hymnsmobile.pipeline.models.Hymn;
-import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.songbase.models.SongbaseHymn;
-import com.hymnsmobile.pipeline.songbase.models.SongbaseKey;
-import java.util.Comparator;
+
+import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import javax.inject.Inject;
+
+import static com.google.common.collect.ImmutableList.toImmutableList;
+import static com.hymnsmobile.pipeline.merge.Utilities.getHymnFrom;
 
 /**
  * Class that merges Songbase songs into the pipeline results.
@@ -28,12 +23,10 @@ public class SongbaseMerger {
   private static final String CHORDS_PATTERN = "\\[(.*?)]";
 
   private final Converter converter;
-  private final Set<PipelineError> errors;
 
   @Inject
-  public SongbaseMerger(Converter converter, @Merge Set<PipelineError> errors) {
+  public SongbaseMerger(Converter converter) {
     this.converter = converter;
-    this.errors = errors;
   }
 
   public ImmutableList<Hymn> merge(

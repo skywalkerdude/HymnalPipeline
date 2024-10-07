@@ -84,6 +84,8 @@ message PipelineError {
     UNPARSEABLE_HYMN_KEY = 8;
     // Hymn number unable to be parsed.
     UNPARSEABLE_HYMN_NUMBER = 9;
+    // A language or related song link was found to be nonexistent.
+    NONEXISTENT_RELEVANT_LINK = 10;
 
     PATCHER_ADD_ERROR = 101;
     PATCHER_REMOVAL_ERROR = 102;

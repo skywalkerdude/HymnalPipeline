@@ -47,8 +47,8 @@ public class SongbasePipeline {
   public void run() throws IOException, InterruptedException {
     LOGGER.info("Songbase pipeline starting");
     String response = fetcher.fetch();
-    songbaseHymns.addAll(converter.convert(response));
     writer.write(response);
+    songbaseHymns.addAll(converter.convert(response));
     LOGGER.info("Songbase pipeline finished");
   }
 

@@ -19,15 +19,13 @@ import com.hymnsmobile.pipeline.songbase.SongbasePipeline;
 import com.hymnsmobile.pipeline.songbase.dagger.SongbasePipelineComponent;
 import com.hymnsmobile.pipeline.storage.StoragePipeline;
 import com.hymnsmobile.pipeline.storage.dagger.StorageComponent;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.sql.SQLException;
-import java.util.logging.Logger;
+import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
+
 import javax.inject.Inject;
 import javax.inject.Provider;
-import javax.xml.parsers.ParserConfigurationException;
-import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
-import org.xml.sax.SAXException;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Logger;
 
 @PipelineScope
 public class Pipeline {
@@ -84,7 +82,7 @@ public class Pipeline {
   }
 
   public static void main(String[] args)
-      throws InterruptedException, IOException, URISyntaxException, SQLException, BadHanyuPinyinOutputFormatCombination, ParserConfigurationException, SAXException {
+      throws InterruptedException, IOException, SQLException, BadHanyuPinyinOutputFormatCombination {
     DaggerPipelineComponent.create().pipeline().run();
   }
 }

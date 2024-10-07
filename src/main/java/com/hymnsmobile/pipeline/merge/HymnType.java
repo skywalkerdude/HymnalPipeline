@@ -31,6 +31,7 @@ public enum HymnType {
   HEBREW("he"),
   SLOVAK("sk"),
   BLUE_SONGBOOK("sb"),
+  LIEDBOEK("lbk"), // Dutch Hymnal
   // Uncategorized songbase songs.
   SONGBASE_OTHER("sbx");
 

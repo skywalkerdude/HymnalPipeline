@@ -3,6 +3,8 @@ package com.hymnsmobile.pipeline.songbase;
 import com.google.common.collect.ImmutableList;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
+import com.hymnsmobile.pipeline.models.PipelineError;
+import com.hymnsmobile.pipeline.songbase.dagger.Songbase;
 import com.hymnsmobile.pipeline.songbase.dagger.SongbasePipelineScope;
 import com.hymnsmobile.pipeline.songbase.models.SongResponse;
 import com.hymnsmobile.pipeline.songbase.models.SongbaseHymn;
@@ -13,6 +15,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
@@ -20,8 +23,11 @@ import static com.google.common.collect.ImmutableList.toImmutableList;
 @SongbasePipelineScope
 public class Converter {
 
+  private final Set<PipelineError> errors;
+
   @Inject
-  public Converter() {
+  public Converter(@Songbase Set<PipelineError> errors) {
+    this.errors = errors;
   }
 
   public ImmutableList<SongbaseHymn> convert(String responseBody)
@@ -50,7 +56,11 @@ public class Converter {
                     .setLanguage(song.getLang())
                     .setLyrics(song.getLyrics()));
               });
-        }).collect(Collectors.toMap(Pair::getKey, Pair::getValue));
+        }).collect(Collectors.toMap(
+            Pair::getKey, // Key mapper: extracts the id as the key.
+            Pair::getValue, // Value mapper: assigns a SongbaseHymn builder to each id.
+            (builder, builder2) -> builder.addAllKey(builder2.getKeyList()) // Merge function: merges the key lists.
+        ));
 
     // Find and add songs that are not in any particular book.
     Map<Integer, SongResponse> copy = new HashMap<>(songResponseById);
@@ -71,7 +81,19 @@ public class Converter {
       int songId = key;
       SongResponse song = songResponseById.get(songId);
       for (int languageLink : song.getLanguageLinksList()) {
-        songbaseHymn.addAllRelated(songbaseHymnById.get(languageLink).getKeyList());
+        SongbaseHymn.Builder language = songbaseHymnById.get(languageLink);
+        if (language == null) {
+          errors.add(
+              PipelineError.newBuilder()
+                  .setSource(PipelineError.Source.SONGBASE)
+                  .setSeverity(PipelineError.Severity.ERROR)
+                  .setErrorType(PipelineError.ErrorType.NONEXISTENT_RELEVANT_LINK)
+                  .addMessages(song.toString())
+                  .addMessages(Integer.toString(languageLink))
+                  .build());
+          continue;
+        }
+        songbaseHymn.addAllRelated(language.getKeyList());
       }
     });
     return songbaseHymnById.values().stream().map(SongbaseHymn.Builder::build).collect(toImmutableList());

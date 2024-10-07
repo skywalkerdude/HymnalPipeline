@@ -1,16 +1,7 @@
 package com.hymnsmobile.pipeline.merge;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
-import static com.hymnsmobile.pipeline.merge.HymnType.BLUE_SONGBOOK;
-import static com.hymnsmobile.pipeline.merge.HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED;
-import static com.hymnsmobile.pipeline.merge.HymnType.CLASSIC_HYMN;
-import static com.hymnsmobile.pipeline.merge.HymnType.FRENCH;
-import static com.hymnsmobile.pipeline.merge.HymnType.HINOS;
-import static com.hymnsmobile.pipeline.merge.HymnType.HOWARD_HIGASHI;
-import static com.hymnsmobile.pipeline.merge.HymnType.LIEDERBUCH;
-import static com.hymnsmobile.pipeline.merge.HymnType.RUSSIAN;
-import static com.hymnsmobile.pipeline.merge.HymnType.SONGBASE_OTHER;
-import static com.hymnsmobile.pipeline.merge.HymnType.SPANISH;
+import static com.hymnsmobile.pipeline.merge.HymnType.*;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.protobuf.Descriptors.Descriptor;
@@ -134,6 +125,7 @@ public class Converter {
       case LIEDERBUCH -> LIEDERBUCH;
       case CANTIQUES -> FRENCH;
       case SONGBASE_OTHER -> SONGBASE_OTHER;
+      case LIEDBOEK -> LIEDBOEK;
       case HINOS -> HINOS;
     };
     return reference.setHymnType(hymnType.abbreviatedValue).build();

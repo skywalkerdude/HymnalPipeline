@@ -2,11 +2,18 @@ package com.hymnsmobile.pipeline.russian;
 
 import com.google.common.collect.ImmutableList;
 import com.hymnsmobile.pipeline.dagger.DaggerPipelineComponent;
+
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Set;
 import java.util.logging.Logger;
 import javax.inject.Inject;
+
+import static java.nio.charset.StandardCharsets.UTF_16;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * Russian songs from
@@ -36,7 +43,7 @@ import javax.inject.Inject;
 public class RussianPipeline {
 
   private static final Logger LOGGER = Logger.getGlobal();
-  private static final String FILE_PATH = "storage/russian/russian_protos.textproto";
+  private static final String FILE_PATH = "storage/russian/russian_protos.binaryproto";
 
   private final Set<RussianHymn> hymns;
 
