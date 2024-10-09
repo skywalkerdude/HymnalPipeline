@@ -94,13 +94,6 @@ class ConverterTest {
   }
 
   @Test
-  public void toSongReference__fromH4aKey_howardHigashi__correctlyConverts() {
-    assertThat(target.toSongReference(H4aKey.newBuilder().setType("NS").setNumber("1001").build()))
-        .isEqualTo(SongReference.newBuilder().setHymnType("lb").setHymnNumber("1").build());
-    assertThat(errors).isEmpty();
-  }
-
-  @Test
   public void toSongReference__fromH4aKey_german__correctlyConverts() {
     assertThat(target.toSongReference(H4aKey.newBuilder().setType("G").setNumber("1001").build()))
         .isEqualTo(SongReference.newBuilder().setHymnType("lde").setHymnNumber("1001").build());

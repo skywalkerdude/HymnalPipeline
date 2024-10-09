@@ -34,6 +34,11 @@ class ConverterTest {
   }
 
   @Test
+  public void toKey__howardHigashi__correctlyConverts() {
+    assertThat(target.toKey("NS1001")).hasValue(H4aKey.newBuilder().setType("HH").setNumber("1").build());
+  }
+
+  @Test
   public void fetchHymns__missingHymnType__addsErrorToErrorsList() {
     assertThat(target.toKey("33")).isEmpty();
     assertThat(pipelineErrors).containsExactly(
