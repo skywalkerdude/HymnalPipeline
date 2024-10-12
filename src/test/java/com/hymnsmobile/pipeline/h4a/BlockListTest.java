@@ -21,13 +21,15 @@ class BlockListTest {
 
   private List<String> miscBlockList;
   private List<String> nonExistentRelatedSongs;
+  private List<String> oneOffCases;
   private BlockList target;
 
   @BeforeEach
   void setUp() {
     this.miscBlockList = new ArrayList<>();
     this.nonExistentRelatedSongs = new ArrayList<>();
-    this.target = new BlockList(converter, miscBlockList, nonExistentRelatedSongs);
+    this.oneOffCases = new ArrayList<>();
+    this.target = new BlockList(converter, miscBlockList, nonExistentRelatedSongs, oneOffCases);
   }
 
   @Test
@@ -37,6 +39,7 @@ class BlockListTest {
     assertThat(miscBlockList).isNotEmpty();
     assertThat(target.blockStatus("song1")).isEqualTo(BlockList.BlockStatus.BLOCKED);
     assertThat(miscBlockList).isEmpty();
+    assertThat(oneOffCases).isEmpty();
   }
 
   @Test
@@ -46,11 +49,26 @@ class BlockListTest {
     assertThat(nonExistentRelatedSongs).isNotEmpty();
     assertThat(target.blockStatus("song1")).isEqualTo(BlockList.BlockStatus.NON_EXISTENT);
     assertThat(nonExistentRelatedSongs).isEmpty();
+    assertThat(oneOffCases).isEmpty();
   }
 
   @Test
   void blockStatus__unparseable__returnsUnparseable() {
     assertThat(target.blockStatus("12")).isEqualTo(BlockList.BlockStatus.UNPARSEABLE);
+  }
+
+  @Test
+  void isOneOff__removedFromList_returnsTrue() {
+    oneOffCases.add("a");
+    assertThat(target.isOneOffCase("a")).isTrue();
+    assertThat(oneOffCases).isEmpty();
+  }
+
+  @Test
+  void isNotOneOff__notRemovedFromList_returnsFalse() {
+    oneOffCases.add("a");
+    assertThat(target.isOneOffCase("b")).isFalse();
+    assertThat(oneOffCases).containsExactly("a");
   }
 
   @Test
@@ -91,9 +109,10 @@ class BlockListTest {
   @Test
   void items__returnsConcatenatedList() {
     miscBlockList.add("song1");
+    oneOffCases.add("song5");
     miscBlockList.add("song2");
     nonExistentRelatedSongs.add("song3");
     miscBlockList.add("song4");
-    assertThat(target.items()).containsExactly("song1", "song2", "song4", "song3");
+    assertThat(target.items()).containsExactly("song1", "song2", "song4", "song3", "song5");
   }
 }

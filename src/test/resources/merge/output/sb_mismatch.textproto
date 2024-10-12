@@ -1,0 +1,239 @@
+# proto-file: proto/common.proto
+# proto-message: Hymn
+
+id: 1
+references {
+  hymn_type: "sb"
+  hymn_number: "1"
+}
+references {
+  hymn_type: "sbx"
+  hymn_number: "3"
+}
+title: "Father Abraham"
+lyrics {
+  verse_type: "do_not_display"
+  lines {
+    line_content: "Father Abraham"
+  }
+  lines {
+    line_content: "Has many sons"
+  }
+  lines {
+    line_content: "Many sons has father Abraham"
+  }
+  lines {
+    line_content: "I am one of them and so are you"
+  }
+  lines {
+    line_content: "So let\'s go marching on"
+  }
+  lines {
+    line_content: "Left foot\342\200\246 (Repeat)"
+  }
+  lines {
+    line_content: "Right foot"
+  }
+  lines {
+    line_content: "Left arm"
+  }
+  lines {
+    line_content: "Right arm"
+  }
+  lines {
+    line_content: "Nod your head"
+  }
+  lines {
+    line_content: "Turn around"
+  }
+  lines {
+    line_content: "Sit Down!"
+  }
+}
+inline_chords {
+  chord_words {
+    word: "Father"
+    chord: ""
+  }
+  chord_words {
+    word: "[D]Abraham"
+    chord: "D"
+  }
+}
+inline_chords {
+  chord_words {
+    word: "Has"
+    chord: ""
+  }
+  chord_words {
+    word: "many"
+    chord: ""
+  }
+  chord_words {
+    word: "[A7]sons"
+    chord: "A7"
+  }
+}
+inline_chords {
+  chord_words {
+    word: "Many"
+    chord: ""
+  }
+  chord_words {
+    word: "sons"
+    chord: ""
+  }
+  chord_words {
+    word: "has"
+    chord: ""
+  }
+  chord_words {
+    word: "father"
+    chord: ""
+  }
+  chord_words {
+    word: "[D]Abraham"
+    chord: "D"
+  }
+}
+inline_chords {
+  chord_words {
+    word: "I"
+    chord: ""
+  }
+  chord_words {
+    word: "am"
+    chord: ""
+  }
+  chord_words {
+    word: "one"
+    chord: ""
+  }
+  chord_words {
+    word: "of"
+    chord: ""
+  }
+  chord_words {
+    word: "them"
+    chord: ""
+  }
+  chord_words {
+    word: "and"
+    chord: ""
+  }
+  chord_words {
+    word: "so"
+    chord: ""
+  }
+  chord_words {
+    word: "are"
+    chord: ""
+  }
+  chord_words {
+    word: "[G]you"
+    chord: "G"
+  }
+}
+inline_chords {
+  chord_words {
+    word: "So"
+    chord: ""
+  }
+  chord_words {
+    word: "[D]let\'s"
+    chord: "D"
+  }
+  chord_words {
+    word: "go"
+    chord: ""
+  }
+  chord_words {
+    word: "[A7]marching"
+    chord: "A7"
+  }
+  chord_words {
+    word: "[D]on"
+    chord: "D"
+  }
+}
+inline_chords {
+  chord_words {
+    word: " "
+  }
+}
+inline_chords {
+  chord_words {
+    word: "Left"
+  }
+  chord_words {
+    word: "foot\342\200\246"
+  }
+  chord_words {
+    word: "(Repeat)"
+  }
+}
+inline_chords {
+  chord_words {
+    word: "[]Right"
+    chord: ""
+  }
+  chord_words {
+    word: "foot"
+    chord: ""
+  }
+}
+inline_chords {
+  chord_words {
+    word: "[]Left"
+    chord: ""
+  }
+  chord_words {
+    word: "arm"
+    chord: ""
+  }
+}
+inline_chords {
+  chord_words {
+    word: "[]Right"
+    chord: ""
+  }
+  chord_words {
+    word: "arm"
+    chord: ""
+  }
+}
+inline_chords {
+  chord_words {
+    word: "[]Nod"
+    chord: ""
+  }
+  chord_words {
+    word: "your"
+    chord: ""
+  }
+  chord_words {
+    word: "head"
+    chord: ""
+  }
+}
+inline_chords {
+  chord_words {
+    word: "[]Turn"
+    chord: ""
+  }
+  chord_words {
+    word: "around"
+    chord: ""
+  }
+}
+inline_chords {
+  chord_words {
+    word: "[]Sit"
+    chord: ""
+  }
+  chord_words {
+    word: "Down!"
+    chord: ""
+  }
+}
+flattened_lyrics: "Has many [A7]sons So [D]let\'s go [A7]marching [D]on "

@@ -103,4 +103,19 @@ interface H4aPipelineModule {
       add("CS400");
     }};
   }
+
+  /**
+   * Songs that require special one-off attention.
+   */
+  @OneOff
+  @Provides
+  @H4aPipelineScope
+  static List<String> oneOffCases() {
+    return new ArrayList<>() {{
+      // Super special case where BF243 needs to remove CS134 as its parent hymn but keep it as a related song. This is
+      // because, since CS134 exists already, BF243 ends up being merged into it, even though it is the English
+      // translation of CS134 (hence, keeping it as a related song).
+      add("BF243");
+    }};
+  }
 }

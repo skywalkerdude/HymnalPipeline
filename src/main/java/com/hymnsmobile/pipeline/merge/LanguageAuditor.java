@@ -2,6 +2,7 @@ package com.hymnsmobile.pipeline.merge;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import com.google.protobuf.AbstractMessage;
 import com.hymnsmobile.pipeline.merge.dagger.Merge;
 import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
 import com.hymnsmobile.pipeline.models.PipelineError;
@@ -13,6 +14,7 @@ import javax.inject.Inject;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
 import static com.hymnsmobile.pipeline.merge.HymnType.*;
@@ -78,8 +80,8 @@ public class LanguageAuditor extends Auditor {
             .setSource(PipelineError.Source.MERGE)
             .setSeverity(Severity.ERROR)
             .setErrorType(ErrorType.AUDITOR_TOO_MANY_INSTANCES)
-            .addMessages(setToAudit.toString())
             .addMessages(hymnType.toString())
+            .addAllMessages(setToAudit.stream().map(AbstractMessage::toString).collect(Collectors.toSet()))
             .build());
       }
     }

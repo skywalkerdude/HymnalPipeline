@@ -210,6 +210,25 @@ public class Reader {
         }
       }
 
+      if (blockList.isOneOffCase(id)) {
+        // Super special case where BF243 needs to remove CS134 as its parent hymn but keep it as a related song. This
+        // is because, since CS134 exists already, BF243 ends up being merged into it, even though it is the English
+        // translation of CS134 (hence, keeping it as a related song).
+        if (id.equals("BF243")) {
+          if (parentHymn.equals("CS134")
+              && related.contains("CS134")) {
+            hymn.clearParentHymn();
+          } else {
+            errors.add(PipelineError.newBuilder()
+                    .setSource(PipelineError.Source.H4A)
+                    .setSeverity(PipelineError.Severity.WARNING)
+                    .setErrorType(PATCHER_OBSOLETE_BLOCK_LIST_ITEM)
+                    .addMessages("One-off case BF243 is obsolete. Need investigation.")
+                    .build());
+          }
+        }
+      }
+
       ResultSet stanzas = connection.createStatement().executeQuery(
           String.format("SELECT * FROM stanza WHERE parent_hymn='%s' ORDER BY n_order", id));
       if (stanzas == null) {

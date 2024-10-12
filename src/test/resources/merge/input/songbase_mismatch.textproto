@@ -1,0 +1,22 @@
+# proto-file: proto/songbase.proto
+# proto-message: SongbaseHymn
+
+key {
+  hymn_type: "blue_songbook"
+  hymn_number: "1"
+}
+key {
+  hymn_type: "songbase_other"
+  hymn_number: "3"
+}
+title: "Father Abraham"
+language: "english"
+lyrics: "Father [D]Abraham\nHas many [A7]sons\nMany sons has father [D]Abraham\nI am one of them and so are [G]you\nSo [D]let\'s go [A7]marching [D]on\n\n  Left foot\342\200\246 (Repeat)\n  []Right foot\n  []Left arm\n  []Right arm\n  []Nod your head\n  []Turn around\n  []Sit Down!"
+related {
+  hymn_type: "songbase_other"
+  hymn_number: "5"
+}
+related {
+  hymn_type: "blue_songbook"
+  hymn_number: "5"
+}

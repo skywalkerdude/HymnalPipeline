@@ -23,7 +23,13 @@ public enum HymnType {
   FRENCH("hf", Optional.of(215)),
   SPANISH("hs", Optional.of(500)),
   HINOS("pt", Optional.empty()),
-  HEBREW("he", Optional.empty());
+  HEBREW("he", Optional.empty()),
+  INDONESIAN("I", Optional.empty()),
+  KOREAN("K", Optional.empty()),
+  RUSSIAN("ru", Optional.empty()),
+  JAPANESE("ja", Optional.empty()),
+  ARABIC("ar", Optional.empty()),
+  ESTONIAN("et", Optional.empty());
 
   public final String abbreviation;
 

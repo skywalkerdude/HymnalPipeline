@@ -71,8 +71,9 @@ class LanguageAuditorTest {
             .setSource(PipelineError.Source.MERGE)
             .setSeverity(PipelineError.Severity.ERROR)
             .setErrorType(PipelineError.ErrorType.AUDITOR_TOO_MANY_INSTANCES)
-            .addMessages(String.format("[%s, %s]", songReference1, songReference2))
             .addMessages(HymnType.CLASSIC_HYMN.toString())
+            .addMessages(songReference1.toString())
+            .addMessages(songReference2.toString())
             .build());
   }
 
@@ -93,13 +94,14 @@ class LanguageAuditorTest {
     SongReference songReference2 =
         SongReference.newBuilder().setHymnType(HymnType.NEW_SONG.abbreviatedValue).setHymnNumber("2").build();
     target.audit(ImmutableSet.of(ImmutableSet.of(songReference1, songReference2)), Optional.empty());
-    assertThat(errors).containsExactly(
+    assertThat(errors).ignoringRepeatedFieldOrder().containsExactly(
         PipelineError.newBuilder()
             .setSource(PipelineError.Source.MERGE)
             .setSeverity(PipelineError.Severity.ERROR)
             .setErrorType(PipelineError.ErrorType.AUDITOR_TOO_MANY_INSTANCES)
-            .addMessages(String.format("[%s, %s]", songReference1, songReference2))
             .addMessages(HymnType.NEW_SONG.toString())
+            .addMessages(songReference1.toString())
+            .addMessages(songReference2.toString())
             .build());
   }
 
@@ -125,8 +127,9 @@ class LanguageAuditorTest {
             .setSource(PipelineError.Source.MERGE)
             .setSeverity(PipelineError.Severity.ERROR)
             .setErrorType(PipelineError.ErrorType.AUDITOR_TOO_MANY_INSTANCES)
-            .addMessages(String.format("[%s, %s]", songReference1, songReference2))
             .addMessages(HymnType.HOWARD_HIGASHI.toString())
+            .addMessages(songReference1.toString())
+            .addMessages(songReference2.toString())
             .build());
   }
 
@@ -155,13 +158,14 @@ class LanguageAuditorTest {
     target.audit(
         ImmutableSet.of(new LinkedHashSet<>(ImmutableSet.of(songReference1, songReference2, songReference3, songReference4))),
         Optional.of(ImmutableSet.of(ImmutableSet.of(songReference1, songReference2))));
-    assertThat(errors).containsExactly(
+    assertThat(errors).ignoringRepeatedFieldOrder().containsExactly(
         PipelineError.newBuilder()
             .setSource(PipelineError.Source.MERGE)
             .setSeverity(PipelineError.Severity.ERROR)
             .setErrorType(PipelineError.ErrorType.AUDITOR_TOO_MANY_INSTANCES)
-            .addMessages(String.format("[%s, %s]", songReference3, songReference4))
             .addMessages(HymnType.CLASSIC_HYMN.toString())
+            .addMessages(songReference3.toString())
+            .addMessages(songReference4.toString())
             .build());
   }
 

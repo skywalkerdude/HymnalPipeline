@@ -61,6 +61,7 @@ time: "4/4"
 meter: "8.8.8.8."
 hymn_code: "56717653321"
 scriptures: "Revelation 22"
+language: "en"
 music {
   key: "MIDI"
   value: "https://www.hymnal.net/Hymns/Children/midi/c0060.mid"
@@ -114,3 +115,4 @@ relevants {
   hymn_type: "h"
   hymn_number: "10b"
 }
+flattened_lyrics: "I\342\200\231ve got the joy, joy, joy, joy Down in my heart, Down in my heart, Down in my heart, I\342\200\231ve got the joy, joy, joy, joy Down in my heart, Down in my heart to stay. And I\342\200\231m so happy, So very happy; I\342\200\231ve got the love of Jesus in my heart. And I\342\200\231m so happy, So very happy, I\342\200\231ve got the love of Jesus in my heart."

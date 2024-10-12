@@ -56,9 +56,21 @@ public class H4aMerger {
       List<Hymn.Builder> builders) {
     SongReference h4aReference = converter.toSongReference(h4aHymn.getId());
     if (H4A_DUPLICATES.containsKey(h4aReference)) {
-      getHymnFrom(H4A_DUPLICATES.get(h4aReference), builders).orElseThrow()
-          .addReferences(h4aReference)
-          .addProvenance("h4a");
+      Hymn.Builder duplicate =
+          getHymnFrom(H4A_DUPLICATES.get(h4aReference), builders).orElseThrow()
+                                                                 .addProvenance("h4a");
+      HymnLanguage language = converter.getLanguage(h4aReference);
+      if (duplicate.getLanguage().equals(language.iso)) {
+        duplicate.addReferences(h4aReference);
+      } else {
+        errors.add(PipelineError.newBuilder()
+                .setSeverity(Severity.ERROR)
+                .setErrorType(ErrorType.DUPLICATE_LANGUAGE_MISMATCH)
+                .setSource(PipelineError.Source.H4A)
+                .addMessages(duplicate.getReferencesList().toString())
+                .addMessages(h4aReference.toString())
+                .build());
+      }
       return;
     }
 
@@ -128,6 +140,16 @@ public class H4aMerger {
           // Add the BE_FILLED song as another reference, not as a new song since it's more than
           // likely a duplicate in terms of content.
           SongReference parentReference = converter.toSongReference(parentKey);
+          if (converter.getLanguage(parentReference) != HymnLanguage.ENGLISH) {
+            errors.add(PipelineError.newBuilder()
+                    .setSeverity(Severity.ERROR)
+                    .setErrorType(ErrorType.DUPLICATE_LANGUAGE_MISMATCH)
+                    .setSource(PipelineError.Source.H4A)
+                    .addMessages(parentReference.toString())
+                    .addMessages(h4aReference.toString())
+                    .build());
+            break;
+          }
           getHymnFrom(parentReference, builders).orElseThrow().addReferences(h4aReference).addProvenance("h4a");
         } else {
           builders.add(converter.toHymn(h4aHymn).toBuilder());

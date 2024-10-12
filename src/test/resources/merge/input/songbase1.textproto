@@ -6,7 +6,7 @@ key {
   hymn_number: "1"
 }
 key {
-  hymn_type: "songbase_other"
+  hymn_type: "english_hymnal"
   hymn_number: "3"
 }
 title: "Father Abraham"

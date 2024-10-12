@@ -23,8 +23,10 @@ message Hymn {
   map<string, string> pdf_sheet = 16;
   repeated SongReference languages = 21;
   repeated SongReference relevants = 22;
-  optional string inline_chords = 19;
+  repeated ChordLine inline_chords = 19;
   repeated string provenance = 20;
+  string flattened_lyrics = 23; // column with just the text, used for de-duping and recommendations.
+  string language = 24;
   reserved 17, 18;
 }
 
@@ -46,6 +48,15 @@ message Verse {
 message Line {
   string line_content = 1;
   optional string transliteration = 2;
+}
+
+message ChordWord {
+  string word = 1;
+  optional string chord = 2;
+}
+
+message ChordLine {
+  repeated ChordWord chord_words = 1;
 }
 
 message PipelineErrors {
@@ -86,6 +97,10 @@ message PipelineError {
     UNPARSEABLE_HYMN_NUMBER = 9;
     // A language or related song link was found to be nonexistent.
     NONEXISTENT_RELEVANT_LINK = 10;
+    // Inline chords empty
+    INLINE_CHORDS_EMPTY = 11;
+    // Duplicate song detected, but songs aren't the same language.
+    DUPLICATE_LANGUAGE_MISMATCH = 12;
 
     PATCHER_ADD_ERROR = 101;
     PATCHER_REMOVAL_ERROR = 102;

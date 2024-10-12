@@ -71,8 +71,9 @@ class RelevantsAuditorTest {
             .setSource(PipelineError.Source.MERGE)
             .setSeverity(PipelineError.Severity.ERROR)
             .setErrorType(PipelineError.ErrorType.AUDITOR_TOO_MANY_INSTANCES)
-            .addMessages(String.format("[%s, %s]", songReference1, songReference2))
             .addMessages(HymnType.CLASSIC_HYMN.toString())
+            .addMessages(songReference1.toString())
+            .addMessages(songReference2.toString())
             .build());
   }
 

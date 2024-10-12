@@ -23,7 +23,7 @@ import javax.inject.Inject;
 public class DatabaseWriter {
 
   private static final String DATABASE_PATH_FORMAT = "jdbc:sqlite:%s/hymnaldb-v%d.sqlite";
-  public static final int DATABASE_VERSION = 27;
+  public static final int DATABASE_VERSION = 28;
 
   private final Lazy<File> outputDirectory;
   private final ZonedDateTime currentTime;
@@ -74,13 +74,15 @@ public class DatabaseWriter {
               + "`SONG_META_DATA_SVG_SHEET_MUSIC` TEXT, "
               + "`SONG_META_DATA_PDF_SHEET_MUSIC` TEXT, "
               + "`SONG_META_DATA_LANGUAGES` TEXT, "
-              + "`SONG_META_DATA_RELEVANT` TEXT)");
+              + "`SONG_META_DATA_RELEVANT` TEXT,"
+              + "`FLATTENED_LYRICS` TEXT,"
+              + "`LANGUAGE` TEXT)");
       connection.createStatement().execute("CREATE INDEX IF NOT EXISTS `index_SONG_DATA_ID` ON `SONG_DATA` (`ID`)");
 
       // SEARCH_VIRTUAL_SONG_DATA table
       connection.createStatement().execute(
           "CREATE VIRTUAL TABLE IF NOT EXISTS `SEARCH_VIRTUAL_SONG_DATA` "
-              + "USING FTS4(`SONG_TITLE` TEXT, `SONG_LYRICS` TEXT NOT NULL, "
+              + "USING FTS4(`SONG_TITLE` TEXT, `FLATTENED_LYRICS` TEXT NOT NULL, "
               + "tokenize=porter, content=`SONG_DATA`)");
 
       connection.createStatement().execute(
@@ -88,9 +90,9 @@ public class DatabaseWriter {
       connection.createStatement().execute(
           "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_SEARCH_VIRTUAL_SONG_DATA_BEFORE_DELETE BEFORE DELETE ON `SONG_DATA` BEGIN DELETE FROM `SEARCH_VIRTUAL_SONG_DATA` WHERE `docid`=OLD.`rowid`; END");
       connection.createStatement().execute(
-          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_SEARCH_VIRTUAL_SONG_DATA_AFTER_UPDATE AFTER UPDATE ON `SONG_DATA` BEGIN INSERT INTO `SEARCH_VIRTUAL_SONG_DATA`(`docid`, `SONG_TITLE`, `SONG_LYRICS`) VALUES (NEW.`rowid`, NEW.`SONG_TITLE`, NEW.`SONG_LYRICS`); END");
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_SEARCH_VIRTUAL_SONG_DATA_AFTER_UPDATE AFTER UPDATE ON `SONG_DATA` BEGIN INSERT INTO `SEARCH_VIRTUAL_SONG_DATA`(`docid`, `SONG_TITLE`, `FLATTENED_LYRICS`) VALUES (NEW.`rowid`, NEW.`SONG_TITLE`, NEW.`FLATTENED_LYRICS`); END");
       connection.createStatement().execute(
-          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_SEARCH_VIRTUAL_SONG_DATA_AFTER_INSERT AFTER INSERT ON `SONG_DATA` BEGIN INSERT INTO `SEARCH_VIRTUAL_SONG_DATA`(`docid`, `SONG_TITLE`, `SONG_LYRICS`) VALUES (NEW.`rowid`, NEW.`SONG_TITLE`, NEW.`SONG_LYRICS`); END");
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_SEARCH_VIRTUAL_SONG_DATA_AFTER_INSERT AFTER INSERT ON `SONG_DATA` BEGIN INSERT INTO `SEARCH_VIRTUAL_SONG_DATA`(`docid`, `SONG_TITLE`, `FLATTENED_LYRICS`) VALUES (NEW.`rowid`, NEW.`SONG_TITLE`, NEW.`FLATTENED_LYRICS`); END");
 
       // Setup queries
       connection.createStatement().execute(
@@ -125,13 +127,13 @@ public class DatabaseWriter {
             + "SONG_META_DATA_KEY, SONG_META_DATA_TIME, SONG_META_DATA_METER, "
             + "SONG_META_DATA_SCRIPTURES, SONG_META_DATA_HYMN_CODE, SONG_META_DATA_MUSIC, "
             + "SONG_META_DATA_SVG_SHEET_MUSIC, SONG_META_DATA_PDF_SHEET_MUSIC, "
-            + "SONG_META_DATA_LANGUAGES, SONG_META_DATA_RELEVANT)"
-            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            + "SONG_META_DATA_LANGUAGES, SONG_META_DATA_RELEVANT, FLATTENED_LYRICS, LANGUAGE)"
+            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
         Statement.RETURN_GENERATED_KEYS);
     insertStatement.setInt(1, hymn.getId());
     insertStatement.setString(2, stripHymnColon(hymn.getTitle()));
     insertStatement.setString(3, toJson(hymn.getLyricsList()));
-    insertStatement.setString(4, hymn.getInlineChords());
+    insertStatement.setString(4, toJson(hymn.getInlineChordsList()));
     insertStatement.setString(5, join(hymn.getCategoryList()));
     insertStatement.setString(6, join(hymn.getSubCategoryList()));
     insertStatement.setString(7, join(hymn.getAuthorList()));
@@ -146,7 +148,8 @@ public class DatabaseWriter {
     insertStatement.setString(16, strMapToJson(hymn.getPdfSheetMap()));
     insertStatement.setString(17, toJson(hymn.getLanguagesList()));
     insertStatement.setString(18, toJson(hymn.getRelevantsList()));
-    insertStatement.execute();
+    insertStatement.setString(19, hymn.getFlattenedLyrics());
+    insertStatement.setString(20, hymn.getLanguage());
 
     try (ResultSet generatedKeys = insertStatement.getGeneratedKeys()) {
       if (!generatedKeys.next()) {

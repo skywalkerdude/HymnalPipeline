@@ -1,8 +1,5 @@
 package com.hymnsmobile.pipeline.merge;
 
-import static com.google.common.collect.ImmutableList.toImmutableList;
-import static com.hymnsmobile.pipeline.merge.HymnType.*;
-
 import com.google.common.annotations.VisibleForTesting;
 import com.google.protobuf.Descriptors.Descriptor;
 import com.google.protobuf.Descriptors.FieldDescriptor;
@@ -16,24 +13,33 @@ import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetKey;
 import com.hymnsmobile.pipeline.liederbuch.models.LiederbuchKey;
 import com.hymnsmobile.pipeline.merge.dagger.Merge;
 import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
-import com.hymnsmobile.pipeline.models.Hymn;
-import com.hymnsmobile.pipeline.models.Line;
-import com.hymnsmobile.pipeline.models.PipelineError;
+import com.hymnsmobile.pipeline.models.*;
 import com.hymnsmobile.pipeline.models.PipelineError.ErrorType;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
-import com.hymnsmobile.pipeline.models.SongReference;
-import com.hymnsmobile.pipeline.models.Verse;
 import com.hymnsmobile.pipeline.russian.RussianHymn;
 import com.hymnsmobile.pipeline.songbase.models.SongbaseHymn;
 import com.hymnsmobile.pipeline.songbase.models.SongbaseKey;
 import com.hymnsmobile.pipeline.utils.TextUtil;
-import java.util.Optional;
-import java.util.Set;
-import java.util.logging.Logger;
+
 import javax.inject.Inject;
+import java.util.*;
+import java.util.function.Function;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+import static com.google.common.collect.ImmutableList.toImmutableList;
+import static com.hymnsmobile.pipeline.merge.HymnType.*;
 
 @MergeScope
 public class Converter {
+
+  public static final String CHORDS_PATTERN = "\\[(.*?)]";
+
+  // Separates chord line out into words.
+  // Note: ?: represents a non-matching group. i.e. the regex matches, but the range isn't extracted.
+  private static final String SEPARATOR_PATTERN = "(\\S*(?:\\[.*?])\\S*|\\S+)";
 
   @VisibleForTesting static int nextHymnId = 1;
 
@@ -53,10 +59,16 @@ public class Converter {
     Optional<String> queryParamsOptional =
         key.hasQueryParams() ? Optional.of(key.getQueryParams()) : Optional.empty();
 
-    // Songs that end with "c" are actually Chinese songs, so we change their type to being Chinese
-    if (hymnNumber.matches("\\d+c")) {
-      hymnNumber = hymnType.abbreviation + hymnNumber;
-      hymnType = com.hymnsmobile.pipeline.hymnalnet.HymnType.CHINESE;
+    // Songs that end with a letter (except 'a' and 'b') are usually in a different language, so we need to change their
+    // types. 'a' and 'b' usually denotes alternate tunes, which are still in the same language (usually English).
+    if (hymnNumber.matches("\\d+\\D+") &&
+        !hymnNumber.matches("\\d+a") &&
+        !hymnNumber.matches("\\d+b")) {
+      Optional<com.hymnsmobile.pipeline.hymnalnet.HymnType> inferredType = inferHymnTypeFromNumber(hymnNumber);
+      if (inferredType.isPresent()) {
+        hymnNumber = hymnType.abbreviation + hymnNumber;
+        hymnType = inferredType.get();
+      }
     }
 
     SongReference.Builder builder = SongReference.newBuilder().setHymnNumber(hymnNumber);
@@ -78,6 +90,107 @@ public class Converter {
         .build();
   }
 
+  private Optional<com.hymnsmobile.pipeline.hymnalnet.HymnType> inferHymnTypeFromNumber(String hymnNumber) {
+    // Songs that end with "ar" are actually Arabic songs.
+    // Example: https://www.hymnal.net/en/hymn/ns/381ar
+    if (hymnNumber.matches("\\d+ar")) {
+      return Optional.of(com.hymnsmobile.pipeline.hymnalnet.HymnType.ARABIC);
+    }
+
+    // Songs that end with "cb" are actually Cebuano songs.
+    // Example: https://www.hymnal.net/en/hymn/ns/381cb
+    if (hymnNumber.matches("\\d+cb")) {
+      return Optional.of(com.hymnsmobile.pipeline.hymnalnet.HymnType.CEBUANO);
+    }
+
+    // Songs that end with "es" are actually Estonian songs.
+    // Example: https://www.hymnal.net/en/hymn/ns/381es
+    if (hymnNumber.matches("\\d+es")) {
+      return Optional.of(com.hymnsmobile.pipeline.hymnalnet.HymnType.ESTONIAN);
+    }
+
+    // Songs that end with "f" are actually French songs.
+    // Example: https://www.hymnal.net/en/hymn/ns/381f
+    if (hymnNumber.matches("\\d+f")) {
+      return Optional.of(com.hymnsmobile.pipeline.hymnalnet.HymnType.FRENCH);
+    }
+
+    // Songs that end with "p" are actually Portuguese songs.
+    // Example: https://www.hymnal.net/en/hymn/ns/381p
+    if (hymnNumber.matches("\\d+p")) {
+      return Optional.of(com.hymnsmobile.pipeline.hymnalnet.HymnType.HINOS);
+    }
+
+    // Songs that end with "htc" are actually Tagalog songs.
+    // Example: https://www.hymnal.net/en/hymn/ns/381tc
+    if (hymnNumber.matches("\\d+tc")) {
+      return Optional.of(com.hymnsmobile.pipeline.hymnalnet.HymnType.TAGALOG);
+    }
+
+    // Songs that end with "t" are actually Tagalog songs.
+    // Example: https://www.hymnal.net/en/hymn/ns/617t
+    if (hymnNumber.matches("\\d+t")) {
+      return Optional.of(com.hymnsmobile.pipeline.hymnalnet.HymnType.TAGALOG);
+    }
+
+    // Songs that end with "c" are actually Chinese songs.
+    // Example: https://www.hymnal.net/en/hymn/ns/746c
+    if (hymnNumber.matches("\\d+c")) {
+      return Optional.of(com.hymnsmobile.pipeline.hymnalnet.HymnType.CHINESE);
+    }
+
+    // Songs that end with "j" are actually Japanese songs.
+    // Example: https://www.hymnal.net/en/hymn/ns/506j
+    if (hymnNumber.matches("\\d+j")) {
+      return Optional.of(com.hymnsmobile.pipeline.hymnalnet.HymnType.JAPANESE);
+    }
+
+    // Songs that end with "k" are actually Korean songs.
+    // Example: https://www.hymnal.net/en/hymn/ns/506k
+    if (hymnNumber.matches("\\d+k")) {
+      return Optional.of(com.hymnsmobile.pipeline.hymnalnet.HymnType.KOREAN);
+    }
+
+    // Songs that end with "r" are actually Russian songs.
+    // Example: https://www.hymnal.net/en/hymn/ns/506r
+    if (hymnNumber.matches("\\d+r")) {
+      return Optional.of(com.hymnsmobile.pipeline.hymnalnet.HymnType.RUSSIAN);
+    }
+
+    // Songs that end with "s" are actually Spanish songs.
+    // Example: https://www.hymnal.net/en/hymn/ns/617s
+    if (hymnNumber.matches("\\d+s")) {
+      return Optional.of(com.hymnsmobile.pipeline.hymnalnet.HymnType.SPANISH);
+    }
+
+    // Songs that end with "ht" are actually Tagalog songs.
+    // Example: https://www.hymnal.net/en/hymn/ns/151ht
+    if (hymnNumber.matches("\\d+ht")) {
+      return Optional.of(com.hymnsmobile.pipeline.hymnalnet.HymnType.TAGALOG);
+    }
+
+    // Songs that end with "de" are actually German songs.
+    // Example: https://www.hymnal.net/en/hymn/ns/151de
+    if (hymnNumber.matches("\\d+de")) {
+      return Optional.of(com.hymnsmobile.pipeline.hymnalnet.HymnType.GERMAN);
+    }
+
+    // Songs that end with "i" are actually Indonesian songs.
+    // Example: https://www.hymnal.net/en/hymn/ns/6i
+    if (hymnNumber.matches("\\d+i")) {
+      return Optional.of(com.hymnsmobile.pipeline.hymnalnet.HymnType.INDONESIAN);
+    }
+
+    errors.add(
+        PipelineError.newBuilder()
+            .setSeverity(Severity.WARNING)
+            .setErrorType(ErrorType.UNRECOGNIZED_HYMN_TYPE)
+            .setSource(PipelineError.Source.HYMNAL_NET)
+            .addMessages(hymnNumber)
+            .build());
+    return Optional.empty();
+  }
+
   public SongReference toSongReference(H4aKey key) {
     SongReference.Builder reference = SongReference.newBuilder();
 
@@ -85,14 +198,10 @@ public class Converter {
         key.getType()).orElseThrow();
     String number = key.getNumber();
 
-    if (isGermanHymn(type)) {
+    if (type == com.hymnsmobile.pipeline.h4a.HymnType.GERMAN) {
       return reference.setHymnType(LIEDERBUCH.abbreviatedValue).setHymnNumber(number).build();
     }
     return reference.setHymnType(HymnType.valueOf(type.name()).abbreviatedValue).setHymnNumber(number).build();
-  }
-
-  private boolean isGermanHymn(com.hymnsmobile.pipeline.h4a.HymnType type) {
-    return type == com.hymnsmobile.pipeline.h4a.HymnType.GERMAN;
   }
 
   public SongReference toSongReference(LiederbuchKey key) {
@@ -131,6 +240,10 @@ public class Converter {
     return reference.setHymnType(hymnType.abbreviatedValue).build();
   }
 
+  public HymnLanguage getLanguage(SongReference songReference) {
+    return fromString(songReference.getHymnType()).language;
+  }
+
   /**
    * Converts a {@link HymnalNetJson} to a {@link Hymn}.
    */
@@ -141,6 +254,7 @@ public class Converter {
         .setId(nextHymnId++)
         .addReferences(toSongReference(hymn.getKey()))
         .setTitle(hymn.getTitle())
+        .setLanguage(getLanguage(toSongReference(key)).iso)
         .addProvenance("hymnal.net");
 
     hymn.getLyricsList().forEach(verse -> builder.addLyrics(toVerse(key, verse)));
@@ -202,6 +316,8 @@ public class Converter {
             .forEach(value -> builder.addRepeatedField(field, value));
       }
     });
+
+    builder.setFlattenedLyrics(flattenLyrics(builder.getLyricsList()));
     LOGGER.fine(String.format("%s successfully converted", key));
     return builder.build();
   }
@@ -245,6 +361,7 @@ public class Converter {
         .addReferences(toSongReference(hymn.getId()))
         .setTitle(hymn.getFirstStanzaLine())
         .addAllLyrics(hymn.getVersesList())
+        .setLanguage(getLanguage(toSongReference(hymn.getId())).iso)
         .addProvenance("h4a");
 
     if (hymn.hasMainCategory() && !TextUtil.isEmpty(hymn.getMainCategory())) {
@@ -292,6 +409,7 @@ public class Converter {
         builder.addLanguages(parentReference);
       }
     }
+    builder.setFlattenedLyrics(flattenLyrics(builder.getLyricsList()));
     return builder.build();
   }
 
@@ -299,23 +417,26 @@ public class Converter {
    * Converts a {@link HymnalNetJson} to a {@link Hymn}.
    */
   public Hymn toHymn(RussianHymn hymn) {
-    Hymn.Builder builder = Hymn.newBuilder()
-                               .setId(nextHymnId++)
-                               .addAllLyrics(hymn.getLyricsList())
-                               .addReferences(SongReference.newBuilder()
-                                                           .setHymnType(RUSSIAN.abbreviatedValue)
-                                                           .setHymnNumber(String.valueOf(hymn.getNumber())))
-                               .setTitle(hymn.getTitle())
-                               .addCategory(hymn.getCategory())
-                               .addSubCategory(hymn.getSubCategory())
-                               .addMeter(hymn.getMeter())
-                               .addLanguages(hymn.getParent())
-                               .addProvenance("russian");
+    Hymn.Builder builder
+        = Hymn.newBuilder()
+              .setId(nextHymnId++)
+              .setLanguage(HymnLanguage.RUSSIAN.iso)
+              .addAllLyrics(hymn.getLyricsList())
+              .addReferences(SongReference.newBuilder()
+                                          .setHymnType(RUSSIAN.abbreviatedValue)
+                                          .setHymnNumber(String.valueOf(hymn.getNumber())))
+              .setTitle(hymn.getTitle())
+              .addCategory(hymn.getCategory())
+              .addSubCategory(hymn.getSubCategory())
+              .addMeter(hymn.getMeter())
+              .addLanguages(hymn.getParent())
+              .addProvenance("russian");
+    builder.setFlattenedLyrics(flattenLyrics(builder.getLyricsList()));
     return builder.build();
   }
 
   public Hymn toHymn(SongbaseHymn hymn) {
-    return Hymn.newBuilder()
+    Hymn.Builder builder = Hymn.newBuilder()
         .setId(nextHymnId++)
         .addAllReferences(
             hymn.getKeyList().stream().map(this::toSongReference).collect(toImmutableList()))
@@ -331,6 +452,102 @@ public class Converter {
                     .map(line -> Line.newBuilder().setLineContent(line))
                     .map(Line.Builder::build)
                     .collect(toImmutableList())))
-        .setInlineChords(hymn.getLyrics()).build();
+        .addAllInlineChords(createInlineChords(hymn.getLyrics()));
+
+    // Check to see if there are mismatched languages
+    Set<HymnLanguage> languages =
+        builder.getReferencesList().stream().map(this::getLanguage).collect(Collectors.toSet());
+    if (languages.size() != 1) {
+      errors.add(PipelineError.newBuilder()
+              .setSeverity(Severity.ERROR)
+              .setErrorType(ErrorType.DUPLICATE_LANGUAGE_MISMATCH)
+              .setSource(PipelineError.Source.SONGBASE)
+              .addMessages(builder.getReferencesList().toString())
+              .build());
+    }
+
+    builder.setFlattenedLyrics(flattenInlineChords(builder.getInlineChordsList()));
+    return builder.build();
+  }
+
+  private List<ChordLine> createInlineChords(String lyrics) {
+    if (TextUtil.isEmpty(lyrics)) {
+      errors.add(
+          PipelineError
+              .newBuilder()
+              .setSeverity(PipelineError.Severity.ERROR)
+              .setErrorType(PipelineError.ErrorType.INLINE_CHORDS_EMPTY)
+              .setSource(PipelineError.Source.SONGBASE)
+              .build());
+      return new ArrayList<>();
+    }
+    return Arrays.stream(lyrics.split("\\n")).map(line -> {
+      if (line.isEmpty()) {
+        return Collections.singletonList(" ");
+      }
+
+      List<String> words = new ArrayList<>();
+      Pattern p = Pattern.compile(SEPARATOR_PATTERN);
+      Matcher m = p.matcher(line);
+      while (m.find()) {
+        words.add(m.group());
+      }
+      return words;
+    }).map(line -> {
+      Pattern p = Pattern.compile(CHORDS_PATTERN);
+      boolean lineContainsChords = line.stream()
+                                       .map(chordWord -> p.matcher(chordWord).find())
+                                       .reduce(false, (bool1, bool2) -> bool1 || bool2);
+      List<ChordWord> chordWords = line.stream().map(chordWord -> {
+        if (!lineContainsChords) {
+          return ChordWord.newBuilder().setWord(chordWord).build();
+        }
+        String word = chordWord;
+        StringBuilder chordBuilder = new StringBuilder();
+        Matcher m = p.matcher(word);
+        while (m.find()) {
+          String chord = m.group(1);
+          int index = m.start();
+          while (chordBuilder.length() < index) {
+            chordBuilder.append(" ");
+          }
+          chordBuilder.append(chord);
+          word = word.replaceFirst(CHORDS_PATTERN, "");
+          m = p.matcher(word);
+        }
+        return ChordWord.newBuilder().setWord(chordWord).setChord(chordBuilder.toString()).build();
+      }).collect(Collectors.toList());
+      return ChordLine.newBuilder().addAllChordWords(chordWords).build();
+    }).collect(Collectors.toList());
+  }
+
+  private String flattenLyrics(List<Verse> lyrics) {
+    return lyrics.stream()
+                 .map(verse -> verse.getLinesList().stream()
+                                    .map(line -> line.getLineContent().trim())
+                                    .collect(Collectors.joining(" "))
+                                    .trim())
+                 .collect(Collectors.joining(" "));
+  }
+
+  private String flattenInlineChords(List<ChordLine> inlineChords) {
+    return inlineChords.stream()
+        .map((Function<ChordLine, Optional<String>>) chordLine -> {
+          String line = chordLine.getChordWordsList().stream()
+                                 .map(chordWord -> chordWord.getWord().trim())
+                                 .collect(Collectors.joining(" "))
+                                 .trim();
+          if (line.matches("\\D+")) {
+            return Optional.empty();
+          }
+
+          if (line.contains("Chorus")) {
+            return Optional.empty();
+          }
+          return Optional.of(line);
+        })
+        .filter(Optional::isPresent)
+        .map(Optional::get)
+        .collect(Collectors.joining(" "));
   }
 }

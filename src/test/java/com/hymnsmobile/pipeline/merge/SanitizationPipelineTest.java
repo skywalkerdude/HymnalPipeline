@@ -262,7 +262,8 @@ class SanitizationPipelineTest {
             .setSeverity(PipelineError.Severity.ERROR)
             .setErrorType(PipelineError.ErrorType.AUDITOR_TOO_MANY_INSTANCES)
             .addMessages("CLASSIC_HYMN")
-            .addMessages("[hymn_type: \"h\"\nhymn_number: \"1\"\n, hymn_type: \"h\"\nhymn_number: \"2\"\n]")
+            .addMessages("hymn_type: \"h\"\nhymn_number: \"1\"\n")
+            .addMessages("hymn_type: \"h\"\nhymn_number: \"2\"\n")
             .build());
   }
 

@@ -2,6 +2,7 @@ package com.hymnsmobile.pipeline.h4a;
 
 import com.hymnsmobile.pipeline.h4a.dagger.MiscBlockList;
 import com.hymnsmobile.pipeline.h4a.dagger.NonExistentRelatedSongs;
+import com.hymnsmobile.pipeline.h4a.dagger.OneOff;
 import com.hymnsmobile.pipeline.h4a.models.H4aKey;
 
 import javax.inject.Inject;
@@ -21,14 +22,17 @@ public class BlockList {
   private final Converter converter;
   private final List<String> miscBlockList;
   private final List<String> nonExistentRelatedSongs;
+  private final List<String> oneOffCases;
 
   @Inject
   public BlockList(Converter converter,
                    @MiscBlockList List<String> miscBlockList,
-                   @NonExistentRelatedSongs List<String> nonExistentRelatedSongs) {
+                   @NonExistentRelatedSongs List<String> nonExistentRelatedSongs,
+                   @OneOff List<String> oneOffCases) {
     this.converter = converter;
     this.miscBlockList = miscBlockList;
     this.nonExistentRelatedSongs = nonExistentRelatedSongs;
+    this.oneOffCases = oneOffCases;
   }
 
   public BlockStatus blockStatus(String id) {
@@ -75,10 +79,15 @@ public class BlockList {
     return BlockStatus.OK;
   }
 
+  public boolean isOneOffCase(String id) {
+    return oneOffCases.remove(id);
+  }
+
   public List<String> items() {
     return new ArrayList<>() {{
       addAll(nonExistentRelatedSongs);
       addAll(miscBlockList);
+      addAll(oneOffCases);
     }};
   }
 }

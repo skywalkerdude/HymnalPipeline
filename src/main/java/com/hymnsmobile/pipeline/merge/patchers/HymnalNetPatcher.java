@@ -84,13 +84,13 @@ public class HymnalNetPatcher extends Patcher {
     fix_pt1297();
     fix_ht1358();
     fix_h6864();
-    fix_ns54de();
-    fix_ns381p_ns381tc_ns381cb();
-    fix_ns506p_ns506r();
-    fix_ns180de();
-    fix_ns617t();
-    fix_ns151de();
-    fix_ns151ht();
+    fix_dens54de();
+    fix_ptns381p_htns381tc_cbns381cb();
+    fix_ptns506p_Rns506r();
+    fix_dens180de();
+    fix_htns617t();
+    fix_dens151de();
+    fix_htns151ht();
     fix_h984_h8204_cb984_pt984_ht984_ch204();
     fix_h254_h8211_ht254_pt254_ch211();
 
@@ -473,11 +473,11 @@ public class HymnalNetPatcher extends Patcher {
   }
 
   /**
-   * hf/881 incorrectly maps to ns/180, hd/6011, ns/180de, and ts/1004 when it should map to h/881 and its
+   * hf/881 incorrectly maps to ns/180, hd/6011, de/ns180de, and ts/1004 when it should map to h/881 and its
    * related songs. h/881 and its related songs all already have the correct mappings.
    */
   void fix_hf881() {
-    removeLanguages("hf/881", "ns/180", "hd/6011", "ns/180de", "ts/1004");
+    removeLanguages("hf/881", "ns/180", "hd/6011", "de/ns180de", "ts/1004");
     addLanguages("hf/881", "h/881");
   }
 
@@ -626,60 +626,60 @@ public class HymnalNetPatcher extends Patcher {
   }
 
   /**
-   * ns/54de references itself when it should be referencing ns/54.
+   * de/ns54de references itself when it should be referencing ns/54.
    */
-  void fix_ns54de() {
-    removeLanguages("ns/54de", "ns/54de");
-    addLanguages("ns/54de", "ns/54");
+  void fix_dens54de() {
+    removeLanguages("de/ns54de", "de/ns54de");
+    addLanguages("de/ns54de", "ns/54");
   }
 
   /**
-   * ns/381 has a bunch of exotic language translations (Arabic-ns/381ar, Estonian-ns/381es, etc.).
+   * ns/381 has a bunch of exotic language translations (Arabic-ar/ns381ar, Estonian-et/nt381es, etc.).
    * However, a lot of them have self-references. Apart from the self-references, the language
    * mappings should be correct.
    */
-  void fix_ns381p_ns381tc_ns381cb() {
-    removeLanguages("ns/381p", "ns/381p");
-    removeLanguages("ns/381tc", "ns/381tc");
-    removeLanguages("ns/381cb", "ns/381cb");
+  void fix_ptns381p_htns381tc_cbns381cb() {
+    removeLanguages("pt/ns381p", "pt/ns381p");
+    removeLanguages("ht/ns381tc", "ht/ns381tc");
+    removeLanguages("cb/ns381cb", "cb/ns381cb");
   }
 
   /**
-   * ns/506 has a bunch of exotic language translations (Korean-ns/506k, Russian-ns/506r, etc.).
+   * ns/506 has a bunch of exotic language translations (Korean-k/ns506k, Russian-R/ns506r, etc.).
    * However, a lot of them have self-references. Apart from the self-references, the language
    * mappings should be correct.
    */
-  void fix_ns506p_ns506r() {
-    removeLanguages("ns/506p", "ns/506p");
-    removeLanguages("ns/506r", "ns/506r");
+  void fix_ptns506p_Rns506r() {
+    removeLanguages("pt/ns506p", "pt/ns506p");
+    removeLanguages("R/ns506r", "R/ns506r");
   }
 
   /**
-   * ns/180de has an unnecessary self-reference.
+   * de/ns180de has an unnecessary self-reference.
    */
-  void fix_ns180de() {
-    removeLanguages("ns/180de", "ns/180de");
+  void fix_dens180de() {
+    removeLanguages("de/ns180de", "de/ns180de");
   }
 
   /**
-   * ns/617t has an unnecessary self-reference.
+   * ht/ns617t has an unnecessary self-reference.
    */
-  void fix_ns617t() {
-    removeLanguages("ns/617t", "ns/617t");
+  void fix_htns617t() {
+    removeLanguages("ht/ns617t", "ht/ns617t");
   }
 
   /**
-   * ns/151de has an unnecessary self-reference.
+   * de/ns151de has an unnecessary self-reference.
    */
-  void fix_ns151de() {
-    removeLanguages("ns/151de", "ns/151de");
+  void fix_dens151de() {
+    removeLanguages("de/ns151de", "de/ns151de");
   }
 
   /**
-   * ns/151ht has an unnecessary self-reference.
+   * ht/ns151ht has an unnecessary self-reference.
    */
-  void fix_ns151ht() {
-    removeLanguages("ns/151ht", "ns/151ht");
+  void fix_htns151ht() {
+    removeLanguages("ht/ns151ht", "ht/ns151ht");
   }
 
   /**

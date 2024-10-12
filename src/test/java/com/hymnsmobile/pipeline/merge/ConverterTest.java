@@ -44,10 +44,30 @@ class ConverterTest {
   }
 
   @Test
+  public void toSongReference__fromHymnalNetKey_songNumberEndsWithA__keepsHymnTypeAndNumber() {
+    assertThat(target.toSongReference(HymnalNetKey.newBuilder().setHymnType("h").setHymnNumber("12a").build()))
+        .isEqualTo(SongReference.newBuilder().setHymnType("h").setHymnNumber("12a").build());
+    assertThat(errors).isEmpty();
+  }
+
+  @Test
   public void toSongReference__fromHymnalNetKey_songNumberEndsWithC__correctlyConvertsToChineseSong() {
     assertThat(target.toSongReference(HymnalNetKey.newBuilder().setHymnType("h").setHymnNumber("12c").build()))
         .isEqualTo(SongReference.newBuilder().setHymnType("ch").setHymnNumber("h12c").build());
     assertThat(errors).isEmpty();
+  }
+
+  @Test
+  public void toSongReference__fromHymnalNetKey_songNumberEndsWithUnrecognized__addsError() {
+    assertThat(target.toSongReference(HymnalNetKey.newBuilder().setHymnType("h").setHymnNumber("12abc").build()))
+        .isEqualTo(SongReference.newBuilder().setHymnType("h").setHymnNumber("12abc").build());
+    assertThat(errors).containsExactly(
+        PipelineError.newBuilder()
+            .setSource(PipelineError.Source.HYMNAL_NET)
+            .setSeverity(PipelineError.Severity.WARNING)
+            .setErrorType(PipelineError.ErrorType.UNRECOGNIZED_HYMN_TYPE)
+            .addMessages("12abc")
+            .build());
   }
 
   @Test
@@ -321,5 +341,27 @@ class ConverterTest {
             Hymn.newBuilder());
     assertThat(actual).isEqualTo(expected);
     assertThat(errors).isEmpty();
+  }
+
+  @Test
+  public void toHymn__fromSongbase__mismatchedReferenceLanguages__addsError() throws IOException {
+    SongbaseHymn input =
+        TestUtils.readTextProto(
+            "src/test/resources/merge/input/songbase_mismatch.textproto",
+            SongbaseHymn.newBuilder());
+    Hymn actual = target.toHymn(input);
+
+    Hymn expected =
+        TestUtils.readTextProto(
+            "src/test/resources/merge/output/sb_mismatch.textproto",
+            Hymn.newBuilder());
+    assertThat(actual).isEqualTo(expected);
+    assertThat(errors).containsExactly(
+        PipelineError.newBuilder()
+            .setSeverity(PipelineError.Severity.ERROR)
+            .setErrorType(PipelineError.ErrorType.DUPLICATE_LANGUAGE_MISMATCH)
+            .setSource(PipelineError.Source.SONGBASE)
+            .addMessages("[hymn_type: \"sb\"\nhymn_number: \"1\"\n, hymn_type: \"sbx\"\nhymn_number: \"3\"\n]")
+            .build());
   }
 }

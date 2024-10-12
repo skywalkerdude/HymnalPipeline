@@ -22,6 +22,11 @@ public interface H4aPipelineTestModule {
    */
   List<String> overrideNonExistentRelatedSongs = new ArrayList<>();
 
+  /**
+   * Override the oneOffCases in tests.
+   */
+  List<String> overrideOneOffCases = new ArrayList<>();
+
   @Provides
   @H4aPipelineScope
   static Set<H4aHymn> h4aHymns() {
@@ -60,5 +65,18 @@ public interface H4aPipelineTestModule {
       return overrideNonExistentRelatedSongs;
     }
     return H4aPipelineModule.nonExistentRelatedSongs();
+  }
+
+  /**
+   * Songs that require special one-off attention.
+   */
+  @OneOff
+  @Provides
+  @H4aPipelineScope
+  static List<String> oneOffCases() {
+    if (!overrideOneOffCases.isEmpty()) {
+      return overrideOneOffCases;
+    }
+    return H4aPipelineModule.oneOffCases();
   }
 }
