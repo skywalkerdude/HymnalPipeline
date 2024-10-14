@@ -7,7 +7,7 @@ references {
   hymn_number: "1"
 }
 title: "Hymn: 但願榮耀歸於聖父"
-language: "zh_HANT"
+language: CHINESE_TRADITIONAL
 lyrics {
   verse_type: "verse"
   lines {

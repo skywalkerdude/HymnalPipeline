@@ -7,7 +7,7 @@ references {
   hymn_number: "1"
 }
 title: "Glory be to God the Father"
-language: "en"
+language: ENGLISH
 lyrics {
   verse_type: "verse"
   lines {
@@ -49,4 +49,4 @@ languages {
   hymn_type: "h"
   hymn_number: "2"
 }
-flattened_lyrics: "Glory be to God the Father, And to Christ the Son, Glory to the Holy Spirit\342\200\224 Ever One."
+flattened_lyrics: "glory be to god the father and to christ the son glory to the holy spirit\342\200\224 ever one"

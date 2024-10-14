@@ -17,7 +17,7 @@ inline_chords {
     chord: ""
   }
   chord_words {
-    word: "[D]Abraham"
+    word: "Abraham"
     chord: "D"
   }
 }
@@ -31,7 +31,7 @@ inline_chords {
     chord: ""
   }
   chord_words {
-    word: "[A7]sons"
+    word: "sons"
     chord: "A7"
   }
 }
@@ -53,7 +53,7 @@ inline_chords {
     chord: ""
   }
   chord_words {
-    word: "[D]Abraham"
+    word: "Abraham"
     chord: "D"
   }
 }
@@ -91,7 +91,7 @@ inline_chords {
     chord: ""
   }
   chord_words {
-    word: "[G]you"
+    word: "you"
     chord: "G"
   }
 }
@@ -101,7 +101,7 @@ inline_chords {
     chord: ""
   }
   chord_words {
-    word: "[D]let\'s"
+    word: "let\'s"
     chord: "D"
   }
   chord_words {
@@ -109,11 +109,11 @@ inline_chords {
     chord: ""
   }
   chord_words {
-    word: "[A7]marching"
+    word: "marching"
     chord: "A7"
   }
   chord_words {
-    word: "[D]on"
+    word: "on"
     chord: "D"
   }
 }
@@ -135,7 +135,7 @@ inline_chords {
 }
 inline_chords {
   chord_words {
-    word: "[]Right"
+    word: "Right"
     chord: ""
   }
   chord_words {
@@ -145,7 +145,7 @@ inline_chords {
 }
 inline_chords {
   chord_words {
-    word: "[]Left"
+    word: "Left"
     chord: ""
   }
   chord_words {
@@ -155,7 +155,7 @@ inline_chords {
 }
 inline_chords {
   chord_words {
-    word: "[]Right"
+    word: "Right"
     chord: ""
   }
   chord_words {
@@ -165,7 +165,7 @@ inline_chords {
 }
 inline_chords {
   chord_words {
-    word: "[]Nod"
+    word: "Nod"
     chord: ""
   }
   chord_words {
@@ -179,7 +179,7 @@ inline_chords {
 }
 inline_chords {
   chord_words {
-    word: "[]Turn"
+    word: "Turn"
     chord: ""
   }
   chord_words {
@@ -189,7 +189,7 @@ inline_chords {
 }
 inline_chords {
   chord_words {
-    word: "[]Sit"
+    word: "Sit"
     chord: ""
   }
   chord_words {
@@ -197,4 +197,4 @@ inline_chords {
     chord: ""
   }
 }
-flattened_lyrics: "Has many [A7]sons So [D]let\'s go [A7]marching [D]on "
+flattened_lyrics: "father abraham has many sons many sons has father abraham i am one of them and so are you so let\'s go marching on  left foot\342\200\246 (repeat) right foot left arm right arm nod your head turn around sit down!"

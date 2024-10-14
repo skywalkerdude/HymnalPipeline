@@ -7,7 +7,7 @@ references {
   hymn_number: "2"
 }
 title: "Glory be to God the Father"
-language: "ru"
+language: RUSSIAN
 lyrics {
   verse_type: "verse"
   lines {
@@ -31,4 +31,4 @@ languages {
   hymn_type: "h"
   hymn_number: "1"
 }
-flattened_lyrics: "Glory, glory, glory, praise and adoration! Hear the anthems swelling out thro\342\200\231 all eternity! Father, Son, and Spirit\342\200\224God in revelation\342\200\224 Prostrate each soul before the Deity!"
+flattened_lyrics: "glory glory glory praise and adoration hear the anthems swelling out thro\342\200\231 all eternity father son and spirit\342\200\224god in revelation\342\200\224 prostrate each soul before the deity"
