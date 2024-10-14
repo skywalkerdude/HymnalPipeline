@@ -26,7 +26,7 @@ message Hymn {
   repeated ChordLine inline_chords = 19;
   repeated string provenance = 20;
   string flattened_lyrics = 23; // column with just the text, used for de-duping and recommendations.
-  string language = 24;
+  Language language = 24;
   reserved 17, 18;
 }
 
@@ -62,6 +62,29 @@ message ChordLine {
 message PipelineErrors {
   int32 count = 1;
   repeated PipelineError errors = 2;
+}
+
+enum Language {
+  UNKNOWN = 0;
+  ENGLISH = 1;
+  DUTCH = 2;
+  GERMAN = 3;
+  CHINESE_TRADITIONAL = 4;
+  CHINESE_SIMPLIFIED = 5;
+  CEBUANO = 6;
+  TAGALOG = 7;
+  FRENCH = 8;
+  SPANISH = 9;
+  KOREAN = 10;
+  JAPANESE = 11;
+  FARSI = 12;
+  RUSSIAN = 13;
+  PORTUGUESE = 14;
+  HEBREW = 15;
+  SLOVAK = 16;
+  ESTONIAN = 17;
+  ARABIC = 18;
+  INDONESIAN = 19;
 }
 
 // An error encountered during processing of the pipeline.

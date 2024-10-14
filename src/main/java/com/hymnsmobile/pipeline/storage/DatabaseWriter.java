@@ -1,23 +1,17 @@
 package com.hymnsmobile.pipeline.storage;
 
-import static com.hymnsmobile.pipeline.utils.TextUtil.join;
-import static com.hymnsmobile.pipeline.utils.TextUtil.strMapToJson;
-import static com.hymnsmobile.pipeline.utils.TextUtil.toJson;
-
 import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.SongReference;
 import com.hymnsmobile.pipeline.storage.dagger.StorageScope;
 import dagger.Lazy;
+
+import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.ZonedDateTime;
-import javax.inject.Inject;
+
+import static com.hymnsmobile.pipeline.utils.TextUtil.*;
 
 @StorageScope
 public class DatabaseWriter {
@@ -74,8 +68,8 @@ public class DatabaseWriter {
               + "`SONG_META_DATA_SVG_SHEET_MUSIC` TEXT, "
               + "`SONG_META_DATA_PDF_SHEET_MUSIC` TEXT, "
               + "`SONG_META_DATA_LANGUAGES` TEXT, "
-              + "`SONG_META_DATA_RELEVANT` TEXT,"
-              + "`FLATTENED_LYRICS` TEXT,"
+              + "`SONG_META_DATA_RELEVANT` TEXT, "
+              + "`FLATTENED_LYRICS` TEXT, "
               + "`LANGUAGE` TEXT)");
       connection.createStatement().execute("CREATE INDEX IF NOT EXISTS `index_SONG_DATA_ID` ON `SONG_DATA` (`ID`)");
 
@@ -127,7 +121,7 @@ public class DatabaseWriter {
             + "SONG_META_DATA_KEY, SONG_META_DATA_TIME, SONG_META_DATA_METER, "
             + "SONG_META_DATA_SCRIPTURES, SONG_META_DATA_HYMN_CODE, SONG_META_DATA_MUSIC, "
             + "SONG_META_DATA_SVG_SHEET_MUSIC, SONG_META_DATA_PDF_SHEET_MUSIC, "
-            + "SONG_META_DATA_LANGUAGES, SONG_META_DATA_RELEVANT, FLATTENED_LYRICS, LANGUAGE)"
+            + "SONG_META_DATA_LANGUAGES, SONG_META_DATA_RELEVANT, FLATTENED_LYRICS, LANGUAGE) "
             + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
         Statement.RETURN_GENERATED_KEYS);
     insertStatement.setInt(1, hymn.getId());
@@ -149,7 +143,8 @@ public class DatabaseWriter {
     insertStatement.setString(17, toJson(hymn.getLanguagesList()));
     insertStatement.setString(18, toJson(hymn.getRelevantsList()));
     insertStatement.setString(19, hymn.getFlattenedLyrics());
-    insertStatement.setString(20, hymn.getLanguage());
+    insertStatement.setString(20, hymn.getLanguage().name());
+    insertStatement.execute();
 
     try (ResultSet generatedKeys = insertStatement.getGeneratedKeys()) {
       if (!generatedKeys.next()) {

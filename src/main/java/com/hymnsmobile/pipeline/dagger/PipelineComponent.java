@@ -1,6 +1,7 @@
 package com.hymnsmobile.pipeline.dagger;
 
 import com.hymnsmobile.pipeline.Pipeline;
+import com.hymnsmobile.pipeline.dedup.dagger.DedupComponent;
 import com.hymnsmobile.pipeline.h4a.dagger.H4aPipelineComponent;
 import com.hymnsmobile.pipeline.hymnalnet.dagger.HymnalNetPipelineComponent;
 import com.hymnsmobile.pipeline.liederbuch.dagger.LiederbuchPipelineComponent;
@@ -9,6 +10,7 @@ import com.hymnsmobile.pipeline.russian.dagger.RussianPipelineComponent;
 import com.hymnsmobile.pipeline.songbase.dagger.SongbasePipelineComponent;
 import com.hymnsmobile.pipeline.storage.dagger.StorageComponent;
 import dagger.Component;
+
 import java.net.http.HttpClient;
 
 @PipelineScope
@@ -17,6 +19,7 @@ public interface PipelineComponent {
 
   HttpClient httpClient();
 
+  DedupComponent.Builder dedupPipelineBuilder();
   HymnalNetPipelineComponent.Builder hymnalNetComponent();
   H4aPipelineComponent.Builder h4aComponent();
 

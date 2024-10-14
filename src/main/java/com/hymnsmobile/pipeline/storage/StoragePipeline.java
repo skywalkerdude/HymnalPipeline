@@ -2,9 +2,7 @@ package com.hymnsmobile.pipeline.storage;
 
 import com.google.common.collect.ImmutableList;
 import com.hymnsmobile.pipeline.FileReadWriter;
-import com.hymnsmobile.pipeline.models.Hymn;
-import com.hymnsmobile.pipeline.models.PipelineError;
-import com.hymnsmobile.pipeline.models.PipelineErrors;
+import com.hymnsmobile.pipeline.models.*;
 import dagger.Lazy;
 import java.io.File;
 import java.io.IOException;
@@ -29,11 +27,12 @@ public class StoragePipeline {
     this.outputDirectory = outputDirectory;
   }
 
-  public void run(ImmutableList<Hymn> hymns, ImmutableList<PipelineError> errors)
+  public void run(ImmutableList<Hymn> hymns, ImmutableList<PipelineError> errors, DuplicationResults duplicationResults)
       throws SQLException, IOException {
     LOGGER.info("Storage pipeline starting");
 
     writeErrors(errors);
+    writeDuplicationResults(duplicationResults);
 
     Connection connection = databaseWriter.createDatabase();
     for (Hymn hymn : hymns) {
@@ -44,8 +43,13 @@ public class StoragePipeline {
   }
 
   private void writeErrors(ImmutableList<PipelineError> errors) throws IOException {
-    fileReadWriter.writeString(outputDirectory.get().getPath() + "/errors.txt",
+    fileReadWriter.writeString(outputDirectory.get().getPath() + "/errors.textproto",
         PipelineErrors.newBuilder().setCount(errors.size()).addAllErrors(errors).build()
             .toString());
+  }
+
+  private void writeDuplicationResults(DuplicationResults duplicationResults) throws IOException {
+    fileReadWriter.writeString(outputDirectory.get().getPath() + "/duplications.textproto",
+                               duplicationResults.toString());
   }
 }

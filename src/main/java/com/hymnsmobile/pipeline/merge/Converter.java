@@ -240,7 +240,7 @@ public class Converter {
     return reference.setHymnType(hymnType.abbreviatedValue).build();
   }
 
-  public HymnLanguage getLanguage(SongReference songReference) {
+  public Language getLanguage(SongReference songReference) {
     return fromString(songReference.getHymnType()).language;
   }
 
@@ -254,7 +254,7 @@ public class Converter {
         .setId(nextHymnId++)
         .addReferences(toSongReference(hymn.getKey()))
         .setTitle(hymn.getTitle())
-        .setLanguage(getLanguage(toSongReference(key)).iso)
+        .setLanguage(getLanguage(toSongReference(key)))
         .addProvenance("hymnal.net");
 
     hymn.getLyricsList().forEach(verse -> builder.addLyrics(toVerse(key, verse)));
@@ -361,7 +361,7 @@ public class Converter {
         .addReferences(toSongReference(hymn.getId()))
         .setTitle(hymn.getFirstStanzaLine())
         .addAllLyrics(hymn.getVersesList())
-        .setLanguage(getLanguage(toSongReference(hymn.getId())).iso)
+        .setLanguage(getLanguage(toSongReference(hymn.getId())))
         .addProvenance("h4a");
 
     if (hymn.hasMainCategory() && !TextUtil.isEmpty(hymn.getMainCategory())) {
@@ -420,7 +420,7 @@ public class Converter {
     Hymn.Builder builder
         = Hymn.newBuilder()
               .setId(nextHymnId++)
-              .setLanguage(HymnLanguage.RUSSIAN.iso)
+              .setLanguage(Language.RUSSIAN)
               .addAllLyrics(hymn.getLyricsList())
               .addReferences(SongReference.newBuilder()
                                           .setHymnType(RUSSIAN.abbreviatedValue)
@@ -441,21 +441,10 @@ public class Converter {
         .addAllReferences(
             hymn.getKeyList().stream().map(this::toSongReference).collect(toImmutableList()))
         .setTitle(hymn.getTitle())
-        // Add into lyrics for FTS
-        .addLyrics(
-            Verse.newBuilder().setVerseType("do_not_display").addAllLines(
-                hymn.getLyrics()
-                    .lines()
-                    .map(line -> line.replaceAll("\\[.*?]", ""))
-                    .filter(line -> !TextUtil.isEmpty(line))
-                    .map(String::trim)
-                    .map(line -> Line.newBuilder().setLineContent(line))
-                    .map(Line.Builder::build)
-                    .collect(toImmutableList())))
         .addAllInlineChords(createInlineChords(hymn.getLyrics()));
 
     // Check to see if there are mismatched languages
-    Set<HymnLanguage> languages =
+    Set<Language> languages =
         builder.getReferencesList().stream().map(this::getLanguage).collect(Collectors.toSet());
     if (languages.size() != 1) {
       errors.add(PipelineError.newBuilder()
@@ -515,7 +504,7 @@ public class Converter {
           word = word.replaceFirst(CHORDS_PATTERN, "");
           m = p.matcher(word);
         }
-        return ChordWord.newBuilder().setWord(chordWord).setChord(chordBuilder.toString()).build();
+        return ChordWord.newBuilder().setWord(word).setChord(chordBuilder.toString()).build();
       }).collect(Collectors.toList());
       return ChordLine.newBuilder().addAllChordWords(chordWords).build();
     }).collect(Collectors.toList());
@@ -523,11 +512,15 @@ public class Converter {
 
   private String flattenLyrics(List<Verse> lyrics) {
     return lyrics.stream()
-                 .map(verse -> verse.getLinesList().stream()
-                                    .map(line -> line.getLineContent().trim())
-                                    .collect(Collectors.joining(" "))
-                                    .trim())
-                 .collect(Collectors.joining(" "));
+        .filter(verse -> !verse.getVerseType().equals("copyright")) // Don't include copyright statement
+        .map(verse -> verse.getLinesList().stream()
+                           .map(Line::getLineContent)
+                           .map(line -> line.replaceAll("\\p{Punct}", "")) // remove punctuation
+                           .map(String::toLowerCase)
+                           .map(String:: trim)
+                           .collect(Collectors.joining(" "))
+                           .trim())
+        .collect(Collectors.joining(" "));
   }
 
   private String flattenInlineChords(List<ChordLine> inlineChords) {
@@ -536,12 +529,17 @@ public class Converter {
           String line = chordLine.getChordWordsList().stream()
                                  .map(chordWord -> chordWord.getWord().trim())
                                  .collect(Collectors.joining(" "))
-                                 .trim();
-          if (line.matches("\\D+")) {
+                                 .toLowerCase();
+          if (line.matches("\\d+")) {
             return Optional.empty();
           }
-
-          if (line.contains("Chorus")) {
+          if (line.contains("chorus")) {
+            return Optional.empty();
+          }
+          if (line.contains("capo")) {
+            return Optional.empty();
+          }
+          if (line.contains("#")) {
             return Optional.empty();
           }
           return Optional.of(line);

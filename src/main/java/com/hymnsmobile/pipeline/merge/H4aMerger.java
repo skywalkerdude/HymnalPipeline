@@ -5,12 +5,9 @@ import com.hymnsmobile.pipeline.h4a.models.H4aHymn;
 import com.hymnsmobile.pipeline.h4a.models.H4aKey;
 import com.hymnsmobile.pipeline.merge.dagger.Merge;
 import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
-import com.hymnsmobile.pipeline.models.Hymn;
-import com.hymnsmobile.pipeline.models.PipelineError;
+import com.hymnsmobile.pipeline.models.*;
 import com.hymnsmobile.pipeline.models.PipelineError.ErrorType;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
-import com.hymnsmobile.pipeline.models.SongReference;
-import com.hymnsmobile.pipeline.models.Verse;
 import com.hymnsmobile.pipeline.utils.TextUtil;
 
 import javax.inject.Inject;
@@ -59,8 +56,7 @@ public class H4aMerger {
       Hymn.Builder duplicate =
           getHymnFrom(H4A_DUPLICATES.get(h4aReference), builders).orElseThrow()
                                                                  .addProvenance("h4a");
-      HymnLanguage language = converter.getLanguage(h4aReference);
-      if (duplicate.getLanguage().equals(language.iso)) {
+      if (duplicate.getLanguage() == converter.getLanguage(h4aReference)) {
         duplicate.addReferences(h4aReference);
       } else {
         errors.add(PipelineError.newBuilder()
@@ -140,7 +136,7 @@ public class H4aMerger {
           // Add the BE_FILLED song as another reference, not as a new song since it's more than
           // likely a duplicate in terms of content.
           SongReference parentReference = converter.toSongReference(parentKey);
-          if (converter.getLanguage(parentReference) != HymnLanguage.ENGLISH) {
+          if (converter.getLanguage(parentReference) != Language.ENGLISH) {
             errors.add(PipelineError.newBuilder()
                     .setSeverity(Severity.ERROR)
                     .setErrorType(ErrorType.DUPLICATE_LANGUAGE_MISMATCH)

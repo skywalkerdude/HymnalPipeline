@@ -1,0 +1,26 @@
+syntax = "proto3";
+import "common.proto";
+
+package com.hymnsmobile.pipeline.models;
+
+option java_multiple_files = true;
+
+message DuplicationResults {
+  DuplicationResult no_difference = 1;
+  DuplicationResult under_5 = 2;
+  DuplicationResult under_10 = 3;
+  DuplicationResult under_50 = 4;
+}
+
+message DuplicationResult {
+  int32 count = 1;
+  repeated Duplication duplications = 2;
+}
+
+message Duplication {
+  int32 distance = 1;
+  repeated SongReference reference1 = 2;
+  repeated SongReference reference2 = 3;
+  Hymn hymn1 = 4;
+  Hymn hymn2 = 5;
+}

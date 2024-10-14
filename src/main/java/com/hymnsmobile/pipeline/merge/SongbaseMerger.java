@@ -5,6 +5,7 @@ import com.google.common.collect.Sets;
 import com.hymnsmobile.pipeline.merge.dagger.Merge;
 import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
 import com.hymnsmobile.pipeline.models.Hymn;
+import com.hymnsmobile.pipeline.models.Language;
 import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.songbase.models.SongbaseHymn;
 
@@ -61,9 +62,9 @@ public class SongbaseMerger {
         throw new IllegalStateException("Wrong number of matching references");
       }
       // Check to see if there are mismatched languages
-      Set<HymnLanguage> matchingReferenceLanguages =
+      Set<Language> matchingReferenceLanguages =
           matchingReference.get(0).getReferencesList().stream().map(converter::getLanguage).collect(Collectors.toSet());
-      Set<HymnLanguage> songbaseLanguages =
+      Set<Language> songbaseLanguages =
           songbaseBuilder.getReferencesList().stream().map(converter::getLanguage).collect(Collectors.toSet());
       if (Sets.intersection(matchingReferenceLanguages, songbaseLanguages).size() != 1) {
         errors.add(PipelineError.newBuilder()
@@ -78,7 +79,10 @@ public class SongbaseMerger {
       // Add the new references
       songbaseBuilder.getReferencesList().stream()
           .filter(reference -> !matchingReference.get(0).getReferencesList().contains(reference))
-          .forEach(reference -> matchingReference.get(0).addReferences(reference));
+          .forEach(reference -> {
+            matchingReference.get(0).addReferences(reference);
+            matchingReference.get(0).addProvenance("songbase");
+          });
       // Set inline chords property only if there are chords found in the song
       if (Pattern.compile(CHORDS_PATTERN).matcher(songbaseHymn.getLyrics()).find()) {
         matchingReference.get(0).addAllInlineChords(songbaseBuilder.getInlineChordsList());

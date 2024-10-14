@@ -11,45 +11,6 @@ references {
   hymn_number: "3"
 }
 title: "Father Abraham"
-lyrics {
-  verse_type: "do_not_display"
-  lines {
-    line_content: "Father Abraham"
-  }
-  lines {
-    line_content: "Has many sons"
-  }
-  lines {
-    line_content: "Many sons has father Abraham"
-  }
-  lines {
-    line_content: "I am one of them and so are you"
-  }
-  lines {
-    line_content: "So let\'s go marching on"
-  }
-  lines {
-    line_content: "Left foot\342\200\246 (Repeat)"
-  }
-  lines {
-    line_content: "Right foot"
-  }
-  lines {
-    line_content: "Left arm"
-  }
-  lines {
-    line_content: "Right arm"
-  }
-  lines {
-    line_content: "Nod your head"
-  }
-  lines {
-    line_content: "Turn around"
-  }
-  lines {
-    line_content: "Sit Down!"
-  }
-}
 inline_chords {
   chord_words {
     word: "Father"
