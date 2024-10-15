@@ -9,8 +9,11 @@ import org.apache.commons.text.similarity.LevenshteinDistance;
 
 import javax.inject.Inject;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @DedupScope
 public class DedupPipeline {
@@ -28,6 +31,7 @@ public class DedupPipeline {
   }
 
   public DuplicationResults run(ImmutableList<Hymn> hymns) {
+    LOGGER.info("Deduplication starting");
     DuplicationResults.Builder builder =
         DuplicationResults.newBuilder()
             .setNoDifference(DuplicationResult.newBuilder().setCount(0))
@@ -94,12 +98,25 @@ public class DedupPipeline {
               .build();
 
       // Make sure the duplication doesn't already exist
-      if (duplicationResult.getDuplicationsList().contains(duplication)) {
+      List<Set<SongReference>> existingReferences =
+          duplicationResult
+              .getDuplicationsList()
+              .stream()
+              .map(d -> Stream.concat(d.getReference1List().stream(),
+                                      d.getReference2List().stream())
+                              .collect(Collectors.toSet()))
+              .toList();
+      if (existingReferences.contains(
+          Stream.concat(hymn1.getReferencesList().stream(),
+                        duplicateHymn.getReferencesList().stream())
+                .collect(Collectors.toSet()))) {
         continue;
       }
+
       duplicationResult.setCount(duplicationResult.getCount() + 1);
       duplicationResult.addDuplications(duplication);
     }
+    LOGGER.info("Deduplication completed");
     return builder.build();
   }
 

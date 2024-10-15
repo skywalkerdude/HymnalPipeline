@@ -22,6 +22,7 @@ import com.hymnsmobile.pipeline.songbase.models.SongbaseKey;
 import com.hymnsmobile.pipeline.utils.TextUtil;
 
 import javax.inject.Inject;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.function.Function;
 import java.util.logging.Logger;
@@ -515,9 +516,11 @@ public class Converter {
         .filter(verse -> !verse.getVerseType().equals("copyright")) // Don't include copyright statement
         .map(verse -> verse.getLinesList().stream()
                            .map(Line::getLineContent)
-                           .map(line -> line.replaceAll("\\p{Punct}", "")) // remove punctuation
+                           .map(line -> line.getBytes(StandardCharsets.ISO_8859_1))
+                           .map(line -> new String(line, StandardCharsets.UTF_8))
+                           .map(line -> line.replaceAll("\\p{P}", "")) // remove punctuation
                            .map(String::toLowerCase)
-                           .map(String:: trim)
+                           .map(String::trim)
                            .collect(Collectors.joining(" "))
                            .trim())
         .collect(Collectors.joining(" "));
