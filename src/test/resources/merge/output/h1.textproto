@@ -14,8 +14,8 @@ lyrics {
     line_content: "Glory be to God the Father,"
   }
   lines {
-    line_content: "  And to Christ the Son,"
-  }
+    line_content: "  And to Christ the \342\200\224 Son,"
+}
   lines {
     line_content: "Glory to the Holy Spirit—"
   }

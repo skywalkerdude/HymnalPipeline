@@ -516,10 +516,10 @@ public class Converter {
         .filter(verse -> !verse.getVerseType().equals("copyright")) // Don't include copyright statement
         .flatMap(verse -> verse.getLinesList().stream()
             .map(Line::getLineContent)
+            .map(word -> word.replaceAll("\\p{P}", "")) // remove punctuations
             .map(line -> line.replaceAll("\u00a0", " ")) // replace no-break spaces
             .flatMap(line -> Arrays.stream(line.split(" ")))
             .filter(word -> !word.isBlank())
-            .map(word -> word.replaceAll("\\p{P}", "")) // remove punctuations
             .map(String::trim)
             .map(String::toLowerCase))
         .collect(Collectors.joining(" "));
