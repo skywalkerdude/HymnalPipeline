@@ -22,13 +22,13 @@ import com.hymnsmobile.pipeline.songbase.models.SongbaseKey;
 import com.hymnsmobile.pipeline.utils.TextUtil;
 
 import javax.inject.Inject;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.function.Function;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
 import static com.hymnsmobile.pipeline.merge.HymnType.*;
@@ -514,15 +514,14 @@ public class Converter {
   private String flattenLyrics(List<Verse> lyrics) {
     return lyrics.stream()
         .filter(verse -> !verse.getVerseType().equals("copyright")) // Don't include copyright statement
-        .map(verse -> verse.getLinesList().stream()
-                           .map(Line::getLineContent)
-                           .map(line -> line.getBytes(StandardCharsets.ISO_8859_1))
-                           .map(line -> new String(line, StandardCharsets.UTF_8))
-                           .map(line -> line.replaceAll("\\p{P}", "")) // remove punctuation
-                           .map(String::toLowerCase)
-                           .map(String::trim)
-                           .collect(Collectors.joining(" "))
-                           .trim())
+        .flatMap(verse -> verse.getLinesList().stream()
+            .map(Line::getLineContent)
+            .map(line -> line.replaceAll("\u00a0", " ")) // replace no-break spaces
+            .flatMap(line -> Arrays.stream(line.split(" ")))
+            .filter(word -> !word.isBlank())
+            .map(word -> word.replaceAll("\\p{P}", "")) // remove punctuations
+            .map(String::trim)
+            .map(String::toLowerCase))
         .collect(Collectors.joining(" "));
   }
 
