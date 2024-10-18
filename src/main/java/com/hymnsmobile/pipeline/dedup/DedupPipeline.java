@@ -8,6 +8,7 @@ import com.hymnsmobile.pipeline.models.*;
 import org.apache.commons.text.similarity.LevenshteinDistance;
 
 import javax.inject.Inject;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -116,6 +117,17 @@ public class DedupPipeline {
       duplicationResult.setCount(duplicationResult.getCount() + 1);
       duplicationResult.addDuplications(duplication);
     }
+
+    builder.getUnder5Builder()
+           .getDuplicationsList()
+           .sort(Comparator.comparingInt(Duplication::getDistance));
+    builder.getUnder10Builder()
+           .getDuplicationsList()
+           .sort(Comparator.comparingInt(Duplication::getDistance));
+    builder.getUnder50Builder()
+           .getDuplicationsList()
+           .sort(Comparator.comparingInt(Duplication::getDistance));
+
     LOGGER.info("Deduplication completed");
     return builder.build();
   }
