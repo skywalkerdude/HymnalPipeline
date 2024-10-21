@@ -102,7 +102,7 @@ public class Fetcher {
                 .setSource(PipelineError.Source.HYMNAL_NET)
                 .setSeverity(Severity.ERROR)
                 .setErrorType(ErrorType.FETCH_ERROR)
-                .addMessages(String.format("Failed to fetch: %s", key))
+                .addMessages(String.format("Failed to fetch: %s/%s", key.getHymnType(), key.getHymnNumber()))
                 .build());
       }
     }
@@ -123,7 +123,7 @@ public class Fetcher {
       return FetchResult.FETCH_EXCEPTION;
     }
     if (hymn.isEmpty()) {
-      LOGGER.warning(String.format("Unable to fetch %s", key));
+      LOGGER.warning(String.format("Unable to fetch %s/%s", key.getHymnType(), key.getHymnNumber()));
       return FetchResult.NON_200_RESPONSE;
     }
 
@@ -210,7 +210,9 @@ public class Fetcher {
                           if (fetchResult == FetchResult.NON_200_RESPONSE) {
                             LOGGER.warning(
                                 String.format(
-                                    "Failed to fetch: %s, a related song of %s", relatedSong, parent));
+                                    "Failed to fetch: %s/%s, a related song of %s/%s",
+                                    relatedSong.getHymnType(), relatedSong.getHymnNumber(),
+                                    parent.getHymnType(), parent.getHymnNumber()));
                             return false;
                           }
                           return true;

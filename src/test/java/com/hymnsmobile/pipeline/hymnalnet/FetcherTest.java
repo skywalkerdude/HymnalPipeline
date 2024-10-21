@@ -92,7 +92,7 @@ class FetcherTest {
             .setSource(PipelineError.Source.HYMNAL_NET)
             .setSeverity(PipelineError.Severity.ERROR)
             .setErrorType(PipelineError.ErrorType.FETCH_ERROR)
-            .addMessages("Failed to fetch: hymn_type: \"h\"\nhymn_number: \"1\"\n")
+            .addMessages("Failed to fetch: h/1")
             .build());
   }
 
