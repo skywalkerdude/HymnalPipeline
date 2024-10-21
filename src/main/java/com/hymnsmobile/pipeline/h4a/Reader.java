@@ -44,13 +44,6 @@ public class Reader {
   private static final String SQL_SCRIPT_PATH = String.format("storage/h4a/hymns-%s.sql", H4A_VERSION);
   private static final String SQLITE_PATH = String.format("storage/h4a/h4a-%s.sqlite", H4A_VERSION);
 
-  /**
-   * Use a custom escape sequence, since Gson will auto-escape strings and screw everything up.
-   * Right before we save the value, we will undo the custom escape character and replace it with
-   * the standard double-quote (").
-   */
-  private static final String CUSTOM_ESCAPE = "$CUSESP$";
-
   private final BlockList blockList;
   private final Converter converter;
   private final Set<PipelineError> errors;
@@ -291,10 +284,6 @@ public class Reader {
       }
 
       Line.Builder line = Line.newBuilder();
-      // Use a custom escape method, since GSON will auto-escape strings and screw everything up. Right
-      // before we save the value, we will undo the custom escape character and replace it with the
-      // standard \".
-      lineContent = lineContent.replace("\"", CUSTOM_ESCAPE + "\"");
       line.setLineContent(lineContent);
       if (type.isTransliterable()) {
         StringBuilder transliteratedLine = new StringBuilder();
