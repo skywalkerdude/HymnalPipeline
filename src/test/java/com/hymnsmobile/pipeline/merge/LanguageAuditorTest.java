@@ -41,7 +41,7 @@ class LanguageAuditorTest {
             .setSource(PipelineError.Source.MERGE)
             .setSeverity(PipelineError.Severity.WARNING)
             .setErrorType(PipelineError.ErrorType.AUDITOR_OBSOLETE_EXCEPTION)
-            .addMessages(String.format("[[%s]]", songReference))
+            .addMessages(String.format("[%s]", songReference))
             .build());
   }
 
@@ -146,7 +146,19 @@ class LanguageAuditorTest {
   }
 
   @Test
-  public void audit__multipleInstances_hasException_butStillTooManyInstances__noErrorsAdded() {
+  public void audit__multipleInstances_retranslation__noErrorsAdded() {
+    SongReference songReference1 =
+        SongReference.newBuilder().setHymnType(HymnType.CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1").build();
+    SongReference songReference2 =
+        SongReference.newBuilder().setHymnType(HymnType.CHINESE.abbreviatedValue).setHymnNumber("1").build();
+    SongReference songReference3 =
+        SongReference.newBuilder().setHymnType(HymnType.CLASSIC_HYMN.abbreviatedValue).setHymnNumber("8001").build();
+    target.audit(ImmutableSet.of(ImmutableSet.of(songReference1, songReference2, songReference3)), Optional.empty());
+    assertThat(errors).isEmpty();
+  }
+
+  @Test
+  public void audit__multipleInstances_hasException_butStillTooManyInstances__errorAdded() {
     SongReference songReference1 =
         SongReference.newBuilder().setHymnType(HymnType.CLASSIC_HYMN.abbreviatedValue).setHymnNumber("1").build();
     SongReference songReference2 =

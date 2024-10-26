@@ -56,13 +56,18 @@ public class RelevantsAuditor extends Auditor {
     for (HymnType hymnType : HymnType.values()) {
       int timesAllowed = 1;
 
-      // For each song like h/810, ns/698b, nt/394b, de/786b, ch/nt575c, chx/nt575c increment the
-      // allowance of that type of hymn, since those are valid alternates.
       if (ImmutableSet.of(CLASSIC_HYMN, NEW_TUNE, NEW_SONG, GERMAN, CHINESE, CHINESE_SIMPLIFIED)
           .contains(hymnType)) {
         for (SongReference songReference : setToAudit) {
           if (HymnType.fromString(songReference.getHymnType()) == hymnType && songReference.getHymnNumber()
               .matches("(\\D+\\d+\\D*)|(\\D*\\d+\\D+)")) {
+            // For each song like h/810, ns/698b, nt/394b, de/786b, ch/nt575c, chx/nt575c increment the allowance of
+            // that type of hymn, since those are valid alternates.
+            timesAllowed++;
+          } else if (HymnType.fromString(songReference.getHymnType()) == CLASSIC_HYMN &&
+              songReference.getHymnNumber().matches("8\\d{3}")) {
+            // For each song like h/8688 which are retranslations of certain Chinese hymns, increment the allowance of
+            // that type of hymn, since those are valid alternates.
             timesAllowed++;
           }
         }

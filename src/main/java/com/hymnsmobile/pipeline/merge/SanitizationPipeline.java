@@ -6,12 +6,9 @@ import com.hymnsmobile.pipeline.merge.dagger.Merge;
 import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
 import com.hymnsmobile.pipeline.merge.exceptions.Exceptions;
 import com.hymnsmobile.pipeline.merge.patchers.Patcher;
-import com.hymnsmobile.pipeline.models.Hymn;
-import com.hymnsmobile.pipeline.models.PipelineError;
+import com.hymnsmobile.pipeline.models.*;
 import com.hymnsmobile.pipeline.models.PipelineError.ErrorType;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
-import com.hymnsmobile.pipeline.models.SongLink;
-import com.hymnsmobile.pipeline.models.SongReference;
 
 import javax.inject.Inject;
 import java.util.*;
@@ -50,15 +47,15 @@ public class SanitizationPipeline {
 
   private ImmutableList<Hymn> sanitize(ImmutableList<Hymn> allHymns, Optional<Patcher> patcher,
       Optional<Exceptions> exceptions) {
-    if (patcher.isPresent()) {
-      allHymns = patcher.get().patch(allHymns);
-    }
-
     ImmutableList<Hymn.Builder> builders =
         allHymns.stream().map(Hymn::toBuilder).collect(toImmutableList());
 
+    patcher.ifPresent(value -> value.preSanitizePatches(builders));
+
     fixLanguages(builders, exceptions);
     fixRelevants(builders, exceptions);
+
+    patcher.ifPresent(value -> value.postSanitizePatches(builders));
 
     return builders.stream().map(Hymn.Builder::build).collect(toImmutableList());
   }

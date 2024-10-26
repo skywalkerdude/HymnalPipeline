@@ -5,10 +5,12 @@ import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.PipelineError.ErrorType;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import com.hymnsmobile.pipeline.models.SongReference;
+
+import javax.annotation.Nullable;
+import java.util.AbstractCollection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import javax.annotation.Nullable;
 
 public abstract class Auditor {
 
@@ -41,12 +43,15 @@ public abstract class Auditor {
     currentAuditExceptions = new HashSet<>(allExceptionsSoFar);
     this.performAudit(songReferenceSets);
     if (!currentAuditExceptions.isEmpty()) {
-      this.errors.add(PipelineError.newBuilder()
-          .setSource(PipelineError.Source.MERGE)
-          .setSeverity(Severity.WARNING)
-          .setErrorType(ErrorType.AUDITOR_OBSOLETE_EXCEPTION)
-          .addMessages(currentAuditExceptions.toString())
-          .build());
+      PipelineError.Builder error =
+          PipelineError.newBuilder()
+              .setSource(PipelineError.Source.MERGE)
+              .setSeverity(Severity.WARNING)
+              .setErrorType(ErrorType.AUDITOR_OBSOLETE_EXCEPTION);
+      currentAuditExceptions.stream()
+          .map(AbstractCollection::toString)
+          .forEach(error::addMessages);
+      this.errors.add(error.build());
     }
     currentAuditExceptions = null;
   }

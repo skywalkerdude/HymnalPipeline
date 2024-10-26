@@ -41,6 +41,7 @@ public class H4aPatcher extends Patcher {
     fix_K372_h494();
     fix_h254_K211_J211_I211();
     fix_h984_K204_J204_I204();
+    fix_h505_K383_J383_I383();
   }
 
   /**
@@ -321,5 +322,25 @@ public class H4aPatcher extends Patcher {
     removeLanguages("I/204", "h/984");
 
     // K/204, I/204, and J/204 already map to ch/204, so no additions are needed.
+  }
+
+  /**
+   * This is mostly fixed by {@link HymnalNetPatcher#fix_h8383_ch383}. However, H4a adds K/383, J/383 and I/383, so we
+   * need to go through and fix those as well.
+   * </p>
+   * K/383, J/383 and I/383 are the Korean, Japanese, and Indonesian translations of ch/383 respectively, so we need to
+   * remove the links to h/505 and add the links to ch/383 to those songs.
+   */
+  private void fix_h505_K383_J383_I383() {
+    removeLanguages("h/505", "K/383", "J/383", "I/383");
+
+    removeLanguages("K/383", "h/505");
+    addLanguages("K/383", "ch/383");
+
+    removeLanguages("J/383", "h/505");
+    addLanguages("J/383", "ch/383");
+
+    removeLanguages("I/383", "h/505");
+    // I/383 already maps to ch/383, so no additions are needed.
   }
 }

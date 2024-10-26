@@ -55,15 +55,39 @@ public class LanguageAuditor extends Auditor {
 
     // Verify that the same hymn type doesn't appear more than the allowed number of times the languages list.
     for (HymnType hymnType : HymnType.values()) {
+      int timesAllowed = 1;
+
       // For each song like ns/151de, lb/12s,  or , increment the allowance of that type of hymn, since those are valid
       // alternates.
-      int timesAllowed = 1;
       if (ImmutableSet.of(NEW_SONG, HOWARD_HIGASHI).contains(hymnType)) {
         for (SongReference songReference : setToAudit) {
           if (HymnType.fromString(songReference.getHymnType()) == hymnType && songReference.getHymnNumber()
               .matches("(\\D+\\d+\\D*)|(\\D*\\d+\\D+)")) {
             timesAllowed++;
           }
+        }
+      }
+      // For each song like h/8688 which are retranslations of certain Chinese hymns, increment the allowance of that
+      // type of hymn, since those are valid alternates.
+      if (hymnType == CLASSIC_HYMN) {
+        for (SongReference songReference : setToAudit) {
+          if (HymnType.fromString(songReference.getHymnType()) != CLASSIC_HYMN) {
+            continue;
+          }
+          if (!songReference.getHymnNumber().matches("8\\d{3}")) {
+            continue;
+          }
+
+          // If there is no Chinese translation, then don't increment allowance.
+          String chineseNumber = String.valueOf(Integer.parseInt(songReference.getHymnNumber()) - 8000);
+          if (Collections.disjoint(setToAudit,
+                                   Set.of(
+                                       SongReference.newBuilder().setHymnType(CHINESE.abbreviatedValue).setHymnNumber(chineseNumber).build(),
+                                       SongReference.newBuilder().setHymnType(CHINESE_SUPPLEMENTAL.abbreviatedValue).setHymnNumber(chineseNumber).build()))) {
+            continue;
+          }
+
+          timesAllowed++;
         }
       }
 

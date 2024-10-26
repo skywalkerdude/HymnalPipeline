@@ -11,6 +11,8 @@ import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.PipelineError.ErrorType;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
 import com.hymnsmobile.pipeline.models.SongReference;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -35,10 +37,27 @@ public abstract class Patcher {
 
   protected abstract void performPatch();
 
-  public ImmutableList<Hymn> patch(ImmutableList<Hymn> allHymns) {
-    this.builders = allHymns.stream().map(Hymn::toBuilder).collect(Collectors.toList());
+  // Subclasses can override
+  protected void postSanitizePatch() {
+  }
+
+  /**
+   * Perform patches before sanitization (i.e. language auditing, relevant auditing, etc.) happens. Most patches should
+   * go here, so they can be sanitized after the fact.
+   */
+  public void preSanitizePatches(ImmutableList<Hymn.Builder> builders) {
+    this.builders = builders;
     performPatch();
-    return builders.stream().map(Hymn.Builder::build).collect(toImmutableList());
+  }
+
+  /**
+   * Perform patches after sanitization (i.e. language auditing, relevant auditing, etc.) happens. This should be
+   * reserved for patches that cannot be done pre-sanitization, as the results are just written as-is without any kind
+   * of sanity-check.
+   */
+  public void postSanitizePatches(ImmutableList<Hymn.Builder> builders) {
+    this.builders = builders;
+    postSanitizePatch();
   }
 
   public static SongReference createFromStringAbbreviation(String abbr) {
@@ -180,24 +199,46 @@ public abstract class Patcher {
 
   protected void addSongLinks(SongReference to, FieldDescriptor field,
       SongReference... songLinks) {
+    // Add Chinese simplified versions if applicable.
+    SongReference[] songLinksToAdd =
+        Arrays.stream(songLinks)
+            .flatMap((Function<SongReference, Stream<SongReference>>) songLink -> {
+              List<SongReference> toAdd = new ArrayList<>();
+              toAdd.add(songLink);
+
+              // If the song is a Chinese song, also add the simplified version
+              HymnType songReferenceType = HymnType.fromString(songLink.getHymnType());
+              if (songReferenceType == HymnType.CHINESE) {
+                toAdd.add(SongReference.newBuilder().setHymnType(HymnType.CHINESE_SIMPLIFIED.abbreviatedValue)
+                                       .setHymnNumber(songLink.getHymnNumber()).build());
+              } else if (songReferenceType == HymnType.CHINESE_SUPPLEMENTAL) {
+                toAdd.add(SongReference.newBuilder().setHymnType(HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED.abbreviatedValue)
+                                       .setHymnNumber(songLink.getHymnNumber()).build());
+              }
+
+              // Don't add self-links.
+              toAdd.remove(to);
+              return toAdd.stream();
+            }).toArray(SongReference[]::new);
+
     // If the song is a Chinese song, also perform for the simplified version.
     HymnType hymnType = HymnType.fromString(to.getHymnType());
     if (hymnType == HymnType.CHINESE) {
       addSongLinks(
           SongReference.newBuilder().setHymnType(HymnType.CHINESE_SIMPLIFIED.abbreviatedValue)
-              .setHymnNumber(to.getHymnNumber()).build(), field, songLinks);
+              .setHymnNumber(to.getHymnNumber()).build(), field, songLinksToAdd);
     }
     if (hymnType == HymnType.CHINESE_SUPPLEMENTAL) {
       addSongLinks(
           SongReference.newBuilder()
               .setHymnType(HymnType.CHINESE_SUPPLEMENTAL_SIMPLIFIED.abbreviatedValue)
-              .setHymnNumber(to.getHymnNumber()).build(), field, songLinks);
+              .setHymnNumber(to.getHymnNumber()).build(), field, songLinksToAdd);
     }
 
     Hymn.Builder builder = getHymn(to);
     // noinspection unchecked
     List<SongReference> links = (List<SongReference>) builder.getField(field);
-    for (SongReference songLink : songLinks) {
+    for (SongReference songLink : songLinksToAdd) {
       if (links.contains(songLink)) {
         errors.add(PipelineError.newBuilder()
             .setSource(PipelineError.Source.MERGE)

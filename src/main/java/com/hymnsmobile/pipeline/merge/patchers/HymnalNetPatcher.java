@@ -5,6 +5,7 @@ import com.hymnsmobile.pipeline.merge.HymnType;
 import com.hymnsmobile.pipeline.merge.dagger.Merge;
 import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
 import com.hymnsmobile.pipeline.models.Hymn;
+import com.hymnsmobile.pipeline.models.Language;
 import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.PipelineError.ErrorType;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
@@ -13,6 +14,7 @@ import com.hymnsmobile.pipeline.models.SongReference;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
@@ -54,7 +56,7 @@ public class HymnalNetPatcher extends Patcher {
     // Fix Languages
     fix_h1351();
     fix_ch1090();
-    fix_h445_h1359();
+    fix_h445_h1359_h8339();
     fix_h79_h8079();
     fix_h267_h1360();
     fix_h379();
@@ -66,6 +68,7 @@ public class HymnalNetPatcher extends Patcher {
     fix_ht62();
     fix_ht1182();
     fix_hf881();
+    fix_hf216();
     fix_ch632();
     fix_ts248();
     fix_pt1001();
@@ -81,6 +84,8 @@ public class HymnalNetPatcher extends Patcher {
     fix_pt1243();
     fix_pt921();
     fix_pt340();
+    fix_pt1375();
+    fix_pt1376();
     fix_pt1297();
     fix_ht1358();
     fix_h6864();
@@ -91,8 +96,7 @@ public class HymnalNetPatcher extends Patcher {
     fix_htns617t();
     fix_dens151de();
     fix_htns151ht();
-    fix_h984_h8204_cb984_pt984_ht984_ch204();
-    fix_h254_h8211_ht254_pt254_ch211();
+    fix_h8383_ch383();
 
     // Fix SONG_META_DATA_RELEVANT
     fix_nt377();
@@ -117,6 +121,11 @@ public class HymnalNetPatcher extends Patcher {
     fix_nt477b();
     fix_c162();
     fix_h163();
+    fix_h8296();
+    fix_h8299();
+    fix_h8328();
+    fix_h8338();
+    fix_h8346();
   }
 
   /**
@@ -267,8 +276,10 @@ public class HymnalNetPatcher extends Patcher {
    *    ch/339->h/1359,ht/1359,hs/192;
    *    ht/1359->h/1359,ch/339,hs/192;
    *    hs/192->h/1359,ch/339,ht/1359;
+   * </p>
+   *    h/8339->ch/339
    */
-  void fix_h445_h1359() {
+  void fix_h445_h1359_h8339() {
     // Remove all current mappings
     removeLanguages("h/445", "cb/445", "ch/339", "ht/1359", "S/192", "pt/445", "hf/79");
     removeLanguages("cb/445", "h/445", "ch/339", "ht/1359", "hf/79", "S/192", "pt/445");
@@ -282,6 +293,8 @@ public class HymnalNetPatcher extends Patcher {
     removeLanguages("ch/339", "h/1359", "cb/445", "ht/1359", "S/192");
     removeLanguages("ht/1359", "h/1359", "cb/445", "ch/339", "S/192");
     removeLanguages("S/190", "h/445", "cb/445", "ch/339", "ht/1359", "hf/79", "pt/445");
+
+    removeLanguages("h/8339", "cb/445", "ht/1359", "S/192");
 
     // Add all correct mappings
     addLanguages("h/445", "cb/445", "ht/445", "hf/79", "de/445", "S/190", "pt/445");
@@ -482,6 +495,15 @@ public class HymnalNetPatcher extends Patcher {
   }
 
   /**
+   * hf/216 incorrectly maps to ns/180, hd/6011, de/ns180de, and ts/1004 when it should map to h/1 and its
+   * related songs. h/1 and its related songs all already have the correct mappings.
+   */
+  void fix_hf216() {
+    removeLanguages("hf/216", "ns/180", "hd/6011", "de/ns180de", "ts/1004");
+    addLanguages("hf/216", "h/1");
+  }
+
+  /**
    * ch/632 is the Chinese song of h/870, but it references h/870b instead, which is a new tune.
    */
   void fix_ch632() {
@@ -603,6 +625,20 @@ public class HymnalNetPatcher extends Patcher {
   }
 
   /**
+   * pt/1375 references ch/723 when it shouldn't be referencing any Chinese song.
+   */
+  void fix_pt1375() {
+    removeLanguages("pt/1375", "ch/723");
+  }
+
+  /**
+   * pt/1376 references ts/718 when it shouldn't be referencing any Chinese song.
+   */
+  void fix_pt1376() {
+    removeLanguages("pt/1376", "ts/718");
+  }
+
+  /**
    * pt/1297 references ts/808 when it should be referencing ts/145.
    */
   void fix_pt1297() {
@@ -683,54 +719,15 @@ public class HymnalNetPatcher extends Patcher {
   }
 
   /**
-   * h/984 and h/8204 are both the same song (with the same tune), but h/8204 has 5 verses while h/984 only has 4.
-   * However, h/984 is the official LSM-sanctioned version. In terms of languages though, we separate the translations
-   * with 5 verses and assign them to h/8204 and the translations with 4 verses we assign to h/984.
-   * <p/>
-   *  Here is the correct mapping:
-   *    h/984->cb/984,pt/984,de/984;
-   *    cb/984->h/984,pt/984,de/984;
-   *    pt/984->cb/984,h/984,de/984;
-   *    de/984->cb/984,h/984,pt/984;
-   * </p>
-   *    h/8204->ht/984,ch/204;
-   *    ht/984->h/8204,ch/204;
-   *    ch/204->ht/984,h/8204;
+   * h/8383 is a retranslation of ch/383, but it's linked to h/505 but h/505 already has a chinese song (ts/27). So the
+   * right move here is just to sever the language links completely and rely on the pre-existing relevant link instead.
    */
-  void fix_h984_h8204_cb984_pt984_ht984_ch204() {
-    removeLanguages("h/984", "ht/984", "ch/204");
-    removeLanguages("cb/984", "ht/984", "ch/204");
-    removeLanguages("pt/984", "ch/204");
-    removeLanguages("de/984", "ht/984", "ch/204");
+  void fix_h8383_ch383() {
+    removeLanguages("h/8383", "cb/505", "hd/505", "ht/505", "hf/89", "S/218", "ts/27");
+    removeLanguages("ch/383", "h/505", "cb/505", "hd/505", "hf/89", "S/218", "pt/505");
 
-    removeLanguages("h/8204", "cb/984");
-    removeLanguages("ht/984", "h/984", "cb/984", "pt/984");
-    addLanguages("ht/984", "h/8204");
-    removeLanguages("ch/204", "h/984", "cb/984", "pt/984");
-    addLanguages("ch/204", "h/8204");
-  }
-
-  /**
-   * h/254 and h/8211 are very similar songs but not exactly the same. It looks like h/254 was the original song but
-   * h/8211 is a closer translation of the (probably original) ch/211. So we perform a remap, according to how closely
-   * the lyrics match to each english song.
-   * <p/>
-   *  Here is the correct mapping:
-   *    h/254->ht/254,pt/254;
-   *    ht/254->h/254,pt/254;
-   *    pt/254->h/254,ht/254;
-   * </p>
-   *    h/8211->ch/211;
-   *    ch/211->h/8211;
-   */
-  void fix_h254_h8211_ht254_pt254_ch211() {
-    removeLanguages("h/254", "ch/211");
-    removeLanguages("ht/254", "ch/211");
-    removeLanguages("pt/254", "ch/211");
-
-    removeLanguages("h/8211", "ht/254");
-    removeLanguages("ch/211", "h/254", "ht/254", "pt/254");
-    addLanguages("ch/211", "h/8211");
+    addLanguages("h/8383", "ch/383");
+    addLanguages("ch/383", "h/8383");
   }
 
   /*--------------------------RELEVANTS--------------------------*/
@@ -950,5 +947,109 @@ public class HymnalNetPatcher extends Patcher {
    */
   void fix_h163() {
     removeRelevants("h/163", "h/163");
+  }
+
+  /**
+   * h/8296 references itself when it should be referencing h/382
+   */
+  void fix_h8296() {
+    removeRelevants("h/8296", "h/8296");
+    addRelevants("h/8296", "h/382");
+  }
+
+  /**
+   * h/8299 references itself when it should be referencing h/380
+   */
+  void fix_h8299() {
+    removeRelevants("h/8299", "h/8299");
+    addRelevants("h/8299", "h/380");
+  }
+
+  /**
+   * h/8328 references itself when it should be referencing h/807
+   */
+  void fix_h8328() {
+    removeRelevants("h/8328", "h/8328");
+    addRelevants("h/8328", "h/807");
+  }
+
+  /**
+   * h/8338 references itself when it should be referencing h/444
+   */
+  void fix_h8338() {
+    removeRelevants("h/8338", "h/8338");
+    addRelevants("h/8338", "h/444");
+  }
+
+  /**
+   * h/8346 references itself when it should be referencing h/461
+   */
+  void fix_h8346() {
+    removeRelevants("h/8346", "h/8346");
+    addRelevants("h/8346", "h/461");
+  }
+
+  @Override
+  protected void postSanitizePatch() {
+    separateRetranslations();
+  }
+
+  /**
+   * There exists retranslations of certain Chinese hymns from Hymnal.net that are similar to their original English
+   * counterpart, but not exactly. To reduce confusion for users, we handle these hymns thusly:
+   *  - Chinese hymn should refer to both the original English and the retranslation as alternate languages.
+   *  - Other hymns should reference the retranslation only as a relevant hymn, not as an alternate language.
+   *  - The retranslation itself should only reference the Chinese hymn as an alternate language and should reference
+   *    the original English as a relevant hymn. This, presumably, should be taken care of already on the Hymnal.net
+   *    side, so we treat it here as an implicit assumption and don't do any special handling.
+   */
+  private void separateRetranslations() {
+    for (Hymn.Builder retranslation : builders) {
+      // Retranslations, as of now, shouldn't have more than one reference.
+      if (retranslation.getReferencesCount() != 1) {
+        continue;
+      }
+
+      SongReference retranslationReference = retranslation.getReferencesList().get(0);
+
+      // Retranslation hymn types are always CLASSIC
+      if (!(HymnType.fromString(retranslationReference.getHymnType()) == HymnType.CLASSIC_HYMN)) {
+        continue;
+      }
+
+      // Retranslation hymn references are in the form 8XXX
+      if (!retranslationReference.getHymnNumber().matches("8\\d{3}")) {
+        continue;
+      }
+
+      List<SongReference> chineseTranslations =
+          retranslation.getLanguagesList().stream()
+                       .filter(language ->
+                                   HymnType.fromString(language.getHymnType()).language == Language.CHINESE_TRADITIONAL ||
+                                       HymnType.fromString(language.getHymnType()).language == Language.CHINESE_SIMPLIFIED)
+                       .toList();
+      if (chineseTranslations.size() != 2) {
+        throw new IllegalStateException("Expect only 2 chinese translation hymns (one simplified, one traditional for a retranslation");
+      }
+
+      // Find links to the retranslation and sever them
+      for (Hymn.Builder builder : builders) {
+        // Don't make changes to the Chinese translations.
+        if (builder.getReferencesList().stream().anyMatch(chineseTranslations::contains)) {
+          continue;
+        }
+
+        // Retranslation should only point to the Chinese translations
+        if (builder == retranslation) {
+          builder.clearLanguages().addAllLanguages(chineseTranslations);
+        }
+
+        // Remove link to retranslation if they exist.
+        int retranslationIndex = builder.getLanguagesList().indexOf(retranslationReference);
+        if (retranslationIndex != -1) {
+          builder.removeLanguages(retranslationIndex);
+        }
+      }
+    }
   }
 }

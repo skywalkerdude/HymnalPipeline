@@ -7,6 +7,7 @@ import com.hymnsmobile.pipeline.merge.patchers.Patcher;
 import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.SongReference;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,7 @@ import static com.google.common.truth.extensions.proto.ProtoTruth.assertThat;
 import static com.hymnsmobile.pipeline.merge.HymnType.CLASSIC_HYMN;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 
 class SanitizationPipelineTest {
@@ -209,12 +210,23 @@ class SanitizationPipelineTest {
                    .build();
 
     Patcher patcher = mock(Patcher.class);
-    doReturn(ImmutableList.of()).when(patcher).patch(any());
+    doAnswer(invocationOnMock -> {
+      ImmutableList<Hymn.Builder> builders = invocationOnMock.getArgument(0);
+      builders.forEach(builder -> builder.setFlattenedLyrics("patched"));
+      return null;
+    }).when(patcher).preSanitizePatches(any());
+
+    doAnswer(invocationOnMock -> {
+      ImmutableList<Hymn.Builder> builders = invocationOnMock.getArgument(0);
+      builders.forEach(builder -> builder.setTitle("also patched"));
+      return null;
+    }).when(patcher).postSanitizePatches(any());
 
     Exceptions exceptions = mock(Exceptions.class);
 
     ImmutableList<Hymn> result = target.sanitize(ImmutableList.of(h1, ch1, de1, nt1), patcher, exceptions);
-    assertThat(result).isEmpty();
+    result.stream().map(Hymn::getFlattenedLyrics).forEach(c -> Assertions.assertEquals(c, "patched"));
+    result.stream().map(Hymn::getTitle).forEach(c -> Assertions.assertEquals(c, "also patched"));
     assertThat(errors).isEmpty();
   }
 
