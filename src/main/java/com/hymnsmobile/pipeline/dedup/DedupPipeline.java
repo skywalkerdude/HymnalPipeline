@@ -8,10 +8,7 @@ import com.hymnsmobile.pipeline.models.*;
 import org.apache.commons.text.similarity.LevenshteinDistance;
 
 import javax.inject.Inject;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -39,6 +36,10 @@ public class DedupPipeline {
             .setUnder5(DuplicationResult.newBuilder().setCount(0))
             .setUnder10(DuplicationResult.newBuilder().setCount(0))
             .setUnder50(DuplicationResult.newBuilder().setCount(0));
+    List<Duplication> noDifference = new ArrayList<>();
+    List<Duplication> under5 = new ArrayList<>();
+    List<Duplication> under10 = new ArrayList<>();
+    List<Duplication> under50 = new ArrayList<>();
     for (Hymn hymn1 : hymns) {
       Hymn duplicateHymn = null;
       int leastDistance = Integer.MAX_VALUE;
@@ -71,21 +72,21 @@ public class DedupPipeline {
           duplicateHymn = hymn2;
         }
       }
-
-      DuplicationResult.Builder duplicationResult = null;
+// TODO 25 is a good threshold
+      List<Duplication> listToAddTo = null;
       if (leastDistance < 50) {
-        duplicationResult = builder.getUnder50Builder();
+        listToAddTo = under50;
       }
       if (leastDistance < 10) {
-        duplicationResult = builder.getUnder10Builder();
+        listToAddTo = under10;
       }
       if (leastDistance < 5) {
-        duplicationResult = builder.getUnder5Builder();
+        listToAddTo = under5;
       }
       if (leastDistance == 0) {
-        duplicationResult = builder.getNoDifferenceBuilder();
+        listToAddTo = noDifference;
       }
-      if (duplicationResult == null) {
+      if (listToAddTo == null) {
         continue;
       }
 
@@ -100,9 +101,7 @@ public class DedupPipeline {
 
       // Make sure the duplication doesn't already exist
       List<Set<SongReference>> existingReferences =
-          duplicationResult
-              .getDuplicationsList()
-              .stream()
+          listToAddTo.stream()
               .map(d -> Stream.concat(d.getReference1List().stream(),
                                       d.getReference2List().stream())
                               .collect(Collectors.toSet()))
@@ -114,19 +113,17 @@ public class DedupPipeline {
         continue;
       }
 
-      duplicationResult.setCount(duplicationResult.getCount() + 1);
-      duplicationResult.addDuplications(duplication);
+      listToAddTo.add(duplication);
     }
 
-    builder.getUnder5Builder()
-           .getDuplicationsList()
-           .sort(Comparator.comparingInt(Duplication::getDistance));
-    builder.getUnder10Builder()
-           .getDuplicationsList()
-           .sort(Comparator.comparingInt(Duplication::getDistance));
-    builder.getUnder50Builder()
-           .getDuplicationsList()
-           .sort(Comparator.comparingInt(Duplication::getDistance));
+    under5.sort(Comparator.comparingInt(Duplication::getDistance));
+    under10.sort(Comparator.comparingInt(Duplication::getDistance));
+    under50.sort(Comparator.comparingInt(Duplication::getDistance));
+
+    builder.getNoDifferenceBuilder().setCount(noDifference.size()).addAllDuplications(noDifference);
+    builder.getUnder5Builder().setCount(under5.size()).addAllDuplications(under5);
+    builder.getUnder10Builder().setCount(under10.size()).addAllDuplications(under10);
+    builder.getUnder50Builder().setCount(under50.size()).addAllDuplications(under50);
 
     LOGGER.info("Deduplication completed");
     return builder.build();
