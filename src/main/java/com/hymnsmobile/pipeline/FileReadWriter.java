@@ -27,11 +27,11 @@ public class FileReadWriter {
   public Optional<File> readLargestFilePath(String path, Optional<String> fileMask) {
     File directory = new File(path);
     LOGGER.fine(String.format("Reading files from %s", directory.getName()));
-    File[] hymnalNetFiles = directory.listFiles();
-    if (hymnalNetFiles == null) {
+    File[] files = directory.listFiles();
+    if (files == null) {
       throw new IllegalArgumentException(String.format("invalid file path: %s", path));
     }
-    return ImmutableList.copyOf(hymnalNetFiles).stream()
+    return ImmutableList.copyOf(files).stream()
         .filter(file -> fileMask.map(mask -> file.getName().matches(mask)).orElse(true))
         .max(Comparator.comparing(File::getName));
   }

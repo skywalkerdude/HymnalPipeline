@@ -19,8 +19,15 @@ message DuplicationResult {
 
 message Duplication {
   int32 distance = 1;
-  repeated SongReference reference1 = 2;
-  repeated SongReference reference2 = 3;
-  Hymn hymn1 = 4;
-  Hymn hymn2 = 5;
+  DuplicateSong song1 = 2;
+  DuplicateSong song2 = 3;
+}
+
+message DuplicateSong {
+  int32 songId = 1;
+  repeated SongReference references = 2;
+  Language language = 3;
+  string flattened_lyrics = 4;
+  // Songs that are exempt from being duplicates of this song.
+  repeated SongReference exemptions = 5;
 }

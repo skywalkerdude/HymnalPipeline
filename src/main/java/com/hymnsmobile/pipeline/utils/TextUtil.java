@@ -1,7 +1,5 @@
 package com.hymnsmobile.pipeline.utils;
 
-import static com.google.gson.stream.JsonToken.END_DOCUMENT;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -12,11 +10,14 @@ import com.google.gson.stream.MalformedJsonException;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 import com.google.protobuf.util.JsonFormat;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.List;
 import java.util.Map;
+
+import static com.google.gson.stream.JsonToken.END_DOCUMENT;
 
 public class TextUtil {
 

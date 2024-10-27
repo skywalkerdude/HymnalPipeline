@@ -23,6 +23,7 @@ import com.hymnsmobile.pipeline.songbase.dagger.SongbasePipelineComponent;
 import com.hymnsmobile.pipeline.storage.StoragePipeline;
 import com.hymnsmobile.pipeline.storage.dagger.StorageComponent;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
+import org.apache.commons.lang3.tuple.Pair;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -86,12 +87,12 @@ public class Pipeline {
     mergedHymns = mergePipeline.mergeSongbase(songbasePipeline.getSongbaseHymns(), mergedHymns);
     LOGGER.info("Merging completed at " + DateTimeFormatter.ISO_LOCAL_TIME.format(LocalDateTime.now()));
 
-    DuplicationResults duplicationResults = dedupPipeline.run(mergedHymns);
+    Pair<ImmutableList<Hymn>, DuplicationResults> dedupResults = dedupPipeline.run(mergedHymns);
 
     ImmutableList<PipelineError> allErrors = mergePipeline.mergeErrors(
         hymnalNetPipeline.getErrors(), h4aPipeline.getErrors(), songbasePipeline.getErrors(),
         mergePipeline.getErrors(), dedupPipeline.getErrors());
-    storagePipeline.run(mergedHymns, allErrors, duplicationResults);
+    storagePipeline.run(dedupResults.getLeft(), allErrors, dedupResults.getRight());
 
     LocalDateTime endTime = LocalDateTime.now();
     Duration timeTaken = Duration.between(startTime, endTime);
