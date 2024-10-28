@@ -23,7 +23,7 @@ import java.util.Map.Entry;
 import java.util.Optional;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
-import static com.hymnsmobile.pipeline.storage.DatabaseWriter.DATABASE_VERSION;
+import static com.hymnsmobile.pipeline.storage.StoragePipeline.DATABASE_VERSION;
 
 public class SongbaseDiffer {
 

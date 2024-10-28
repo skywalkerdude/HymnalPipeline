@@ -3,38 +3,31 @@ package com.hymnsmobile.pipeline.storage;
 import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.SongReference;
 import com.hymnsmobile.pipeline.storage.dagger.StorageScope;
-import dagger.Lazy;
 
 import javax.inject.Inject;
-import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 import java.time.ZonedDateTime;
 
-import static com.hymnsmobile.pipeline.utils.TextUtil.*;
+import static com.hymnsmobile.pipeline.utils.TextUtil.join;
+import static com.hymnsmobile.pipeline.utils.TextUtil.serialize;
 
 @StorageScope
 public class DatabaseWriter {
 
-  private static final String DATABASE_PATH_FORMAT = "jdbc:sqlite:%s/hymnaldb-v%d.sqlite";
-  public static final int DATABASE_VERSION = 28;
-
-  private final Lazy<File> outputDirectory;
   private final ZonedDateTime currentTime;
 
   @Inject
-  public DatabaseWriter(Lazy<File> outputDirectory, ZonedDateTime currentTime) {
+  public DatabaseWriter(ZonedDateTime currentTime) {
     this.currentTime = currentTime;
-    this.outputDirectory = outputDirectory;
   }
 
-  Connection createDatabase() {
+  Connection createDatabase(String databasePath, int databaseVersion) {
     try {
       Class.forName("org.sqlite.JDBC");
-      Connection connection = DriverManager.getConnection(
-          String.format(DATABASE_PATH_FORMAT, outputDirectory.get().getPath(), DATABASE_VERSION));
+      Connection connection = DriverManager.getConnection(databasePath);
       connection.createStatement()
-          .execute(String.format("PRAGMA user_version = %d", DATABASE_VERSION));
+          .execute(String.format("PRAGMA user_version = %d", databaseVersion));
 
       // SONG_IDS table
       connection.createStatement().execute(
@@ -112,7 +105,7 @@ public class DatabaseWriter {
     connection.close();
   }
 
-  void writeHymn(Connection connection, Hymn hymn)
+  void writeHymn(Connection connection, Hymn hymn, boolean writeBinaryProtos)
       throws SQLException, IOException {
     PreparedStatement insertStatement = connection.prepareStatement(
         "INSERT INTO SONG_DATA ("
@@ -126,8 +119,13 @@ public class DatabaseWriter {
         Statement.RETURN_GENERATED_KEYS);
     insertStatement.setInt(1, hymn.getId());
     insertStatement.setString(2, stripHymnColon(hymn.getTitle()));
-    insertStatement.setString(3, toJson(hymn.getLyricsList()));
-    insertStatement.setString(4, toJson(hymn.getInlineChordsList()));
+    if (writeBinaryProtos) {
+      insertStatement.setBytes(3, hymn.getLyrics().toByteArray());
+      insertStatement.setBytes(4,  hymn.getInlineChords().toByteArray());
+    } else {
+      insertStatement.setString(3, hymn.getLyrics().toString());
+      insertStatement.setString(4, hymn.getInlineChords().toString());
+    }
     insertStatement.setString(5, join(hymn.getCategoryList()));
     insertStatement.setString(6, join(hymn.getSubCategoryList()));
     insertStatement.setString(7, join(hymn.getAuthorList()));
@@ -137,11 +135,19 @@ public class DatabaseWriter {
     insertStatement.setString(11, join(hymn.getMeterList()));
     insertStatement.setString(12, join(hymn.getScripturesList()));
     insertStatement.setString(13, join(hymn.getHymnCodeList()));
-    insertStatement.setString(14, strMapToJson(hymn.getMusicMap()));
-    insertStatement.setString(15, strMapToJson(hymn.getSvgSheetMap()));
-    insertStatement.setString(16, strMapToJson(hymn.getPdfSheetMap()));
-    insertStatement.setString(17, toJson(hymn.getLanguagesList()));
-    insertStatement.setString(18, toJson(hymn.getRelevantsList()));
+    if (writeBinaryProtos) {
+      insertStatement.setBytes(14, hymn.getMusic().toByteArray());
+      insertStatement.setBytes(15, hymn.getSvgSheet().toByteArray());
+      insertStatement.setBytes(16, hymn.getPdfSheet().toByteArray());
+      insertStatement.setBytes(17, serialize(hymn.getLanguagesList()));
+      insertStatement.setBytes(18, serialize(hymn.getRelevantsList()));
+    } else {
+      insertStatement.setString(14, hymn.getMusic().toString());
+      insertStatement.setString(15, hymn.getSvgSheet().toString());
+      insertStatement.setString(16, hymn.getPdfSheet().toString());
+      insertStatement.setString(17, hymn.getLanguagesList().toString());
+      insertStatement.setString(18, hymn.getLanguagesList().toString());
+    }
     insertStatement.setString(19, hymn.getFlattenedLyrics());
     insertStatement.setString(20, hymn.getLanguage().name());
     insertStatement.execute();

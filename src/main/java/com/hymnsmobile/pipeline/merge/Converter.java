@@ -1,8 +1,8 @@
 package com.hymnsmobile.pipeline.merge;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.protobuf.Descriptors.Descriptor;
 import com.google.protobuf.Descriptors.FieldDescriptor;
+import com.google.protobuf.DynamicMessage;
 import com.google.protobuf.MapEntry;
 import com.hymnsmobile.pipeline.h4a.models.H4aHymn;
 import com.hymnsmobile.pipeline.h4a.models.H4aKey;
@@ -28,7 +28,6 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
 import static com.hymnsmobile.pipeline.merge.HymnType.*;
@@ -258,7 +257,7 @@ public class Converter {
         .setLanguage(getLanguage(toSongReference(key)))
         .addProvenance("hymnal.net");
 
-    hymn.getLyricsList().forEach(verse -> builder.addLyrics(toVerse(key, verse)));
+    hymn.getLyricsList().forEach(verse -> builder.getLyricsBuilder().addVerses(toVerse(key, verse)));
 
     hymn.getMetaDataList().forEach(metaDatum -> {
       String name = metaDatum.getName();
@@ -302,23 +301,26 @@ public class Converter {
           || metaDatumType.get() == MetaDatumType.SVG_SHEET
           || metaDatumType.get() == MetaDatumType.PDF_SHEET) {
 
+        DynamicMessage.Builder messageBuilder = DynamicMessage.newBuilder(field.getMessageType());
+        FieldDescriptor mapField = messageBuilder.getDescriptorForType().getFields().get(0);
+
         metaDatum.getDataList().forEach(datum -> {
           String value = datum.getValue();
           String url = datum.getPath();
 
-          Descriptor descriptor = field.getMessageType();
-          MapEntry<String, String> entry = MapEntry.newDefaultInstance(descriptor,
+          MapEntry<String, String> entry = MapEntry.newDefaultInstance(mapField.getMessageType(),
               com.google.protobuf.WireFormat.FieldType.STRING, value,
               com.google.protobuf.WireFormat.FieldType.STRING, url);
-          builder.addRepeatedField(field, entry);
+          messageBuilder.addRepeatedField(mapField, entry);
         });
+        builder.setField(field, messageBuilder.build());
       } else {
         metaDatum.getDataList().stream().map(Datum::getValue)
             .forEach(value -> builder.addRepeatedField(field, value));
       }
     });
 
-    builder.setFlattenedLyrics(flattenLyrics(builder.getLyricsList()));
+    builder.setFlattenedLyrics(flattenLyrics(builder.getLyrics().getVersesList()));
     LOGGER.fine(String.format("%s successfully converted", key));
     return builder.build();
   }
@@ -361,7 +363,7 @@ public class Converter {
         .setId(nextHymnId++)
         .addReferences(toSongReference(hymn.getId()))
         .setTitle(hymn.getFirstStanzaLine())
-        .addAllLyrics(hymn.getVersesList())
+        .setLyrics(Lyrics.newBuilder().addAllVerses(hymn.getVersesList()))
         .setLanguage(getLanguage(toSongReference(hymn.getId())))
         .addProvenance("h4a");
 
@@ -393,10 +395,10 @@ public class Converter {
       builder.addHymnCode(hymn.getHymnCode());
     }
     if (hymn.hasPianoSvg() && !TextUtil.isEmpty(hymn.getPianoSvg())) {
-      builder.putSvgSheet("Piano", hymn.getPianoSvg());
+      builder.getSvgSheetBuilder().putSvgSheet("Piano", hymn.getPianoSvg());
     }
     if (hymn.hasGuitarSvg() && !TextUtil.isEmpty(hymn.getGuitarSvg())) {
-      builder.putSvgSheet("Guitar", hymn.getGuitarSvg());
+      builder.getSvgSheetBuilder().putSvgSheet("Guitar", hymn.getGuitarSvg());
     }
 
     hymn.getRelatedList().stream()
@@ -410,7 +412,7 @@ public class Converter {
         builder.addLanguages(parentReference);
       }
     }
-    builder.setFlattenedLyrics(flattenLyrics(builder.getLyricsList()));
+    builder.setFlattenedLyrics(flattenLyrics(builder.getLyrics().getVersesList()));
     return builder.build();
   }
 
@@ -422,7 +424,7 @@ public class Converter {
         = Hymn.newBuilder()
               .setId(nextHymnId++)
               .setLanguage(Language.RUSSIAN)
-              .addAllLyrics(hymn.getLyricsList())
+              .setLyrics(Lyrics.newBuilder().addAllVerses(hymn.getLyricsList()))
               .addReferences(SongReference.newBuilder()
                                           .setHymnType(RUSSIAN.abbreviatedValue)
                                           .setHymnNumber(String.valueOf(hymn.getNumber())))
@@ -430,9 +432,9 @@ public class Converter {
               .addCategory(hymn.getCategory())
               .addSubCategory(hymn.getSubCategory())
               .addMeter(hymn.getMeter())
-              .addLanguages(hymn.getParent())
               .addProvenance("russian");
-    builder.setFlattenedLyrics(flattenLyrics(builder.getLyricsList()));
+    builder.addLanguages(hymn.getParent());
+    builder.setFlattenedLyrics(flattenLyrics(builder.getLyrics().getVersesList()));
     return builder.build();
   }
 
@@ -442,7 +444,7 @@ public class Converter {
         .addAllReferences(
             hymn.getKeyList().stream().map(this::toSongReference).collect(toImmutableList()))
         .setTitle(hymn.getTitle())
-        .addAllInlineChords(createInlineChords(hymn.getLyrics()));
+        .setInlineChords(InlineChords.newBuilder().addAllLines(createInlineChords(hymn.getLyrics())));
 
     // Check to see if there are mismatched languages
     Set<Language> languages =
@@ -456,7 +458,7 @@ public class Converter {
               .build());
     }
 
-    builder.setFlattenedLyrics(flattenInlineChords(builder.getInlineChordsList()));
+    builder.setFlattenedLyrics(flattenInlineChords(builder.getInlineChords().getLinesList()));
     return builder.build();
   }
 

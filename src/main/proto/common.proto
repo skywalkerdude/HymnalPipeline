@@ -8,7 +8,7 @@ message Hymn {
   int32 id = 1;
   repeated SongReference references = 2;
   string title = 3;
-  repeated Verse lyrics = 4;
+  Lyrics lyrics = 4;
   repeated string category = 5;
   repeated string sub_category = 6;
   repeated string author = 7;
@@ -18,12 +18,12 @@ message Hymn {
   repeated string meter = 11;
   repeated string scriptures = 12;
   repeated string hymn_code = 13;
-  map<string, string> music = 14;
-  map<string, string> svg_sheet = 15;
-  map<string, string> pdf_sheet = 16;
+  Music music = 14;
+  SvgSheet svg_sheet = 15;
+  PdfSheet pdf_sheet = 16;
   repeated SongReference languages = 21;
   repeated SongReference relevants = 22;
-  repeated ChordLine inline_chords = 19;
+  InlineChords inline_chords = 19;
   repeated string provenance = 20;
   string flattened_lyrics = 23; // column with just the text, used for de-duping and recommendations.
   Language language = 24;
@@ -40,6 +40,10 @@ message SongLink {
   SongReference reference = 2;
 }
 
+message Lyrics {
+  repeated Verse verses = 1;
+}
+
 message Verse {
   string verse_type = 1;
   repeated Line lines = 2;
@@ -50,13 +54,29 @@ message Line {
   optional string transliteration = 2;
 }
 
+message InlineChords {
+  repeated ChordLine lines = 1;
+}
+
+message ChordLine {
+  repeated ChordWord chord_words = 1;
+}
+
 message ChordWord {
   string word = 1;
   optional string chord = 2;
 }
 
-message ChordLine {
-  repeated ChordWord chord_words = 1;
+message Music {
+  map<string, string> music = 1;
+}
+
+message SvgSheet {
+  map<string, string> svg_sheet = 1;
+}
+
+message PdfSheet {
+  map<string, string> pdf_sheet = 1;
 }
 
 message PipelineErrors {

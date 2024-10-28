@@ -98,8 +98,10 @@ public class MergePipeline {
       // Set the parent to also reference the Russian hymn.
       SongReference parentReference = russianHymn.getParent();
       Hymn.Builder parent = getHymnFrom(parentReference, builders).orElseThrow();
-      parent.addLanguages(SongReference.newBuilder().setHymnType(HymnType.RUSSIAN.abbreviatedValue)
-          .setHymnNumber(String.valueOf(russianHymn.getNumber())).build());
+      parent.addLanguages(
+          SongReference.newBuilder()
+              .setHymnType(HymnType.RUSSIAN.abbreviatedValue)
+              .setHymnNumber(String.valueOf(russianHymn.getNumber())).build());
     });
     LOGGER.info("Sanitizing Russian");
     return sanitizationPipeline.sanitize(

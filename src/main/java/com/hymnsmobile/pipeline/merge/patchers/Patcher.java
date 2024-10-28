@@ -1,7 +1,5 @@
 package com.hymnsmobile.pipeline.merge.patchers;
 
-import static com.google.common.collect.ImmutableList.toImmutableList;
-
 import com.google.common.collect.ImmutableList;
 import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.hymnsmobile.pipeline.merge.HymnType;
@@ -17,8 +15,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static com.google.common.collect.ImmutableList.toImmutableList;
 
 /**
  * Performs one-off patches to the set of hymns from Hymns For Android that are unfixable with a

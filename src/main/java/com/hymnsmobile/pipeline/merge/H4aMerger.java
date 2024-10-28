@@ -196,7 +196,7 @@ public class H4aMerger {
 
       // We also fix the lyrics by nuking the existing lyrics and just using the new German lyrics.
       // TODO add some validation here (verse lengths, verse types, etc.)
-      germanSongs.get(0).clearLyrics().addAllLyrics(h4aGermanHymn.getVersesList());
+      germanSongs.get(0).clearLyrics().setLyrics(Lyrics.newBuilder().addAllVerses(h4aGermanHymn.getVersesList()));
     } else if (germanSongs.isEmpty()) {
       // This is a new song, so add it into the list
       builders.add(converter.toHymn(h4aGermanHymn).toBuilder());
@@ -206,8 +206,9 @@ public class H4aMerger {
 
     // Go through all the related and add Liederbuch as a related song
     relatedReferences.forEach(
-        relatedReference -> getHymnFrom(relatedReference, builders).orElseThrow()
-            .addLanguages(germanSongReference));
+        relatedReference ->
+            getHymnFrom(relatedReference, builders).orElseThrow()
+                .addLanguages(germanSongReference));
   }
 
   /**

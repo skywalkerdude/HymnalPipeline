@@ -6,9 +6,12 @@ import com.hymnsmobile.pipeline.merge.dagger.Merge;
 import com.hymnsmobile.pipeline.merge.dagger.MergeScope;
 import com.hymnsmobile.pipeline.merge.exceptions.Exceptions;
 import com.hymnsmobile.pipeline.merge.patchers.Patcher;
-import com.hymnsmobile.pipeline.models.*;
+import com.hymnsmobile.pipeline.models.Hymn;
+import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.PipelineError.ErrorType;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
+import com.hymnsmobile.pipeline.models.SongLink;
+import com.hymnsmobile.pipeline.models.SongReference;
 
 import javax.inject.Inject;
 import java.util.*;

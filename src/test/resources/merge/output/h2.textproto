@@ -9,18 +9,20 @@ references {
 title: "Glory be to God the Father"
 language: RUSSIAN
 lyrics {
-  verse_type: "verse"
-  lines {
-    line_content: "Glory, glory, glory, praise and adoration!"
-  }
-  lines {
-    line_content: "Hear the anthems swelling out thro’ all eternity!"
-  }
-  lines {
-    line_content: "Father, Son, and Spirit—God in revelation—",
-  }
-  lines {
-    line_content: "  Prostrate each soul before the Deity!"
+  verses {
+    verse_type: "verse"
+    lines {
+      line_content: "Glory, glory, glory, praise and adoration!"
+    }
+    lines {
+      line_content: "Hear the anthems swelling out thro’ all eternity!"
+    }
+    lines {
+      line_content: "Father, Son, and Spirit—God in revelation—",
+    }
+    lines {
+      line_content: "  Prostrate each soul before the Deity!"
+    }
   }
 }
 category: "Blessing of the Trinity"
