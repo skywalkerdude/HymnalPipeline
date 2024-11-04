@@ -316,3 +316,10 @@ errors {
   error_type: FETCH_EXCEPTION
   messages: "Exception thrown during fetch: hymn_type: \"cb\"\nhymn_number: \"1\"\n, a related song of hymn_type: \"h\"\nhymn_number: \"1\"\n"
 }
+errors {
+  source: HYMNAL_NET
+  severity: ERROR
+  error_type: FETCH_ERROR_NON_200
+  messages: "500"
+  messages: "error response found!"
+}

@@ -37,6 +37,7 @@ class FetcherTest {
   @BeforeEach
   public void setUp() throws IOException {
     lenient().doReturn(500).when(errorResponse).statusCode();
+    lenient().doReturn("error response found!").when(errorResponse).body();
 
     lenient().doReturn(200).when(h1).statusCode();
     lenient().doReturn(TestUtils.readText("src/test/resources/hymnalnet/input/_v2_hymn_h_1")).when(h1).body();
@@ -74,6 +75,7 @@ class FetcherTest {
     ImmutableList<HymnalNetKey> songsToFetch =
         ImmutableList.of(HymnalNetKey.newBuilder().setHymnType("h").setHymnNumber("1").build());
 
+    lenient().doReturn(null).when(errorResponse).body();
     doReturn(errorResponse)
         .when(client)
         .send(
@@ -93,6 +95,12 @@ class FetcherTest {
             .setSeverity(PipelineError.Severity.ERROR)
             .setErrorType(PipelineError.ErrorType.FETCH_ERROR)
             .addMessages("Failed to fetch: h/1")
+            .build(),
+        PipelineError.newBuilder()
+            .setSource(PipelineError.Source.HYMNAL_NET)
+            .setSeverity(PipelineError.Severity.ERROR)
+            .setErrorType(PipelineError.ErrorType.FETCH_ERROR_NON_200)
+            .addMessages("500")
             .build());
   }
 
@@ -114,7 +122,15 @@ class FetcherTest {
     target.fetchHymns();
 
     assertThat(hymnalNetJsons).isEmpty();
-    assertThat(errors).isEmpty();
+    assertThat(errors).containsExactly(
+        PipelineError.newBuilder()
+            .setSeverity(PipelineError.Severity.ERROR)
+            .setSource(PipelineError.Source.HYMNAL_NET)
+            .setErrorType(PipelineError.ErrorType.FETCH_ERROR_NON_200)
+            .addMessages("500")
+            .addMessages("error response found!")
+            .build()
+    );
   }
 
   @Test

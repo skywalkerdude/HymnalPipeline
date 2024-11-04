@@ -10,6 +10,7 @@ import com.hymnsmobile.pipeline.hymnalnet.models.MetaDatum;
 import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.PipelineError.ErrorType;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
+import com.hymnsmobile.pipeline.utils.TextUtil;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -168,6 +169,16 @@ public class Fetcher {
         client.send(HttpRequest.newBuilder().uri(buildUri(key)).build(), BodyHandlers.ofString());
 
     if (response.statusCode() != 200) {
+      PipelineError.Builder error =
+          PipelineError.newBuilder()
+              .setSource(PipelineError.Source.HYMNAL_NET)
+              .setSeverity(Severity.ERROR)
+              .setErrorType(ErrorType.FETCH_ERROR_NON_200)
+              .addMessages(String.valueOf(response.statusCode()));
+      if (!TextUtil.isEmpty(response.body())) {
+        error.addMessages(response.body());
+      }
+      errors.add(error.build());
       return Optional.empty();
     }
 
