@@ -11,192 +11,190 @@ references {
   hymn_number: "3"
 }
 title: "Father Abraham"
-inline_chords {
-  lines {
-    chord_words {
-      word: "Father"
-      chord: ""
-    }
-    chord_words {
-      word: "Abraham"
-      chord: "D"
-    }
+chord_lines {
+  chord_words {
+    word: "Father"
+    chords: ""
   }
-  lines {
-    chord_words {
-      word: "Has"
-      chord: ""
-    }
-    chord_words {
-      word: "many"
-      chord: ""
-    }
-    chord_words {
-      word: "sons"
-      chord: "A7"
-    }
+  chord_words {
+    word: "Abraham"
+    chords: "D"
   }
-  lines {
-    chord_words {
-      word: "Many"
-      chord: ""
-    }
-    chord_words {
-      word: "sons"
-      chord: ""
-    }
-    chord_words {
-      word: "has"
-      chord: ""
-    }
-    chord_words {
-      word: "father"
-      chord: ""
-    }
-    chord_words {
-      word: "Abraham"
-      chord: "D"
-    }
+}
+chord_lines {
+  chord_words {
+    word: "Has"
+    chords: ""
   }
-  lines {
-    chord_words {
-      word: "I"
-      chord: ""
-    }
-    chord_words {
-      word: "am"
-      chord: ""
-    }
-    chord_words {
-      word: "one"
-      chord: ""
-    }
-    chord_words {
-      word: "of"
-      chord: ""
-    }
-    chord_words {
-      word: "them"
-      chord: ""
-    }
-    chord_words {
-      word: "and"
-      chord: ""
-    }
-    chord_words {
-      word: "so"
-      chord: ""
-    }
-    chord_words {
-      word: "are"
-      chord: ""
-    }
-    chord_words {
-      word: "you"
-      chord: "G"
-    }
+  chord_words {
+    word: "many"
+    chords: ""
   }
-  lines {
-    chord_words {
-      word: "So"
-      chord: ""
-    }
-    chord_words {
-      word: "let\'s"
-      chord: "D"
-    }
-    chord_words {
-      word: "go"
-      chord: ""
-    }
-    chord_words {
-      word: "marching"
-      chord: "A7"
-    }
-    chord_words {
-      word: "on"
-      chord: "D"
-    }
+  chord_words {
+    word: "sons"
+    chords: "A7"
   }
-  lines {
-    chord_words {
-      word: " "
-    }
+}
+chord_lines {
+  chord_words {
+    word: "Many"
+    chords: ""
   }
-  lines {
-    chord_words {
-      word: "Left"
-    }
-    chord_words {
-      word: "foot\342\200\246"
-    }
-    chord_words {
-      word: "(Repeat)"
-    }
+  chord_words {
+    word: "sons"
+    chords: ""
   }
-  lines {
-    chord_words {
-      word: "Right"
-      chord: ""
-    }
-    chord_words {
-      word: "foot"
-      chord: ""
-    }
+  chord_words {
+    word: "has"
+    chords: ""
   }
-  lines {
-    chord_words {
-      word: "Left"
-      chord: ""
-    }
-    chord_words {
-      word: "arm"
-      chord: ""
-    }
+  chord_words {
+    word: "father"
+    chords: ""
   }
-  lines {
-    chord_words {
-      word: "Right"
-      chord: ""
-    }
-    chord_words {
-      word: "arm"
-      chord: ""
-    }
+  chord_words {
+    word: "Abraham"
+    chords: "D"
   }
-  lines {
-    chord_words {
-      word: "Nod"
-      chord: ""
-    }
-    chord_words {
-      word: "your"
-      chord: ""
-    }
-    chord_words {
-      word: "head"
-      chord: ""
-    }
+}
+chord_lines {
+  chord_words {
+    word: "I"
+    chords: ""
   }
-  lines {
-    chord_words {
-      word: "Turn"
-      chord: ""
-    }
-    chord_words {
-      word: "around"
-      chord: ""
-    }
+  chord_words {
+    word: "am"
+    chords: ""
   }
-  lines {
-    chord_words {
-      word: "Sit"
-      chord: ""
-    }
-    chord_words {
-      word: "Down!"
-      chord: ""
-    }
+  chord_words {
+    word: "one"
+    chords: ""
+  }
+  chord_words {
+    word: "of"
+    chords: ""
+  }
+  chord_words {
+    word: "them"
+    chords: ""
+  }
+  chord_words {
+    word: "and"
+    chords: ""
+  }
+  chord_words {
+    word: "so"
+    chords: ""
+  }
+  chord_words {
+    word: "are"
+    chords: ""
+  }
+  chord_words {
+    word: "you"
+    chords: "G"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "So"
+    chords: ""
+  }
+  chord_words {
+    word: "let\'s"
+    chords: "D"
+  }
+  chord_words {
+    word: "go"
+    chords: ""
+  }
+  chord_words {
+    word: "marching"
+    chords: "A7"
+  }
+  chord_words {
+    word: "on"
+    chords: "D"
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Left"
+  }
+  chord_words {
+    word: "foot\342\200\246"
+  }
+  chord_words {
+    word: "(Repeat)"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Right"
+    chords: ""
+  }
+  chord_words {
+    word: "foot"
+    chords: ""
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Left"
+    chords: ""
+  }
+  chord_words {
+    word: "arm"
+    chords: ""
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Right"
+    chords: ""
+  }
+  chord_words {
+    word: "arm"
+    chords: ""
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Nod"
+    chords: ""
+  }
+  chord_words {
+    word: "your"
+    chords: ""
+  }
+  chord_words {
+    word: "head"
+    chords: ""
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Turn"
+    chords: ""
+  }
+  chord_words {
+    word: "around"
+    chords: ""
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Sit"
+    chords: ""
+  }
+  chord_words {
+    word: "Down!"
+    chords: ""
   }
 }
 flattened_lyrics: "father abraham has many sons many sons has father abraham i am one of them and so are you so let\'s go marching on  left foot\342\200\246 (repeat) right foot left arm right arm nod your head turn around sit down!"

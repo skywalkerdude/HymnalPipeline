@@ -10,6 +10,7 @@ import com.hymnsmobile.pipeline.h4a.models.Youtube;
 import com.hymnsmobile.pipeline.models.Line;
 import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.Verse;
+import com.hymnsmobile.pipeline.models.VerseType;
 import com.hymnsmobile.pipeline.utils.TextUtil;
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
@@ -272,9 +273,9 @@ public class Reader {
     Verse.Builder verse = Verse.newBuilder();
 
     if ("chorus".equals(stanzaNumber)) {
-      verse.setVerseType("chorus");
+      verse.setVerseType(VerseType.CHORUS);
     } else {
-      verse.setVerseType("verse");
+      verse.setVerseType(VerseType.VERSE);
     }
 
     String[] lines = stanzaText.split("<br/>");

@@ -1,8 +1,8 @@
 package com.hymnsmobile.pipeline.storage;
 
-import com.hymnsmobile.pipeline.models.Hymn;
-import com.hymnsmobile.pipeline.models.SongReference;
 import com.hymnsmobile.pipeline.storage.dagger.StorageScope;
+import com.hymnsmobile.pipeline.storage.models.HymnEntity;
+import com.hymnsmobile.pipeline.storage.models.HymnIdentifierEntity;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -10,7 +10,6 @@ import java.sql.*;
 import java.time.ZonedDateTime;
 
 import static com.hymnsmobile.pipeline.utils.TextUtil.join;
-import static com.hymnsmobile.pipeline.utils.TextUtil.serialize;
 
 @StorageScope
 public class DatabaseWriter {
@@ -32,7 +31,7 @@ public class DatabaseWriter {
       // SONG_IDS table
       connection.createStatement().execute(
           "CREATE TABLE IF NOT EXISTS `SONG_IDS`("
-              + "`HYMN_TYPE` TEXT NOT NULL, "
+              + "`HYMN_TYPE` INTEGER NOT NULL, "
               + "`HYMN_NUMBER` TEXT NOT NULL, "
               + "`SONG_ID` INTEGER NOT NULL, "
               + "PRIMARY KEY (`HYMN_TYPE`, `HYMN_NUMBER`), "
@@ -61,9 +60,9 @@ public class DatabaseWriter {
               + "`SONG_META_DATA_SVG_SHEET_MUSIC` TEXT, "
               + "`SONG_META_DATA_PDF_SHEET_MUSIC` TEXT, "
               + "`SONG_META_DATA_LANGUAGES` TEXT, "
-              + "`SONG_META_DATA_RELEVANT` TEXT, "
+              + "`SONG_META_DATA_RELEVANTS` TEXT, "
               + "`FLATTENED_LYRICS` TEXT, "
-              + "`LANGUAGE` TEXT)");
+              + "`SONG_LANGUAGE` INTEGER)");
       connection.createStatement().execute("CREATE INDEX IF NOT EXISTS `index_SONG_DATA_ID` ON `SONG_DATA` (`ID`)");
 
       // SEARCH_VIRTUAL_SONG_DATA table
@@ -105,7 +104,7 @@ public class DatabaseWriter {
     connection.close();
   }
 
-  void writeHymn(Connection connection, Hymn hymn, boolean writeBinaryProtos)
+  void writeHymn(Connection connection, HymnEntity hymn, boolean writeBinaryProtos)
       throws SQLException, IOException {
     PreparedStatement insertStatement = connection.prepareStatement(
         "INSERT INTO SONG_DATA ("
@@ -114,14 +113,14 @@ public class DatabaseWriter {
             + "SONG_META_DATA_KEY, SONG_META_DATA_TIME, SONG_META_DATA_METER, "
             + "SONG_META_DATA_SCRIPTURES, SONG_META_DATA_HYMN_CODE, SONG_META_DATA_MUSIC, "
             + "SONG_META_DATA_SVG_SHEET_MUSIC, SONG_META_DATA_PDF_SHEET_MUSIC, "
-            + "SONG_META_DATA_LANGUAGES, SONG_META_DATA_RELEVANT, FLATTENED_LYRICS, LANGUAGE) "
+            + "SONG_META_DATA_LANGUAGES, SONG_META_DATA_RELEVANTS, FLATTENED_LYRICS, SONG_LANGUAGE) "
             + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
         Statement.RETURN_GENERATED_KEYS);
-    insertStatement.setInt(1, hymn.getId());
+    insertStatement.setLong(1, hymn.getId());
     insertStatement.setString(2, stripHymnColon(hymn.getTitle()));
     if (writeBinaryProtos) {
       insertStatement.setBytes(3, hymn.getLyrics().toByteArray());
-      insertStatement.setBytes(4,  hymn.getInlineChords().toByteArray());
+      insertStatement.setBytes(4, hymn.getInlineChords().toByteArray());
     } else {
       insertStatement.setString(3, hymn.getLyrics().toString());
       insertStatement.setString(4, hymn.getInlineChords().toString());
@@ -139,17 +138,17 @@ public class DatabaseWriter {
       insertStatement.setBytes(14, hymn.getMusic().toByteArray());
       insertStatement.setBytes(15, hymn.getSvgSheet().toByteArray());
       insertStatement.setBytes(16, hymn.getPdfSheet().toByteArray());
-      insertStatement.setBytes(17, serialize(hymn.getLanguagesList()));
-      insertStatement.setBytes(18, serialize(hymn.getRelevantsList()));
+      insertStatement.setBytes(17, hymn.getLanguages().toByteArray());
+      insertStatement.setBytes(18, hymn.getRelevants().toByteArray());
     } else {
       insertStatement.setString(14, hymn.getMusic().toString());
       insertStatement.setString(15, hymn.getSvgSheet().toString());
       insertStatement.setString(16, hymn.getPdfSheet().toString());
-      insertStatement.setString(17, hymn.getLanguagesList().toString());
-      insertStatement.setString(18, hymn.getLanguagesList().toString());
+      insertStatement.setString(17, hymn.getLanguages().toString());
+      insertStatement.setString(18, hymn.getRelevants().toString());
     }
     insertStatement.setString(19, hymn.getFlattenedLyrics());
-    insertStatement.setString(20, hymn.getLanguage().name());
+    insertStatement.setInt(20, hymn.getLanguage().getNumber());
     insertStatement.execute();
 
     try (ResultSet generatedKeys = insertStatement.getGeneratedKeys()) {
@@ -162,9 +161,9 @@ public class DatabaseWriter {
       }
       PreparedStatement songIdInsert = connection.prepareStatement(
           "INSERT INTO SONG_IDS (HYMN_TYPE, HYMN_NUMBER, SONG_ID) VALUES (?, ?, ?)");
-      for (SongReference songReference : hymn.getReferencesList()) {
-        songIdInsert.setString(1, songReference.getHymnType());
-        songIdInsert.setString(2, songReference.getHymnNumber());
+      for (HymnIdentifierEntity hymnIdentifier : hymn.getReferencesList()) {
+        songIdInsert.setInt(1, hymnIdentifier.getHymnType().getNumber());
+        songIdInsert.setString(2, hymnIdentifier.getHymnNumber());
         songIdInsert.setLong(3, id);
         songIdInsert.execute();
         songIdInsert.clearParameters();

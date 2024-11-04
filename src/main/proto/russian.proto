@@ -13,18 +13,18 @@ message RussianHymns {
 message RussianHymn {
   int32 number = 1;
   string title = 2;
-  repeated com.hymnsmobile.pipeline.models.Verse lyrics = 3;
+  repeated Verse lyrics = 3;
   string category = 4;
   string sub_category = 5;
   string meter = 6;
   com.hymnsmobile.pipeline.models.SongReference parent = 7;
 }
 
-message Lyrics {
-  repeated Verse verses = 1;
-}
-
 message Verse {
   string verse_type = 1;
-  repeated string verse_content = 2;
+  repeated com.hymnsmobile.pipeline.models.Line lines = 2;
+}
+
+message Lyrics {
+  repeated Verse verses = 1;
 }

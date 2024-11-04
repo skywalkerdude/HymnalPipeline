@@ -10,7 +10,6 @@ import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.PipelineError.ErrorType;
 import com.hymnsmobile.pipeline.models.PipelineError.Severity;
-import com.hymnsmobile.pipeline.models.SongLink;
 import com.hymnsmobile.pipeline.models.SongReference;
 
 import javax.inject.Inject;
@@ -84,7 +83,7 @@ public class SanitizationPipeline {
   }
 
   /**
-   * Generates aggregated sets of {@link SongLink}s that represent all links of a single song,
+   * Generates aggregated sets of {@link SongReference}s that represent all links of a single song,
    * described by the {@link FieldDescriptor}.
    */
   private Set<Set<SongReference>> generateSongLinkSets(
@@ -157,7 +156,7 @@ public class SanitizationPipeline {
   }
 
   /**
-   * Write the newly aggregated {@link SongLink} sets onto each hymn.
+   * Write the newly aggregated {@link SongReference} sets onto each hymn.
    */
   private void writeSongLinks(
       ImmutableList<Hymn.Builder> builders,

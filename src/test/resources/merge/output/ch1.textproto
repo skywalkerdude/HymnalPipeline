@@ -8,44 +8,42 @@ references {
 }
 title: "Hymn: 但願榮耀歸於聖父"
 language: CHINESE_TRADITIONAL
-lyrics {
-  verses {
-    verse_type: "verse"
-    lines {
-      line_content: "但願榮耀歸於聖父，"
-      transliteration: "dàn yuàn róng yào gūi yú shèng fù ，"
-    }
-    lines {
-      line_content: "並聖子基督，"
-      transliteration: "bìng shèng zǐ jī dū ，"
-    }
-    lines {
-      line_content: "且願榮耀歸於聖靈"
-      transliteration: "qiě yuàn róng yào gūi yú shèng líng"
-    }
-    lines {
-      line_content: "到永古。"
-      transliteration: "dào yǒng gǔ 。"
-    }
+verses {
+  verse_type: VERSE
+  lines {
+    line_content: "但願榮耀歸於聖父，"
+    transliteration: "dàn yuàn róng yào gūi yú shèng fù ，"
   }
-  verses {
-    verse_type: "verse"
-    lines {
-      line_content: "當我觀賞廣大創造－"
-      transliteration: "dāng wǒ guān shǎng guǎng dà chuàng zào －"
-    }
-    lines {
-      line_content: "神智所制訂，"
-      transliteration: "shén zhì suǒ zhì dìng ，"
-    }
-    lines {
-      line_content: "我靈受感，立獻敬拜，"
-      transliteration: "wǒ líng shòu gǎn ， lì xiàn jìng bài ，"
-    }
-    lines {
-      line_content: "並肅靜。"
-      transliteration: "bìng sù jìng 。"
-    }
+  lines {
+    line_content: "並聖子基督，"
+    transliteration: "bìng shèng zǐ jī dū ，"
+  }
+  lines {
+    line_content: "且願榮耀歸於聖靈"
+    transliteration: "qiě yuàn róng yào gūi yú shèng líng"
+  }
+  lines {
+    line_content: "到永古。"
+    transliteration: "dào yǒng gǔ 。"
+  }
+}
+verses {
+  verse_type: VERSE
+  lines {
+    line_content: "當我觀賞廣大創造－"
+    transliteration: "dāng wǒ guān shǎng guǎng dà chuàng zào －"
+  }
+  lines {
+    line_content: "神智所制訂，"
+    transliteration: "shén zhì suǒ zhì dìng ，"
+  }
+  lines {
+    line_content: "我靈受感，立獻敬拜，"
+    transliteration: "wǒ líng shòu gǎn ， lì xiàn jìng bài ，"
+  }
+  lines {
+    line_content: "並肅靜。"
+    transliteration: "bìng sù jìng 。"
   }
 }
 provenance: "hymnal.net"

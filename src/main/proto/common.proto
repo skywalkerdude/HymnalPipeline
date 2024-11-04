@@ -8,7 +8,7 @@ message Hymn {
   int32 id = 1;
   repeated SongReference references = 2;
   string title = 3;
-  Lyrics lyrics = 4;
+  repeated Verse verses = 4;
   repeated string category = 5;
   repeated string sub_category = 6;
   repeated string author = 7;
@@ -18,12 +18,12 @@ message Hymn {
   repeated string meter = 11;
   repeated string scriptures = 12;
   repeated string hymn_code = 13;
-  Music music = 14;
-  SvgSheet svg_sheet = 15;
-  PdfSheet pdf_sheet = 16;
+  map<string, string> music = 14;
+  map<string, string> svg_sheet = 15;
+  map<string, string> pdf_sheet = 16;
   repeated SongReference languages = 21;
   repeated SongReference relevants = 22;
-  InlineChords inline_chords = 19;
+  repeated ChordLine chord_lines = 19;
   repeated string provenance = 20;
   string flattened_lyrics = 23; // column with just the text, used for de-duping and recommendations.
   Language language = 24;
@@ -35,17 +35,17 @@ message SongReference {
   string hymn_number = 2;
 }
 
-message SongLink {
-  optional string name = 1;
-  SongReference reference = 2;
-}
-
-message Lyrics {
-  repeated Verse verses = 1;
+enum VerseType {
+  VERSE = 0;
+  CHORUS = 1;
+  OTHER = 2;
+  COPYRIGHT = 3;
+  NOTE = 4;
+  DO_NOT_DISPLAY = 5;
 }
 
 message Verse {
-  string verse_type = 1;
+  VerseType verse_type = 1;
   repeated Line lines = 2;
 }
 
@@ -64,7 +64,7 @@ message ChordLine {
 
 message ChordWord {
   string word = 1;
-  optional string chord = 2;
+  optional string chords = 2;
 }
 
 message Music {
@@ -85,26 +85,25 @@ message PipelineErrors {
 }
 
 enum Language {
-  UNKNOWN = 0;
-  ENGLISH = 1;
-  DUTCH = 2;
-  GERMAN = 3;
-  CHINESE_TRADITIONAL = 4;
-  CHINESE_SIMPLIFIED = 5;
-  CEBUANO = 6;
-  TAGALOG = 7;
-  FRENCH = 8;
-  SPANISH = 9;
-  KOREAN = 10;
-  JAPANESE = 11;
-  FARSI = 12;
-  RUSSIAN = 13;
-  PORTUGUESE = 14;
-  HEBREW = 15;
-  SLOVAK = 16;
-  ESTONIAN = 17;
-  ARABIC = 18;
-  INDONESIAN = 19;
+  ENGLISH = 0;
+  DUTCH = 1;
+  GERMAN = 2;
+  CHINESE_TRADITIONAL = 3;
+  CHINESE_SIMPLIFIED = 4;
+  CEBUANO = 5;
+  TAGALOG = 6;
+  FRENCH = 7;
+  SPANISH = 8;
+  KOREAN = 9;
+  JAPANESE = 10;
+  FARSI = 11;
+  RUSSIAN = 12;
+  PORTUGUESE = 13;
+  HEBREW = 14;
+  SLOVAK = 15;
+  ESTONIAN = 16;
+  ARABIC = 17;
+  INDONESIAN = 18;
 }
 
 // An error encountered during processing of the pipeline.

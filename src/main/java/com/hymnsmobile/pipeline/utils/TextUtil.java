@@ -11,7 +11,6 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 import com.google.protobuf.util.JsonFormat;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
@@ -27,18 +26,6 @@ public class TextUtil {
       return null;
     }
     return new Gson().toJson(stringMap);
-  }
-
-  public static <M extends Message> byte[] serialize(List<M> messages) throws IOException {
-    if (messages.isEmpty()) {
-      return new byte[]{};
-    }
-
-    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-    for (M message : messages) {
-      message.writeTo(stream);
-    }
-    return stream.toByteArray();
   }
 
   public static <M extends Message> String toJson(List<M> messages) throws IOException {

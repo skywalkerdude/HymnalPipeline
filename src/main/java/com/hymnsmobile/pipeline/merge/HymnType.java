@@ -37,7 +37,7 @@ public enum HymnType {
   BLUE_SONGBOOK("sb", Language.ENGLISH),
   LIEDBOEK("lbk", Language.DUTCH), // Dutch Hymnal
   // Uncategorized songbase songs.
-  SONGBASE_OTHER("sbx", Language.UNKNOWN);
+  SONGBASE_OTHER("sbx", Language.UNRECOGNIZED);
 
   /**
    * abbreviated value (eg: h, nt, ns, etc)

@@ -7,9 +7,8 @@ references {
   hymn_number: "60"
 }
 title: "Hymn: I’ve got the joy, joy, joy, joy"
-lyrics {
-  verses {
-  verse_type: "verse"
+verses {
+  verse_type: VERSE
   lines {
     line_content: "I’ve got the joy, joy, joy, joy"
   }
@@ -32,8 +31,8 @@ lyrics {
     line_content: "Down in my heart to stay."
   }
 }
-  verses {
-  verse_type: "verse"
+verses {
+  verse_type: VERSE
   lines {
     line_content: "And I’m so happy,"
   }
@@ -53,7 +52,6 @@ lyrics {
     line_content: "I’ve got the love of Jesus in my heart."
   }
 }
-}
 category: "Assurance and Joy of Salvation"
 sub_category: "General"
 author: "George Willis Cooke (1848-1923)"
@@ -65,42 +63,36 @@ hymn_code: "56717653321"
 scriptures: "Revelation 22"
 language: ENGLISH
 music {
-  music {
-    key: "MIDI"
-    value: "https://www.hymnal.net/Hymns/Children/midi/c0060.mid"
-  }
-  music {
-    key: "Tune (MIDI)"
-    value: "https://www.hymnal.net/Hymns/Children/midi/tunes/child0060_tune.midi"
-  }
-  music {
-    key: "mp3"
-    value: "https://www.hymnal.net/Hymns/Children/mp3/c0060.mp3"
-  }
+  key: "MIDI"
+  value: "https://www.hymnal.net/Hymns/Children/midi/c0060.mid"
+}
+music {
+  key: "Tune (MIDI)"
+  value: "https://www.hymnal.net/Hymns/Children/midi/tunes/child0060_tune.midi"
+}
+music {
+  key: "mp3"
+  value: "https://www.hymnal.net/Hymns/Children/mp3/c0060.mp3"
 }
 svg_sheet {
-  svg_sheet {
-    key: "Guitar"
-    value: "https://www.hymnal.net/Hymns/Children/svg/child0060_g.svg"
-  }
-  svg_sheet {
-    key: "Piano"
-    value: "https://www.hymnal.net/Hymns/Children/svg/child0060_p.svg"
-  }
+  key: "Guitar"
+  value: "https://www.hymnal.net/Hymns/Children/svg/child0060_g.svg"
+}
+svg_sheet {
+  key: "Piano"
+  value: "https://www.hymnal.net/Hymns/Children/svg/child0060_p.svg"
 }
 pdf_sheet {
-  pdf_sheet {
-    key: "Guitar"
-    value: "https://www.hymnal.net/Hymns/Children/pdfs/child0060_g.pdf"
-  }
-  pdf_sheet {
-    key: "Piano"
-    value: "https://www.hymnal.net/Hymns/Children/pdfs/child0060_p.pdf"
-  }
-  pdf_sheet {
-    key: "Text"
-    value: "https://www.hymnal.net/Hymns/Children/pdfs/child0060_gt.pdf"
-  }
+  key: "Guitar"
+  value: "https://www.hymnal.net/Hymns/Children/pdfs/child0060_g.pdf"
+}
+pdf_sheet {
+  key: "Piano"
+  value: "https://www.hymnal.net/Hymns/Children/pdfs/child0060_p.pdf"
+}
+pdf_sheet {
+  key: "Text"
+  value: "https://www.hymnal.net/Hymns/Children/pdfs/child0060_gt.pdf"
 }
 provenance: "hymnal.net"
 languages {

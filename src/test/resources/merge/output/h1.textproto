@@ -8,21 +8,19 @@ references {
 }
 title: "Glory be to God the Father"
 language: ENGLISH
-lyrics {
-  verses {
-    verse_type: "verse"
-    lines {
-      line_content: "Glory be to God the Father,"
-    }
-    lines {
-      line_content: "  And to Christ the \342\200\224 Son,"
-    }
-    lines {
-      line_content: "Glory to the Holy Spirit—"
-    }
-    lines {
-      line_content: "    Ever One."
-    }
+verses {
+  verse_type: VERSE
+  lines {
+    line_content: "Glory be to God the Father,"
+  }
+  lines {
+    line_content: "  And to Christ the \342\200\224 Son,"
+  }
+  lines {
+    line_content: "Glory to the Holy Spirit—"
+  }
+  lines {
+    line_content: "    Ever One."
   }
 }
 category: "Blessing of the Trinity"
@@ -35,14 +33,12 @@ meter: "8.5.8.3."
 scriptures: "Revelation 22"
 hymn_code: "5553216153222"
 svg_sheet {
-  svg_sheet {
-    key: "Guitar"
-    value: "https://www.hymnal.net/Hymns/Hymnal/svg/e0001_g.svg"
-  }
-  svg_sheet {
-    key: "Piano"
-    value: "https://www.hymnal.net/Hymns/Hymnal/svg/e0001_p.svg"
-  }
+  key: "Guitar"
+  value: "https://www.hymnal.net/Hymns/Hymnal/svg/e0001_g.svg"
+}
+svg_sheet {
+  key: "Piano"
+  value: "https://www.hymnal.net/Hymns/Hymnal/svg/e0001_p.svg"
 }
 provenance: "h4a"
 languages {

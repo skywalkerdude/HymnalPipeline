@@ -26,7 +26,7 @@ related {
   number: "457"
 }
 verses {
-  verse_type: "verse"
+  verse_type: VERSE
   lines {
     line_content: "What shall I give unto the Lord"
   }

@@ -85,7 +85,7 @@ public class SongbaseMerger {
           });
       // Set inline chords property only if there are chords found in the song
       if (Pattern.compile(CHORDS_PATTERN).matcher(songbaseHymn.getLyrics()).find()) {
-        matchingReference.get(0).getInlineChordsBuilder().addAllLines(songbaseBuilder.getInlineChords().getLinesList());
+        matchingReference.get(0).addAllChordLines(songbaseBuilder.getChordLinesList());
       }
     });
     return builders.stream().map(Hymn.Builder::build).collect(toImmutableList());

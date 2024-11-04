@@ -6,6 +6,7 @@ import com.hymnsmobile.pipeline.models.DuplicationResults;
 import com.hymnsmobile.pipeline.models.Hymn;
 import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.models.PipelineErrors;
+import com.hymnsmobile.pipeline.storage.models.HymnEntity;
 import dagger.Lazy;
 
 import javax.inject.Inject;
@@ -22,13 +23,15 @@ public class StoragePipeline {
   private static final String EXPANDED_DATABASE_PATH_FORMAT = "jdbc:sqlite:%s/hymnaldb-v%d-expanded.sqlite";
   public static final int DATABASE_VERSION = 28;
 
+  private final Converter converter;
   private final DatabaseWriter databaseWriter;
   private final Lazy<File> outputDirectory;
   private final FileReadWriter fileReadWriter;
 
   @Inject
-  public StoragePipeline(DatabaseWriter databaseWriter, Lazy<File> outputDirectory,
+  public StoragePipeline(Converter converter, DatabaseWriter databaseWriter, Lazy<File> outputDirectory,
       FileReadWriter fileReadWriter) {
+    this.converter = converter;
     this.databaseWriter = databaseWriter;
     this.fileReadWriter = fileReadWriter;
     this.outputDirectory = outputDirectory;
@@ -43,18 +46,20 @@ public class StoragePipeline {
 
     String databasePath = String.format(DATABASE_PATH_FORMAT, outputDirectory.get().getPath(), DATABASE_VERSION);
     Connection connection = databaseWriter.createDatabase(databasePath, DATABASE_VERSION);
-    for (Hymn hymn : hymns) {
-      databaseWriter.writeHymn(connection, hymn, true);
-    }
-    databaseWriter.closeDatabase(connection);
 
     String expandedDatabasePath =
         String.format(EXPANDED_DATABASE_PATH_FORMAT, outputDirectory.get().getPath(), DATABASE_VERSION);
     Connection expandedConnection = databaseWriter.createDatabase(expandedDatabasePath, DATABASE_VERSION);
+
     for (Hymn hymn : hymns) {
-      databaseWriter.writeHymn(expandedConnection, hymn, false);
+      HymnEntity entity = converter.convert(hymn);
+      databaseWriter.writeHymn(connection, entity, true);
+      databaseWriter.writeHymn(expandedConnection, entity, false);
     }
+
+    databaseWriter.closeDatabase(connection);
     databaseWriter.closeDatabase(expandedConnection);
+
     LOGGER.info("Storage pipeline starting");
   }
 
