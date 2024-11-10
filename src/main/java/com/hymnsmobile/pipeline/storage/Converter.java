@@ -1,17 +1,18 @@
 package com.hymnsmobile.pipeline.storage;
 
-import com.hymnsmobile.pipeline.merge.HymnType;
 import com.hymnsmobile.pipeline.models.*;
 import com.hymnsmobile.pipeline.storage.dagger.StorageScope;
+import com.hymnsmobile.pipeline.storage.models.Language;
+import com.hymnsmobile.pipeline.storage.models.VerseType;
 import com.hymnsmobile.pipeline.storage.models.*;
 
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Map;
 
-import static com.hymnsmobile.pipeline.storage.models.HymnTypeEntity.*;
-import static com.hymnsmobile.pipeline.storage.models.LanguageEntity.UNRECOGNIZED;
-import static com.hymnsmobile.pipeline.storage.models.LanguageEntity.*;
+import static com.hymnsmobile.pipeline.storage.models.HymnType.*;
+import static com.hymnsmobile.pipeline.storage.models.Language.*;
+import static com.hymnsmobile.pipeline.storage.models.VerseType.*;
 
 @StorageScope
 public class Converter {
@@ -27,7 +28,7 @@ public class Converter {
         .setTitle(hymn.getTitle())
         .setLyrics(convertLyrics(hymn.getVersesList()))
         .addAllCategory(hymn.getCategoryList())
-        .addAllSubCategory(hymn.getSubCategoryList())
+        .addAllSubcategory(hymn.getSubCategoryList())
         .addAllAuthor(hymn.getAuthorList())
         .addAllComposer(hymn.getComposerList())
         .addAllKey(hymn.getKeyList())
@@ -49,24 +50,24 @@ public class Converter {
 
   private HymnIdentifierEntity convert(SongReference songReference) {
     return HymnIdentifierEntity.newBuilder()
-        .setHymnType(convert(HymnType.fromString(songReference.getHymnType())))
+        .setHymnType(convert(com.hymnsmobile.pipeline.merge.HymnType.fromString(songReference.getHymnType())))
         .setHymnNumber(songReference.getHymnNumber())
         .build();
   }
 
-  private HymnTypeEntity convert(HymnType hymnType) {
+  private HymnType convert(com.hymnsmobile.pipeline.merge.HymnType hymnType) {
     return switch (hymnType) {
-      case CLASSIC_HYMN -> CLASSIC_HYMN;
+      case CLASSIC_HYMN -> CLASSIC;
       case NEW_TUNE -> NEW_TUNE;
       case NEW_SONG -> NEW_SONG;
-      case CHILDREN_SONG -> CHILDREN_SONG;
+      case CHILDREN_SONG -> CHILDREN;
       case HOWARD_HIGASHI -> HOWARD_HIGASHI;
       case DUTCH -> DUTCH;
       case GERMAN -> GERMAN;
       case CHINESE -> CHINESE;
       case CHINESE_SIMPLIFIED -> CHINESE_SIMPLIFIED;
-      case CHINESE_SUPPLEMENTAL -> CHINESE_SUPPLEMENTAL;
-      case CHINESE_SUPPLEMENTAL_SIMPLIFIED -> CHINESE_SUPPLEMENTAL_SIMPLIFIED;
+      case CHINESE_SUPPLEMENTAL -> CHINESE_SUPPLEMENT;
+      case CHINESE_SUPPLEMENTAL_SIMPLIFIED -> CHINESE_SUPPLEMENT_SIMPLIFIED;
       case CEBUANO -> CEBUANO;
       case TAGALOG -> TAGALOG;
       case FRENCH -> FRENCH;
@@ -98,9 +99,21 @@ public class Converter {
 
   private VerseEntity convert(Verse verse) {
     return VerseEntity.newBuilder()
-        .setVerseType(verse.getVerseType())
+        .setVerseType(convert(verse.getVerseType()))
         .addAllLines(verse.getLinesList().stream().map(this::convert).toList())
         .build();
+  }
+
+  private VerseType convert(com.hymnsmobile.pipeline.models.VerseType verseType) {
+    return switch (verseType) {
+      case VERSE -> VERSE;
+      case CHORUS -> CHORUS;
+      case OTHER -> OTHER;
+      case COPYRIGHT -> COPYRIGHT;
+      case NOTE -> NOTE;
+      case DO_NOT_DISPLAY -> DO_NOT_DISPLAY;
+      case UNRECOGNIZED -> VerseType.UNRECOGNIZED;
+    };
   }
 
   private LineEntity convert(Line line) {
@@ -163,7 +176,7 @@ public class Converter {
     return builder.build();
   }
 
-  private LanguageEntity convert(Language language) {
+  private Language convert(com.hymnsmobile.pipeline.models.Language language) {
     return switch (language) {
       case ENGLISH -> LANGUAGE_ENGLISH;
       case DUTCH -> LANGUAGE_DUTCH;
@@ -184,7 +197,7 @@ public class Converter {
       case ESTONIAN -> LANGUAGE_ESTONIAN;
       case ARABIC -> LANGUAGE_ARABIC;
       case INDONESIAN -> LANGUAGE_INDONESIAN;
-      case UNRECOGNIZED -> UNRECOGNIZED;
+      case UNRECOGNIZED -> Language.UNRECOGNIZED;
     };
   }
 }

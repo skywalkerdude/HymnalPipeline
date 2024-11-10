@@ -1,11 +1,15 @@
 package com.hymnsmobile.pipeline.storage;
 
+import com.hymnsmobile.pipeline.models.Language;
 import com.hymnsmobile.pipeline.models.*;
+import com.hymnsmobile.pipeline.storage.models.VerseType;
 import com.hymnsmobile.pipeline.storage.models.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static com.hymnsmobile.pipeline.storage.models.LanguageEntity.LANGUAGE_FARSI;
+import static com.hymnsmobile.pipeline.storage.models.HymnType.NEW_SONG;
+import static com.hymnsmobile.pipeline.storage.models.HymnType.NEW_TUNE;
+import static com.hymnsmobile.pipeline.storage.models.Language.LANGUAGE_FARSI;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -26,13 +30,13 @@ class ConverterTest {
         .addReferences(SongReference.newBuilder().setHymnType("ch").setHymnNumber("3"))
         .setTitle("title")
         .addVerses(Verse.newBuilder()
-                .setVerseType(VerseType.VERSE)
+                .setVerseType(com.hymnsmobile.pipeline.models.VerseType.VERSE)
                 .addLines(Line.newBuilder().setLineContent("no transliteration"))
                 .addLines(Line.newBuilder().setLineContent("empty transliteration").setTransliteration(""))
                 .addLines(Line.newBuilder().setLineContent("blank transliteration").setTransliteration(" "))
                 .addLines(Line.newBuilder().setLineContent("transliteration").setTransliteration("transliteration")))
         .addVerses(Verse.newBuilder()
-                .setVerseType(VerseType.CHORUS)
+                .setVerseType(com.hymnsmobile.pipeline.models.VerseType.CHORUS)
                 .addLines(Line.newBuilder().setLineContent("chorus line 1"))
                 .addLines(Line.newBuilder().setLineContent("chorus line 2"))
                 .addLines(Line.newBuilder().setLineContent("chorus line 3"))
@@ -69,8 +73,8 @@ class ConverterTest {
     HymnEntity hymnEntity = HymnEntity
         .newBuilder()
         .setId(1)
-        .addReferences(HymnIdentifierEntity.newBuilder().setHymnType(HymnTypeEntity.CLASSIC_HYMN).setHymnNumber("2"))
-        .addReferences(HymnIdentifierEntity.newBuilder().setHymnType(HymnTypeEntity.CHINESE).setHymnNumber("3"))
+        .addReferences(HymnIdentifierEntity.newBuilder().setHymnType(HymnType.CLASSIC).setHymnNumber("2"))
+        .addReferences(HymnIdentifierEntity.newBuilder().setHymnType(HymnType.CHINESE).setHymnNumber("3"))
         .setTitle("title")
         .setLyrics(LyricsEntity.newBuilder()
                 .addVerses(
@@ -90,8 +94,8 @@ class ConverterTest {
         .addCategory("category 1")
         .addCategory("category 1") // duplicate category
         .addCategory("category 2")
-        .addSubCategory("subcategory 1")
-        .addSubCategory("subcategory 2")
+        .addSubcategory("subcategory 1")
+        .addSubcategory("subcategory 2")
         .addAuthor("author 1")
         .addComposer("composer 1")
         .addKey("key 1")
@@ -105,9 +109,9 @@ class ConverterTest {
                 .putSvgSheet("svg key 3", "svg value 2"))
         .setPdfSheet(PdfSheetEntity.newBuilder().putPdfSheet("pdf key 1", "pdf value 1"))
         .setLanguages(LanguagesEntity.newBuilder()
-                .addLanguages(HymnIdentifierEntity.newBuilder().setHymnType(HymnTypeEntity.NEW_SONG).setHymnNumber("2")))
+                .addLanguages(HymnIdentifierEntity.newBuilder().setHymnType(NEW_SONG).setHymnNumber("2")))
         .setRelevants(RelevantsEntity.newBuilder()
-                .addRelevants(HymnIdentifierEntity.newBuilder().setHymnType(HymnTypeEntity.NEW_TUNE).setHymnNumber("2")))
+                .addRelevants(HymnIdentifierEntity.newBuilder().setHymnType(NEW_TUNE).setHymnNumber("2")))
         .setInlineChords(InlineChordsEntity.newBuilder()
                 .addChordLines(ChordLineEntity.newBuilder()
                         .addChordWords(ChordWordEntity.newBuilder().setWord("no chords"))

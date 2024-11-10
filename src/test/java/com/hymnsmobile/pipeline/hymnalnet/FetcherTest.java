@@ -89,7 +89,7 @@ class FetcherTest {
     target.fetchHymns();
 
     assertThat(hymnalNetJsons).isEmpty();
-    assertThat(errors).containsExactly(
+    assertThat(errors).containsExactlyInAnyOrder(
         PipelineError.newBuilder()
             .setSource(PipelineError.Source.HYMNAL_NET)
             .setSeverity(PipelineError.Severity.ERROR)

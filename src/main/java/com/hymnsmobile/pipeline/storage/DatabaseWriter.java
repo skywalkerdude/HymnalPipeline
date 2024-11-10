@@ -126,7 +126,7 @@ public class DatabaseWriter {
       insertStatement.setString(4, hymn.getInlineChords().toString());
     }
     insertStatement.setString(5, join(hymn.getCategoryList()));
-    insertStatement.setString(6, join(hymn.getSubCategoryList()));
+    insertStatement.setString(6, join(hymn.getSubcategoryList()));
     insertStatement.setString(7, join(hymn.getAuthorList()));
     insertStatement.setString(8, join(hymn.getComposerList()));
     insertStatement.setString(9, join(hymn.getKeyList()));
