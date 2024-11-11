@@ -100,6 +100,7 @@ class FetcherTest {
             .setSource(PipelineError.Source.HYMNAL_NET)
             .setSeverity(PipelineError.Severity.ERROR)
             .setErrorType(PipelineError.ErrorType.FETCH_ERROR_NON_200)
+            .addMessages("h/1")
             .addMessages("500")
             .build());
   }
@@ -127,6 +128,7 @@ class FetcherTest {
             .setSeverity(PipelineError.Severity.ERROR)
             .setSource(PipelineError.Source.HYMNAL_NET)
             .setErrorType(PipelineError.ErrorType.FETCH_ERROR_NON_200)
+            .addMessages("nt/1")
             .addMessages("500")
             .addMessages("error response found!")
             .build()

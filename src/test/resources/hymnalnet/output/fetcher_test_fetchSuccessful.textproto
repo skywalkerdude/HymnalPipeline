@@ -320,6 +320,23 @@ errors {
   source: HYMNAL_NET
   severity: ERROR
   error_type: FETCH_ERROR_NON_200
+  messages: "hs/1"
+  messages: "500"
+  messages: "error response found!"
+}
+errors {
+  source: HYMNAL_NET
+  severity: ERROR
+  error_type: FETCH_ERROR_NON_200
+  messages: "ch/1"
+  messages: "500"
+  messages: "error response found!"
+}
+errors {
+  source: HYMNAL_NET
+  severity: ERROR
+  error_type: FETCH_ERROR_NON_200
+  messages: "ch/1?gb=1"
   messages: "500"
   messages: "error response found!"
 }

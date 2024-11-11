@@ -169,11 +169,15 @@ public class Fetcher {
         client.send(HttpRequest.newBuilder().uri(buildUri(key)).build(), BodyHandlers.ofString());
 
     if (response.statusCode() != 200) {
+      String keyString = key.hasQueryParams() ?
+          String.format("%s/%s%s", key.getHymnType(), key.getHymnNumber(), key.getQueryParams()) :
+          String.format("%s/%s", key.getHymnType(), key.getHymnNumber());
       PipelineError.Builder error =
           PipelineError.newBuilder()
               .setSource(PipelineError.Source.HYMNAL_NET)
               .setSeverity(Severity.ERROR)
               .setErrorType(ErrorType.FETCH_ERROR_NON_200)
+              .addMessages(keyString)
               .addMessages(String.valueOf(response.statusCode()));
       if (!TextUtil.isEmpty(response.body())) {
         error.addMessages(response.body());
