@@ -162,7 +162,11 @@ public class DatabaseWriter {
       PreparedStatement songIdInsert = connection.prepareStatement(
           "INSERT INTO SONG_IDS (HYMN_TYPE, HYMN_NUMBER, SONG_ID) VALUES (?, ?, ?)");
       for (HymnIdentifierEntity hymnIdentifier : hymn.getReferencesList()) {
-        songIdInsert.setInt(1, hymnIdentifier.getHymnType().getNumber());
+        if (writeBinaryProtos) {
+          songIdInsert.setInt(1, hymnIdentifier.getHymnType().getNumber());
+        } else {
+          songIdInsert.setString(1, hymnIdentifier.getHymnType().name());
+        }
         songIdInsert.setString(2, hymnIdentifier.getHymnNumber());
         songIdInsert.setLong(3, id);
         songIdInsert.execute();
