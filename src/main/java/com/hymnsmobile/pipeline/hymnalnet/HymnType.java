@@ -20,7 +20,7 @@ public enum HymnType {
   CHINESE_SUPPLEMENTAL("ts", Optional.empty()),
   CEBUANO("cb", Optional.empty()),
   TAGALOG("ht", Optional.empty()),
-  FRENCH("hf", Optional.of(215)),
+  FRENCH("hf", Optional.of(248)),
   SPANISH("hs", Optional.of(500)),
   HINOS("pt", Optional.empty()),
   HEBREW("he", Optional.empty()),
