@@ -237,6 +237,8 @@ public class Converter {
       case CANTIQUES -> FRENCH;
       case SONGBASE_OTHER -> SONGBASE_OTHER;
       case LIEDBOEK -> LIEDBOEK;
+      case CHINESE -> CHINESE;
+      case KOREAN -> KOREAN;
       case HINOS -> HINOS;
     };
     return reference.setHymnType(hymnType.abbreviatedValue).build();
