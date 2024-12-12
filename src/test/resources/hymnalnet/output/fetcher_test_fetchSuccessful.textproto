@@ -49,6 +49,10 @@ hymnanlNetJson {
     verse_content: "Glory to the Holy Spirit\342\200\224"
     verse_content: "\302\240\302\240\302\240\302\240Ever One."
   }
+  lyrics {
+    verse_type: "copyright"
+    verse_content: "Used by permission."
+  }
   meta_data {
     name: "Category"
     data {

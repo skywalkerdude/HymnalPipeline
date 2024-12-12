@@ -25,6 +25,10 @@ lyrics {
   verse_content: "So very happy,"
   verse_content: "I’ve got the love of Jesus in my heart."
 }
+lyrics {
+  verse_type: "copyright"
+  verse_content: "Used with permission."
+}
 meta_data {
   name: "Category"
   data {

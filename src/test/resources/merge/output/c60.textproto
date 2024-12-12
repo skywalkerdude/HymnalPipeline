@@ -52,6 +52,12 @@ verses {
     line_content: "I’ve got the love of Jesus in my heart."
   }
 }
+verses {
+  verse_type: COPYRIGHT
+  lines {
+    line_content: "Used with permission."
+  }
+}
 category: "Assurance and Joy of Salvation"
 sub_category: "General"
 author: "George Willis Cooke (1848-1923)"

@@ -32,6 +32,7 @@ import java.util.stream.Collectors;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
 import static com.hymnsmobile.pipeline.merge.HymnType.*;
+import static com.hymnsmobile.pipeline.models.VerseType.COPYRIGHT;
 
 @MergeScope
 public class Converter {
@@ -343,7 +344,7 @@ public class Converter {
       case "verse" -> VerseType.VERSE;
       case "chorus" -> VerseType.CHORUS;
       case "other" -> VerseType.OTHER;
-      case "copyright" -> VerseType.COPYRIGHT;
+      case "copyright" -> COPYRIGHT;
       case "note" -> VerseType.NOTE;
       case "do_not_display" -> VerseType.DO_NOT_DISPLAY;
       default -> VerseType.UNRECOGNIZED;
@@ -532,7 +533,7 @@ public class Converter {
 
   private String flattenLyrics(List<Verse> lyrics) {
     return lyrics.stream()
-        .filter(verse -> !verse.getVerseType().equals("copyright")) // Don't include copyright statement
+        .filter(verse -> verse.getVerseType() != COPYRIGHT) // Don't include copyright statement
         .flatMap(verse -> verse.getLinesList().stream()
             .map(Line::getLineContent)
             .map(word -> word.replaceAll("\\p{P}", "")) // remove punctuations
