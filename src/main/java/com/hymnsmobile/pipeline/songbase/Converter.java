@@ -32,8 +32,10 @@ public class Converter {
 
   public ImmutableList<SongbaseHymn> convert(String responseBody)
       throws InvalidProtocolBufferException {
+    String sanitizedJson = ignoreNullLanguageLinks(responseBody);
+
     SongbaseResponse.Builder responseBuilder = SongbaseResponse.newBuilder();
-    JsonFormat.parser().merge(responseBody, responseBuilder);
+    JsonFormat.parser().merge(sanitizedJson, responseBuilder);
     SongbaseResponse songbaseResponse = responseBuilder.build();
 
     Map<Integer, SongResponse> songResponseById = songbaseResponse.getSongsList().stream()
@@ -97,5 +99,9 @@ public class Converter {
       }
     });
     return songbaseHymnById.values().stream().map(SongbaseHymn.Builder::build).collect(toImmutableList());
+  }
+
+  private String ignoreNullLanguageLinks(String responseBody) {
+    return responseBody.replaceAll("language_links\":\\s?\\[null,?\\s?", "language_links\":[");
   }
 }

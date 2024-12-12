@@ -84,18 +84,28 @@ class ConverterTest {
             .setTitle("Son Isaac")
             .setLanguage("english")
             .setLyrics("Son [D]Isaac\nHad just one [A7]dad\n....")
+            .addRelated(SongbaseKey.newBuilder().setHymnType(HymnType.BLUE_SONGBOOK.codeName).setHymnNumber("1").build())
+            .build(),
+        SongbaseHymn.newBuilder()
+            .addKey(SongbaseKey.newBuilder().setHymnType(HymnType.BLUE_SONGBOOK.codeName).setHymnNumber("2").build())
+            .setTitle("Spirit Jacob")
+            .setLanguage("english")
+            .setLyrics("Spirit [D]Jacob\nHad....")
+            .addRelated(SongbaseKey.newBuilder().setHymnType(HymnType.BLUE_SONGBOOK.codeName).setHymnNumber("1").build())
             .build());
     assertThat(errors).containsExactly(
         PipelineError.newBuilder()
             .setSource(PipelineError.Source.SONGBASE)
             .setSeverity(PipelineError.Severity.ERROR)
             .setErrorType(PipelineError.ErrorType.NONEXISTENT_RELEVANT_LINK)
-            .addMessages("id: 1\n" +
-                             "title: \"Father Abraham\"\n" +
-                             "lang: \"english\"\n" +
-                             "lyrics: \"Father [D]Abraham\\nHas many [A7]sons\\n....\"\n" +
-                             "language_links: 2\n" +
-                             "language_links: 5\n")
+            .addMessages("""
+               id: 1
+               title: "Father Abraham"
+               lang: "english"
+               lyrics: "Father [D]Abraham\\nHas many [A7]sons\\n...."
+               language_links: 2
+               language_links: 5
+               """)
             .addMessages(Integer.toString(5))
             .build());
   }

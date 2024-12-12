@@ -5,14 +5,21 @@
       "title": "Father Abraham",
       "lang": "english",
       "lyrics": "Father [D]Abraham\nHas many [A7]sons\n....",
-      "language_links": [2, 5]
+      "language_links":[null,2, 5]
     },
     {
       "id": 2,
       "title": "Son Isaac",
       "lang": "english",
       "lyrics": "Son [D]Isaac\nHad just one [A7]dad\n....",
-      "language_links": []
+      "language_links": [1]
+    },
+    {
+      "id": 3,
+      "title": "Spirit Jacob",
+      "lang": "english",
+      "lyrics": "Spirit [D]Jacob\nHad....",
+      "language_links": [null, 1]
     }
   ],
   "books": [
@@ -21,7 +28,8 @@
       "name": "Blue Songbook",
       "slug": "blue_songbook",
       "songs": {
-        "1": "1"
+        "1": "1",
+        "3": "2"
       },
       "languages": [
         "english"
