@@ -19,7 +19,7 @@ protobuf {
 }
 
 dependencies {
-    def protobuf_version = "3.22.2"
+    def protobuf_version = "4.29.1"
     // https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java
     implementation "com.google.protobuf:protobuf-java:$protobuf_version"
     // https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java-util
