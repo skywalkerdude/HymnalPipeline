@@ -1,0 +1,8 @@
+count: 1
+errors {
+  severity: ERROR
+  error_type: NONEXISTENT_RELEVANT_LINK
+  source: SONGBASE
+  messages: "id: 401\ntitle: \"Give yourself to love the Lord\"\nlang: \"english\"\nlyrics: \"#(Capo 1)\\n\\n1\\n[E]Give yourself[A] to love the [E]Lor[A]d.\\n[E]No other way[A] is so pre[E]vailing[A].\\nAnd [F#m]no other [B]way, [F#m]no other [B]way\\nIs so [E]safe[A].\\n\\n2\\n[E]Give yourself[A] to love the [E]Lor[A]d.\\n[E]No other way[A] is so [E]rich[A]\\n[F#m]And so [B]full, [F#m]oh so f[B]ull of en[E]joyment.\\nEach [C#m]morning we must [G#m]rise up\\nAnd [A]say to [Am]Him,\\n\\342\\200\\234Lord [E]Jesus,[A] I love [E]You[A]\\342\\200\\235.\\n\\n3\\n[E]Give yourself[A] to love the [E]Lor[A]d.\\n[E]Do not care[A] for anything [E]else[A].\\n[F#m]Just love [B]Him, [G#m]do not [A]care;\\n[F#m]Give yours[B]elf to love the [E]Lord.\\n\\n4\\n[C#m]We are not our [G#m]own, Lord.\\nAll we [A]have we give to [Am]You.\\nLord [E]Jesus,[A] Lord [E]Jesus,[A] Lord [E]Jesus[B],\\nWe love [E]You.\"\nlanguage_links: 2267\nlanguage_links: 7065\n"
+  messages: "7065"
+}
