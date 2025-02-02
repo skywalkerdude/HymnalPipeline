@@ -123,7 +123,7 @@ message PipelineError {
   enum ErrorType {
     ERROR_TYPE_UNKNOWN = 0;
     FETCH_ERROR = 1;
-    FETCH_ERROR_NON_200 = 13;
+    FETCH_ERROR_NON_200 = 13 [deprecated = true];
     PARSE_ERROR = 2;
     // Hymn type was unrecognized.
     UNRECOGNIZED_HYMN_TYPE = 3;

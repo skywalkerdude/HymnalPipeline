@@ -323,24 +323,17 @@ errors {
 errors {
   source: HYMNAL_NET
   severity: ERROR
-  error_type: FETCH_ERROR_NON_200
-  messages: "hs/1"
+  error_type: FETCH_EXCEPTION
+  messages: "Failed to fetch fetch: hymn_type: \"ch\"\nhymn_number: \"1\"\n, a related song of hymn_type: \"ht\"\nhymn_number: \"1\"\n"
   messages: "500"
   messages: "error response found!"
 }
 errors {
   source: HYMNAL_NET
   severity: ERROR
-  error_type: FETCH_ERROR_NON_200
-  messages: "ch/1"
+  error_type: FETCH_EXCEPTION
+  messages: "Failed to fetch fetch: hymn_type: \"ch\"\nhymn_number: \"1\"\n, a related song of hymn_type: \"h\"\nhymn_number: \"1\"\n"
   messages: "500"
   messages: "error response found!"
-}
-errors {
-  source: HYMNAL_NET
-  severity: ERROR
-  error_type: FETCH_ERROR_NON_200
-  messages: "ch/1?gb=1"
-  messages: "500"
-  messages: "error response found!"
+
 }

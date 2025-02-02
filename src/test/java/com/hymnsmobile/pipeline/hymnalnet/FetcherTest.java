@@ -29,6 +29,7 @@ class FetcherTest {
 
   @Mock private HttpClient client;
   @Mock private HttpResponse<String> errorResponse;
+  @Mock private HttpResponse<String> missingResponse;
   @Mock private HttpResponse<String> h1;
   @Mock private HttpResponse<String> ht1;
 
@@ -38,6 +39,9 @@ class FetcherTest {
   public void setUp() throws IOException {
     lenient().doReturn(500).when(errorResponse).statusCode();
     lenient().doReturn("error response found!").when(errorResponse).body();
+
+    lenient().doReturn(400).when(missingResponse).statusCode();
+    lenient().doReturn("not found!").when(missingResponse).body();
 
     lenient().doReturn(200).when(h1).statusCode();
     lenient().doReturn(TestUtils.readText("src/test/resources/hymnalnet/input/_v2_hymn_h_1")).when(h1).body();
@@ -94,12 +98,6 @@ class FetcherTest {
             .setSource(PipelineError.Source.HYMNAL_NET)
             .setSeverity(PipelineError.Severity.ERROR)
             .setErrorType(PipelineError.ErrorType.FETCH_ERROR)
-            .addMessages("Failed to fetch: h/1")
-            .build(),
-        PipelineError.newBuilder()
-            .setSource(PipelineError.Source.HYMNAL_NET)
-            .setSeverity(PipelineError.Severity.ERROR)
-            .setErrorType(PipelineError.ErrorType.FETCH_ERROR_NON_200)
             .addMessages("h/1")
             .addMessages("500")
             .build());
@@ -127,12 +125,62 @@ class FetcherTest {
         PipelineError.newBuilder()
             .setSeverity(PipelineError.Severity.ERROR)
             .setSource(PipelineError.Source.HYMNAL_NET)
-            .setErrorType(PipelineError.ErrorType.FETCH_ERROR_NON_200)
+            .setErrorType(PipelineError.ErrorType.FETCH_ERROR)
             .addMessages("nt/1")
             .addMessages("500")
             .addMessages("error response found!")
             .build()
     );
+  }
+
+  @Test
+  public void fetchHymns__fetchMissing__addsErrorToList() throws IOException, InterruptedException {
+    ImmutableList<HymnalNetKey> songsToFetch =
+        ImmutableList.of(HymnalNetKey.newBuilder().setHymnType("h").setHymnNumber("1").build());
+
+    lenient().doReturn(null).when(missingResponse).body();
+    doReturn(missingResponse)
+        .when(client)
+        .send(
+            HttpRequest.newBuilder().uri(URI.create("https://hymnalnetapi.herokuapp.com/v2/hymn/h/1?check_exists=true")).build(),
+            HttpResponse.BodyHandlers.ofString());
+
+    Set<HymnalNetJson> hymnalNetJsons = new HashSet<>();
+    Set<PipelineError> errors = new HashSet<>();
+
+    target = new Fetcher(client, songsToFetch, hymnalNetJsons, errors);
+    target.fetchHymns();
+
+    assertThat(hymnalNetJsons).isEmpty();
+    assertThat(errors).containsExactlyInAnyOrder(
+        PipelineError.newBuilder()
+                     .setSource(PipelineError.Source.HYMNAL_NET)
+                     .setSeverity(PipelineError.Severity.ERROR)
+                     .setErrorType(PipelineError.ErrorType.FETCH_ERROR)
+                     .addMessages("h/1")
+                     .addMessages("404")
+                     .build());
+  }
+
+  @Test
+  public void fetchHymns__fetchMissing_noMaxNumber__doNotAddToErrorToList() throws IOException, InterruptedException {
+    ImmutableList<HymnalNetKey> songsToFetch =
+        ImmutableList.of(HymnalNetKey.newBuilder().setHymnType("nt").setHymnNumber("1").build());
+
+    doReturn(missingResponse)
+        .when(client)
+        .send(
+            HttpRequest.newBuilder().uri(URI.create("https://hymnalnetapi.herokuapp.com/v2/hymn/nt/1?check_exists=true")).build(),
+            HttpResponse.BodyHandlers.ofString());
+
+    Set<HymnalNetJson> hymnalNetJsons = new HashSet<>();
+    Set<PipelineError> errors = new HashSet<>();
+
+    target = new Fetcher(client, songsToFetch, hymnalNetJsons, errors);
+    target.fetchHymns();
+
+    assertThat(hymnalNetJsons).isEmpty();
+    assertThat(errors).isEmpty();
   }
 
   @Test
@@ -158,7 +206,7 @@ class FetcherTest {
             .setSource(PipelineError.Source.HYMNAL_NET)
             .setSeverity(PipelineError.Severity.ERROR)
             .setErrorType(PipelineError.ErrorType.FETCH_EXCEPTION)
-            .addMessages("Exception thrown during fetch: hymn_type: \"h\"\nhymn_number: \"1\"\n")
+            .addMessages("h/1")
             .build());
   }
 
@@ -186,7 +234,8 @@ class FetcherTest {
             .setSource(PipelineError.Source.HYMNAL_NET)
             .setSeverity(PipelineError.Severity.ERROR)
             .setErrorType(PipelineError.ErrorType.FETCH_EXCEPTION)
-            .addMessages("Exception thrown during fetch: hymn_type: \"h\"\nhymn_number: \"1\"\n")
+            .addMessages("h/1")
+            .addMessages("dummy: dummy")
             .build());
   }
 
@@ -213,7 +262,7 @@ class FetcherTest {
             .setSource(PipelineError.Source.HYMNAL_NET)
             .setSeverity(PipelineError.Severity.ERROR)
             .setErrorType(PipelineError.ErrorType.FETCH_EXCEPTION)
-            .addMessages("Exception thrown during fetch: hymn_type: \"h\"\nhymn_number: \"1\"\n")
+            .addMessages("h/1")
             .build());
   }
 
@@ -230,7 +279,12 @@ class FetcherTest {
         ImmutableList.of(HymnalNetKey.newBuilder().setHymnType("h").setHymnNumber("1").build());
 
     Set<HymnalNetJson> hymnalNetJsons = new HashSet<>();
-    doReturn(errorResponse).when(client).send(any(HttpRequest.class), eq(HttpResponse.BodyHandlers.ofString()));
+    doReturn(missingResponse).when(client).send(any(HttpRequest.class), eq(HttpResponse.BodyHandlers.ofString()));
+    doReturn(errorResponse)
+        .when(client)
+        .send(
+            HttpRequest.newBuilder().uri(URI.create("https://hymnalnetapi.herokuapp.com/v2/hymn/ch/1?check_exists=true")).build(),
+            HttpResponse.BodyHandlers.ofString());
     doReturn(h1)
         .when(client)
         .send(
