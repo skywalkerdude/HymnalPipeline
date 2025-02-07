@@ -90,8 +90,8 @@ public class Pipeline {
     Pair<ImmutableList<Hymn>, DuplicationResults> dedupResults = dedupPipeline.run(mergedHymns);
 
     ImmutableList<PipelineError> allErrors = mergePipeline.mergeErrors(
-        hymnalNetPipeline.getErrors(), h4aPipeline.getErrors(), songbasePipeline.getErrors(),
-        mergePipeline.getErrors(), dedupPipeline.getErrors());
+        hymnalNetPipeline.getErrors(), h4aPipeline.getErrors(), liederbuchPipeline.getErrors(),
+        songbasePipeline.getErrors(), mergePipeline.getErrors(), dedupPipeline.getErrors());
     storagePipeline.run(dedupResults.getLeft(), allErrors, dedupResults.getRight());
 
     LocalDateTime endTime = LocalDateTime.now();

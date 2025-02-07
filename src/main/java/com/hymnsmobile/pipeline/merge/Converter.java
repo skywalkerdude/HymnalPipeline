@@ -112,8 +112,8 @@ public class Converter {
     }
 
     // Songs that end with "f" are actually French songs.
-    // Example: https://www.hymnal.net/en/hymn/ns/381f
-    if (hymnNumber.matches("\\d+f")) {
+    // Example: https://www.hymnal.net/en/hymn/ns/381f, https://www.hymnal.net/en/hymn/ns/1052fr
+    if (hymnNumber.matches("\\d+f") || hymnNumber.matches("\\d+fr")) {
       return Optional.of(com.hymnsmobile.pipeline.hymnalnet.HymnType.FRENCH);
     }
 

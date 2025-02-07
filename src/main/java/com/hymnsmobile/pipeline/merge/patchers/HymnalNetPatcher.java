@@ -66,6 +66,7 @@ public class HymnalNetPatcher extends Patcher {
     fix_ns154();
     fix_ch9166();
     fix_ht62();
+    fix_cb65();
     fix_ht1182();
     fix_hf881();
     fix_hf216();
@@ -92,6 +93,7 @@ public class HymnalNetPatcher extends Patcher {
     fix_dens54de();
     fix_ptns381p_htns381tc_cbns381cb();
     fix_ptns506p_Rns506r();
+    fix_hfns1052fr();
     fix_dens180de();
     fix_htns617t();
     fix_dens151de();
@@ -286,7 +288,7 @@ public class HymnalNetPatcher extends Patcher {
     removeLanguages("ht/445", "cb/445", "ch/339", "h/445", "hf/79", "S/192", "pt/445");
     removeLanguages("de/445", "cb/445", "ch/339", "h/445", "hf/79", "ht/1359", "S/192", "pt/445");
     removeLanguages("hf/79", "h/445", "cb/445", "ch/339", "de/445", "ht/1359", "S/192", "pt/445");
-    removeLanguages("S/192", "cb/445", "ch/339", "h/1359", "de/445", "ht/1359");
+    removeLanguages("S/192", "cb/445", "ch/339", "h/1359", "ht/1359");
     removeLanguages("pt/445", "h/445", "S/192", "ch/339");
 
     removeLanguages("h/1359", "cb/445", "ch/339", "ht/1359", "S/192");
@@ -474,6 +476,15 @@ public class HymnalNetPatcher extends Patcher {
   void fix_ht62() {
     removeLanguages("ht/62", "h/31", "pt/31", "ch/29");
     addLanguages("ht/62", "h/62");
+  }
+
+  /**
+   * cb/65 incorrectly maps to h/1013, pt/1013, and ch/1013 when it should map to h/65 and its
+   * related songs. h/65 and its related songs all already have the correct mappings.
+   */
+  void fix_cb65() {
+    removeLanguages("cb/65", "h/1013", "pt/1013", "ch/1013");
+    addLanguages("cb/65", "h/65");
   }
 
   /**
@@ -688,6 +699,15 @@ public class HymnalNetPatcher extends Patcher {
   void fix_ptns506p_Rns506r() {
     removeLanguages("pt/ns506p", "pt/ns506p");
     removeLanguages("R/ns506r", "R/ns506r");
+  }
+
+  /**
+   * ns/1052 has a bunch of exotic language translations (French-hf/ns1052fr, Italian-I/ns1052it, etc.).
+   * However, a lot of them have self-references. Apart from the self-references, the language
+   * mappings should be correct.
+   */
+  void fix_hfns1052fr() {
+    removeLanguages("hf/ns1052fr", "hf/ns1052fr");
   }
 
   /**
