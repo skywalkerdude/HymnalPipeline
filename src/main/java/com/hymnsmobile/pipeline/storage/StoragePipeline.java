@@ -21,7 +21,7 @@ public class StoragePipeline {
   private static final Logger LOGGER = Logger.getGlobal();
   private static final String DATABASE_PATH_FORMAT = "jdbc:sqlite:%s/hymnaldb-v%d.sqlite";
   private static final String EXPANDED_DATABASE_PATH_FORMAT = "jdbc:sqlite:%s/hymnaldb-v%d-expanded.sqlite";
-  public static final int DATABASE_VERSION = 28;
+  public static final int DATABASE_VERSION = 29;
 
   private final Converter converter;
   private final DatabaseWriter databaseWriter;
