@@ -53,9 +53,9 @@ public class RussianPipeline {
   }
 
   public void run() throws IOException {
-    LOGGER.fine("Russian pipeline starting");
+    LOGGER.info("Russian pipeline starting");
     this.hymns.addAll(RussianHymns.parseFrom(new FileInputStream(FILE_PATH)).getRussianHymnsList());
-    LOGGER.fine("Russian pipeline finished");
+    LOGGER.info("Russian pipeline finished");
   }
 
   public ImmutableList<RussianHymn> getRussianHymns() {
