@@ -28,6 +28,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -69,7 +70,8 @@ public class Pipeline {
   }
 
   public void run()
-      throws IOException, InterruptedException, SQLException, BadHanyuPinyinOutputFormatCombination {
+      throws IOException, InterruptedException, SQLException, BadHanyuPinyinOutputFormatCombination,
+          NoSuchAlgorithmException {
     LocalDateTime startTime = LocalDateTime.now();
     LOGGER.info("Pipeline starting at " + DateTimeFormatter.ISO_LOCAL_TIME.format(startTime));
 
@@ -102,7 +104,8 @@ public class Pipeline {
   }
 
   public static void main(String[] args)
-      throws InterruptedException, IOException, SQLException, BadHanyuPinyinOutputFormatCombination {
+      throws InterruptedException, IOException, SQLException, BadHanyuPinyinOutputFormatCombination,
+          NoSuchAlgorithmException {
     DaggerPipelineComponent.create().pipeline().run();
   }
 }

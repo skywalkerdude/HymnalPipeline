@@ -21,6 +21,9 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -42,6 +45,7 @@ public class Fetcher {
 
   private final Set<HymnalNetJson> hymnalNetJsons;
   private final Set<PipelineError> errors;
+  private final Set<HymnalNetKey> processed;
 
   @Inject
   public Fetcher(HttpClient client,
@@ -52,6 +56,7 @@ public class Fetcher {
     this.hymnalNetJsons = hymnalNetJsons;
     this.songsToFetch = songsToFetch;
     this.errors = errors;
+    this.processed = new HashSet<>();
   }
 
   /**
@@ -117,9 +122,21 @@ public class Fetcher {
 
   private FetchResult fetchHymn(HymnalNetKey key) {
     LOGGER.fine(String.format("Fetching %s", key));
-    if (hymnalNetJsons.stream().anyMatch(hymn -> hymn.getKey().equals(key))) {
-      LOGGER.fine(String.format("%s already exists. Skipping...", key));
-      return new FetchResult.AlreadyFetched();
+
+    List<HymnalNetJson> existing = hymnalNetJsons.stream().filter(hymn -> hymn.getKey().equals(key)).toList();
+    if (existing.size() > 1) {
+      throw new IllegalStateException("List too big. This shouldn't happen, as it indicates a code error.");
+    }
+
+    if (processed.contains(key) && !existing.isEmpty()) {
+      return new FetchResult.AlreadySeen();
+    }
+    processed.add(key);
+
+    if (!existing.isEmpty()) {
+      LOGGER.fine(String.format("%s already exists in database. Not re-fetching, but re-fetching related songs", key));
+      fetchRelated(key, existing.get(0));
+      return new FetchResult.AlreadyStored();
     }
 
     HttpResponse<String> response;
@@ -144,34 +161,41 @@ public class Fetcher {
       return new FetchResult.FetchException(e);
     }
     LOGGER.fine(String.format("%s successfully fetched", key));
+    HymnalNetJson hymnalNetJson = builder.build();
 
     // Need to add the hymn here first as a terminal case
-    this.hymnalNetJsons.add(builder.build());
+    this.hymnalNetJsons.add(hymnalNetJson);
+
+    fetchRelated(key, hymnalNetJson);
+
+    return new FetchResult.FetchSuccess(builder.build());
+  }
+
+  private void fetchRelated(HymnalNetKey key, HymnalNetJson hymnalNetJson) {
+    HymnalNetJson.Builder builder = hymnalNetJson.toBuilder();
 
     // Go through ahd try to fetch the related songs, removing them from the list if the fetch
     // for some reason doesn't succeed.
-    HymnalNetJson.Builder clone = builder.build().toBuilder();
-    for (int i = 0; i < clone.getMetaDataCount(); i++) {
-      MetaDatum metaDatum = clone.getMetaDataList().get(i);
+    for (int i = 0; i < builder.getMetaDataCount(); i++) {
+      MetaDatum metaDatum = builder.getMetaDataList().get(i);
       String name = metaDatum.getName();
       if (MetaDatumType.LANGUAGES.jsonKeys.contains(name) ||
-          MetaDatumType.RELEVANT.jsonKeys.contains(name)) {
+              MetaDatumType.RELEVANT.jsonKeys.contains(name)) {
         MetaDatum successfulFetches = fetchAndReturnSuccesses(metaDatum, key);
         if (successfulFetches.getDataList().isEmpty()) {
-          clone.removeMetaData(i);
+          builder.removeMetaData(i);
         } else {
-          clone.setMetaData(i, successfulFetches);
+          builder.setMetaData(i, successfulFetches);
         }
       }
     }
 
     // Basically this happens when there were songs that weren't able to be fetched, so those songs
     // were removed from the related songs list. Thus, we need to update the song to the new version
-    if (!builder.build().equals(clone.build())) {
-      this.hymnalNetJsons.remove((builder.build()));
-      this.hymnalNetJsons.add(clone.build());
+    if (!hymnalNetJson.equals(builder.build())) {
+      this.hymnalNetJsons.remove(hymnalNetJson);
+      this.hymnalNetJsons.add(builder.build());
     }
-    return new FetchResult.FetchSuccess(builder.build());
   }
 
   /**
@@ -188,8 +212,8 @@ public class Fetcher {
   private MetaDatum fetchAndReturnSuccesses(MetaDatum metaDatum, HymnalNetKey parent) {
     return metaDatum.toBuilder().clearData()
         .addAllData(
-            metaDatum.getDataList().stream().filter(datum ->
-                    extractFromPath(datum.getPath(), parent, errors)
+            metaDatum.getDataList().stream().filter(datum -> {
+                    Optional<HymnalNetKey> key = extractFromPath(datum.getPath(), parent, errors)
                         .filter(relatedSong -> {
                           FetchResult fetchResult = fetchHymn(relatedSong);
                           if (fetchResult instanceof FetchResult.FetchException) {
@@ -224,7 +248,9 @@ public class Fetcher {
                           }
 
                           return !(fetchResult instanceof FetchResult.FetchNotFound);
-                        }).isPresent())
+                        });
+                    return key.isPresent();
+            })
                 .collect(toImmutableList()))
         .build();
   }

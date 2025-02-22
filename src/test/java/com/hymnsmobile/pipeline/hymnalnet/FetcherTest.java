@@ -1,15 +1,14 @@
 package com.hymnsmobile.pipeline.hymnalnet;
 
 import com.google.common.collect.ImmutableList;
-import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNet;
-import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetJson;
-import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetKey;
+import com.hymnsmobile.pipeline.hymnalnet.models.*;
 import com.hymnsmobile.pipeline.models.PipelineError;
 import com.hymnsmobile.pipeline.testutil.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
@@ -32,6 +31,7 @@ class FetcherTest {
   @Mock private HttpResponse<String> missingResponse;
   @Mock private HttpResponse<String> h1;
   @Mock private HttpResponse<String> ht1;
+  @Mock private HttpResponse<String> h21;
 
   private Fetcher target;
 
@@ -48,29 +48,50 @@ class FetcherTest {
 
     lenient().doReturn(200).when(ht1).statusCode();
     lenient().doReturn(TestUtils.readText("src/test/resources/hymnalnet/input/_v2_hymn_ht_1")).when(ht1).body();
+
+    lenient().doReturn(200).when(h21).statusCode();
+    lenient().doReturn(TestUtils.readText("src/test/resources/hymnalnet/input/_v2_hymn_h_21")).when(h21).body();
   }
 
   @Test
-  public void fetchHymns__alreadyFetched__returnsFetchedList() {
+  public void fetchHymns__alreadyStored__returnsFetchedList_fetchesRelatedSongs() throws IOException, InterruptedException {
     ImmutableList<HymnalNetKey> songsToFetch =
-        ImmutableList.of(HymnalNetKey.newBuilder().setHymnType("h").setHymnNumber("1").build());
+        ImmutableList.of(HymnalNetKey.newBuilder().setHymnType("h").setHymnNumber("20").build());
 
-    // Already fetched list
-    Set<HymnalNetJson> hymnalNetJsons =
-        new HashSet<>(Set.of(
-            HymnalNetJson.newBuilder()
-                .setKey(
-                    HymnalNetKey.newBuilder()
-                        .setHymnType("h")
-                        .setHymnNumber("1"))
-                .build()));
+    HymnalNetJson h1 =
+        HymnalNetJson.newBuilder()
+            .setKey(
+                HymnalNetKey.newBuilder()
+                    .setHymnType("h")
+                    .setHymnNumber("20"))
+            .addMetaData(
+                MetaDatum.newBuilder()
+                    .setName("Languages")
+                    .addData(Datum.newBuilder().setValue("value1").setPath("/en/hymn/h/21"))
+                    .addData(Datum.newBuilder().setValue("value2").setPath("/en/hymn/pt/21")))
+           .build();
+
+    doReturn(h21)
+        .when(client)
+        .send(
+            HttpRequest.newBuilder().uri(URI.create("https://hymnalnetapi.herokuapp.com/v2/hymn/h/21?check_exists=true")).build(),
+            HttpResponse.BodyHandlers.ofString());
+
+    doReturn(missingResponse)
+        .when(client)
+        .send(
+            HttpRequest.newBuilder().uri(URI.create("https://hymnalnetapi.herokuapp.com/v2/hymn/pt/21?check_exists=true")).build(),
+            HttpResponse.BodyHandlers.ofString());
+
+    Set<HymnalNetJson> alreadyFetched = Set.of(h1);
 
     Set<PipelineError> errors = new HashSet<>();
 
+    Set<HymnalNetJson> hymnalNetJsons = new HashSet<>(alreadyFetched);
     target = new Fetcher(client, songsToFetch, hymnalNetJsons, errors);
     target.fetchHymns();
 
-    assertThat(hymnalNetJsons).containsExactlyElementsOf(hymnalNetJsons);
+    assertThat(hymnalNetJsons).hasSize(2);
     assertThat(errors).isEmpty();
   }
 

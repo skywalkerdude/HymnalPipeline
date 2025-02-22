@@ -9,6 +9,7 @@ option java_multiple_files = true;
 message HymnalNet {
   repeated HymnalNetJson hymnanlNetJson = 1;
   repeated com.hymnsmobile.pipeline.models.PipelineError errors = 2;
+  bytes sha_256 = 3;
 }
 
 // Json representation from Hymnal net API. Used to make deserialization easier.

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,7 +33,7 @@ class HymnalNetPipelineTest {
 
   @Test
   @FetchHymns(keysToFetch = {"h/1336"})
-  public void fetchSingleSongFromNetwork__shouldFetchSong() throws IOException {
+  public void fetchSingleSongFromNetwork__shouldFetchSong() throws IOException, NoSuchAlgorithmException {
     hymnalNetPipeline.run();
 
     assertThat(hymnalNetPipeline.getHymnalNetJsons()).hasSize(1);
@@ -125,7 +126,7 @@ class HymnalNetPipelineTest {
   @Test
   @FetchHymns(keysToFetch = {"c/60"}) // should be read from stored file via ReadFromStorageExtension
   @ReadFromStorage
-  public void fetchSingleSongFromStorage__shouldFetchSong() throws IOException {
+  public void fetchSingleSongFromStorage__shouldFetchSong() throws IOException, NoSuchAlgorithmException {
     hymnalNetPipeline.run();
 
     assertThat(hymnalNetPipeline.getHymnalNetJsons()).hasSize(1);
@@ -258,7 +259,7 @@ class HymnalNetPipelineTest {
    */
   @Test
   @FetchHymns(keysToFetch = {"ns/510c"})
-  public void songsWithNewSongChinese__shouldConvertToChineseSongs() throws IOException {
+  public void songsWithNewSongChinese__shouldConvertToChineseSongs() throws IOException, NoSuchAlgorithmException {
     hymnalNetPipeline.run();
 
     assertThat(hymnalNetPipeline.getHymnalNetJsons().stream()
@@ -278,7 +279,7 @@ class HymnalNetPipelineTest {
       "c/60"// should be read from stored file
   })
   @ReadFromStorage
-  public void runEndToEnd() throws IOException {
+  public void runEndToEnd() throws IOException, NoSuchAlgorithmException {
     hymnalNetPipeline.run();
 
     HymnalNet expected =

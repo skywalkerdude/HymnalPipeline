@@ -4,9 +4,21 @@ import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetJson;
 
 public abstract class FetchResult {
 
-  public static class AlreadyFetched extends FetchResult {
+  /**
+   * Already seen during current execution of the pipeline.
+   */
+  public static class AlreadySeen extends FetchResult {
 
-    AlreadyFetched() {
+    AlreadySeen() {
+    }
+  }
+
+  /**
+   * Result has been stored from a previous execution of the pipeline.
+   */
+  public static class AlreadyStored extends FetchResult {
+
+    AlreadyStored() {
     }
   }
 
