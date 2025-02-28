@@ -21,12 +21,14 @@ public class DatabaseWriter {
     this.currentTime = currentTime;
   }
 
-  Connection createDatabase(String databasePath, int databaseVersion) {
+  Connection createDatabase(String databasePath, boolean writeBinaryProtos) {
+    String protoType = writeBinaryProtos ? "BLOB" : "TEXT";
+
     try {
       Class.forName("org.sqlite.JDBC");
       Connection connection = DriverManager.getConnection(databasePath);
       connection.createStatement()
-          .execute(String.format("PRAGMA user_version = %d", databaseVersion));
+          .execute(String.format("PRAGMA user_version = %d", StoragePipeline.DATABASE_VERSION));
 
       // SONG_IDS table
       connection.createStatement().execute(
@@ -45,8 +47,8 @@ public class DatabaseWriter {
           "CREATE TABLE IF NOT EXISTS `SONG_DATA` ("
               + "`ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
               + "`SONG_TITLE` TEXT, "
-              + "`SONG_LYRICS` TEXT, "
-              + "`INLINE_CHORDS` TEXT, "
+              + "`SONG_LYRICS` " + protoType + ", "
+              + "`INLINE_CHORDS` " + protoType + ", "
               + "`SONG_META_DATA_CATEGORY` TEXT, "
               + "`SONG_META_DATA_SUBCATEGORY` TEXT, "
               + "`SONG_META_DATA_AUTHOR` TEXT, "
@@ -56,11 +58,11 @@ public class DatabaseWriter {
               + "`SONG_META_DATA_METER` TEXT, "
               + "`SONG_META_DATA_SCRIPTURES` TEXT, "
               + "`SONG_META_DATA_HYMN_CODE` TEXT, "
-              + "`SONG_META_DATA_MUSIC` TEXT, "
-              + "`SONG_META_DATA_SVG_SHEET_MUSIC` TEXT, "
-              + "`SONG_META_DATA_PDF_SHEET_MUSIC` TEXT, "
-              + "`SONG_META_DATA_LANGUAGES` TEXT, "
-              + "`SONG_META_DATA_RELEVANTS` TEXT, "
+              + "`SONG_META_DATA_MUSIC` " + protoType + ", "
+              + "`SONG_META_DATA_SVG_SHEET_MUSIC` " + protoType + ", "
+              + "`SONG_META_DATA_PDF_SHEET_MUSIC` " + protoType + ", "
+              + "`SONG_META_DATA_LANGUAGES` " + protoType + ", "
+              + "`SONG_META_DATA_RELEVANTS` " + protoType + ", "
               + "`FLATTENED_LYRICS` TEXT, "
               + "`SONG_LANGUAGE` INTEGER)");
       connection.createStatement().execute("CREATE INDEX IF NOT EXISTS `index_SONG_DATA_ID` ON `SONG_DATA` (`ID`)");

@@ -7,6 +7,7 @@ import com.google.common.collect.Multimap;
 import com.hymnsmobile.pipeline.FileReadWriter;
 import com.hymnsmobile.pipeline.dagger.DaggerPipelineComponent;
 import com.hymnsmobile.pipeline.models.SongReference;
+import com.hymnsmobile.pipeline.storage.StoragePipeline;
 import dagger.Lazy;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -23,7 +24,6 @@ import java.util.Map.Entry;
 import java.util.Optional;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
-import static com.hymnsmobile.pipeline.storage.StoragePipeline.DATABASE_VERSION;
 
 public class SongbaseDiffer {
 
@@ -137,7 +137,7 @@ public class SongbaseDiffer {
     }
 
     Connection connection = DriverManager.getConnection( // hymnaldb-v23.sqlite
-        "jdbc:sqlite:" + mostRecentFile.get().getPath() + "/hymnaldb-v" + DATABASE_VERSION + ".sqlite");
+        "jdbc:sqlite:" + mostRecentFile.get().getPath() + "/hymnaldb-v" + StoragePipeline.DATABASE_VERSION + ".sqlite");
     ResultSet resultSet = connection.createStatement().executeQuery(
         "SELECT HYMN_TYPE, HYMN_NUMBER, SONG_TITLE FROM SONG_DATA JOIN SONG_IDS ON SONG_DATA.ID = SONG_IDS.SONG_ID WHERE HYMN_TYPE = 'sb' OR HYMN_TYPE = 'sbx'");
     if (resultSet == null) {

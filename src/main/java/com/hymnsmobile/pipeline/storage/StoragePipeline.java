@@ -21,7 +21,7 @@ public class StoragePipeline {
   private static final Logger LOGGER = Logger.getGlobal();
   private static final String DATABASE_PATH_FORMAT = "jdbc:sqlite:%s/hymnaldb-v%d.sqlite";
   private static final String EXPANDED_DATABASE_PATH_FORMAT = "jdbc:sqlite:%s/hymnaldb-v%d-expanded.sqlite";
-  public static final int DATABASE_VERSION = 29;
+  public static final int DATABASE_VERSION = 30;
 
   private final Converter converter;
   private final DatabaseWriter databaseWriter;
@@ -45,11 +45,11 @@ public class StoragePipeline {
     writeDuplicationResults(duplicationResults);
 
     String databasePath = String.format(DATABASE_PATH_FORMAT, outputDirectory.get().getPath(), DATABASE_VERSION);
-    Connection connection = databaseWriter.createDatabase(databasePath, DATABASE_VERSION);
+    Connection connection = databaseWriter.createDatabase(databasePath, true);
 
     String expandedDatabasePath =
         String.format(EXPANDED_DATABASE_PATH_FORMAT, outputDirectory.get().getPath(), DATABASE_VERSION);
-    Connection expandedConnection = databaseWriter.createDatabase(expandedDatabasePath, DATABASE_VERSION);
+    Connection expandedConnection = databaseWriter.createDatabase(expandedDatabasePath, false);
 
     for (Hymn hymn : hymns) {
       HymnEntity entity = converter.convert(hymn);
