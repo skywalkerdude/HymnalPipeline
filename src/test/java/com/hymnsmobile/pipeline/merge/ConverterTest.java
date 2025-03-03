@@ -5,9 +5,7 @@ import com.hymnsmobile.pipeline.h4a.models.H4aKey;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetJson;
 import com.hymnsmobile.pipeline.hymnalnet.models.HymnalNetKey;
 import com.hymnsmobile.pipeline.liederbuch.models.LiederbuchKey;
-import com.hymnsmobile.pipeline.models.Hymn;
-import com.hymnsmobile.pipeline.models.PipelineError;
-import com.hymnsmobile.pipeline.models.SongReference;
+import com.hymnsmobile.pipeline.models.*;
 import com.hymnsmobile.pipeline.russian.RussianHymn;
 import com.hymnsmobile.pipeline.songbase.models.SongbaseHymn;
 import com.hymnsmobile.pipeline.songbase.models.SongbaseKey;
@@ -16,9 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.NoSuchElementException;
-import java.util.Set;
+import java.util.*;
 
 import static com.google.common.truth.extensions.proto.ProtoTruth.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -363,5 +359,175 @@ class ConverterTest {
             .setSource(PipelineError.Source.SONGBASE)
             .addMessages("[hymn_type: \"sb\"\nhymn_number: \"1\"\n, hymn_type: \"sbx\"\nhymn_number: \"3\"\n]")
             .build());
+  }
+
+
+  @Test
+  public void createInlineChords__emptyString__shouldBeConvertedToEmptyList() {
+    assertThat(target.createInlineChords("")).isEmpty();
+    assertThat(errors).containsExactly(
+        PipelineError
+            .newBuilder()
+            .setSeverity(PipelineError.Severity.ERROR)
+            .setErrorType(PipelineError.ErrorType.INLINE_CHORDS_EMPTY)
+            .setSource(PipelineError.Source.SONGBASE)
+            .build());
+  }
+
+  @Test
+  public void createInlineChords__noChordFound__shouldBeConvertedToChordWordsWithNullChords() {
+    assertThat(target.createInlineChords("With Christ in my vessel I will"))
+        .isEqualTo(List.of(
+            ChordLine.newBuilder()
+                     .addChordWords(ChordWord.newBuilder().setWord("With"))
+                     .addChordWords(ChordWord.newBuilder().setWord("Christ"))
+                     .addChordWords(ChordWord.newBuilder().setWord("in"))
+                     .addChordWords(ChordWord.newBuilder().setWord("my"))
+                     .addChordWords(ChordWord.newBuilder().setWord("vessel"))
+                     .addChordWords(ChordWord.newBuilder().setWord("I"))
+                     .addChordWords(ChordWord.newBuilder().setWord("will"))
+                     .build()));
+    assertThat(errors).isEmpty();
+  }
+
+  @Test
+  public void createInlineChords__emptyChordsFound__shouldExtractTheWordsOutWithEmptyChords() {
+    assertThat(target.createInlineChords("[]With Christ in my vessel I will"))
+        .isEqualTo(List.of(
+            ChordLine.newBuilder()
+                     .addChordWords(ChordWord.newBuilder().setWord("With").setChords(""))
+                     .addChordWords(ChordWord.newBuilder().setWord("Christ").setChords(""))
+                     .addChordWords(ChordWord.newBuilder().setWord("in").setChords(""))
+                     .addChordWords(ChordWord.newBuilder().setWord("my").setChords(""))
+                     .addChordWords(ChordWord.newBuilder().setWord("vessel").setChords(""))
+                     .addChordWords(ChordWord.newBuilder().setWord("I").setChords(""))
+                     .addChordWords(ChordWord.newBuilder().setWord("will").setChords(""))
+                     .build()));
+    assertThat(errors).isEmpty();
+  }
+
+  @Test
+  public void createInlineChords__longChordsInMiddleOfWord__shouldParseOutChords() {
+    assertThat(target.createInlineChords("  [G]Exercise your [A]spirit in this w[D  G-D  G-D  G-D]ay."))
+        .isEqualTo(List.of(
+            ChordLine.newBuilder()
+                     .addChordWords(ChordWord.newBuilder().setWord("Exercise").setChords("G"))
+                     .addChordWords(ChordWord.newBuilder().setWord("your").setChords(""))
+                     .addChordWords(ChordWord.newBuilder().setWord("spirit").setChords("A"))
+                     .addChordWords(ChordWord.newBuilder().setWord("in").setChords(""))
+                     .addChordWords(ChordWord.newBuilder().setWord("this").setChords(""))
+                     .addChordWords(ChordWord.newBuilder().setWord("way.").setChords(" D  G-D  G-D  G-D"))
+                     .build()));
+    assertThat(errors).isEmpty();
+  }
+
+  @Test
+  public void createInlineChords__chordsFound__shouldExtractTheChordsOutIntoChordWords() {
+    assertThat(target.createInlineChords("1\n" +
+                                             "[C]Loving You Lord’s [G]all I’m " +
+                                             "living [Am - C]for.\n" +
+                                             "[F]Loving You Lord [G]to the " +
+                                             "utter[C]most.\n" +
+                                             "[G]Lord, forgive me[Am] if I’ve " +
+                                             "left my first [F]love," +
+                                             "\n" +
+                                             "That’s the [Dm]bridal love for " +
+                                             "[G]You.\n" +
+                                             "Brideg[G]room.\n" +
+                                             "\n" +
+                                             "  []I give You the first place\n" +
+                                             "  Infuse [F]me with [G]Yourself " +
+                                             "[Am]abundant[F]ly\n" +
+                                             "  Till we [C]meet, dear [Am - " +
+                                             "F]Lord, [G]\n" +
+                                             "\n" +
+                                             "2\n" +
+                                             "You’ve the right to take all that" +
+                                             " I love,\n" +
+                                             "Loving one another’s sweet."))
+        .isEqualTo(List.of(
+            ChordLine.newBuilder().addChordWords(ChordWord.newBuilder().setWord("1")).build(),
+            ChordLine.newBuilder()
+                .addChordWords(ChordWord.newBuilder().setWord("Loving").setChords("C"))
+                .addChordWords(ChordWord.newBuilder().setWord("You").setChords(""))
+                .addChordWords(ChordWord.newBuilder().setWord("Lord’s").setChords(""))
+                .addChordWords(ChordWord.newBuilder().setWord("all").setChords("G"))
+                .addChordWords(ChordWord.newBuilder().setWord("I’m").setChords(""))
+                .addChordWords(ChordWord.newBuilder().setWord("living").setChords(""))
+                .addChordWords(ChordWord.newBuilder().setWord("for.").setChords("Am - C"))
+                .build(),
+            ChordLine.newBuilder()
+                .addChordWords(ChordWord.newBuilder().setWord("Loving").setChords("F"))
+                .addChordWords(ChordWord.newBuilder().setWord("You").setChords(""))
+                .addChordWords(ChordWord.newBuilder().setWord("Lord").setChords(""))
+                .addChordWords(ChordWord.newBuilder().setWord("to").setChords("G"))
+                .addChordWords(ChordWord.newBuilder().setWord("the").setChords(""))
+                .addChordWords(ChordWord.newBuilder().setWord("uttermost.").setChords("     C"))
+                .build(),
+            ChordLine.newBuilder()
+                .addChordWords(ChordWord.newBuilder().setWord("Lord,").setChords("G"))
+                .addChordWords(ChordWord.newBuilder().setWord("forgive").setChords(""))
+                .addChordWords(ChordWord.newBuilder().setWord("me").setChords("  Am"))
+                .addChordWords(ChordWord.newBuilder().setWord("if").setChords(""))
+                .addChordWords(ChordWord.newBuilder().setWord("I’ve").setChords(""))
+                .addChordWords(ChordWord.newBuilder().setWord("left").setChords(""))
+                .addChordWords(ChordWord.newBuilder().setWord("my").setChords(""))
+                .addChordWords(ChordWord.newBuilder().setWord("first").setChords(""))
+                .addChordWords(ChordWord.newBuilder().setWord("love,").setChords("F"))
+                .build(),
+            ChordLine.newBuilder()
+                .addChordWords(ChordWord.newBuilder().setWord("That’s").setChords(""))
+                .addChordWords(ChordWord.newBuilder().setWord("the").setChords(""))
+                .addChordWords(ChordWord.newBuilder().setWord("bridal").setChords("Dm"))
+                .addChordWords(ChordWord.newBuilder().setWord("love").setChords(""))
+                .addChordWords(ChordWord.newBuilder().setWord("for").setChords(""))
+                .addChordWords(ChordWord.newBuilder().setWord("You.").setChords("G"))
+                .build(),
+            ChordLine.newBuilder().addChordWords(ChordWord.newBuilder().setWord("Bridegroom.").setChords("      G")).build(),
+            ChordLine.newBuilder().addChordWords(ChordWord.newBuilder().setWord(" ")).build(),
+            ChordLine.newBuilder()
+                .addChordWords(ChordWord.newBuilder().setWord("I").setChords(""))
+                .addChordWords(ChordWord.newBuilder().setWord("give").setChords(""))
+                .addChordWords(ChordWord.newBuilder().setWord("You").setChords(""))
+                .addChordWords(ChordWord.newBuilder().setWord("the").setChords(""))
+                .addChordWords(ChordWord.newBuilder().setWord("first").setChords(""))
+                .addChordWords(ChordWord.newBuilder().setWord("place").setChords(""))
+                .build(),
+            ChordLine.newBuilder()
+                .addChordWords(ChordWord.newBuilder().setWord("Infuse").setChords(""))
+                .addChordWords(ChordWord.newBuilder().setWord("me").setChords("F"))
+                .addChordWords(ChordWord.newBuilder().setWord("with").setChords(""))
+                .addChordWords(ChordWord.newBuilder().setWord("Yourself").setChords("G"))
+                .addChordWords(ChordWord.newBuilder().setWord("abundantly").setChords("Am      F"))
+                .build(),
+            ChordLine.newBuilder()
+                .addChordWords(ChordWord.newBuilder().setWord("Till").setChords(""))
+                .addChordWords(ChordWord.newBuilder().setWord("we").setChords(""))
+                .addChordWords(ChordWord.newBuilder().setWord("meet,").setChords("C"))
+                .addChordWords(ChordWord.newBuilder().setWord("dear").setChords(""))
+                .addChordWords(ChordWord.newBuilder().setWord("Lord,").setChords("Am - F"))
+                .addChordWords(ChordWord.newBuilder().setWord("").setChords("G"))
+                .build(),
+            ChordLine.newBuilder().addChordWords(ChordWord.newBuilder().setWord(" ")).build(),
+            ChordLine.newBuilder().addChordWords(ChordWord.newBuilder().setWord("2")).build(),
+            ChordLine.newBuilder()
+                .addChordWords(ChordWord.newBuilder().setWord("You’ve"))
+                .addChordWords(ChordWord.newBuilder().setWord("the"))
+                .addChordWords(ChordWord.newBuilder().setWord("right"))
+                .addChordWords(ChordWord.newBuilder().setWord("to"))
+                .addChordWords(ChordWord.newBuilder().setWord("take"))
+                .addChordWords(ChordWord.newBuilder().setWord("all"))
+                .addChordWords(ChordWord.newBuilder().setWord("that"))
+                .addChordWords(ChordWord.newBuilder().setWord("I"))
+                .addChordWords(ChordWord.newBuilder().setWord("love,"))
+                .build(),
+            ChordLine.newBuilder()
+                .addChordWords(ChordWord.newBuilder().setWord("Loving"))
+                .addChordWords(ChordWord.newBuilder().setWord("one"))
+                .addChordWords(ChordWord.newBuilder().setWord("another’s"))
+                .addChordWords(ChordWord.newBuilder().setWord("sweet."))
+                .build()
+        ));
+    assertThat(errors).isEmpty();
   }
 }

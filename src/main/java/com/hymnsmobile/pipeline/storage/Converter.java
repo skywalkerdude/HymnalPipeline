@@ -170,7 +170,7 @@ public class Converter {
     ChordWordEntity.Builder builder =
         ChordWordEntity.newBuilder()
             .setWord(chordWord.getWord());
-    if (chordWord.hasChords() && !chordWord.getChords().isBlank()) {
+    if (chordWord.hasChords()) {
       builder.setChords(chordWord.getChords());
     }
     return builder.build();

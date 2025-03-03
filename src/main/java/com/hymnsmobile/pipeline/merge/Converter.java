@@ -482,7 +482,8 @@ public class Converter {
     return builder.build();
   }
 
-  private List<ChordLine> createInlineChords(String lyrics) {
+  @VisibleForTesting
+  List<ChordLine> createInlineChords(String lyrics) {
     if (TextUtil.isEmpty(lyrics)) {
       errors.add(
           PipelineError
