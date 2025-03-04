@@ -537,14 +537,16 @@ public class Converter {
   private String flattenLyrics(List<Verse> lyrics) {
     return lyrics.stream()
         .filter(verse -> verse.getVerseType() != COPYRIGHT) // Don't include copyright statement
-        .flatMap(verse -> verse.getLinesList().stream()
-            .map(Line::getLineContent)
-            .map(word -> word.replaceAll("\\p{P}", "")) // remove punctuations
-            .map(line -> line.replaceAll("\u00a0", " ")) // replace no-break spaces
-            .flatMap(line -> Arrays.stream(line.split(" ")))
-            .filter(word -> !word.isBlank())
-            .map(String::trim)
-            .map(String::toLowerCase))
+        .map(Verse::getLinesList)
+        .flatMap(Collection::stream)
+        .map(Line::getLineContent)
+        .map(line -> line.replaceAll("\\p{P}", "")) // remove punctuations
+        .map(line -> line.replaceAll(" ", " ")) // replace no-break spaces
+        .map(line -> line.split(" ")) // split into words
+        .flatMap(Arrays::stream)
+        .filter(word -> !word.isBlank()) // remove blank words
+        .map(String::trim)
+        .map(String::toLowerCase)
         .collect(Collectors.joining(" "));
   }
 
