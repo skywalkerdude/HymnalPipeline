@@ -175,12 +175,69 @@ public class DedupPipeline {
              .map(this::getPriority)
              .reduce(Integer.MIN_VALUE, Integer::max);
     if (hymn1Priority > hymn2Priority) {
-      hymn1.addAllReferences(hymn2.getReferencesList());
+      mergeHymns(hymn1, hymn2);
       builders.remove(hymn2);
     } else if (hymn2Priority > hymn1Priority) {
-      hymn2.addAllReferences(hymn1.getReferencesList());
+      mergeHymns(hymn2, hymn1);
       builders.remove(hymn1);
     }
+  }
+
+
+  public void mergeHymns(Hymn.Builder hymn1Builder, Hymn.Builder hymn2Builder) {
+    Hymn hymn1 = hymn1Builder.build();
+    Hymn hymn2 = hymn2Builder.build();
+
+    hymn1Builder.clearReferences().addAllReferences(mergeLists(hymn1.getReferencesList(), hymn2.getReferencesList()));
+    if (hymn1.getVersesList().isEmpty() && !hymn2.getVersesList().isEmpty()) {
+      hymn1Builder.addAllVerses(hymn2.getVersesList());
+    }
+    hymn1Builder.clearCategory().addAllCategory(mergeLists(hymn1.getCategoryList(), hymn2.getCategoryList()));
+    hymn1Builder.clearSubCategory().addAllSubCategory(mergeLists(hymn1.getSubCategoryList(), hymn2.getSubCategoryList()));
+
+    hymn1Builder.clearAuthor().addAllAuthor(mergeLists(hymn1.getAuthorList(), hymn2.getAuthorList()));
+    hymn1Builder.clearComposer().addAllComposer(mergeLists(hymn1.getComposerList(), hymn2.getComposerList()));
+    hymn1Builder.clearKey().addAllKey(mergeLists(hymn1.getKeyList(), hymn2.getKeyList()));
+    hymn1Builder.clearTime().addAllTime(mergeLists(hymn1.getTimeList(), hymn2.getTimeList()));
+    hymn1Builder.clearMeter().addAllMeter(mergeLists(hymn1.getMeterList(), hymn2.getMeterList()));
+    hymn1Builder.clearScriptures().addAllScriptures(mergeLists(hymn1.getScripturesList(), hymn2.getScripturesList()));
+    hymn1Builder.clearHymnCode().addAllHymnCode(mergeLists(hymn1.getHymnCodeList(), hymn2.getHymnCodeList()));
+    hymn1Builder.clearMusic().putAllMusic(mergeMaps(hymn1.getMusicMap(), hymn2.getMusicMap()));
+    hymn1Builder.clearSvgSheet().putAllSvgSheet(mergeMaps(hymn1.getSvgSheetMap(), hymn2.getSvgSheetMap()));
+    hymn1Builder.clearPdfSheet().putAllPdfSheet(mergeMaps(hymn1.getPdfSheetMap(), hymn2.getPdfSheetMap()));
+    hymn1Builder.clearLanguages().addAllLanguages(mergeLists(hymn1.getLanguagesList(), hymn2.getLanguagesList()));
+    hymn1Builder.clearRelevants().addAllRelevants(mergeLists(hymn1.getRelevantsList(), hymn2.getRelevantsList()));
+
+    if (hymn1.getChordLinesList().isEmpty() && !hymn2.getChordLinesList().isEmpty()) {
+      hymn1Builder.addAllChordLines(hymn2.getChordLinesList());
+    }
+    hymn1Builder.clearProvenance().addAllProvenance(mergeLists(hymn1.getProvenanceList(), hymn2.getProvenanceList()));
+  }
+
+  private <T> List<T> mergeLists(List<T> list1, List<T> list2) {
+    if (list1 == null || list1.isEmpty()) {
+      return list2;
+    }
+    if (list2 == null || list2.isEmpty()) {
+      return list1;
+    }
+
+    Set<T> combinedSet = new LinkedHashSet<>(list1);
+    combinedSet.addAll(list2);
+    return new ArrayList<>(combinedSet);
+  }
+
+  private <K, V> Map<K, V> mergeMaps(Map<K, V> map1, Map<K, V> map2) {
+    if (map1 == null || map1.isEmpty()) {
+      return map2;
+    }
+    if (map2 == null || map2.isEmpty()) {
+      return map1;
+    }
+
+    Map<K, V> mergedMap = new LinkedHashMap<>(map1);
+    mergedMap.putAll(map2);
+    return mergedMap;
   }
 
   /**
