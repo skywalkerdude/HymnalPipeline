@@ -71,7 +71,7 @@ public class DatabaseWriter {
       connection.createStatement().execute(
           "CREATE VIRTUAL TABLE IF NOT EXISTS `SEARCH_VIRTUAL_SONG_DATA` "
               + "USING FTS4(`SONG_TITLE` TEXT, `FLATTENED_LYRICS` TEXT NOT NULL, "
-              + "tokenize=porter, content=`SONG_DATA`)");
+              + "tokenize=simple, content=`SONG_DATA`)");
 
       connection.createStatement().execute(
           "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_SEARCH_VIRTUAL_SONG_DATA_BEFORE_UPDATE BEFORE UPDATE ON `SONG_DATA` BEGIN DELETE FROM `SEARCH_VIRTUAL_SONG_DATA` WHERE `docid`=OLD.`rowid`; END");
@@ -86,7 +86,7 @@ public class DatabaseWriter {
       connection.createStatement().execute(
           "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
       connection.createStatement().execute(
-          "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '149899ceb52daed7a593403c861b0589')");
+          "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8d5d38c742c904aa7de4ba863b13dd78')");
 
       connection.createStatement().execute(
           "CREATE TABLE IF NOT EXISTS misc_meta_data (metadata_key TEXT, metadata_value TEXT)");
