@@ -86,7 +86,7 @@ public class DatabaseWriter {
       connection.createStatement().execute(
           "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
       connection.createStatement().execute(
-          "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a5ef7790f4ea35ca75baeef7eea7a216')");
+          "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '149899ceb52daed7a593403c861b0589')");
 
       connection.createStatement().execute(
           "CREATE TABLE IF NOT EXISTS misc_meta_data (metadata_key TEXT, metadata_value TEXT)");
