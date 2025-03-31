@@ -361,6 +361,40 @@ class ConverterTest {
             .build());
   }
 
+  // Testing when there is a new tune, similar to https://github.com/ReganRyanNZ/songbase/blob/0a94d452197d48a48a50dff05d3d6939009959f2/test/factories/song_factory.rb#L33-L37
+  @Test
+  public void toHymn__fromSongbase__newTune__correctlyConverts() throws IOException {
+    SongbaseHymn input =
+        TestUtils.readTextProto(
+            "src/test/resources/merge/input/songbase_new_tune.textproto",
+            SongbaseHymn.newBuilder());
+    Hymn actual = target.toHymn(input);
+
+    Hymn expected =
+        TestUtils.readTextProto(
+            "src/test/resources/merge/output/sb_new_tune.textproto",
+            Hymn.newBuilder());
+    assertThat(actual).isEqualTo(expected);
+    assertThat(errors).isEmpty();
+  }
+
+  // Testing when there are several tunes, similar to https://github.com/ReganRyanNZ/songbase/blob/0a94d452197d48a48a50dff05d3d6939009959f2/test/factories/song_factory.rb#L39-L43
+  @Test
+  public void toHymn__fromSongbase__multipleTunes__correctlyConverts() throws IOException {
+    SongbaseHymn input =
+        TestUtils.readTextProto(
+            "src/test/resources/merge/input/songbase_multiple_tunes.textproto",
+            SongbaseHymn.newBuilder());
+    Hymn actual = target.toHymn(input);
+
+    Hymn expected =
+        TestUtils.readTextProto(
+            "src/test/resources/merge/output/sb_multiple_tunes.textproto",
+            Hymn.newBuilder());
+    assertThat(actual).isEqualTo(expected);
+    assertThat(errors).isEmpty();
+  }
+
 
   @Test
   public void createInlineChords__emptyString__shouldBeConvertedToEmptyList() {

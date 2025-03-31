@@ -1,0 +1,1050 @@
+# proto-file: proto/common.proto
+# proto-message: Hymn
+
+id: 1
+references {
+  hymn_type: "sb"
+  hymn_number: "5"
+}
+references {
+  hymn_type: "h"
+  hymn_number: "367"
+}
+title: "Be Thou supreme, O Jesus Christ"
+chord_lines {
+  chord_words {
+    word: "###"
+  }
+  chord_words {
+    word: "Original"
+  }
+  chord_words {
+    word: "tune"
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "#"
+  }
+  chord_words {
+    word: "Capo"
+  }
+  chord_words {
+    word: "1"
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "1"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Be"
+    chords: ""
+  }
+  chord_words {
+    word: "Thou"
+    chords: "G"
+  }
+  chord_words {
+    word: "supreme,"
+    chords: "  D"
+  }
+  chord_words {
+    word: "O"
+    chords: ""
+  }
+  chord_words {
+    word: "Jesus"
+    chords: "G"
+  }
+  chord_words {
+    word: "Christ,"
+    chords: "C"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Nor"
+    chords: ""
+  }
+  chord_words {
+    word: "creed,"
+    chords: "Am"
+  }
+  chord_words {
+    word: "nor"
+    chords: ""
+  }
+  chord_words {
+    word: "form,"
+    chords: "D"
+  }
+  chord_words {
+    word: "nor"
+    chords: ""
+  }
+  chord_words {
+    word: "word,"
+    chords: "G"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Nor"
+    chords: ""
+  }
+  chord_words {
+    word: "holy"
+    chords: "D"
+  }
+  chord_words {
+    word: "Church,"
+    chords: "G"
+  }
+  chord_words {
+    word: "nor"
+    chords: ""
+  }
+  chord_words {
+    word: "human"
+    chords: "B7"
+  }
+  chord_words {
+    word: "love,"
+    chords: "Em"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Compare"
+    chords: "   G"
+  }
+  chord_words {
+    word: "with"
+    chords: ""
+  }
+  chord_words {
+    word: "Thee,"
+    chords: "Am"
+  }
+  chord_words {
+    word: "my"
+    chords: "D"
+  }
+  chord_words {
+    word: "Lord!"
+    chords: "G"
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "2"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Be"
+  }
+  chord_words {
+    word: "Thou"
+  }
+  chord_words {
+    word: "supreme,"
+  }
+  chord_words {
+    word: "O"
+  }
+  chord_words {
+    word: "Jesus"
+  }
+  chord_words {
+    word: "Christ,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Thy"
+  }
+  chord_words {
+    word: "love"
+  }
+  chord_words {
+    word: "has"
+  }
+  chord_words {
+    word: "conquered"
+  }
+  chord_words {
+    word: "me;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Beneath"
+  }
+  chord_words {
+    word: "Thy"
+  }
+  chord_words {
+    word: "Cross"
+  }
+  chord_words {
+    word: "I"
+  }
+  chord_words {
+    word: "die"
+  }
+  chord_words {
+    word: "to"
+  }
+  chord_words {
+    word: "self,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "And"
+  }
+  chord_words {
+    word: "live"
+  }
+  chord_words {
+    word: "alone"
+  }
+  chord_words {
+    word: "to"
+  }
+  chord_words {
+    word: "Thee."
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "3"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Be"
+  }
+  chord_words {
+    word: "Thou"
+  }
+  chord_words {
+    word: "supreme,"
+  }
+  chord_words {
+    word: "O"
+  }
+  chord_words {
+    word: "Jesus"
+  }
+  chord_words {
+    word: "Christ,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "My"
+  }
+  chord_words {
+    word: "inmost"
+  }
+  chord_words {
+    word: "being"
+  }
+  chord_words {
+    word: "fill;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "So"
+  }
+  chord_words {
+    word: "shall"
+  }
+  chord_words {
+    word: "I"
+  }
+  chord_words {
+    word: "think"
+  }
+  chord_words {
+    word: "as"
+  }
+  chord_words {
+    word: "Thou"
+  }
+  chord_words {
+    word: "dost"
+  }
+  chord_words {
+    word: "think,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "And"
+  }
+  chord_words {
+    word: "will"
+  }
+  chord_words {
+    word: "as"
+  }
+  chord_words {
+    word: "Thou"
+  }
+  chord_words {
+    word: "dost"
+  }
+  chord_words {
+    word: "will."
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "4"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Be"
+  }
+  chord_words {
+    word: "Thou"
+  }
+  chord_words {
+    word: "supreme,"
+  }
+  chord_words {
+    word: "O"
+  }
+  chord_words {
+    word: "Jesus"
+  }
+  chord_words {
+    word: "Christ,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Thy"
+  }
+  chord_words {
+    word: "life"
+  }
+  chord_words {
+    word: "transfigure"
+  }
+  chord_words {
+    word: "mine;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "And"
+  }
+  chord_words {
+    word: "through"
+  }
+  chord_words {
+    word: "this"
+  }
+  chord_words {
+    word: "veil"
+  }
+  chord_words {
+    word: "of"
+  }
+  chord_words {
+    word: "mortal"
+  }
+  chord_words {
+    word: "flesh,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Lord,"
+  }
+  chord_words {
+    word: "let"
+  }
+  chord_words {
+    word: "Thy"
+  }
+  chord_words {
+    word: "splendor"
+  }
+  chord_words {
+    word: "shine."
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "5"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Be"
+  }
+  chord_words {
+    word: "Thou"
+  }
+  chord_words {
+    word: "supreme,"
+  }
+  chord_words {
+    word: "O"
+  }
+  chord_words {
+    word: "Jesus"
+  }
+  chord_words {
+    word: "Christ,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "My"
+  }
+  chord_words {
+    word: "soul"
+  }
+  chord_words {
+    word: "exults"
+  }
+  chord_words {
+    word: "in"
+  }
+  chord_words {
+    word: "Thee;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "To"
+  }
+  chord_words {
+    word: "be"
+  }
+  chord_words {
+    word: "Thy"
+  }
+  chord_words {
+    word: "slave,"
+  }
+  chord_words {
+    word: "to"
+  }
+  chord_words {
+    word: "do"
+  }
+  chord_words {
+    word: "Thy"
+  }
+  chord_words {
+    word: "will,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Is"
+  }
+  chord_words {
+    word: "my"
+  }
+  chord_words {
+    word: "felicity."
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "###"
+  }
+  chord_words {
+    word: "New"
+  }
+  chord_words {
+    word: "tune"
+  }
+  chord_words {
+    word: "(with"
+  }
+  chord_words {
+    word: "chorus)"
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "1"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Be"
+    chords: "C"
+  }
+  chord_words {
+    word: "Thou"
+    chords: ""
+  }
+  chord_words {
+    word: "supreme,"
+    chords: "  G"
+  }
+  chord_words {
+    word: "O"
+    chords: ""
+  }
+  chord_words {
+    word: "Jesus"
+    chords: "Am"
+  }
+  chord_words {
+    word: "Christ,"
+    chords: ""
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Thy"
+    chords: "F"
+  }
+  chord_words {
+    word: "love"
+    chords: ""
+  }
+  chord_words {
+    word: "has"
+    chords: ""
+  }
+  chord_words {
+    word: "conquered"
+    chords: ""
+  }
+  chord_words {
+    word: "me;"
+    chords: "G"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Beneath"
+    chords: "C"
+  }
+  chord_words {
+    word: "Thy"
+    chords: ""
+  }
+  chord_words {
+    word: "Cross"
+    chords: "G"
+  }
+  chord_words {
+    word: "I"
+    chords: ""
+  }
+  chord_words {
+    word: "die"
+    chords: "Am"
+  }
+  chord_words {
+    word: "to"
+    chords: ""
+  }
+  chord_words {
+    word: "self,"
+    chords: ""
+  }
+}
+chord_lines {
+  chord_words {
+    word: "And"
+    chords: "F"
+  }
+  chord_words {
+    word: "live"
+    chords: ""
+  }
+  chord_words {
+    word: "alone"
+    chords: " G"
+  }
+  chord_words {
+    word: "to"
+    chords: ""
+  }
+  chord_words {
+    word: "Thee."
+    chords: "C"
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Be"
+    chords: ""
+  }
+  chord_words {
+    word: "Thou"
+    chords: ""
+  }
+  chord_words {
+    word: "supreme,"
+    chords: "  F   G"
+  }
+  chord_words {
+    word: "O"
+    chords: ""
+  }
+  chord_words {
+    word: "Jesus"
+    chords: ""
+  }
+  chord_words {
+    word: "Christ,"
+    chords: "C"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Nor"
+    chords: ""
+  }
+  chord_words {
+    word: "creed,"
+    chords: ""
+  }
+  chord_words {
+    word: "nor"
+    chords: ""
+  }
+  chord_words {
+    word: "form,"
+    chords: "F  G"
+  }
+  chord_words {
+    word: "nor"
+    chords: ""
+  }
+  chord_words {
+    word: "word,"
+    chords: "C"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Nor"
+    chords: ""
+  }
+  chord_words {
+    word: "holy"
+    chords: ""
+  }
+  chord_words {
+    word: "Church,"
+    chords: "F"
+  }
+  chord_words {
+    word: "nor"
+    chords: "G"
+  }
+  chord_words {
+    word: "human"
+    chords: "Am"
+  }
+  chord_words {
+    word: "love,"
+    chords: ""
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Compare"
+    chords: "F"
+  }
+  chord_words {
+    word: "with"
+    chords: ""
+  }
+  chord_words {
+    word: "Thee,"
+    chords: "G"
+  }
+  chord_words {
+    word: "my"
+    chords: ""
+  }
+  chord_words {
+    word: "Lord!"
+    chords: "C"
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "2"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Be"
+  }
+  chord_words {
+    word: "Thou"
+  }
+  chord_words {
+    word: "supreme,"
+  }
+  chord_words {
+    word: "O"
+  }
+  chord_words {
+    word: "Jesus"
+  }
+  chord_words {
+    word: "Christ,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "My"
+  }
+  chord_words {
+    word: "inmost"
+  }
+  chord_words {
+    word: "being"
+  }
+  chord_words {
+    word: "fill;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "So"
+  }
+  chord_words {
+    word: "shall"
+  }
+  chord_words {
+    word: "I"
+  }
+  chord_words {
+    word: "think"
+  }
+  chord_words {
+    word: "as"
+  }
+  chord_words {
+    word: "Thou"
+  }
+  chord_words {
+    word: "dost"
+  }
+  chord_words {
+    word: "think,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "And"
+  }
+  chord_words {
+    word: "will"
+  }
+  chord_words {
+    word: "as"
+  }
+  chord_words {
+    word: "Thou"
+  }
+  chord_words {
+    word: "dost"
+  }
+  chord_words {
+    word: "will."
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "3"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Be"
+  }
+  chord_words {
+    word: "Thou"
+  }
+  chord_words {
+    word: "supreme,"
+  }
+  chord_words {
+    word: "O"
+  }
+  chord_words {
+    word: "Jesus"
+  }
+  chord_words {
+    word: "Christ,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Thy"
+  }
+  chord_words {
+    word: "life"
+  }
+  chord_words {
+    word: "transfigure"
+  }
+  chord_words {
+    word: "mine;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "And"
+  }
+  chord_words {
+    word: "through"
+  }
+  chord_words {
+    word: "this"
+  }
+  chord_words {
+    word: "veil"
+  }
+  chord_words {
+    word: "of"
+  }
+  chord_words {
+    word: "mortal"
+  }
+  chord_words {
+    word: "flesh,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Lord,"
+  }
+  chord_words {
+    word: "let"
+  }
+  chord_words {
+    word: "Thy"
+  }
+  chord_words {
+    word: "splendor"
+  }
+  chord_words {
+    word: "shine."
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "4"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Be"
+  }
+  chord_words {
+    word: "Thou"
+  }
+  chord_words {
+    word: "supreme,"
+  }
+  chord_words {
+    word: "O"
+  }
+  chord_words {
+    word: "Jesus"
+  }
+  chord_words {
+    word: "Christ,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "My"
+  }
+  chord_words {
+    word: "soul"
+  }
+  chord_words {
+    word: "exults"
+  }
+  chord_words {
+    word: "in"
+  }
+  chord_words {
+    word: "Thee;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "To"
+  }
+  chord_words {
+    word: "be"
+  }
+  chord_words {
+    word: "Thy"
+  }
+  chord_words {
+    word: "slave,"
+  }
+  chord_words {
+    word: "to"
+  }
+  chord_words {
+    word: "do"
+  }
+  chord_words {
+    word: "Thy"
+  }
+  chord_words {
+    word: "will,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Is"
+  }
+  chord_words {
+    word: "my"
+  }
+  chord_words {
+    word: "felicity."
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "#"
+  }
+  chord_words {
+    word: "Verse"
+  }
+  chord_words {
+    word: "1"
+  }
+  chord_words {
+    word: "of"
+  }
+  chord_words {
+    word: "the"
+  }
+  chord_words {
+    word: "original"
+  }
+  chord_words {
+    word: "hymn"
+  }
+  chord_words {
+    word: "has"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "#"
+  }
+  chord_words {
+    word: "become"
+  }
+  chord_words {
+    word: "the"
+  }
+  chord_words {
+    word: "chorus"
+  }
+  chord_words {
+    word: "for"
+  }
+  chord_words {
+    word: "this"
+  }
+  chord_words {
+    word: "tune"
+  }
+}
+flattened_lyrics: "be thou supreme o jesus christ nor creed nor form nor word nor holy church nor human love compare with thee my lord be thou supreme o jesus christ thy love has conquered me beneath thy cross i die to self and live alone to thee be thou supreme o jesus christ my inmost being fill so shall i think as thou dost think and will as thou dost will be thou supreme o jesus christ thy life transfigure mine and through this veil of mortal flesh lord let thy splendor shine be thou supreme o jesus christ my soul exults in thee to be thy slave to do thy will is my felicity"

@@ -24,7 +24,6 @@ import com.hymnsmobile.pipeline.utils.TextUtil;
 
 import javax.inject.Inject;
 import java.util.*;
-import java.util.function.Function;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -42,6 +41,10 @@ public class Converter {
   // Separates chord line out into words.
   // Note: ?: represents a non-matching group. i.e. the regex matches, but the range isn't extracted.
   private static final String SEPARATOR_PATTERN = "(\\S*(?:\\[.*?])\\S*|\\S+)";
+
+  // Note: ?! is a negative lookahead. This basically excludes the word "original" from being matched while matching
+  // everything else.
+  private static final String MULTIPLE_TUNES_PATTERN = "### (?!.*(original)).*tune.*";
 
   @VisibleForTesting static int nextHymnId = 1;
 
@@ -551,28 +554,41 @@ public class Converter {
   }
 
   private String flattenInlineChords(List<ChordLine> inlineChords) {
-    return inlineChords.stream()
-        .map((Function<ChordLine, Optional<String>>) chordLine -> {
-          String line = chordLine.getChordWordsList().stream()
-                                 .map(chordWord -> chordWord.getWord().trim())
-                                 .collect(Collectors.joining(" "))
-                                 .toLowerCase();
-          if (line.matches("\\d+")) {
-            return Optional.empty();
-          }
-          if (line.contains("chorus")) {
-            return Optional.empty();
-          }
-          if (line.contains("capo")) {
-            return Optional.empty();
-          }
-          if (line.contains("#")) {
-            return Optional.empty();
-          }
-          return Optional.of(line);
-        })
-        .filter(Optional::isPresent)
-        .map(Optional::get)
+    List<String> lines = new ArrayList<>();
+    for (ChordLine chordLine : inlineChords) {
+      String line = chordLine.getChordWordsList().stream()
+          .map(chordWord -> chordWord.getWord().trim())
+          .collect(Collectors.joining(" "))
+          .toLowerCase();
+
+      // If there is a new or alternate tune tag, that indicates that the rest of the lyrics are mostly just a
+      // duplication of the original, so we are effectively done, and we can short-circuit.
+      if (line.matches(MULTIPLE_TUNES_PATTERN)) {
+        break;
+      }
+
+      if (line.matches("\\d+")) {
+        continue;
+      }
+      if (line.contains("chorus")) {
+        continue;
+      }
+      if (line.contains("capo")) {
+        continue;
+      }
+      if (line.contains("#")) {
+        continue;
+      }
+      lines.add(line);
+    }
+    return lines.stream()
+        .map(line -> line.replaceAll("\\p{P}", "")) // remove punctuations
+        .map(line -> line.replaceAll(" ", " ")) // replace no-break spaces
+        .map(line -> line.split(" ")) // split into words
+        .flatMap(Arrays::stream)
+        .filter(word -> !word.isBlank()) // remove blank words
+        .map(String::trim)
+        .map(String::toLowerCase)
         .collect(Collectors.joining(" "));
   }
 }

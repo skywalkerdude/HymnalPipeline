@@ -1,0 +1,14 @@
+# proto-file: proto/songbase.proto
+# proto-message: SongbaseHymn
+
+key {
+  hymn_type: "blue_songbook"
+  hymn_number: "5"
+}
+key {
+  hymn_type: "english_hymnal"
+  hymn_number: "367"
+}
+title: "Be Thou supreme, O Jesus Christ"
+language: "english"
+lyrics: "### Original tune\n\n# Capo 1\n\n1\nBe [G]Thou su[D]preme, O [G]Jesus [C]Christ,\nNor [Am]creed, nor [D]form, nor [G]word,\nNor [D]holy [G]Church, nor [B7]human [Em]love,\nCom[G]pare with [Am]Thee, [D]my [G]Lord!\n\n2\nBe Thou supreme, O Jesus Christ,\nThy love has conquered me;\nBeneath Thy Cross I die to self,\nAnd live alone to Thee.\n\n3\nBe Thou supreme, O Jesus Christ,\nMy inmost being fill;\nSo shall I think as Thou dost think,\nAnd will as Thou dost will.\n\n4\nBe Thou supreme, O Jesus Christ,\nThy life transfigure mine;\nAnd through this veil of mortal flesh,\nLord, let Thy splendor shine.\n\n5\nBe Thou supreme, O Jesus Christ,\nMy soul exults in Thee;\nTo be Thy slave, to do Thy will,\nIs my felicity.\n\n### New tune (with chorus)\n\n1\n[C]Be Thou su[G]preme, O [Am]Jesus Christ,\n[F]Thy love has conquered [G]me;\n[C]Beneath Thy [G]Cross I [Am]die to self,\n[F]And live a[G]lone to [C]Thee.\n\n  Be Thou su[F]prem[G]e, O Jesus [C]Christ,\n  Nor creed, nor [F]for[G]m, nor [C]word,\n  Nor holy [F]Church, [G]nor [Am]human love,\n  [F]Compare with [G]Thee, my [C]Lord!\n\n2\nBe Thou supreme, O Jesus Christ,\nMy inmost being fill;\nSo shall I think as Thou dost think,\nAnd will as Thou dost will.\n\n3\nBe Thou supreme, O Jesus Christ,\nThy life transfigure mine;\nAnd through this veil of mortal flesh,\nLord, let Thy splendor shine.\n\n4\nBe Thou supreme, O Jesus Christ,\nMy soul exults in Thee;\nTo be Thy slave, to do Thy will,\nIs my felicity.\n\n\n# Verse 1 of the original hymn has\n# become the chorus for this tune"

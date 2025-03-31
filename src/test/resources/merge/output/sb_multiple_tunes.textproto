@@ -1,0 +1,2158 @@
+# proto-file: proto/common.proto
+# proto-message: Hymn
+
+id: 1
+references {
+  hymn_type: "h"
+  hymn_number: "724"
+}
+title: "A little bird I am"
+chord_lines {
+  chord_words {
+    word: "###"
+  }
+  chord_words {
+    word: "Original"
+  }
+  chord_words {
+    word: "tune"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "#"
+  }
+  chord_words {
+    word: "Capo"
+  }
+  chord_words {
+    word: "3"
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "1"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "A"
+    chords: "G"
+  }
+  chord_words {
+    word: "little"
+    chords: ""
+  }
+  chord_words {
+    word: "bird"
+    chords: "D7"
+  }
+  chord_words {
+    word: "I"
+    chords: ""
+  }
+  chord_words {
+    word: "am,"
+    chords: "G"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Shut"
+    chords: ""
+  }
+  chord_words {
+    word: "from"
+    chords: "C"
+  }
+  chord_words {
+    word: "the"
+    chords: ""
+  }
+  chord_words {
+    word: "fields"
+    chords: ""
+  }
+  chord_words {
+    word: "of"
+    chords: ""
+  }
+  chord_words {
+    word: "air,"
+    chords: "D   D7"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "And"
+    chords: ""
+  }
+  chord_words {
+    word: "in"
+    chords: "G"
+  }
+  chord_words {
+    word: "my"
+    chords: ""
+  }
+  chord_words {
+    word: "cage"
+    chords: "D7"
+  }
+  chord_words {
+    word: "I"
+    chords: ""
+  }
+  chord_words {
+    word: "sit"
+    chords: "G"
+  }
+  chord_words {
+    word: "and"
+    chords: ""
+  }
+  chord_words {
+    word: "sing"
+    chords: ""
+  }
+}
+chord_lines {
+  chord_words {
+    word: "To"
+    chords: ""
+  }
+  chord_words {
+    word: "Him"
+    chords: "A"
+  }
+  chord_words {
+    word: "who"
+    chords: ""
+  }
+  chord_words {
+    word: "placed"
+    chords: "A7"
+  }
+  chord_words {
+    word: "me"
+    chords: ""
+  }
+  chord_words {
+    word: "there;"
+    chords: "D"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Well"
+    chords: "D7"
+  }
+  chord_words {
+    word: "pleased"
+    chords: "G"
+  }
+  chord_words {
+    word: "a"
+    chords: ""
+  }
+  chord_words {
+    word: "prisoner"
+    chords: ""
+  }
+  chord_words {
+    word: "to"
+    chords: ""
+  }
+  chord_words {
+    word: "be,"
+    chords: ""
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Because,"
+    chords: ""
+  }
+  chord_words {
+    word: "my"
+    chords: "D"
+  }
+  chord_words {
+    word: "God,"
+    chords: "G  C"
+  }
+  chord_words {
+    word: "it"
+    chords: ""
+  }
+  chord_words {
+    word: "pleaseth"
+    chords: "D    D7"
+  }
+  chord_words {
+    word: "Thee."
+    chords: "G"
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "2"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Nought"
+  }
+  chord_words {
+    word: "have"
+  }
+  chord_words {
+    word: "I"
+  }
+  chord_words {
+    word: "else"
+  }
+  chord_words {
+    word: "to"
+  }
+  chord_words {
+    word: "do,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "I"
+  }
+  chord_words {
+    word: "sing"
+  }
+  chord_words {
+    word: "the"
+  }
+  chord_words {
+    word: "whole"
+  }
+  chord_words {
+    word: "day"
+  }
+  chord_words {
+    word: "long;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "And"
+  }
+  chord_words {
+    word: "He"
+  }
+  chord_words {
+    word: "whom"
+  }
+  chord_words {
+    word: "most"
+  }
+  chord_words {
+    word: "I"
+  }
+  chord_words {
+    word: "love"
+  }
+  chord_words {
+    word: "to"
+  }
+  chord_words {
+    word: "please"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Doth"
+  }
+  chord_words {
+    word: "listen"
+  }
+  chord_words {
+    word: "to"
+  }
+  chord_words {
+    word: "my"
+  }
+  chord_words {
+    word: "song;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "He"
+  }
+  chord_words {
+    word: "caught"
+  }
+  chord_words {
+    word: "and"
+  }
+  chord_words {
+    word: "bound"
+  }
+  chord_words {
+    word: "my"
+  }
+  chord_words {
+    word: "wandering"
+  }
+  chord_words {
+    word: "wing,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "But"
+  }
+  chord_words {
+    word: "still"
+  }
+  chord_words {
+    word: "He"
+  }
+  chord_words {
+    word: "bends"
+  }
+  chord_words {
+    word: "to"
+  }
+  chord_words {
+    word: "hear"
+  }
+  chord_words {
+    word: "me"
+  }
+  chord_words {
+    word: "sing."
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "3"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Thou"
+  }
+  chord_words {
+    word: "hast"
+  }
+  chord_words {
+    word: "an"
+  }
+  chord_words {
+    word: "ear"
+  }
+  chord_words {
+    word: "to"
+  }
+  chord_words {
+    word: "hear"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "A"
+  }
+  chord_words {
+    word: "heart"
+  }
+  chord_words {
+    word: "to"
+  }
+  chord_words {
+    word: "love"
+  }
+  chord_words {
+    word: "and"
+  }
+  chord_words {
+    word: "bless;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "And"
+  }
+  chord_words {
+    word: "though"
+  }
+  chord_words {
+    word: "my"
+  }
+  chord_words {
+    word: "notes"
+  }
+  chord_words {
+    word: "were"
+  }
+  chord_words {
+    word: "e\'er"
+  }
+  chord_words {
+    word: "so"
+  }
+  chord_words {
+    word: "rude,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Thou"
+  }
+  chord_words {
+    word: "wouldst"
+  }
+  chord_words {
+    word: "not"
+  }
+  chord_words {
+    word: "hear"
+  }
+  chord_words {
+    word: "the"
+  }
+  chord_words {
+    word: "less;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Because"
+  }
+  chord_words {
+    word: "Thou"
+  }
+  chord_words {
+    word: "knowest"
+  }
+  chord_words {
+    word: "as"
+  }
+  chord_words {
+    word: "they"
+  }
+  chord_words {
+    word: "fall,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "That"
+  }
+  chord_words {
+    word: "love,"
+  }
+  chord_words {
+    word: "sweet"
+  }
+  chord_words {
+    word: "love,"
+  }
+  chord_words {
+    word: "inspires"
+  }
+  chord_words {
+    word: "them"
+  }
+  chord_words {
+    word: "all."
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "4"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "My"
+  }
+  chord_words {
+    word: "cage"
+  }
+  chord_words {
+    word: "confines"
+  }
+  chord_words {
+    word: "me"
+  }
+  chord_words {
+    word: "round;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Abroad"
+  }
+  chord_words {
+    word: "I"
+  }
+  chord_words {
+    word: "cannot"
+  }
+  chord_words {
+    word: "fly;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "But"
+  }
+  chord_words {
+    word: "though"
+  }
+  chord_words {
+    word: "my"
+  }
+  chord_words {
+    word: "wing"
+  }
+  chord_words {
+    word: "is"
+  }
+  chord_words {
+    word: "closely"
+  }
+  chord_words {
+    word: "bound,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "My"
+  }
+  chord_words {
+    word: "heart\'s"
+  }
+  chord_words {
+    word: "at"
+  }
+  chord_words {
+    word: "liberty;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "For"
+  }
+  chord_words {
+    word: "prison"
+  }
+  chord_words {
+    word: "walls"
+  }
+  chord_words {
+    word: "cannot"
+  }
+  chord_words {
+    word: "control"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "The"
+  }
+  chord_words {
+    word: "flight,"
+  }
+  chord_words {
+    word: "the"
+  }
+  chord_words {
+    word: "freedom"
+  }
+  chord_words {
+    word: "of"
+  }
+  chord_words {
+    word: "the"
+  }
+  chord_words {
+    word: "soul."
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "5"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "O"
+  }
+  chord_words {
+    word: "it"
+  }
+  chord_words {
+    word: "is"
+  }
+  chord_words {
+    word: "good"
+  }
+  chord_words {
+    word: "to"
+  }
+  chord_words {
+    word: "soar"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "These"
+  }
+  chord_words {
+    word: "bolts"
+  }
+  chord_words {
+    word: "and"
+  }
+  chord_words {
+    word: "bars"
+  }
+  chord_words {
+    word: "above!"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "To"
+  }
+  chord_words {
+    word: "Him"
+  }
+  chord_words {
+    word: "whose"
+  }
+  chord_words {
+    word: "purpose"
+  }
+  chord_words {
+    word: "I"
+  }
+  chord_words {
+    word: "adore,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Whose"
+  }
+  chord_words {
+    word: "providence"
+  }
+  chord_words {
+    word: "I"
+  }
+  chord_words {
+    word: "love;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "And"
+  }
+  chord_words {
+    word: "in"
+  }
+  chord_words {
+    word: "Thy"
+  }
+  chord_words {
+    word: "mighty"
+  }
+  chord_words {
+    word: "will"
+  }
+  chord_words {
+    word: "to"
+  }
+  chord_words {
+    word: "find"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "The"
+  }
+  chord_words {
+    word: "joy,"
+  }
+  chord_words {
+    word: "the"
+  }
+  chord_words {
+    word: "freedom"
+  }
+  chord_words {
+    word: "of"
+  }
+  chord_words {
+    word: "the"
+  }
+  chord_words {
+    word: "mind."
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "###"
+  }
+  chord_words {
+    word: "Tune"
+  }
+  chord_words {
+    word: "2"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "1"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "A"
+    chords: "D"
+  }
+  chord_words {
+    word: "little"
+    chords: ""
+  }
+  chord_words {
+    word: "bird"
+    chords: "G"
+  }
+  chord_words {
+    word: "I"
+    chords: ""
+  }
+  chord_words {
+    word: "am,"
+    chords: ""
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Shut"
+    chords: ""
+  }
+  chord_words {
+    word: "from"
+    chords: "D"
+  }
+  chord_words {
+    word: "the"
+    chords: ""
+  }
+  chord_words {
+    word: "fields"
+    chords: "Bm"
+  }
+  chord_words {
+    word: "of"
+    chords: ""
+  }
+  chord_words {
+    word: "air,"
+    chords: "A"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "And"
+    chords: "D"
+  }
+  chord_words {
+    word: "in"
+    chords: ""
+  }
+  chord_words {
+    word: "my"
+    chords: ""
+  }
+  chord_words {
+    word: "cage"
+    chords: "G"
+  }
+  chord_words {
+    word: "I"
+    chords: ""
+  }
+  chord_words {
+    word: "sit"
+    chords: ""
+  }
+  chord_words {
+    word: "and"
+    chords: ""
+  }
+  chord_words {
+    word: "sing"
+    chords: "D"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "To"
+    chords: ""
+  }
+  chord_words {
+    word: "Him"
+    chords: ""
+  }
+  chord_words {
+    word: "who"
+    chords: ""
+  }
+  chord_words {
+    word: "placed"
+    chords: ""
+  }
+  chord_words {
+    word: "me"
+    chords: ""
+  }
+  chord_words {
+    word: "there;"
+    chords: "A"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Well"
+    chords: "G"
+  }
+  chord_words {
+    word: "pleased"
+    chords: ""
+  }
+  chord_words {
+    word: "a"
+    chords: ""
+  }
+  chord_words {
+    word: "prisoner"
+    chords: "A"
+  }
+  chord_words {
+    word: "to"
+    chords: ""
+  }
+  chord_words {
+    word: "be,"
+    chords: "F#m  Bm"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Because,"
+    chords: "G"
+  }
+  chord_words {
+    word: "my"
+    chords: ""
+  }
+  chord_words {
+    word: "God,"
+    chords: "A"
+  }
+  chord_words {
+    word: "it"
+    chords: ""
+  }
+  chord_words {
+    word: "pleaseth"
+    chords: "A7"
+  }
+  chord_words {
+    word: "Thee."
+    chords: "D"
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "2"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Nought"
+  }
+  chord_words {
+    word: "have"
+  }
+  chord_words {
+    word: "I"
+  }
+  chord_words {
+    word: "else"
+  }
+  chord_words {
+    word: "to"
+  }
+  chord_words {
+    word: "do,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "I"
+  }
+  chord_words {
+    word: "sing"
+  }
+  chord_words {
+    word: "the"
+  }
+  chord_words {
+    word: "whole"
+  }
+  chord_words {
+    word: "day"
+  }
+  chord_words {
+    word: "long;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "And"
+  }
+  chord_words {
+    word: "He"
+  }
+  chord_words {
+    word: "whom"
+  }
+  chord_words {
+    word: "most"
+  }
+  chord_words {
+    word: "I"
+  }
+  chord_words {
+    word: "love"
+  }
+  chord_words {
+    word: "to"
+  }
+  chord_words {
+    word: "please"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Doth"
+  }
+  chord_words {
+    word: "listen"
+  }
+  chord_words {
+    word: "to"
+  }
+  chord_words {
+    word: "my"
+  }
+  chord_words {
+    word: "song;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "He"
+  }
+  chord_words {
+    word: "caught"
+  }
+  chord_words {
+    word: "and"
+  }
+  chord_words {
+    word: "bound"
+  }
+  chord_words {
+    word: "my"
+  }
+  chord_words {
+    word: "wandering"
+  }
+  chord_words {
+    word: "wing,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "But"
+  }
+  chord_words {
+    word: "still"
+  }
+  chord_words {
+    word: "He"
+  }
+  chord_words {
+    word: "bends"
+  }
+  chord_words {
+    word: "to"
+  }
+  chord_words {
+    word: "hear"
+  }
+  chord_words {
+    word: "me"
+  }
+  chord_words {
+    word: "sing."
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "3"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Thou"
+  }
+  chord_words {
+    word: "hast"
+  }
+  chord_words {
+    word: "an"
+  }
+  chord_words {
+    word: "ear"
+  }
+  chord_words {
+    word: "to"
+  }
+  chord_words {
+    word: "hear"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "A"
+  }
+  chord_words {
+    word: "heart"
+  }
+  chord_words {
+    word: "to"
+  }
+  chord_words {
+    word: "love"
+  }
+  chord_words {
+    word: "and"
+  }
+  chord_words {
+    word: "bless;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "And"
+  }
+  chord_words {
+    word: "though"
+  }
+  chord_words {
+    word: "my"
+  }
+  chord_words {
+    word: "notes"
+  }
+  chord_words {
+    word: "were"
+  }
+  chord_words {
+    word: "e\'er"
+  }
+  chord_words {
+    word: "so"
+  }
+  chord_words {
+    word: "rude,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Thou"
+  }
+  chord_words {
+    word: "wouldst"
+  }
+  chord_words {
+    word: "not"
+  }
+  chord_words {
+    word: "hear"
+  }
+  chord_words {
+    word: "the"
+  }
+  chord_words {
+    word: "less;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Because"
+  }
+  chord_words {
+    word: "Thou"
+  }
+  chord_words {
+    word: "knowest"
+  }
+  chord_words {
+    word: "as"
+  }
+  chord_words {
+    word: "they"
+  }
+  chord_words {
+    word: "fall,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "That"
+  }
+  chord_words {
+    word: "love,"
+  }
+  chord_words {
+    word: "sweet"
+  }
+  chord_words {
+    word: "love,"
+  }
+  chord_words {
+    word: "inspires"
+  }
+  chord_words {
+    word: "them"
+  }
+  chord_words {
+    word: "all."
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "4"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "My"
+  }
+  chord_words {
+    word: "cage"
+  }
+  chord_words {
+    word: "confines"
+  }
+  chord_words {
+    word: "me"
+  }
+  chord_words {
+    word: "round;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Abroad"
+  }
+  chord_words {
+    word: "I"
+  }
+  chord_words {
+    word: "cannot"
+  }
+  chord_words {
+    word: "fly;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "But"
+  }
+  chord_words {
+    word: "though"
+  }
+  chord_words {
+    word: "my"
+  }
+  chord_words {
+    word: "wing"
+  }
+  chord_words {
+    word: "is"
+  }
+  chord_words {
+    word: "closely"
+  }
+  chord_words {
+    word: "bound,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "My"
+  }
+  chord_words {
+    word: "heart\'s"
+  }
+  chord_words {
+    word: "at"
+  }
+  chord_words {
+    word: "liberty;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "For"
+  }
+  chord_words {
+    word: "prison"
+  }
+  chord_words {
+    word: "walls"
+  }
+  chord_words {
+    word: "cannot"
+  }
+  chord_words {
+    word: "control"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "The"
+  }
+  chord_words {
+    word: "flight,"
+  }
+  chord_words {
+    word: "the"
+  }
+  chord_words {
+    word: "freedom"
+  }
+  chord_words {
+    word: "of"
+  }
+  chord_words {
+    word: "the"
+  }
+  chord_words {
+    word: "soul."
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "5"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "O"
+  }
+  chord_words {
+    word: "it"
+  }
+  chord_words {
+    word: "is"
+  }
+  chord_words {
+    word: "good"
+  }
+  chord_words {
+    word: "to"
+  }
+  chord_words {
+    word: "soar"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "These"
+  }
+  chord_words {
+    word: "bolts"
+  }
+  chord_words {
+    word: "and"
+  }
+  chord_words {
+    word: "bars"
+  }
+  chord_words {
+    word: "above!"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "To"
+  }
+  chord_words {
+    word: "Him"
+  }
+  chord_words {
+    word: "whose"
+  }
+  chord_words {
+    word: "purpose"
+  }
+  chord_words {
+    word: "I"
+  }
+  chord_words {
+    word: "adore,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Whose"
+  }
+  chord_words {
+    word: "providence"
+  }
+  chord_words {
+    word: "I"
+  }
+  chord_words {
+    word: "love;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "And"
+  }
+  chord_words {
+    word: "in"
+  }
+  chord_words {
+    word: "Thy"
+  }
+  chord_words {
+    word: "mighty"
+  }
+  chord_words {
+    word: "will"
+  }
+  chord_words {
+    word: "to"
+  }
+  chord_words {
+    word: "find"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "The"
+  }
+  chord_words {
+    word: "joy,"
+  }
+  chord_words {
+    word: "the"
+  }
+  chord_words {
+    word: "freedom"
+  }
+  chord_words {
+    word: "of"
+  }
+  chord_words {
+    word: "the"
+  }
+  chord_words {
+    word: "mind."
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "###"
+  }
+  chord_words {
+    word: "Tune"
+  }
+  chord_words {
+    word: "3"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "#"
+  }
+  chord_words {
+    word: "Capo"
+  }
+  chord_words {
+    word: "4"
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "1"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "A"
+    chords: ""
+  }
+  chord_words {
+    word: "little"
+    chords: "C"
+  }
+  chord_words {
+    word: "bird"
+    chords: "G"
+  }
+  chord_words {
+    word: "I"
+    chords: ""
+  }
+  chord_words {
+    word: "am,"
+    chords: "Am"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Shut"
+    chords: ""
+  }
+  chord_words {
+    word: "from"
+    chords: "F"
+  }
+  chord_words {
+    word: "the"
+    chords: ""
+  }
+  chord_words {
+    word: "fields"
+    chords: ""
+  }
+  chord_words {
+    word: "of"
+    chords: ""
+  }
+  chord_words {
+    word: "air,"
+    chords: "G"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "And"
+    chords: ""
+  }
+  chord_words {
+    word: "in"
+    chords: "C"
+  }
+  chord_words {
+    word: "my"
+    chords: ""
+  }
+  chord_words {
+    word: "cage"
+    chords: "G"
+  }
+  chord_words {
+    word: "I"
+    chords: ""
+  }
+  chord_words {
+    word: "sit"
+    chords: "Am"
+  }
+  chord_words {
+    word: "and"
+    chords: ""
+  }
+  chord_words {
+    word: "sing"
+    chords: ""
+  }
+}
+chord_lines {
+  chord_words {
+    word: "To"
+    chords: ""
+  }
+  chord_words {
+    word: "Him"
+    chords: "F"
+  }
+  chord_words {
+    word: "who"
+    chords: ""
+  }
+  chord_words {
+    word: "placed"
+    chords: ""
+  }
+  chord_words {
+    word: "me"
+    chords: ""
+  }
+  chord_words {
+    word: "there;"
+    chords: "G"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Well"
+    chords: ""
+  }
+  chord_words {
+    word: "pleased"
+    chords: ""
+  }
+  chord_words {
+    word: "a"
+    chords: "C"
+  }
+  chord_words {
+    word: "prisoner"
+    chords: "G    Am"
+  }
+  chord_words {
+    word: "to"
+    chords: ""
+  }
+  chord_words {
+    word: "be,"
+    chords: ""
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Because,"
+    chords: "  F"
+  }
+  chord_words {
+    word: "my"
+    chords: ""
+  }
+  chord_words {
+    word: "God,"
+    chords: "G"
+  }
+  chord_words {
+    word: "it"
+    chords: ""
+  }
+  chord_words {
+    word: "pleaseth"
+    chords: ""
+  }
+  chord_words {
+    word: "Thee."
+    chords: "C-F-C"
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "2"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Nought"
+  }
+  chord_words {
+    word: "have"
+  }
+  chord_words {
+    word: "I"
+  }
+  chord_words {
+    word: "else"
+  }
+  chord_words {
+    word: "to"
+  }
+  chord_words {
+    word: "do,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "I"
+  }
+  chord_words {
+    word: "sing"
+  }
+  chord_words {
+    word: "the"
+  }
+  chord_words {
+    word: "whole"
+  }
+  chord_words {
+    word: "day"
+  }
+  chord_words {
+    word: "long;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "And"
+  }
+  chord_words {
+    word: "He"
+  }
+  chord_words {
+    word: "whom"
+  }
+  chord_words {
+    word: "most"
+  }
+  chord_words {
+    word: "I"
+  }
+  chord_words {
+    word: "love"
+  }
+  chord_words {
+    word: "to"
+  }
+  chord_words {
+    word: "please"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Doth"
+  }
+  chord_words {
+    word: "listen"
+  }
+  chord_words {
+    word: "to"
+  }
+  chord_words {
+    word: "my"
+  }
+  chord_words {
+    word: "song;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "He"
+  }
+  chord_words {
+    word: "caught"
+  }
+  chord_words {
+    word: "and"
+  }
+  chord_words {
+    word: "bound"
+  }
+  chord_words {
+    word: "my"
+  }
+  chord_words {
+    word: "wandering"
+  }
+  chord_words {
+    word: "wing,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "But"
+  }
+  chord_words {
+    word: "still"
+  }
+  chord_words {
+    word: "He"
+  }
+  chord_words {
+    word: "bends"
+  }
+  chord_words {
+    word: "to"
+  }
+  chord_words {
+    word: "hear"
+  }
+  chord_words {
+    word: "me"
+  }
+  chord_words {
+    word: "sing."
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "3"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Thou"
+  }
+  chord_words {
+    word: "hast"
+  }
+  chord_words {
+    word: "an"
+  }
+  chord_words {
+    word: "ear"
+  }
+  chord_words {
+    word: "to"
+  }
+  chord_words {
+    word: "hear"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "A"
+  }
+  chord_words {
+    word: "heart"
+  }
+  chord_words {
+    word: "to"
+  }
+  chord_words {
+    word: "love"
+  }
+  chord_words {
+    word: "and"
+  }
+  chord_words {
+    word: "bless;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "And"
+  }
+  chord_words {
+    word: "though"
+  }
+  chord_words {
+    word: "my"
+  }
+  chord_words {
+    word: "notes"
+  }
+  chord_words {
+    word: "were"
+  }
+  chord_words {
+    word: "e\'er"
+  }
+  chord_words {
+    word: "so"
+  }
+  chord_words {
+    word: "rude,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Thou"
+  }
+  chord_words {
+    word: "wouldst"
+  }
+  chord_words {
+    word: "not"
+  }
+  chord_words {
+    word: "hear"
+  }
+  chord_words {
+    word: "the"
+  }
+  chord_words {
+    word: "less;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Because"
+  }
+  chord_words {
+    word: "Thou"
+  }
+  chord_words {
+    word: "knowest"
+  }
+  chord_words {
+    word: "as"
+  }
+  chord_words {
+    word: "they"
+  }
+  chord_words {
+    word: "fall,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "That"
+  }
+  chord_words {
+    word: "love,"
+  }
+  chord_words {
+    word: "sweet"
+  }
+  chord_words {
+    word: "love,"
+  }
+  chord_words {
+    word: "inspires"
+  }
+  chord_words {
+    word: "them"
+  }
+  chord_words {
+    word: "all."
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "4"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "My"
+  }
+  chord_words {
+    word: "cage"
+  }
+  chord_words {
+    word: "confines"
+  }
+  chord_words {
+    word: "me"
+  }
+  chord_words {
+    word: "round;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Abroad"
+  }
+  chord_words {
+    word: "I"
+  }
+  chord_words {
+    word: "cannot"
+  }
+  chord_words {
+    word: "fly;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "But"
+  }
+  chord_words {
+    word: "though"
+  }
+  chord_words {
+    word: "my"
+  }
+  chord_words {
+    word: "wing"
+  }
+  chord_words {
+    word: "is"
+  }
+  chord_words {
+    word: "closely"
+  }
+  chord_words {
+    word: "bound,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "My"
+  }
+  chord_words {
+    word: "heart\'s"
+  }
+  chord_words {
+    word: "at"
+  }
+  chord_words {
+    word: "liberty;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "For"
+  }
+  chord_words {
+    word: "prison"
+  }
+  chord_words {
+    word: "walls"
+  }
+  chord_words {
+    word: "cannot"
+  }
+  chord_words {
+    word: "control"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "The"
+  }
+  chord_words {
+    word: "flight,"
+  }
+  chord_words {
+    word: "the"
+  }
+  chord_words {
+    word: "freedom"
+  }
+  chord_words {
+    word: "of"
+  }
+  chord_words {
+    word: "the"
+  }
+  chord_words {
+    word: "soul."
+  }
+}
+chord_lines {
+  chord_words {
+    word: " "
+  }
+}
+chord_lines {
+  chord_words {
+    word: "5"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "O"
+  }
+  chord_words {
+    word: "it"
+  }
+  chord_words {
+    word: "is"
+  }
+  chord_words {
+    word: "good"
+  }
+  chord_words {
+    word: "to"
+  }
+  chord_words {
+    word: "soar"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "These"
+  }
+  chord_words {
+    word: "bolts"
+  }
+  chord_words {
+    word: "and"
+  }
+  chord_words {
+    word: "bars"
+  }
+  chord_words {
+    word: "above!"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "To"
+  }
+  chord_words {
+    word: "Him"
+  }
+  chord_words {
+    word: "whose"
+  }
+  chord_words {
+    word: "purpose"
+  }
+  chord_words {
+    word: "I"
+  }
+  chord_words {
+    word: "adore,"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "Whose"
+  }
+  chord_words {
+    word: "providence"
+  }
+  chord_words {
+    word: "I"
+  }
+  chord_words {
+    word: "love;"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "And"
+  }
+  chord_words {
+    word: "in"
+  }
+  chord_words {
+    word: "Thy"
+  }
+  chord_words {
+    word: "mighty"
+  }
+  chord_words {
+    word: "will"
+  }
+  chord_words {
+    word: "to"
+  }
+  chord_words {
+    word: "find"
+  }
+}
+chord_lines {
+  chord_words {
+    word: "The"
+  }
+  chord_words {
+    word: "joy,"
+  }
+  chord_words {
+    word: "the"
+  }
+  chord_words {
+    word: "freedom"
+  }
+  chord_words {
+    word: "of"
+  }
+  chord_words {
+    word: "the"
+  }
+  chord_words {
+    word: "mind."
+  }
+}
+flattened_lyrics: "a little bird i am shut from the fields of air and in my cage i sit and sing to him who placed me there well pleased a prisoner to be because my god it pleaseth thee nought have i else to do i sing the whole day long and he whom most i love to please doth listen to my song he caught and bound my wandering wing but still he bends to hear me sing thou hast an ear to hear a heart to love and bless and though my notes were eer so rude thou wouldst not hear the less because thou knowest as they fall that love sweet love inspires them all my cage confines me round abroad i cannot fly but though my wing is closely bound my hearts at liberty for prison walls cannot control the flight the freedom of the soul o it is good to soar these bolts and bars above to him whose purpose i adore whose providence i love and in thy mighty will to find the joy the freedom of the mind"
